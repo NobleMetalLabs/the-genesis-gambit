@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5jfg1sr4d0r1"]
+
+[ext_resource type="Texture2D" uid="uid://cf7gm8mm2duvp" path="res://tex.png" id="1_qd4j2"]
+[ext_resource type="Texture2D" uid="uid://d3jr225lwia3f" path="res://thing.png" id="2_8vnp3"]
+[ext_resource type="Script" path="res://Thing.gd" id="3_1wo3m"]
+[ext_resource type="PackedScene" uid="uid://bgo4xe15kjkfd" path="res://card.tscn" id="4_p4r78"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Uv" type="Sprite2D" parent="."]
+position = Vector2(480, 270)
+texture = ExtResource("1_qd4j2")
+
+[node name="Thing" type="Sprite2D" parent="."]
+position = Vector2(580, 270)
+texture = ExtResource("2_8vnp3")
+script = ExtResource("3_1wo3m")
+
+[node name="Test-card" parent="." instance=ExtResource("4_p4r78")]
+
+[node name="Test-card2" parent="." instance=ExtResource("4_p4r78")]
+position = Vector2(373, 360)
+
+[node name="Test-card3" parent="." instance=ExtResource("4_p4r78")]
+position = Vector2(421, 362)
+
+[node name="Test-card4" parent="." instance=ExtResource("4_p4r78")]
+position = Vector2(470, 350)
+
+[node name="Test-card5" parent="." instance=ExtResource("4_p4r78")]
+position = Vector2(371, 429)
+
+[node name="Test-card6" parent="." instance=ExtResource("4_p4r78")]
+position = Vector2(428, 425)
+
+[node name="Test-card7" parent="." instance=ExtResource("4_p4r78")]
+position = Vector2(478, 420)

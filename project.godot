@@ -16,6 +16,12 @@ config/features=PackedStringArray("4.2", "GL Compatibility")
 boot_splash/use_filter=false
 config/icon="res://ast/image/icons/icon.png"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=2
+gdscript/warnings/return_value_discarded=1
+gdscript/warnings/integer_division=0
+
 [display]
 
 window/size/viewport_width=960

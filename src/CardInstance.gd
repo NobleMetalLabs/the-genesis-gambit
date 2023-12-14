@@ -3,9 +3,6 @@ extends Node
 
 @export var meta : CardMetadata
 
-func _init(_meta : CardMetadata):
-	meta = _meta
-
 @onready var area = $Area2D
 var dragging : bool = false
 var dragging_offset : Vector2 = Vector2.ZERO

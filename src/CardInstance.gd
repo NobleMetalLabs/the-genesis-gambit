@@ -1,7 +1,10 @@
 class_name CardInstance
 extends Node
 
-@export var meta : CardMetadata
+@export var data : CardMetadata
+
+func _init(_data : CardMetadata = CardMetadata.new()):
+	data = _data
 
 @onready var area = $Area2D
 var dragging : bool = false

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cf7gm8mm2duvp" path="res://tex.png" id="1_qd4j2"]
 [ext_resource type="Texture2D" uid="uid://d3jr225lwia3f" path="res://thing.png" id="2_8vnp3"]
 [ext_resource type="Script" path="res://Thing.gd" id="3_1wo3m"]
-[ext_resource type="PackedScene" uid="uid://bgo4xe15kjkfd" path="res://card.tscn" id="4_p4r78"]
+[ext_resource type="PackedScene" uid="uid://bgo4xe15kjkfd" path="res://CardInstance.tscn" id="4_p4r78"]
 
 [node name="Node2D" type="Node2D"]
 

@@ -19,7 +19,6 @@ config/icon="res://ast/image/icons/icon.png"
 [debug]
 
 gdscript/warnings/untyped_declaration=2
-gdscript/warnings/return_value_discarded=1
 gdscript/warnings/integer_division=0
 
 [display]

@@ -17,6 +17,7 @@ texture = ExtResource("2_bisxq")
 script = ExtResource("3_d6e12")
 
 [node name="Test-card" parent="." instance=ExtResource("4_tfb5s")]
+position = Vector2(323, 355)
 
 [node name="Test-card2" parent="." instance=ExtResource("4_tfb5s")]
 position = Vector2(373, 360)

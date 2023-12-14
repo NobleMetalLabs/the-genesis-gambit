@@ -1,4 +1,4 @@
-class_name Card
+class_name CardInstance
 extends Node
 
 @onready var area = $Area2D

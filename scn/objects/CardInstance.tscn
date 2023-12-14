@@ -1,13 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgo4xe15kjkfd"]
+[gd_scene load_steps=8 format=3 uid="uid://bgo4xe15kjkfd"]
 
 [ext_resource type="Script" path="res://src/CardInstance.gd" id="2_jxcke"]
 [ext_resource type="Texture2D" uid="uid://mxqovcc74tr" path="res://ast/image/cards/fgs/test-chip.png" id="2_ssmkd"]
+[ext_resource type="Script" path="res://lib/CardLogic.gd" id="2_u4hep"]
+[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="3_3x30a"]
+
+[sub_resource type="Resource" id="Resource_jh1lx"]
+script = ExtResource("2_u4hep")
+event_handlers = {}
+
+[sub_resource type="Resource" id="Resource_xw6fm"]
+script = ExtResource("3_3x30a")
+id = 0
+name = ""
+description = ""
+rarity = ""
+cost = 0
+hp = 0
+power = 0
+defense = 0
+logic = SubResource("Resource_jh1lx")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3m57w"]
 size = Vector2(42, 60)
 
 [node name="Card" type="Node2D"]
 script = ExtResource("2_jxcke")
+data = SubResource("Resource_xw6fm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_ssmkd")

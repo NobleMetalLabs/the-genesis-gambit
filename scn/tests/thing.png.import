@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dd7mra8s8a3e7"
-path="res://.godot/imported/ethkog.PNG-d8f1ee668d8053d4194fe938c916f3df.ctex"
+uid="uid://d3jr225lwia3f"
+path="res://.godot/imported/thing.png-67e5f1c75ea09d4cab4cba5462c9e738.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ethkog.PNG"
-dest_files=["res://.godot/imported/ethkog.PNG-d8f1ee668d8053d4194fe938c916f3df.ctex"]
+source_file="res://scn/tests/thing.png"
+dest_files=["res://.godot/imported/thing.png-67e5f1c75ea09d4cab4cba5462c9e738.ctex"]
 
 [params]
 

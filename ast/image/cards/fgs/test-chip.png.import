@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxn7v35vbhtvc"
-path="res://.godot/imported/test-card.png-ff2a8099a5b6324f2d083bbe797964a5.ctex"
+uid="uid://mxqovcc74tr"
+path="res://.godot/imported/test-chip.png-40d02a1f98f44629911bb2dc933bcaa5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://test-card.png"
-dest_files=["res://.godot/imported/test-card.png-ff2a8099a5b6324f2d083bbe797964a5.ctex"]
+source_file="res://ast/image/cards/fgs/test-chip.png"
+dest_files=["res://.godot/imported/test-chip.png-40d02a1f98f44629911bb2dc933bcaa5.ctex"]
 
 [params]
 

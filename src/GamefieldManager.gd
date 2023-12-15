@@ -10,6 +10,12 @@ func export_gamefield_state() -> GamefieldState:
 func load_gamefield_state(_state: GamefieldState) -> void:
 	pass
 
+func get_own_player() -> Player:
+	#for player in gamefield.players:
+	#	if player.something == this_client:
+	#	return player
+	return null
+
 func place_card(player : Player, metadata : CardMetadata, position : Vector2) -> void:
 	var new_card : CardInstance = card_scn.instantiate()
 	new_card.metadata = metadata

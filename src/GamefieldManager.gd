@@ -19,4 +19,4 @@ func place_card(player : Player, metadata : CardMetadata, position : Vector2) ->
 	gamefield.event.connect(func(event_name : StringName, data : Dictionary) -> void:
 		new_card.logic.process_event(event_name, data)
 	)
-	gamefield.cards_holder.add_child(new_card, true)
+	gamefield.cards_parent.add_child(new_card, true)

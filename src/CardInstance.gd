@@ -1,8 +1,10 @@
 class_name CardInstance
 extends Node
 
+var gamefield : Gamefield
 var metadata : CardMetadata
 var logic : CardLogic
+var player_owner : Player
 
 @onready var area : Area2D = $Area2D
 @onready var sprite : Sprite2D = $Sprite2D
@@ -20,8 +22,9 @@ func _ready() -> void:
 	)
 	sprite.texture = metadata.image
 	logic = metadata.logic_script.new()
-	if logic.event_handlers.has("on_placement"):
-		logic.event_handlers["on_placement"].call()
+	logic.card_instance = self
+
+	gamefield.event.emit("card_placement", {"card_instance": self})
 
 func _process(_delta : float) -> void:
 	if dragging:

@@ -1,7 +1,8 @@
 class_name CardInstance
 extends Node
 
-@export var metadata : CardMetadata
+var metadata : CardMetadata
+var logic : CardLogic
 
 @onready var area : Area2D = $Area2D
 @onready var sprite : Sprite2D = $Sprite2D
@@ -17,8 +18,10 @@ func _ready() -> void:
 			else: end_drag()
 			get_viewport().set_input_as_handled()
 	)
-	
 	sprite.texture = metadata.image
+	logic = metadata.logic_script.new()
+	if logic.event_handlers.has("on_placement"):
+		logic.event_handlers["on_placement"].call()
 
 func _process(_delta : float) -> void:
 	if dragging:

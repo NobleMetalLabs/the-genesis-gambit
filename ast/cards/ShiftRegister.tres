@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://dfpmseflf6h0b"]
+
+[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="1_o3x3c"]
+[ext_resource type="Texture2D" uid="uid://mxqovcc74tr" path="res://ast/image/cards/fgs/test-chip.png" id="1_v7l0a"]
+[ext_resource type="Script" path="res://ast/cards/ShiftRegister.gd" id="2_dg2yy"]
+
+[resource]
+script = ExtResource("1_o3x3c")
+id = 0
+name = "Shift Register"
+description = ""
+image = ExtResource("1_v7l0a")
+rarity = ""
+cost = 0
+hp = 0
+power = 0
+defense = 0
+logic_script = ExtResource("2_dg2yy")

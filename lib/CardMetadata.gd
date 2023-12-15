@@ -2,7 +2,7 @@
 class_name CardMetadata
 extends Resource
 
-@export_group("Caracteristics")
+@export_group("Characteristics")
 @export var id : int
 @export var name : String
 @export var description : String

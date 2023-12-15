@@ -26,3 +26,5 @@ func place_card(player : Player, metadata : CardMetadata, position : Vector2) ->
 		new_card.logic.process_event(event_name, data)
 	)
 	gamefield.cards_parent.add_child(new_card, true)
+	var ap : AudioStreamPlayer2D = AudioDispatcher.dispatch_positional_audio(new_card, "res://ast/sound/cardplace.tres")
+	ap.panning_strength = 0.25

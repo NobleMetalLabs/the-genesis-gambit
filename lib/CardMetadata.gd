@@ -10,4 +10,4 @@ extends Resource
 @export var hp : int
 @export var power : int
 @export var defense : int
-@export var logic: CardLogic
+@export var logic_script : GDScript

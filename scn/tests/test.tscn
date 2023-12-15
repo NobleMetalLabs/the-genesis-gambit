@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5jfg1sr4d0r1"]
+[gd_scene load_steps=6 format=3 uid="uid://b5jfg1sr4d0r1"]
 
 [ext_resource type="Texture2D" uid="uid://cf7gm8mm2duvp" path="res://ast/image/ui/tex.png" id="1_fcxgx"]
 [ext_resource type="Texture2D" uid="uid://d3jr225lwia3f" path="res://scn/tests/thing.png" id="2_bisxq"]
 [ext_resource type="Script" path="res://scn/tests/Thing.gd" id="3_d6e12"]
-[ext_resource type="PackedScene" uid="uid://bgo4xe15kjkfd" path="res://scn/objects/CardInstance.tscn" id="4_tfb5s"]
+[ext_resource type="PackedScene" uid="uid://ct78rnvd5iwus" path="res://scn/Gamefield.tscn" id="4_2sf5u"]
+[ext_resource type="Script" path="res://scn/tests/test_card_creator.gd" id="5_mdn41"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -16,23 +17,7 @@ position = Vector2(580, 270)
 texture = ExtResource("2_bisxq")
 script = ExtResource("3_d6e12")
 
-[node name="Test-card" parent="." instance=ExtResource("4_tfb5s")]
-position = Vector2(323, 355)
+[node name="Gamefield" parent="." instance=ExtResource("4_2sf5u")]
 
-[node name="Test-card2" parent="." instance=ExtResource("4_tfb5s")]
-position = Vector2(373, 360)
-
-[node name="Test-card3" parent="." instance=ExtResource("4_tfb5s")]
-position = Vector2(421, 362)
-
-[node name="Test-card4" parent="." instance=ExtResource("4_tfb5s")]
-position = Vector2(470, 350)
-
-[node name="Test-card5" parent="." instance=ExtResource("4_tfb5s")]
-position = Vector2(371, 429)
-
-[node name="Test-card6" parent="." instance=ExtResource("4_tfb5s")]
-position = Vector2(428, 425)
-
-[node name="Test-card7" parent="." instance=ExtResource("4_tfb5s")]
-position = Vector2(478, 420)
+[node name="test_card_creator" type="Node" parent="."]
+script = ExtResource("5_mdn41")

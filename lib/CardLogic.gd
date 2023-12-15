@@ -1,5 +1,7 @@
 class_name CardLogic
-extends Resource
+extends Object
 
-@export var event_handlers : Dictionary = { #[StringName (event), Callable] 
-}
+@export var event_handlers : Dictionary #[StringName (event), Callable] 
+
+func _init(_event_handlers : Dictionary) -> void:
+	event_handlers = _event_handlers

@@ -5,5 +5,5 @@ func _init() -> void:
 		"on_placement" : print_funny_to_console
 	})
 
-static func print_funny_to_console() -> void:
+func print_funny_to_console() -> void:
 	print("Funny")

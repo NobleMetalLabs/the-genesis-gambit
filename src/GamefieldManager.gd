@@ -9,8 +9,8 @@ func export_gamefield_state() -> GamefieldState:
 func load_gamefield_state(_state: GamefieldState) -> void:
 	pass
 
-func place_card(_player : Player, _data : CardMetadata, position : Vector2) -> void:
+func place_card(_player : Player, _metadata : CardMetadata, position : Vector2) -> void:
 	var new_card : CardInstance = card_scn.instantiate()
-	new_card.data = _data
+	new_card.metadata = _metadata
 	new_card.position = position
 	get_parent().get_node("Cards").add_child(new_card, true)

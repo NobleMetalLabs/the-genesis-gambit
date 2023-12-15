@@ -1,7 +1,7 @@
 class_name CardInstance
 extends Node
 
-@export var data : CardMetadata
+@export var metadata : CardMetadata
 
 @onready var area : Area2D = $Area2D
 @onready var sprite : Sprite2D = $Sprite2D
@@ -18,7 +18,7 @@ func _ready() -> void:
 			get_viewport().set_input_as_handled()
 	)
 	
-	sprite.texture = data.image
+	sprite.texture = metadata.image
 
 func _process(_delta : float) -> void:
 	if dragging:

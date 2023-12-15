@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/GamefieldManager.gd" id="1_7wimk"]
 [ext_resource type="Script" path="res://src/Gamefield.gd" id="1_bhmi3"]
 
-[node name="Gamefield" type="Node2D"]
+[node name="GAMEFIELD" type="Node2D"]
 script = ExtResource("1_bhmi3")
 
 [node name="GamefieldManager" type="Node" parent="."]

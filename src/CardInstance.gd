@@ -1,5 +1,5 @@
 class_name CardInstance
-extends Node
+extends Node2D
 
 var gamefield : Gamefield
 var metadata : CardMetadata

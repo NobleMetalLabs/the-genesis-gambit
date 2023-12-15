@@ -1,3 +1,4 @@
+@icon("res://lib/CardLogic.png")
 class_name CardLogic
 extends Object
 

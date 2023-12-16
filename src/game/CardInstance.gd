@@ -22,7 +22,7 @@ func _ready() -> void:
 	)
 	sprite.texture = metadata.image
 	logic = metadata.logic_script.new()
-	logic.card_instance = self
+	logic.owner = self
 
 	gamefield.event.emit("card_placement", {"card_instance": self})
 
@@ -35,8 +35,6 @@ func _process(_delta : float) -> void:
 func start_drag() -> void:
 	dragging = true
 	dragging_offset = self.position - get_parent().get_local_mouse_position()
-	print("drag")
 
 func end_drag() -> void:
 	dragging = false
-	print("end drag")

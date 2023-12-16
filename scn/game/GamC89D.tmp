@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://ct78rnvd5iwus"]
+
+[ext_resource type="Script" path="res://src/Gamefield.gd" id="1_fgrj6"]
+[ext_resource type="Script" path="res://src/GamefieldManager.gd" id="2_fvv4v"]
+[ext_resource type="PackedScene" uid="uid://jig42kmvjtxn" path="res://scn/game/CardInstance.tscn" id="3_x6i0v"]
+
+[node name="GAMEFIELD" type="Node2D"]
+script = ExtResource("1_fgrj6")
+
+[node name="GamefieldManager" type="Node" parent="."]
+script = ExtResource("2_fvv4v")
+card_scn = ExtResource("3_x6i0v")
+
+[node name="Cards" type="Node2D" parent="."]

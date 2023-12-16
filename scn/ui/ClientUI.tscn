@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4fmewjxtuggy"]
+
+[ext_resource type="Script" path="res://src/ui/ClientUI.gd" id="1_68p1r"]
+[ext_resource type="PackedScene" uid="uid://db8am01hwwg1q" path="res://scn/ui/UIFullCard.tscn" id="2_5wpux"]
+[ext_resource type="PackedScene" uid="uid://es3xnd1snslt" path="res://scn/ui/TempCard.tscn" id="2_fpva6"]
+[ext_resource type="Script" path="res://src/ui/CardInfoPanel.gd" id="3_73koh"]
+
+[node name="CLIENT-UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_68p1r")
+temp_card_scn = ExtResource("2_fpva6")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -64.0
+offset_right = 70.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "spawn ghost test
+(hold)"
+
+[node name="CARD-INFO-PANEL" type="Panel" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 301.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("3_73koh")
+
+[node name="MarginContainer" type="MarginContainer" parent="CARD-INFO-PANEL"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="CARD-DISPLAY" parent="CARD-INFO-PANEL/MarginContainer" instance=ExtResource("2_5wpux")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]

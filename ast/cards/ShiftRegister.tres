@@ -8,8 +8,8 @@
 script = ExtResource("1_o3x3c")
 id = 0
 name = "Shift Register"
-description = ""
 image = ExtResource("1_v7l0a")
+type = "Thingie"
 rarity = "Common"
 cost = 0
 hp = 0

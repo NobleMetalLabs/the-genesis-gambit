@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://es3xnd1snslt"]
 
-[ext_resource type="Script" path="res://src/TempCard.gd" id="1_gehdp"]
+[ext_resource type="Script" path="res://src/ui/TempCard.gd" id="1_gehdp"]
 [ext_resource type="Texture2D" uid="uid://cxn7v35vbhtvc" path="res://ast/image/cards/bgs/test-card.png" id="2_r6frc"]
 
 [node name="TempCard" type="Node2D"]

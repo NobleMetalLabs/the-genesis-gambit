@@ -16,19 +16,23 @@ func _setup(_gamefield : Gamefield, _metadata : CardMetadata, _player_owner : Pl
 	metadata = _metadata
 	player_owner = _player_owner
 
+var selecting_target : bool = false
+var target : CardInstance = null
+
 func _ready() -> void:
 	area.input_event.connect(
 		func (_viewport : Viewport, event : InputEvent, _shape_idx : int) -> void:
 			if not event is InputEventMouseButton: return
-			if not event.button_index == MOUSE_BUTTON_LEFT: return
-			if event.pressed: start_drag() 
-			else: end_drag()
+			if event.button_index == MOUSE_BUTTON_LEFT:
+				if event.pressed: start_drag() 
+				else: end_drag()
+			if event.button_index == MOUSE_BUTTON_RIGHT:
+				if event.pressed: start_target()
 			get_viewport().set_input_as_handled()
 	)
 	sprite.texture = metadata.image
 	logic = metadata.logic_script.new()
 	logic.owner = self
-
 	gamefield.event.emit("card_placement", {"card_instance": self})
 
 func _process(_delta : float) -> void:
@@ -36,6 +40,9 @@ func _process(_delta : float) -> void:
 		self.position = get_parent().get_local_mouse_position() + dragging_offset
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			end_drag()
+	
+	if selecting_target and not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		end_target()
 
 func start_drag() -> void:
 	dragging = true
@@ -43,3 +50,13 @@ func start_drag() -> void:
 
 func end_drag() -> void:
 	dragging = false
+
+func start_target() -> void:
+	selecting_target = true
+	target = null
+
+func end_target() -> void:
+	selecting_target = false
+	target = gamefield.get_hovered_card()
+	#print(target)
+	#if target != null: print(target.metadata)

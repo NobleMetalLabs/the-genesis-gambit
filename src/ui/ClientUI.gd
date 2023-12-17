@@ -24,5 +24,3 @@ func _input(event : InputEvent) -> void:
 		else:
 			card_info_panel.undisplay()
 	
-
-	

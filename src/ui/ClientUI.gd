@@ -11,8 +11,7 @@ var shift_reg_meta : CardMetadata = preload("res://ast/cards/ShiftRegister.tres"
 
 func _on_button_button_down() -> void:
 	var new_temp_card : TempCard = temp_card_scn.instantiate() 
-	new_temp_card.metadata = shift_reg_meta
-	new_temp_card.ui = self
+	new_temp_card._setup(self, shift_reg_meta)
 	self.add_child(new_temp_card, true)
 
 func _input(event : InputEvent) -> void:

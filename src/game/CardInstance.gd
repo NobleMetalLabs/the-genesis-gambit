@@ -11,6 +11,11 @@ var player_owner : Player
 var dragging : bool = false
 var dragging_offset : Vector2 = Vector2.ZERO
 
+func _setup(_gamefield : Gamefield, _metadata : CardMetadata, _player_owner : Player) -> void:
+	gamefield = _gamefield
+	metadata = _metadata
+	player_owner = _player_owner
+
 func _ready() -> void:
 	area.input_event.connect(
 		func (_viewport : Viewport, event : InputEvent, _shape_idx : int) -> void:

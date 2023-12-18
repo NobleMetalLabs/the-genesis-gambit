@@ -21,12 +21,12 @@ func _input(event : InputEvent) -> void:
 		if hovered_card != null:
 			card_info_panel.set_card_metadata(hovered_card.metadata)
 			card_info_panel.display()
-			update_target(hovered_card.target)
+			#update_target_sprite(hovered_card.target)
 		else:
 			card_info_panel.undisplay()
-			update_target(null)
+			#update_target_sprite(null)
 
-func update_target(target : CardInstance) -> void:
+func update_target_sprite(target : CardInstance) -> void:
 	if target == null: target_sprite.hide()
 	else:
 		target_sprite.show()

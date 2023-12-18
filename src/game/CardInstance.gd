@@ -11,6 +11,8 @@ var player_owner : Player
 var dragging : bool = false
 var dragging_offset : Vector2 = Vector2.ZERO
 
+var target_arrow = Arrow2D.new()
+
 func _setup(_gamefield : Gamefield, _metadata : CardMetadata, _player_owner : Player) -> void:
 	gamefield = _gamefield
 	metadata = _metadata
@@ -34,6 +36,11 @@ func _ready() -> void:
 	logic = metadata.logic_script.new()
 	logic.owner = self
 	gamefield.event.emit("card_placement", {"card_instance": self})
+	
+	target_arrow.z_index = 2
+	target_arrow.modulate = Color.RED
+	add_child(target_arrow)
+	
 
 func _process(_delta : float) -> void:
 	if dragging:
@@ -41,10 +48,13 @@ func _process(_delta : float) -> void:
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			end_drag()
 	
+	target_arrow.visible = (target != null or selecting_target)
+	
 	if selecting_target:
-		
+		target_arrow.end_position = get_parent().get_local_mouse_position()
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			end_target()
+	elif target != null: target_arrow.end_position = target.global_position
 
 func start_drag() -> void:
 	dragging = true
@@ -60,5 +70,3 @@ func start_target() -> void:
 func end_target() -> void:
 	selecting_target = false
 	target = gamefield.get_hovered_card()
-	#print(target)
-	#if target != null: print(target.metadata)

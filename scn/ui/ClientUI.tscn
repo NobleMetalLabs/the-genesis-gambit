@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://djjhjh04iwame" path="res://ast/image/cards/fgs/target-placeholder.png" id="5_kgfmm"]
 
 [node name="CLIENT-UI" type="Control"]
+z_index = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

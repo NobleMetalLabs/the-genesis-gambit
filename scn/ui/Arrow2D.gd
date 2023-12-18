@@ -8,7 +8,7 @@ var end_position : Vector2 :
 	set(value):
 		var local : Vector2 = self.to_local(value)
 		var half_head_height : float = 0.5 * _arrowhead.texture.get_height()
-		var _end_position : Vector2 = local - Vector2(half_head_height, half_head_height)
+		var _end_position : Vector2 = local.normalized() * (local.length() - Vector2(half_head_height, half_head_height).length())
 		_arrowhead.position = _end_position
 		self.set_point_position(1, _end_position)
 		_arrowhead.rotation = local.angle() - deg_to_rad(135)

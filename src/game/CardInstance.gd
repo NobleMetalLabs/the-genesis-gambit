@@ -41,8 +41,10 @@ func _process(_delta : float) -> void:
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			end_drag()
 	
-	if selecting_target and not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		end_target()
+	if selecting_target:
+		
+		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+			end_target()
 
 func start_drag() -> void:
 	dragging = true

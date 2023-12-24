@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djjhjh04iwame"
-path="res://.godot/imported/target-placeholder.png-f580bdc89edc0c4ec30e9a9a3729a230.ctex"
+uid="uid://ldfm46wscm4d"
+path="res://.godot/imported/yurgteam-full.png-5509e0b0e1d39c935c28de73cb344d2b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/image/cards/fgs/target-placeholder.png"
-dest_files=["res://.godot/imported/target-placeholder.png-f580bdc89edc0c4ec30e9a9a3729a230.ctex"]
+source_file="res://ast/image/ui/icons/yurgteam-full.png"
+dest_files=["res://.godot/imported/yurgteam-full.png-5509e0b0e1d39c935c28de73cb344d2b.ctex"]
 
 [params]
 

@@ -24,24 +24,24 @@ func get_hovered_card() -> CardInstance:
 
 # make panning strength a user setting
 func place_card(player : Player, metadata : CardMetadata, position : Vector2) -> void:
-	var new_card : CardInstance = card_instance_scene.instantiate()
+	var new_card : CardInstanceOnField = card_instance_scene.instantiate()
 	new_card._setup(self, metadata, player)
 	new_card.position = position
 
 	self.event.connect(func(event_name : StringName, data : Dictionary) -> void:
 		new_card.logic.process_event(event_name, data)
 	)
-	new_card.get_node("Area2D").mouse_entered.connect(
+	new_card.mouse_entered.connect(
 		func() -> void:
 			_hovered_card = new_card
 	)
-	new_card.get_node("Area2D").mouse_exited.connect(
+	new_card.mouse_exited.connect(
 		func() -> void:
 			_hovered_card = null
 	)
 	
 	cards_holder.add_child(new_card, true)
 	var ap : AudioStreamPlayer2D = AudioDispatcher.dispatch_positional_audio(new_card, "res://ast/sound/cardplace.tres")
-	ap.panning_strength = 0.25 
+	ap.panning_strength = 0.25
 
 

@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://oi7cavr81leq"]
-
-[ext_resource type="Texture2D" uid="uid://cxn7v35vbhtvc" path="res://ast/image/cards/bgs/test-card.png" id="1_0cfnh"]
-[ext_resource type="Script" path="res://scn/ui/HandCard.gd" id="2_ifrwv"]
-
-[node name="HandCard" type="TextureButton"]
-texture_normal = ExtResource("1_0cfnh")
-script = ExtResource("2_ifrwv")

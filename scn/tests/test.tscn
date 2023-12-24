@@ -12,6 +12,7 @@
 z_index = -5
 position = Vector2(480, 270)
 texture = ExtResource("1_fcxgx")
+metadata/_edit_lock_ = true
 
 [node name="Thing" type="Sprite2D" parent="."]
 position = Vector2(580, 270)
@@ -23,5 +24,6 @@ unique_name_in_owner = true
 
 [node name="CLIENT-UI" parent="." node_paths=PackedStringArray("gamefield") instance=ExtResource("5_vofwa")]
 unique_name_in_owner = true
-mouse_filter = 1
+z_index = 1
+mouse_filter = 2
 gamefield = NodePath("../GAMEFIELD")

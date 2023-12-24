@@ -7,16 +7,17 @@
 [ext_resource type="Texture2D" uid="uid://cdhjukcem57os" path="res://ast/image/ui/test-hand-bg.png" id="3_ahllg"]
 [ext_resource type="Resource" uid="uid://dfpmseflf6h0b" path="res://ast/cards/ShiftRegister.tres" id="3_buy1h"]
 [ext_resource type="Texture2D" uid="uid://djjhjh04iwame" path="res://ast/image/cards/fgs/target-placeholder.png" id="5_kgfmm"]
-[ext_resource type="PackedScene" uid="uid://oi7cavr81leq" path="res://scn/ui/HandCard.tscn" id="7_78t22"]
+[ext_resource type="PackedScene" uid="uid://dosfprffmtayf" path="res://scn/ui/CardInstanceInHand.tscn" id="7_goj2q"]
 
 [node name="CLIENT-UI" type="Control"]
-z_index = 1
+z_index = -1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_68p1r")
 temp_card_scn = ExtResource("2_fpva6")
 metadata/_edit_lock_ = true
@@ -66,17 +67,10 @@ layout_mode = 0
 offset_top = 465.0
 offset_right = 960.0
 offset_bottom = 525.0
+mouse_filter = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="HandCard" parent="HandContainer" instance=ExtResource("7_78t22")]
-layout_mode = 2
-metadata = ExtResource("3_buy1h")
-
-[node name="HandCard2" parent="HandContainer" instance=ExtResource("7_78t22")]
-layout_mode = 2
-metadata = ExtResource("3_buy1h")
-
-[node name="HandCard3" parent="HandContainer" instance=ExtResource("7_78t22")]
+[node name="CardInstanceInHand" parent="HandContainer" instance=ExtResource("7_goj2q")]
 layout_mode = 2
 metadata = ExtResource("3_buy1h")

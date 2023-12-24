@@ -8,13 +8,6 @@ extends Control
 
 @export var gamefield : Gamefield
 
-## debug
-#var shift_reg_meta : CardMetadata = preload("res://ast/cards/ShiftRegister.tres")
-#func _on_button_button_down() -> void:
-	#var new_temp_card : TempCard = temp_card_scn.instantiate() 
-	#new_temp_card._setup(self, shift_reg_meta)
-	#self.add_child(new_temp_card, true)
-
 func _input(event : InputEvent) -> void:
 	if not event is InputEventKey: return
 	if Input.is_action_just_pressed("ui_inspect"):
@@ -35,10 +28,15 @@ func update_target_sprite(target : CardInstance) -> void:
 
 # i guess this should be done individually when cards get added, rather than a for loop
 # (can't do that yet since they're already in the scene for now)
-func _ready(): setup_hand()
+func _ready() -> void: setup_hand()
 func setup_hand() -> void:
-	for card : HandCard in hand_container.get_children():
-		card.button_down.connect(card_button_down.bind(card.metadata))
+	for card : CardInstanceInHand in hand_container.get_children():
+		card.gui_input.connect(
+		func (event : InputEvent) -> void:
+				if not event is InputEventMouseButton: return
+				if event.button_index == MOUSE_BUTTON_LEFT:
+					if event.pressed: card_button_down(card.metadata)
+		)
 
 func card_button_down(metadata : CardMetadata) -> void:
 	var new_temp_card : TempCard = temp_card_scn.instantiate() 

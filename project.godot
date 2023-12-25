@@ -25,6 +25,7 @@ AudioDispatcher="*res://src/autoloads/AudioDispatcher.gd"
 
 [debug]
 
+gdscript/warnings/shadowed_global_identifier=0
 gdscript/warnings/untyped_declaration=1
 gdscript/warnings/integer_division=0
 

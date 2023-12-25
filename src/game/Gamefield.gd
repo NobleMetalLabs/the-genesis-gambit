@@ -24,8 +24,7 @@ func get_hovered_card() -> CardInstance:
 
 # make panning strength a user setting
 func place_card(player : Player, metadata : CardMetadata, position : Vector2) -> void:
-	var new_card : CardInstanceOnField = card_instance_scene.instantiate()
-	new_card._setup(self, metadata, player)
+	var new_card : CardInstanceOnField = ObjectDB._CardInstanceOnField.create(self, metadata, player)
 	new_card.position = position
 
 	self.event.connect(func(event_name : StringName, data : Dictionary) -> void:

@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://dp0ichqwouy35"]
+
+[ext_resource type="Script" path="res://src/ui/HandUI.gd" id="1_l6ysm"]
+[ext_resource type="Script" path="res://src/test.gd" id="2_7qmu2"]
+[ext_resource type="Resource" uid="uid://dfpmseflf6h0b" path="res://ast/cards/ShiftRegister.tres" id="3_10l3o"]
+
+[node name="HAND-UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l6ysm")
+
+[node name="CardStack" type="HBoxContainer" parent="."]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("2_7qmu2")
+meta = ExtResource("3_10l3o")

@@ -1,24 +1,21 @@
 class_name CardInstanceOnField
 extends CardInstance
 
-#var gamefield : Gamefield
-#var player_owner : Player
+var logic : CardLogic
+var gamefield : Gamefield
+var player_owner : Player
 
-var dragging : bool = false
-var dragging_offset : Vector2 = Vector2.ZERO
+@onready var texture_rect : TextureRect = $TextureRect
 
-#func _setup(_gamefield : Gamefield, _player_owner : Player) -> void:
-	#
-	#gamefield = _gamefield
-	#player_owner = _player_owner
-
-var selecting_target : bool = false
-var target : CardInstance = null
-var target_arrow : Arrow2D = Arrow2D.new()
+func _setup(_gamefield: Gamefield, _metadata : CardMetadata, _player_owner: Player) -> void:
+	metadata = _metadata
+	logic = metadata.logic_script.new()
+	logic.owner = self
+	gamefield = _gamefield
+	player_owner = _player_owner
 
 func _ready() -> void:
-	super()
-	texture_rect.position -= metadata.image.get_size() / 2
+	texture_rect.texture = metadata.image
 	
 	gui_input.connect(
 		func (event : InputEvent) -> void:
@@ -34,6 +31,13 @@ func _ready() -> void:
 	target_arrow.z_index = 2
 	target_arrow.modulate = Color.RED
 	add_child(target_arrow)
+	
+var dragging : bool = false
+var dragging_offset : Vector2 = Vector2.ZERO
+
+var selecting_target : bool = false
+var target : CardInstance = null
+var target_arrow : Arrow2D = Arrow2D.new()
 
 func _process(_delta : float) -> void:
 	if dragging:

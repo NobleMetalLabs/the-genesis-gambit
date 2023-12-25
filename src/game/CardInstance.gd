@@ -2,18 +2,6 @@ class_name CardInstance
 extends Control
 
 @export var metadata : CardMetadata
-var logic : CardLogic
-var gamefield : Gamefield
-var player_owner : Player
-
-func _setup(_gamefield: Gamefield, _metadata : CardMetadata, _player_owner: Player) -> void:
-	metadata = _metadata
-	logic = metadata.logic_script.new()
-	logic.owner = self
-	gamefield = _gamefield
-	player_owner = _player_owner
-
-var texture_rect : TextureRect
 
 func get_vector_to_edge_at_angle(angle : float) -> Vector2:
 	# TODO: Make this shit better
@@ -29,7 +17,4 @@ func get_vector_to_edge_at_angle(angle : float) -> Vector2:
 		to_edge = Vector2.from_angle(angle) * Vector2(half_bounds.x, tan(tri_angle) * half_bounds.x).length()
 	return to_edge * (1 - bleed)
 
-func _ready() -> void:
-	texture_rect = TextureRect.new()
-	texture_rect.texture = metadata.image
-	add_child(texture_rect)
+

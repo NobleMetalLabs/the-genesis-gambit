@@ -42,4 +42,8 @@ func place_card(player : Player, metadata : CardMetadata, position : Vector2) ->
 	var ap : AudioStreamPlayer2D = AudioDispatcher.dispatch_positional_audio(new_card, "res://ast/sound/cardplace.tres")
 	ap.panning_strength = 0.25
 
-
+func _input(event : InputEvent) -> void:
+	if not event is InputEventKey: return
+	if Input.is_action_just_pressed("freeze_card"):
+		if _hovered_card != null:
+			_hovered_card.add_freeze()

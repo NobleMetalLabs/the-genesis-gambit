@@ -10,14 +10,14 @@ class _CardInstanceOnField:
 
 class _CardInstanceInHand:
 	const scene : PackedScene = preload("res://scn/ui/CardInstanceInHand.tscn")
-	static func create(metadata : CardMetadata) -> CardInstanceInHand:
+	static func create(hand_ui : HandUI, metadata : CardMetadata) -> CardInstanceInHand:
 		var new_obj : CardInstanceInHand = scene.instantiate()
-		new_obj._setup(metadata)
+		new_obj._setup(hand_ui, metadata)
 		return new_obj
 
 class _TempCard: #Rename? CardInstanceGhost?
 	const scene : PackedScene = preload("res://scn/ui/TempCard.tscn")
-	static func create(client_ui : ClientUI, metadata : CardMetadata) -> TempCard:
+	static func create(card_instance_in_hand_mirror : CardInstanceInHand, metadata : CardMetadata) -> TempCard:
 		var new_obj : TempCard = scene.instantiate()
-		new_obj._setup(client_ui, metadata)
+		new_obj._setup(card_instance_in_hand_mirror, metadata)
 		return new_obj

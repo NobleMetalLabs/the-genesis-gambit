@@ -24,7 +24,7 @@ func _handle_hand_update(data : Dictionary) -> void:
 var hovered_hand_card : CardInstanceInHand = null
 
 func _add_card_to_hand(metadata : CardMetadata) -> void:
-	var new_hand_card : CardInstanceInHand = ObjectDB._CardInstanceInHand.create(metadata)
+	var new_hand_card : CardInstanceInHand = ObjectDB._CardInstanceInHand.create(self, metadata)
 	card_stack_container.add_child(new_hand_card, true)
 	new_hand_card.mouse_entered.connect(
 		func() -> void:

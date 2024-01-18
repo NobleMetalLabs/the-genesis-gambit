@@ -5,7 +5,7 @@ signal was_placed(global_position : Vector2)
 signal was_canceled()
 
 @onready var texture_rect : TextureRect = $TextureRect
-var card_instance_in_hand_mirror : CardInstanceInHand = null
+var card_instance_in_hand_mirror : CardInstanceInHand
 
 func _ready() -> void:
 	texture_rect.texture = metadata.image

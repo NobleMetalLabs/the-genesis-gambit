@@ -11,7 +11,7 @@ func _setup(_hand_ui : HandUI, _metadata : CardMetadata) -> void:
 	hand_ui = _hand_ui
 	metadata = _metadata
 
-func _input(event : InputEvent) -> void:
+func _gui_input(event : InputEvent) -> void:
 	if not event is InputEventMouseButton: return
 	if not event.button_index == MOUSE_BUTTON_LEFT: return
 	if not event.pressed: return
@@ -22,8 +22,4 @@ func _input(event : InputEvent) -> void:
 			var gamefield : Gamefield = hand_ui.client_ui.gamefield
 			gamefield.place_card(gamefield.get_own_player(), new_temp_card.metadata, _position)
 			hand_ui._remove_card_from_hand(self)
-	)
-	new_temp_card.was_canceled.connect(
-		func() -> void:
-			self.visible = true
 	)

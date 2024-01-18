@@ -27,12 +27,21 @@ var hovered_hand_card : CardInstanceInHand = null
 func _add_card_to_hand(metadata : CardMetadata) -> void:
 	var new_hand_card : CardInstanceInHand = ObjectDB._CardInstanceInHand.create(metadata)
 	card_stack_container.add_child(new_hand_card, true)
-	new_hand_card.gui_input.connect(
+	new_hand_card.gui_input.connect( #TODO: this should probably move
 		func (event : InputEvent) -> void:
 			if not event is InputEventMouseButton: return
 			if not event.button_index == MOUSE_BUTTON_LEFT: return
 			if not event.pressed: return
 			var new_temp_card : TempCard = ObjectDB._TempCard.create(client_ui, new_hand_card.metadata)
+			new_hand_card.visible = false
+			new_temp_card.was_placed.connect( #TODO: this should DEFINITELY move
+				func() -> void:
+					self._remove_card_from_hand(new_hand_card)
+			)
+			new_temp_card.was_canceled.connect( #TODO: this should DEFINITELY move
+				func() -> void:
+					new_hand_card.visible = true
+			)
 			client_ui.add_child(new_temp_card, true)
 	)
 	new_hand_card.mouse_entered.connect(
@@ -45,8 +54,7 @@ func _add_card_to_hand(metadata : CardMetadata) -> void:
 	)
 
 func _remove_card_from_hand(_instance : CardInstanceInHand) -> void:
-	#instance.queue_free()?
-	pass
+	_instance.queue_free()
 
 func _clear_hand() -> void:
 	pass

@@ -6,7 +6,8 @@ extends Control
 @onready var hand_ui : HandUI = $"%HAND-UI"
 
 func _ready() -> void:
-	var player : Player = Player.new() #TODO: change this
+	var player : Player = Player.new() #TODO: change this 
+	self.add_child(player) #TODO: change this
 	hand_ui._setup(self, player)
 
 @export var gamefield : Gamefield

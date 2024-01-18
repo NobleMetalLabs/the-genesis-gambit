@@ -11,7 +11,6 @@ func _setup(_client_ui : ClientUI, _player_owner : Player) -> void:
 	player_owner = _player_owner
 	player_owner.hand_updated.connect(_handle_hand_update)
 
-#TODO: this is tenative
 func _handle_hand_update(data : Dictionary) -> void:
 	var event_type : String = data["type"]
 	match event_type:
@@ -27,23 +26,6 @@ var hovered_hand_card : CardInstanceInHand = null
 func _add_card_to_hand(metadata : CardMetadata) -> void:
 	var new_hand_card : CardInstanceInHand = ObjectDB._CardInstanceInHand.create(metadata)
 	card_stack_container.add_child(new_hand_card, true)
-	new_hand_card.gui_input.connect( #TODO: this should probably move
-		func (event : InputEvent) -> void:
-			if not event is InputEventMouseButton: return
-			if not event.button_index == MOUSE_BUTTON_LEFT: return
-			if not event.pressed: return
-			var new_temp_card : TempCard = ObjectDB._TempCard.create(client_ui, new_hand_card.metadata)
-			new_hand_card.visible = false
-			new_temp_card.was_placed.connect( #TODO: this should DEFINITELY move
-				func() -> void:
-					self._remove_card_from_hand(new_hand_card)
-			)
-			new_temp_card.was_canceled.connect( #TODO: this should DEFINITELY move
-				func() -> void:
-					new_hand_card.visible = true
-			)
-			client_ui.add_child(new_temp_card, true)
-	)
 	new_hand_card.mouse_entered.connect(
 		func() -> void:
 			hovered_hand_card = new_hand_card
@@ -57,5 +39,6 @@ func _remove_card_from_hand(_instance : CardInstanceInHand) -> void:
 	_instance.queue_free()
 
 func _clear_hand() -> void:
-	pass
+	for child in card_stack_container.get_children():
+		child.queue_free()
 

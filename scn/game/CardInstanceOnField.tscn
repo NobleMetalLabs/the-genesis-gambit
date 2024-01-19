@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ms1n2nfejqmb"]
+[gd_scene load_steps=3 format=3 uid="uid://ms1n2nfejqmb"]
 
 [ext_resource type="Script" path="res://src/game/CardInstanceOnField.gd" id="1_tkv1q"]
+[ext_resource type="Texture2D" uid="uid://bn043l1ax60di" path="res://ast/image/game/icons/statuseffects/freeze.png" id="2_li7e2"]
 
 [node name="CardInstanceOnField" type="Control"]
 layout_mode = 3
@@ -28,3 +29,21 @@ grow_vertical = 2
 [node name="FreezeTimer" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
+
+[node name="FreezeLabel" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -20.0
+offset_top = 8.0
+offset_right = 20.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "10"
+horizontal_alignment = 2
+
+[node name="FreezeSprite" type="Sprite2D" parent="FreezeLabel"]
+texture = ExtResource("2_li7e2")
+centered = false
+offset = Vector2(0, 4)

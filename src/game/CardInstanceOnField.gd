@@ -7,6 +7,7 @@ var player_owner : Player
 
 @onready var texture_rect : TextureRect = $TextureRect
 @onready var freeze_timer : Timer = $FreezeTimer
+@onready var freeze_label : Label = $FreezeLabel
 
 func _setup(_gamefield: Gamefield, _metadata : CardMetadata, _player_owner: Player) -> void:
 	metadata = _metadata
@@ -58,6 +59,11 @@ func _process(_delta : float) -> void:
 		var to_edge : Vector2 = target.get_vector_to_edge_at_angle(target_dir_angle)
 		target_arrow.position = self.get_vector_to_edge_at_angle(target_dir_angle)
 		target_arrow.end_position = (target.global_position - to_edge)
+	
+	if freeze_timer.time_left > 0:
+		freeze_label.show()
+		freeze_label.text = str(ceil(freeze_timer.time_left))
+	elif freeze_label.visible: freeze_label.hide()
 
 func start_drag() -> void:
 	dragging = true
@@ -76,3 +82,4 @@ func end_target() -> void:
 
 func add_freeze() -> void:
 	freeze_timer.start(freeze_timer.time_left + 10)
+	print(freeze_timer.time_left)

@@ -3,7 +3,6 @@ extends Node
 
 signal event(name : StringName, data : Dictionary)
 
-@export var card_instance_scene : PackedScene
 @onready var cards_holder : Node2D = get_node("Cards")
 
 func export_gamefield_state() -> GamefieldState:

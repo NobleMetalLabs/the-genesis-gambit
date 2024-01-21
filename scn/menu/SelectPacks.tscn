@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjqwh86m7fs6b"]
+
+[ext_resource type="Script" path="res://src/menu/SelectPacks.gd" id="1_cwgrl"]
+
+[node name="SelectPacks" type="Node2D"]
+script = ExtResource("1_cwgrl")

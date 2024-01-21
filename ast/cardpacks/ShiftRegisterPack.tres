@@ -1,9 +1,12 @@
-[gd_resource type="Resource" script_class="CardPack" load_steps=3 format=3 uid="uid://83l27bl2mylr"]
+[gd_resource type="Resource" script_class="CardPack" load_steps=4 format=3 uid="uid://83l27bl2mylr"]
 
 [ext_resource type="Script" path="res://lib/CardPack.gd" id="1_et3jr"]
 [ext_resource type="Resource" uid="uid://dfpmseflf6h0b" path="res://ast/cards/ShiftRegister.tres" id="1_ge3wr"]
+[ext_resource type="Texture2D" uid="uid://blraur8on344p" path="res://ast/image/game/cardpacks/test-pack.png" id="2_3law0"]
 
 [resource]
 script = ExtResource("1_et3jr")
+name = "Shift Register Pack"
+image = ExtResource("2_3law0")
 cards = Array[Resource("res://lib/CardMetadata.gd")]([ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr")])
 rarity = "Common"

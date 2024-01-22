@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ldfm46wscm4d"
-path="res://.godot/imported/yurgteam-full.png-5509e0b0e1d39c935c28de73cb344d2b.ctex"
+uid="uid://dd7mra8s8a3e7"
+path="res://.godot/imported/ethkog.PNG-995dea13a51c99a450df997c730cae46.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/image/ui/icons/yurgteam-full.png"
-dest_files=["res://.godot/imported/yurgteam-full.png-5509e0b0e1d39c935c28de73cb344d2b.ctex"]
+source_file="res://ast/ui/image/icons/ethkog.PNG"
+dest_files=["res://.godot/imported/ethkog.PNG-995dea13a51c99a450df997c730cae46.ctex"]
 
 [params]
 

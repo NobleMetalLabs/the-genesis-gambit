@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mxqovcc74tr"
-path="res://.godot/imported/test-chip.png-c2886e8cfac1075e740baf5b7a8f8e70.ctex"
+uid="uid://djjhjh04iwame"
+path="res://.godot/imported/target-placeholder.png-bea00a6e6164214a1f539bbb0ac28113.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/image/game/cards/fgs/test-chip.png"
-dest_files=["res://.godot/imported/test-chip.png-c2886e8cfac1075e740baf5b7a8f8e70.ctex"]
+source_file="res://ast/game/cards/fgs/target-placeholder.png"
+dest_files=["res://.godot/imported/target-placeholder.png-bea00a6e6164214a1f539bbb0ac28113.ctex"]
 
 [params]
 

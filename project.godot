@@ -14,10 +14,10 @@ config/name="DraftGame"
 run/main_scene="res://scn/tests/test.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
-boot_splash/image="res://ast/image/ui/icons/yurgteam-full.png"
+boot_splash/image="res://ast/ui/image/icons/yurgteam-full.png"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
-config/icon="res://ast/image/ui/icons/icon.png"
+config/icon="res://ast/ui/image/icons/icon.png"
 
 [autoload]
 

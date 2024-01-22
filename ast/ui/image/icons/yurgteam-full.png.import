@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxn7v35vbhtvc"
-path="res://.godot/imported/test-card.png-5bb33e23c1403a0652198d602cb98665.ctex"
+uid="uid://ldfm46wscm4d"
+path="res://.godot/imported/yurgteam-full.png-a032b3224356606af3c71d50bc040b05.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/image/game/cards/bgs/test-card.png"
-dest_files=["res://.godot/imported/test-card.png-5bb33e23c1403a0652198d602cb98665.ctex"]
+source_file="res://ast/ui/image/icons/yurgteam-full.png"
+dest_files=["res://.godot/imported/yurgteam-full.png-a032b3224356606af3c71d50bc040b05.ctex"]
 
 [params]
 

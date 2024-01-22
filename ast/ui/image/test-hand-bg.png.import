@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dd7mra8s8a3e7"
-path="res://.godot/imported/ethkog.PNG-4731df7dd6f622baf6b8035c70576442.ctex"
+uid="uid://cdhjukcem57os"
+path="res://.godot/imported/test-hand-bg.png-fa7beec2af2e641ccd82445ed9a25737.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/image/ui/icons/ethkog.PNG"
-dest_files=["res://.godot/imported/ethkog.PNG-4731df7dd6f622baf6b8035c70576442.ctex"]
+source_file="res://ast/ui/image/test-hand-bg.png"
+dest_files=["res://.godot/imported/test-hand-bg.png-fa7beec2af2e641ccd82445ed9a25737.ctex"]
 
 [params]
 

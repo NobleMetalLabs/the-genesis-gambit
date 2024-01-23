@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b7ps156778jt5"
-path="res://.godot/imported/test-pack-epic.png-92b307242bedaf4d28ac94e4a12c0f03.ctex"
+path="res://.godot/imported/test-pack-epic.png-a9ff197f16bf6d8484165e3e36c7e25b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/image/game/cardpacks/test-pack-epic.png"
-dest_files=["res://.godot/imported/test-pack-epic.png-92b307242bedaf4d28ac94e4a12c0f03.ctex"]
+source_file="res://ast/game/cardpacks/fgs/test-pack-epic.png"
+dest_files=["res://.godot/imported/test-pack-epic.png-a9ff197f16bf6d8484165e3e36c7e25b.ctex"]
 
 [params]
 

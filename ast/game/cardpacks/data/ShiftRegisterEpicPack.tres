@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CardPack" load_steps=4 format=3 uid="uid://e6dpk175mi33"]
 
-[ext_resource type="Resource" uid="uid://dfpmseflf6h0b" path="res://ast/cards/ShiftRegister.tres" id="1_pam31"]
-[ext_resource type="Texture2D" uid="uid://b7ps156778jt5" path="res://ast/image/game/cardpacks/test-pack-epic.png" id="2_rjryq"]
+[ext_resource type="Resource" uid="uid://dfpmseflf6h0b" path="res://ast/game/cards/logic/ShiftRegister.tres" id="1_pam31"]
+[ext_resource type="Texture2D" uid="uid://b7ps156778jt5" path="res://ast/game/cardpacks/fgs/test-pack-epic.png" id="2_rjryq"]
 [ext_resource type="Script" path="res://lib/CardPack.gd" id="3_jaapw"]
 
 [resource]

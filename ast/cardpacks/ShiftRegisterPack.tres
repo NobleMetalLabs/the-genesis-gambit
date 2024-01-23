@@ -8,5 +8,5 @@
 script = ExtResource("1_et3jr")
 name = "Shift Register Pack"
 image = ExtResource("2_3law0")
-cards = Array[Resource("res://lib/CardMetadata.gd")]([ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr")])
+cards = Array[Resource("res://lib/CardMetadata.gd")]([ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr"), ExtResource("1_ge3wr")])
 rarity = "Common"

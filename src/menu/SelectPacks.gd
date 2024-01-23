@@ -1,7 +1,8 @@
 extends Node
 
+@export var cardpack_path : String = "res://ast/cardpacks"
 func _ready() -> void:
-	scan_packs("res://ast/cardpacks")
+	scan_packs(cardpack_path)
 
 var all_packs : Dictionary = {
 	"Common": [],
@@ -16,5 +17,7 @@ func scan_packs(path : String) -> void:
 	for file_name : String in pack_list:
 		var new_pack : CardPack = load(path + "/" + file_name)
 		all_packs[new_pack.rarity].append(new_pack)
-	
-	print(all_packs)
+
+func show_packs_by_rarity(rarity : String) -> void:
+	var displayed_packs : Array = all_packs[rarity]
+	print(displayed_packs)

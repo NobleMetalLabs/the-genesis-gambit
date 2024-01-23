@@ -4,3 +4,37 @@
 
 [node name="SelectPacks" type="Node2D"]
 script = ExtResource("1_cwgrl")
+metadata/_edit_lock_ = true
+
+[node name="ButtonCommon" type="Button" parent="."]
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 150.0
+offset_bottom = 90.0
+text = "Common"
+
+[node name="ButtonRare" type="Button" parent="."]
+offset_left = 30.0
+offset_top = 120.0
+offset_right = 150.0
+offset_bottom = 180.0
+text = "Rare"
+
+[node name="ButtonMythic" type="Button" parent="."]
+offset_left = 30.0
+offset_top = 210.0
+offset_right = 150.0
+offset_bottom = 270.0
+text = "Mythic"
+
+[node name="ButtonEpic" type="Button" parent="."]
+offset_left = 30.0
+offset_top = 300.0
+offset_right = 150.0
+offset_bottom = 360.0
+text = "Epic"
+
+[connection signal="pressed" from="ButtonCommon" to="." method="show_packs_by_rarity" binds= ["Common"]]
+[connection signal="pressed" from="ButtonRare" to="." method="show_packs_by_rarity" binds= ["Rare"]]
+[connection signal="pressed" from="ButtonMythic" to="." method="show_packs_by_rarity" binds= ["Mythic"]]
+[connection signal="pressed" from="ButtonEpic" to="." method="show_packs_by_rarity" binds= ["Epic"]]

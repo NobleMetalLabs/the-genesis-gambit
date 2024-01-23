@@ -1,7 +1,8 @@
-class_name CardPack
+class_name PackMetadata
 extends Resource
 
 @export var name : String
 @export var image : Texture
-@export var cards : Array[CardMetadata]
+@export var all_cards : Array[CardWithProbability]
+
 @export_enum("Common", "Rare", "Mythic", "Epic") var rarity: String = "Common"

@@ -1,4 +1,4 @@
-class_name CardDisplay
+class_name UIFullCard
 extends Control
 
 @onready var title_label : Label = $"%TITLE-LABEL"

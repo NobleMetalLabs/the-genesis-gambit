@@ -2,18 +2,18 @@
 
 [ext_resource type="LabelSettings" uid="uid://weqtjt6ioq07" path="res://ast/ui/BodyLabelSettings.tres" id="1_7ipja"]
 [ext_resource type="LabelSettings" uid="uid://cw57svhh0ogg2" path="res://ast/ui/TitleLabelSettings.tres" id="1_7rt17"]
-[ext_resource type="Script" path="res://src/ui/CardDisplay.gd" id="1_l4oiy"]
+[ext_resource type="Script" path="res://src/ui/UIFullCard.gd" id="1_c4m40"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jjl1y"]
 
-[node name="CardDisplay" type="AspectRatioContainer"]
+[node name="UIFullCard" type="AspectRatioContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 ratio = 0.7
-script = ExtResource("1_l4oiy")
+script = ExtResource("1_c4m40")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
@@ -70,6 +70,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_jjl1y")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+stretch_mode = 6
 
 [node name="TypePanel" type="PanelContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelsHolder"]
 layout_mode = 2

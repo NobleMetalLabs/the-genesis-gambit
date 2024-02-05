@@ -4,4 +4,5 @@
 
 [resource]
 font = ExtResource("1_2krov")
+font_size = 21
 outline_color = Color(0, 0, 0, 0)

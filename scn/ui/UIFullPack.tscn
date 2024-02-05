@@ -1,14 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://rihm7nhisdhj"]
+[gd_scene load_steps=8 format=3 uid="uid://rihm7nhisdhj"]
 
 [ext_resource type="Script" path="res://scn/ui/UIFullPack.gd" id="1_qfa0v"]
 [ext_resource type="Texture2D" uid="uid://ddxq6of8xesw3" path="res://ast/ui/image/banner.png" id="3_0bcd4"]
 [ext_resource type="LabelSettings" uid="uid://weqtjt6ioq07" path="res://ast/ui/BodyLabelSettings.tres" id="3_h3ru6"]
+[ext_resource type="Script" path="res://src/ui/AutoSizeLabel.gd" id="4_e0jia"]
 [ext_resource type="FontFile" uid="uid://d2oaifr2k5au7" path="res://ast/ui/fonts/counting_apples.ttf" id="4_kb103"]
 [ext_resource type="Texture2D" uid="uid://bds3c6arsw346" path="res://ast/ui/image/icons/show-pack-contents.png" id="5_mv0co"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_xd7dh"]
+[sub_resource type="LabelSettings" id="LabelSettings_65ulp"]
 font = ExtResource("4_kb103")
-font_size = 48
+font_size = 39
 outline_color = Color(0, 0, 0, 0)
 
 [node name="UIFullPack" type="AspectRatioContainer"]
@@ -82,10 +83,11 @@ layout_mode = 2
 size_flags_vertical = 1
 size_flags_stretch_ratio = 2.0
 text = "Card Positioning"
-label_settings = SubResource("LabelSettings_xd7dh")
+label_settings = SubResource("LabelSettings_65ulp")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+script = ExtResource("4_e0jia")
 
 [node name="TYPE-LABEL" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelsHolder"]
 unique_name_in_owner = true
@@ -94,6 +96,8 @@ text = "Googoogaga"
 label_settings = ExtResource("3_h3ru6")
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("4_e0jia")
+fill_percentage = 0.4
 
 [node name="___" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelsHolder"]
 layout_mode = 2
@@ -114,28 +118,39 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.05
 mouse_filter = 2
 
-[node name="___" type="Control" parent="."]
+[node name="___" type="VBoxContainer" parent="."]
 layout_mode = 2
+alignment = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="___"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -64.0
-grow_horizontal = 0
-grow_vertical = 0
+[node name="Control" type="Control" parent="___"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+
+[node name="____" type="HBoxContainer" parent="___"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 2
+
+[node name="Control" type="Control" parent="___/____"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="MarginContainer" type="MarginContainer" parent="___/____"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="INSPECT-BUTTON" type="Button" parent="___/MarginContainer"]
+[node name="INSPECT-BUTTON" type="Button" parent="___/____/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 flat = true
 
-[node name="TextureRect" type="TextureRect" parent="___/MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="___/____/MarginContainer"]
 layout_mode = 2
 texture = ExtResource("5_mv0co")
+expand_mode = 5
+stretch_mode = 4

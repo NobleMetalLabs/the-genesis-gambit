@@ -8,8 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://bds3c6arsw346" path="res://ast/ui/image/icons/show-pack-contents.png" id="5_mv0co"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_65ulp"]
+resource_local_to_scene = true
 font = ExtResource("4_kb103")
-font_size = 13
+font_size = 59
 outline_color = Color(0, 0, 0, 0)
 
 [node name="UIFullPack" type="AspectRatioContainer"]
@@ -98,7 +99,7 @@ label_settings = ExtResource("3_h3ru6")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("4_e0jia")
-fill_percentage = 0.4
+fill_percentage = 0.6
 
 [node name="___" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelsHolder"]
 layout_mode = 2
@@ -136,7 +137,7 @@ alignment = 2
 [node name="Control" type="Control" parent="___/____"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
+size_flags_stretch_ratio = 3.0
 
 [node name="MarginContainer" type="MarginContainer" parent="___/____"]
 layout_mode = 2

@@ -3,8 +3,9 @@ class_name AutoSizeLabel
 extends Label
 
 @export var fill_percentage : float = 1
-var last_text : String
-func _process(_delta : float) -> void:
+
+func _ready() -> void:
+	item_rect_changed.connect(resize_from_current_text)
 	resize_from_current_text()
 
 func resize_from_current_text() -> void:
@@ -18,6 +19,7 @@ func resize_from_current_text() -> void:
 			size_max = size_mid
 	self.label_settings.font_size = size_min
 
+#TODO: Add multiline functionality
 func does_text_fit(_size : int) -> bool:
 	var settings : LabelSettings = self.label_settings
 	var text_size : Vector2 = settings.font.get_string_size(

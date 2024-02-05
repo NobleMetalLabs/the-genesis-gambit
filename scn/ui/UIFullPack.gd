@@ -6,8 +6,10 @@ extends Control
 @onready var type_label : Label = $"%TYPE-LABEL"
 @onready var full_button : Button = $"%FULL-BUTTON"
 @onready var inspect_button : Button = $"%INSPECT-BUTTON"
+var _metadata : PackMetadata
 
 func set_metadata(metadata : PackMetadata) -> void:
+	_metadata = metadata
 	title_label.text = metadata.name
 	image_trect.texture = metadata.image
 	type_label.text = metadata.type

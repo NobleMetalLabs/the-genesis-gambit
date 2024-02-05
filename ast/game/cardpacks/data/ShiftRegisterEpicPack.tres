@@ -16,3 +16,4 @@ name = "Shift Register EPIC Pack"
 image = ExtResource("2_rjryq")
 all_cards = Array[ExtResource("2_8wxxr")]([SubResource("Resource_mfgy6")])
 rarity = "Epic"
+type = "Attacker"

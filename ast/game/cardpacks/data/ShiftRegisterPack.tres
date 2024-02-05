@@ -33,3 +33,4 @@ name = "Shift Register Pack"
 image = ExtResource("2_3law0")
 all_cards = Array[ExtResource("1_k472e")]([SubResource("Resource_c5w3x"), SubResource("Resource_fdw5p")])
 rarity = "Common"
+type = "Attacker"

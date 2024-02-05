@@ -9,10 +9,11 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_65ulp"]
 font = ExtResource("4_kb103")
-font_size = 39
+font_size = 13
 outline_color = Color(0, 0, 0, 0)
 
 [node name="UIFullPack" type="AspectRatioContainer"]
+custom_minimum_size = Vector2(10, 15)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

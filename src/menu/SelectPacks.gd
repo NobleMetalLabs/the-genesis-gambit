@@ -3,7 +3,7 @@ extends Node
 @export var cardpack_path : String = "res://ast/game/cardpacks/data"
 func _ready() -> void:
 	scan_packs(cardpack_path)
-
+ 
 var all_packs : Dictionary = {
 	"Common": [],
 	"Rare": [],

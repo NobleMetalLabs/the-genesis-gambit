@@ -1,7 +1,7 @@
 extends Node
 
 @export var cardpack_path : String = "res://ast/game/cardpacks/data"
-var pack_scene : PackedScene = load("res://scn/ui/UIFullPack.tscn")
+@export var pack_scene : PackedScene
 @onready var pack_container : GridContainer = $"%GRID-CONTAINER"
 @onready var rarity_filter : OptionButton = $"%RARITY-FILTER"
 @onready var type_filter : OptionButton = $"%TYPE-FILTER"

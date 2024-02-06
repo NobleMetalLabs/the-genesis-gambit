@@ -1,36 +1,19 @@
-[gd_resource type="Resource" script_class="PackMetadata" load_steps=9 format=3 uid="uid://83l27bl2mylr"]
+[gd_resource type="Resource" script_class="PackMetadata" load_steps=6 format=3 uid="uid://83l27bl2mylr"]
 
 [ext_resource type="Resource" uid="uid://dfpmseflf6h0b" path="res://ast/game/cards/logic/ShiftRegister.tres" id="1_ge3wr"]
 [ext_resource type="Script" path="res://lib/CardWithProbability.gd" id="1_k472e"]
-[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="1_ko70m"]
 [ext_resource type="Texture2D" uid="uid://blraur8on344p" path="res://ast/game/cardpacks/fgs/test-pack.png" id="2_3law0"]
 [ext_resource type="Script" path="res://lib/PackMetadata.gd" id="2_803ek"]
 
-[sub_resource type="Resource" id="Resource_8td78"]
-script = ExtResource("1_ko70m")
-id = 0
-name = ""
-type = ""
-rarity = "Common"
-cost = 0
-hp = 0
-power = 0
-defense = 0
-
-[sub_resource type="Resource" id="Resource_c5w3x"]
-script = ExtResource("1_k472e")
-card = SubResource("Resource_8td78")
-probability = 1
-
-[sub_resource type="Resource" id="Resource_fdw5p"]
+[sub_resource type="Resource" id="Resource_ydsyg"]
 script = ExtResource("1_k472e")
 card = ExtResource("1_ge3wr")
-probability = 1
+probability = 100
 
 [resource]
 script = ExtResource("2_803ek")
 name = "Shift Register Pack"
 image = ExtResource("2_3law0")
-all_cards = Array[ExtResource("1_k472e")]([SubResource("Resource_c5w3x"), SubResource("Resource_fdw5p")])
+card_pool = Array[ExtResource("1_k472e")]([SubResource("Resource_ydsyg")])
 rarity = "Common"
 type = "Attacker"

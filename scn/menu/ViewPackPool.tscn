@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://da2seysyaf186"]
+
+[ext_resource type="PackedScene" uid="uid://db8am01hwwg1q" path="res://scn/ui/UIFullCard.tscn" id="1_qrygb"]
+[ext_resource type="Script" path="res://src/menu/ViewPackPool.gd" id="1_ukmt6"]
+
+[node name="ViewPackPool" type="PopupPanel"]
+title = "Hi"
+position = Vector2i(0, 36)
+size = Vector2i(840, 400)
+visible = true
+borderless = false
+script = ExtResource("1_ukmt6")
+card_scene = ExtResource("1_qrygb")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 836.0
+offset_bottom = 396.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="POOL-CONTAINER" type="HBoxContainer" parent="ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = -15

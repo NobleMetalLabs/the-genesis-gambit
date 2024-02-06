@@ -1,19 +1,34 @@
-[gd_resource type="Resource" script_class="PackMetadata" load_steps=6 format=3 uid="uid://e6dpk175mi33"]
+[gd_resource type="Resource" script_class="PackMetadata" load_steps=9 format=3 uid="uid://e6dpk175mi33"]
 
 [ext_resource type="Resource" uid="uid://dfpmseflf6h0b" path="res://ast/game/cards/logic/ShiftRegister.tres" id="1_pam31"]
 [ext_resource type="Script" path="res://lib/CardWithProbability.gd" id="2_8wxxr"]
 [ext_resource type="Texture2D" uid="uid://b7ps156778jt5" path="res://ast/game/cardpacks/fgs/test-pack-epic.png" id="2_rjryq"]
 [ext_resource type="Script" path="res://lib/PackMetadata.gd" id="4_ncax0"]
 
-[sub_resource type="Resource" id="Resource_mfgy6"]
+[sub_resource type="Resource" id="Resource_duk31"]
 script = ExtResource("2_8wxxr")
 card = ExtResource("1_pam31")
-probability = 5484
+probability = 1
+
+[sub_resource type="Resource" id="Resource_0rgqg"]
+script = ExtResource("2_8wxxr")
+card = ExtResource("1_pam31")
+probability = 2
+
+[sub_resource type="Resource" id="Resource_ieky8"]
+script = ExtResource("2_8wxxr")
+card = ExtResource("1_pam31")
+probability = 3
+
+[sub_resource type="Resource" id="Resource_t530b"]
+script = ExtResource("2_8wxxr")
+card = ExtResource("1_pam31")
+probability = 4
 
 [resource]
 script = ExtResource("4_ncax0")
 name = "Shift Register EPIC Pack"
 image = ExtResource("2_rjryq")
-all_cards = Array[ExtResource("2_8wxxr")]([SubResource("Resource_mfgy6")])
+card_pool = Array[ExtResource("2_8wxxr")]([SubResource("Resource_duk31"), SubResource("Resource_0rgqg"), SubResource("Resource_ieky8"), SubResource("Resource_t530b")])
 rarity = "Epic"
 type = "Attacker"

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dosfprffmtayf"]
+[gd_scene load_steps=3 format=3 uid="uid://dosfprffmtayf"]
 
 [ext_resource type="Script" path="res://src/ui/CardInstanceInHand.gd" id="1_ixf6w"]
+[ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="2_x7hwj"]
 
 [node name="CardInstanceInHand" type="Control"]
 layout_mode = 3
@@ -20,3 +21,6 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="CardBorderComponent" parent="TextureRect" instance=ExtResource("2_x7hwj")]
+layout_mode = 1

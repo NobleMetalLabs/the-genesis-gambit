@@ -6,6 +6,7 @@ var gamefield : Gamefield
 var player_owner : Player
 
 @onready var texture_rect : TextureRect = $TextureRect
+@onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent
 
 func _setup(_gamefield: Gamefield, _metadata : CardMetadata, _player_owner: Player) -> void:
 	metadata = _metadata
@@ -16,6 +17,7 @@ func _setup(_gamefield: Gamefield, _metadata : CardMetadata, _player_owner: Play
 
 func _ready() -> void:
 	texture_rect.texture = metadata.image
+	border_component.set_rarity(metadata.rarity)
 	
 	gui_input.connect(
 		func (event : InputEvent) -> void:

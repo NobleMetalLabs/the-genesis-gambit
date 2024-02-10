@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://src/menu/ViewPackPool.gd" id="1_ukmt6"]
 
 [node name="ViewPackPool" type="PopupPanel"]
+canvas_item_default_texture_filter = 0
 title = "Hi"
 position = Vector2i(0, 36)
 size = Vector2i(840, 400)

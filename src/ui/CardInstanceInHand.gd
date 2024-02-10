@@ -2,14 +2,17 @@ class_name CardInstanceInHand
 extends CardInstance
 
 @onready var texture_rect : TextureRect = $TextureRect
+@onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent
 var hand_ui : HandUI
 
 func _ready() -> void:
 	texture_rect.texture = metadata.image
+	border_component.set_rarity(metadata.rarity)
 
 func _setup(_hand_ui : HandUI, _metadata : CardMetadata) -> void:
 	hand_ui = _hand_ui
 	metadata = _metadata
+	
 
 func _gui_input(event : InputEvent) -> void:
 	if not event is InputEventMouseButton: return

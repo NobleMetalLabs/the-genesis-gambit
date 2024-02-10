@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdfnnjgo2jc4p"]
+
+[ext_resource type="Script" path="res://src/game/CardBorderComponent.gd" id="1_8l8ef"]
+[ext_resource type="Texture2D" uid="uid://cmhabwd2frhya" path="res://ast/game/cards/borders/common.png" id="1_mikyf"]
+[ext_resource type="Texture2D" uid="uid://u7m2q4fwu4t" path="res://ast/game/cards/borders/rare.png" id="3_ekqu2"]
+[ext_resource type="Texture2D" uid="uid://bicykyd16octc" path="res://ast/game/cards/borders/mythic.png" id="4_0q074"]
+[ext_resource type="Texture2D" uid="uid://bppbxm02u6cej" path="res://ast/game/cards/borders/epic.png" id="5_g78lu"]
+
+[node name="CardBorderComponent" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_8l8ef")
+common_texture = ExtResource("1_mikyf")
+rare_texture = ExtResource("3_ekqu2")
+mythic_texture = ExtResource("4_0q074")
+epic_texture = ExtResource("5_g78lu")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_mikyf")
+expand_mode = 1

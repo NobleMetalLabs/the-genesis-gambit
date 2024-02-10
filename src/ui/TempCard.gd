@@ -5,10 +5,12 @@ signal was_placed(global_position : Vector2)
 signal was_canceled()
 
 @onready var texture_rect : TextureRect = $TextureRect
+@onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent
 var card_instance_in_hand_mirror : CardInstanceInHand
 
 func _ready() -> void:
 	texture_rect.texture = metadata.image
+	border_component.set_rarity(metadata.rarity)
 
 func _setup(_hand_mirror : CardInstanceInHand, _metadata : CardMetadata) -> void:
 	card_instance_in_hand_mirror = _hand_mirror

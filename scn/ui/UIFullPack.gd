@@ -6,6 +6,7 @@ extends Control
 @onready var type_label : Label = $"%TYPE-LABEL"
 @onready var full_button : Button = $"%FULL-BUTTON"
 @onready var inspect_button : Button = $"%INSPECT-BUTTON"
+@onready var border_component : CardBorderComponent = $"%BORDER-COMPONENT"
 var _metadata : PackMetadata
 
 @export var view_pack_popup_scn : PackedScene
@@ -15,6 +16,7 @@ func set_metadata(metadata : PackMetadata) -> void:
 	title_label.text = metadata.name
 	image_trect.texture = metadata.image
 	type_label.text = metadata.type
+	border_component.set_rarity(metadata.rarity)
 
 func _ready() -> void:
 	inspect_button.pressed.connect(

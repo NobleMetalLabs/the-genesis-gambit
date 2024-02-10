@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://es3xnd1snslt"]
+[gd_scene load_steps=3 format=3 uid="uid://es3xnd1snslt"]
 
 [ext_resource type="Script" path="res://src/ui/TempCard.gd" id="1_gehdp"]
+[ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="2_pu8ax"]
 
 [node name="TempCard" type="Control"]
 layout_mode = 3
@@ -21,3 +22,6 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="CardBorderComponent" parent="TextureRect" instance=ExtResource("2_pu8ax")]
+layout_mode = 1

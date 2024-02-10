@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://rihm7nhisdhj"]
+[gd_scene load_steps=10 format=3 uid="uid://rihm7nhisdhj"]
 
 [ext_resource type="Script" path="res://scn/ui/UIFullPack.gd" id="1_qfa0v"]
 [ext_resource type="PackedScene" uid="uid://da2seysyaf186" path="res://scn/menu/ViewPackPool.tscn" id="2_cjb10"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://src/ui/AutoSizeLabel.gd" id="4_e0jia"]
 [ext_resource type="FontFile" uid="uid://d2oaifr2k5au7" path="res://ast/ui/fonts/counting_apples.ttf" id="4_kb103"]
 [ext_resource type="Texture2D" uid="uid://bds3c6arsw346" path="res://ast/ui/image/icons/show-pack-contents.png" id="5_mv0co"]
+[ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="8_xiwtf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_65ulp"]
 resource_local_to_scene = true
@@ -124,6 +125,10 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.05
 mouse_filter = 2
 
+[node name="BORDER-COMPONENT" parent="." instance=ExtResource("8_xiwtf")]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="___" type="VBoxContainer" parent="."]
 layout_mode = 2
 mouse_filter = 2
@@ -158,6 +163,7 @@ theme_override_constants/margin_bottom = 5
 [node name="INSPECT-BUTTON" type="Button" parent="___/____/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Inspect Pack Pool"
 flat = true
 
 [node name="TextureRect" type="TextureRect" parent="___/____/MarginContainer"]

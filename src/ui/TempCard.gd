@@ -1,19 +1,24 @@
 class_name TempCard
-extends CardInstance
+extends Control
 
 signal was_placed(global_position : Vector2)
 signal was_canceled()
 
+@onready var card_instance_identifier : ICardInstance = %"ICardInstance"
+var metadata : CardMetadata :
+	get:
+		return card_instance_identifier.metadata
+
 @onready var texture_rect : TextureRect = $TextureRect
 @onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent
-var card_instance_in_hand_mirror : CardInstanceInHand
+var card_in_hand_mirror : CardInHand
 
 func _ready() -> void:
 	texture_rect.texture = metadata.image
 	border_component.set_rarity(metadata.rarity)
 
-func _setup(_hand_mirror : CardInstanceInHand, _metadata : CardMetadata) -> void:
-	card_instance_in_hand_mirror = _hand_mirror
+func _setup(_hand_mirror : CardInHand, _metadata : CardMetadata) -> void:
+	card_in_hand_mirror = _hand_mirror
 	metadata = _metadata
 
 func _input(event : InputEvent) -> void:
@@ -33,11 +38,11 @@ func _place() -> void:
 	self.queue_free()
 
 func _is_in_hand_region() -> bool:
-	var value : bool = card_instance_in_hand_mirror.hand_ui.get_global_rect().intersects(self.get_global_rect())
+	var value : bool = card_in_hand_mirror.hand_ui.get_global_rect().intersects(self.get_global_rect())
 	return value
 
 func _process(_delta : float) -> void:
 	position = get_global_mouse_position()
 	var is_vis : bool = _is_in_hand_region()
 	visible = not is_vis
-	card_instance_in_hand_mirror.visible = is_vis
+	card_in_hand_mirror.visible = is_vis

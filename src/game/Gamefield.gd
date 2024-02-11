@@ -17,13 +17,13 @@ func get_own_player() -> Player:
 	#	return player
 	return null
 
-var _hovered_card : CardInstance = null
-func get_hovered_card() -> CardInstance:
+var _hovered_card : ICardInstance = null
+func get_hovered_card() -> ICardInstance:
 	return _hovered_card
 
 # make panning strength a user setting
 func place_card(player : Player, metadata : CardMetadata, position : Vector2) -> void:
-	var new_card : CardInstanceOnField = ObjectDB._CardInstanceOnField.create(self, metadata, player)
+	var new_card : CardOnField = ObjectDB._CardOnField.create(self, metadata, player)
 	new_card.position = position
 
 	self.event.connect(func(event_name : StringName, data : Dictionary) -> void:
@@ -31,7 +31,7 @@ func place_card(player : Player, metadata : CardMetadata, position : Vector2) ->
 	)
 	new_card.mouse_entered.connect(
 		func() -> void:
-			_hovered_card = new_card
+			_hovered_card = ICardInstance.id(new_card)
 	)
 	new_card.mouse_exited.connect(
 		func() -> void:

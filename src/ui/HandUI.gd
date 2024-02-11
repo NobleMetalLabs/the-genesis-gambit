@@ -21,10 +21,10 @@ func _handle_hand_update(data : Dictionary) -> void:
 		"clear":
 			_clear_hand()
 
-var hovered_hand_card : CardInstanceInHand = null
+var hovered_hand_card : CardInHand = null
 
 func _add_card_to_hand(metadata : CardMetadata) -> void:
-	var new_hand_card : CardInstanceInHand = ObjectDB._CardInstanceInHand.create(self, metadata)
+	var new_hand_card : CardInHand = ObjectDB._CardInHand.create(self, metadata)
 	card_stack_container.add_child(new_hand_card, true)
 	new_hand_card.mouse_entered.connect(
 		func() -> void:
@@ -35,7 +35,7 @@ func _add_card_to_hand(metadata : CardMetadata) -> void:
 			hovered_hand_card = null
 	)
 
-func _remove_card_from_hand(_instance : CardInstanceInHand) -> void:
+func _remove_card_from_hand(_instance : CardInHand) -> void:
 	_instance.queue_free()
 
 func _clear_hand() -> void:

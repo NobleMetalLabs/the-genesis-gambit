@@ -23,6 +23,7 @@ config/icon="res://ast/ui/image/icons/icon.png"
 
 AudioDispatcher="*res://src/autoloads/AudioDispatcher.gd"
 SaveData="*res://src/autoloads/SaveData.gd"
+Utils="*res://src/autoloads/Utils.gd"
 
 [debug]
 

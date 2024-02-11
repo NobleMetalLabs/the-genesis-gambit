@@ -1,18 +1,18 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://dfpmseflf6h0b"]
 
-[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="1_o3x3c"]
-[ext_resource type="Texture2D" uid="uid://mxqovcc74tr" path="res://ast/game/cards/fgs/test-chip.png" id="1_v7l0a"]
+[ext_resource type="Texture2D" uid="uid://mxqovcc74tr" path="res://ast/game/cards/fgs/test-chip.png" id="1_35rv2"]
 [ext_resource type="Script" path="res://ast/game/cards/logic/ShiftRegister.gd" id="2_dg2yy"]
+[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="3_7t8er"]
 
 [resource]
-script = ExtResource("1_o3x3c")
+script = ExtResource("3_7t8er")
 id = 0
 name = "Shift Register"
-image = ExtResource("1_v7l0a")
+image = ExtResource("1_35rv2")
 type = "Attacker"
 rarity = "Common"
 cost = 0
-hp = 0
-power = 0
-defense = 0
+hp = 1
+power = 1
+defense = 1
 logic_script = ExtResource("2_dg2yy")

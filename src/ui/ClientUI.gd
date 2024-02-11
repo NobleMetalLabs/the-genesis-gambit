@@ -19,7 +19,7 @@ func _input(event : InputEvent) -> void:
 			card_info_panel.set_card_metadata(hand_ui.hovered_hand_card.metadata)
 			card_info_panel.display()
 		else:
-			var hovered_card : CardInstance = gamefield.get_hovered_card()
+			var hovered_card : ICardInstance = gamefield.get_hovered_card()
 			if hovered_card != null:
 				card_info_panel.set_card_metadata(hovered_card.metadata)
 				card_info_panel.display()
@@ -28,13 +28,15 @@ func _input(event : InputEvent) -> void:
 				card_info_panel.undisplay()
 				#update_target_sprite(null)
 
-func update_target_sprite(target : CardInstance) -> void:
+func update_target_sprite(target : ICardInstance) -> void:
+	target = target.get_object()
 	if target == null: target_sprite.hide()
 	else:
 		target_sprite.show()
 		target_sprite.position = target.position
 
-func request_temp_card(hand_instance : CardInstanceInHand) -> TempCard:
-	var new_temp_card : TempCard = ObjectDB._TempCard.create(hand_instance, hand_instance.metadata)
+func request_temp_card(hand_instance : ICardInstance) -> TempCard:
+	var hand_card : CardInHand = hand_instance.get_object() as CardInHand
+	var new_temp_card : TempCard = ObjectDB._TempCard.create(hand_card, hand_instance.metadata)
 	self.add_child(new_temp_card, true)
 	return new_temp_card

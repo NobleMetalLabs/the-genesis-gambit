@@ -2,7 +2,7 @@
 class_name CardLogic
 extends Object
 
-var owner : CardInstance
+var owner : ICardInstance
 var description : String
 var event_handlers : Dictionary #[StringName (event), Callable] 
 

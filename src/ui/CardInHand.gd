@@ -1,5 +1,9 @@
-class_name CardInstanceInHand
-extends CardInstance
+class_name CardInHand
+extends Control
+
+var metadata : CardMetadata :
+	get:
+		return ICardInstance.id(self).metadata
 
 @onready var texture_rect : TextureRect = $TextureRect
 @onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent
@@ -13,13 +17,12 @@ func _setup(_hand_ui : HandUI, _metadata : CardMetadata) -> void:
 	hand_ui = _hand_ui
 	metadata = _metadata
 	
-
 func _gui_input(event : InputEvent) -> void:
 	if not event is InputEventMouseButton: return
 	if not event.button_index == MOUSE_BUTTON_LEFT: return
 	if not event.pressed: return
 
-	var new_temp_card : TempCard = hand_ui.client_ui.request_temp_card(self)
+	var new_temp_card : TempCard = hand_ui.client_ui.request_temp_card(ICardInstance.id(self))
 	new_temp_card.was_placed.connect(
 		func(_position : Vector2) -> void:
 			var gamefield : Gamefield = hand_ui.client_ui.gamefield

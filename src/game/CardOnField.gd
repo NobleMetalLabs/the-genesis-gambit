@@ -44,7 +44,7 @@ var dragging : bool = false
 var dragging_offset : Vector2 = Vector2.ZERO
 
 var selecting_target : bool = false
-var target : ICardInstance = null
+var target : ITargetable = null
 var target_arrow : Arrow2D = Arrow2D.new()
 
 func _process(_delta : float) -> void:
@@ -81,4 +81,5 @@ func start_target() -> void:
 
 func end_target() -> void:
 	selecting_target = false
-	target = gamefield.get_hovered_card()
+	var hovered : ICardInstance = gamefield.get_hovered_card()
+	target = ITargetable.id(hovered) if hovered else null

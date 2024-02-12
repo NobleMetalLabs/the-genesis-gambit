@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ms1n2nfejqmb"]
+[gd_scene load_steps=5 format=3 uid="uid://ms1n2nfejqmb"]
 
 [ext_resource type="Script" path="res://src/game/CardOnField.gd" id="1_tkv1q"]
 [ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="2_d3fqe"]
 [ext_resource type="Script" path="res://lib/identifiers/ICardInstance.gd" id="3_de6rx"]
+[ext_resource type="Script" path="res://lib/identifiers/ITargetable.gd" id="4_v3eks"]
 
 [node name="CardOnField" type="Control"]
 layout_mode = 3
@@ -32,3 +33,6 @@ layout_mode = 1
 
 [node name="ICardInstance" type="Node" parent="."]
 script = ExtResource("3_de6rx")
+
+[node name="ITargetable" type="Node" parent="."]
+script = ExtResource("4_v3eks")

@@ -4,6 +4,8 @@ extends Control
 var metadata : CardMetadata :
 	get:
 		return ICardInstance.id(self).metadata
+	set(value):
+		ICardInstance.id(self).metadata = value
 
 var logic : CardLogic
 var gamefield : Gamefield
@@ -53,16 +55,18 @@ func _process(_delta : float) -> void:
 	
 	target_arrow.visible = (target != null or selecting_target)
 	
+	var target_obj : Node = target.get_object() if target != null else null
+
 	if selecting_target:
 		target_arrow.position = Utils.get_vector_to_rectangle_edge_at_angle(self.get_rect(), get_local_mouse_position().angle())
 		target_arrow.end_position = get_parent().get_local_mouse_position()
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			end_target()
 	elif target != null: 
-		var target_dir_angle : float = self.global_position.angle_to_point(target.global_position)
-		var to_edge : Vector2 = Utils.get_vector_to_rectangle_edge_at_angle(target.get_rect(), target_dir_angle)
+		var target_dir_angle : float = self.global_position.angle_to_point(target_obj.global_position)
+		var to_edge : Vector2 = Utils.get_vector_to_rectangle_edge_at_angle(target_obj.get_rect(), target_dir_angle)
 		target_arrow.position = Utils.get_vector_to_rectangle_edge_at_angle(self.get_rect(), target_dir_angle)
-		target_arrow.end_position = (target.global_position - to_edge)
+		target_arrow.end_position = (target_obj.global_position - to_edge)
 
 func start_drag() -> void:
 	dragging = true

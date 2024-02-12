@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://es3xnd1snslt"]
+[gd_scene load_steps=4 format=3 uid="uid://es3xnd1snslt"]
 
 [ext_resource type="Script" path="res://src/ui/TempCard.gd" id="1_gehdp"]
 [ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="2_pu8ax"]
+[ext_resource type="Script" path="res://lib/identifiers/ICardInstance.gd" id="3_x3nvi"]
 
 [node name="TempCard" type="Control"]
 layout_mode = 3
@@ -25,3 +26,6 @@ grow_vertical = 2
 
 [node name="CardBorderComponent" parent="TextureRect" instance=ExtResource("2_pu8ax")]
 layout_mode = 1
+
+[node name="ICardInstance" type="Node" parent="."]
+script = ExtResource("3_x3nvi")

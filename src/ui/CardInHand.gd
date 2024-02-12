@@ -4,6 +4,8 @@ extends Control
 var metadata : CardMetadata :
 	get:
 		return ICardInstance.id(self).metadata
+	set(value):
+		ICardInstance.id(self).metadata = value
 
 @onready var texture_rect : TextureRect = $TextureRect
 @onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent

@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://ms1n2nfejqmb"]
+[gd_scene load_steps=4 format=3 uid="uid://ms1n2nfejqmb"]
 
 [ext_resource type="Script" path="res://src/game/CardOnField.gd" id="1_tkv1q"]
 [ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="2_d3fqe"]
+[ext_resource type="Script" path="res://lib/identifiers/ICardInstance.gd" id="3_de6rx"]
 
-[node name="CardInstanceOnField" type="Control"]
+[node name="CardOnField" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,3 +29,6 @@ grow_vertical = 2
 
 [node name="CardBorderComponent" parent="TextureRect" instance=ExtResource("2_d3fqe")]
 layout_mode = 1
+
+[node name="ICardInstance" type="Node" parent="."]
+script = ExtResource("3_de6rx")

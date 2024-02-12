@@ -4,10 +4,11 @@ extends Control
 signal was_placed(global_position : Vector2)
 signal was_canceled()
 
-@onready var card_instance_identifier : ICardInstance = %"ICardInstance"
 var metadata : CardMetadata :
 	get:
-		return card_instance_identifier.metadata
+		return ICardInstance.id(self).metadata
+	set(value):
+		ICardInstance.id(self).metadata = value
 
 @onready var texture_rect : TextureRect = $TextureRect
 @onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent

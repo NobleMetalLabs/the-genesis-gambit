@@ -1,4 +1,4 @@
-class_name TempCard
+class_name CardGhost
 extends Control
 
 signal was_placed(global_position : Vector2)

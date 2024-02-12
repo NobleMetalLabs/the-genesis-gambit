@@ -35,8 +35,8 @@ func update_target_sprite(target : ICardInstance) -> void:
 		target_sprite.show()
 		target_sprite.position = target.position
 
-func request_temp_card(hand_instance : ICardInstance) -> TempCard:
+func request_card_ghost(hand_instance : ICardInstance) -> CardGhost:
 	var hand_card : CardInHand = hand_instance.get_object() as CardInHand
-	var new_temp_card : TempCard = ObjectDB._TempCard.create(hand_card, hand_instance.metadata)
-	self.add_child(new_temp_card, true)
-	return new_temp_card
+	var new_card_ghost : CardGhost = ObjectDB._CardGhost.create(hand_card, hand_instance.metadata)
+	self.add_child(new_card_ghost, true)
+	return new_card_ghost

@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://es3xnd1snslt"]
 
-[ext_resource type="Script" path="res://src/ui/TempCard.gd" id="1_gehdp"]
-[ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="2_pu8ax"]
-[ext_resource type="Script" path="res://lib/identifiers/ICardInstance.gd" id="3_x3nvi"]
+[ext_resource type="Script" path="res://src/ui/CardGhost.gd" id="1_ruca6"]
+[ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="2_iqn6l"]
+[ext_resource type="Script" path="res://lib/identifiers/ICardInstance.gd" id="3_n6cvr"]
 
-[node name="TempCard" type="Control"]
+[node name="CardGhost" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_gehdp")
+script = ExtResource("1_ruca6")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 self_modulate = Color(1, 1, 1, 0.498039)
@@ -24,8 +24,8 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CardBorderComponent" parent="TextureRect" instance=ExtResource("2_pu8ax")]
+[node name="CardBorderComponent" parent="TextureRect" instance=ExtResource("2_iqn6l")]
 layout_mode = 1
 
 [node name="ICardInstance" type="Node" parent="."]
-script = ExtResource("3_x3nvi")
+script = ExtResource("3_n6cvr")

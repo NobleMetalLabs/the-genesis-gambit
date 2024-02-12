@@ -1,11 +1,16 @@
 class_name CardOnField
 extends Control
 
+#implements ICardInstance
 var metadata : CardMetadata :
 	get:
 		return ICardInstance.id(self).metadata
 	set(value):
 		ICardInstance.id(self).metadata = value
+
+#implements ITargetable
+func get_boundary_rectangle() -> Rect2:
+	return texture_rect.get_global_rect()
 
 var logic : CardLogic
 var gamefield : Gamefield
@@ -55,18 +60,18 @@ func _process(_delta : float) -> void:
 	
 	target_arrow.visible = (target != null or selecting_target)
 	
-	var target_obj : Node = target.get_object() if target != null else null
-
+	var self_rect : Rect2 = self.get_boundary_rectangle()
 	if selecting_target:
-		target_arrow.position = Utils.get_vector_to_rectangle_edge_at_angle(self.get_rect(), get_local_mouse_position().angle())
+		target_arrow.position = Utils.get_vector_to_rectangle_edge_at_angle(self_rect, get_local_mouse_position().angle())
 		target_arrow.end_position = get_parent().get_local_mouse_position()
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			end_target()
-	elif target != null: 
-		var target_dir_angle : float = self.global_position.angle_to_point(target_obj.global_position)
-		var to_edge : Vector2 = Utils.get_vector_to_rectangle_edge_at_angle(target_obj.get_rect(), target_dir_angle)
-		target_arrow.position = Utils.get_vector_to_rectangle_edge_at_angle(self.get_rect(), target_dir_angle)
-		target_arrow.end_position = (target_obj.global_position - to_edge)
+	elif target != null:
+		var target_rect : Rect2 = target.get_boundary_rectangle()
+		var target_dir_angle : float = self_rect.get_center().angle_to_point(target_rect.get_center())
+		var to_edge : Vector2 = Utils.get_vector_to_rectangle_edge_at_angle(target_rect, target_dir_angle)
+		target_arrow.position = Utils.get_vector_to_rectangle_edge_at_angle(self_rect, target_dir_angle)
+		target_arrow.end_position = (target_rect.get_center() - to_edge)
 
 func start_drag() -> void:
 	dragging = true
@@ -81,5 +86,7 @@ func start_target() -> void:
 
 func end_target() -> void:
 	selecting_target = false
-	var hovered : ICardInstance = gamefield.get_hovered_card()
-	target = ITargetable.id(hovered) if hovered else null
+	var hovered : ICardInstance = gamefield.client_ui.get_hovered_card()
+	target = null
+	if hovered != null:
+		target = ITargetable.id(hovered)

@@ -1,11 +1,16 @@
 class_name CardInHand
 extends Control
 
+#implements ICardInstance
 var metadata : CardMetadata :
 	get:
 		return ICardInstance.id(self).metadata
 	set(value):
 		ICardInstance.id(self).metadata = value
+
+#implements ITargetable
+func get_boundary_rectangle() -> Rect2:
+	return texture_rect.get_global_rect()
 
 @onready var texture_rect : TextureRect = $TextureRect
 @onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent

@@ -4,6 +4,7 @@ extends Node
 signal event(name : StringName, data : Dictionary)
 
 @onready var cards_holder : Node2D = get_node("Cards")
+@onready var client_ui : ClientUI = get_parent().get_node("CLIENT-UI")
 
 func export_gamefield_state() -> GamefieldState:
 	return null
@@ -17,8 +18,8 @@ func get_own_player() -> Player:
 	#	return player
 	return null
 
-var _hovered_card : ICardInstance = null
-func get_hovered_card() -> ICardInstance:
+var _hovered_card : CardOnField = null
+func get_hovered_card() -> CardOnField:
 	return _hovered_card
 
 # make panning strength a user setting
@@ -31,7 +32,7 @@ func place_card(player : Player, metadata : CardMetadata, position : Vector2) ->
 	)
 	new_card.mouse_entered.connect(
 		func() -> void:
-			_hovered_card = ICardInstance.id(new_card)
+			_hovered_card = new_card
 	)
 	new_card.mouse_exited.connect(
 		func() -> void:

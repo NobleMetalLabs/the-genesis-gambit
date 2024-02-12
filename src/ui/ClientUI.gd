@@ -19,7 +19,7 @@ func _input(event : InputEvent) -> void:
 			card_info_panel.set_card_metadata(hand_ui.hovered_hand_card.metadata)
 			card_info_panel.display()
 		else:
-			var hovered_card : ICardInstance = gamefield.get_hovered_card()
+			var hovered_card : ICardInstance = ICardInstance.id(gamefield.get_hovered_card())
 			if hovered_card != null:
 				card_info_panel.set_card_metadata(hovered_card.metadata)
 				card_info_panel.display()
@@ -27,6 +27,13 @@ func _input(event : InputEvent) -> void:
 			else:
 				card_info_panel.undisplay()
 				#update_target_sprite(null)
+
+func get_hovered_card() -> ICardInstance:
+	var gc : ICardInstance = ICardInstance.id(gamefield.get_hovered_card())
+	var hnd : ICardInstance = ICardInstance.id(hand_ui.hovered_hand_card)
+	if gc != null: return gc
+	if hnd != null: return hnd
+	return null
 
 func update_target_sprite(target : ICardInstance) -> void:
 	target = target.get_object()

@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://rihm7nhisdhj"]
 
-[ext_resource type="Script" path="res://scn/ui/UIFullPack.gd" id="1_qfa0v"]
+[ext_resource type="Script" path="res://src/ui/UIFullPack.gd" id="1_4lj65"]
 [ext_resource type="PackedScene" uid="uid://da2seysyaf186" path="res://scn/menu/ViewPackPool.tscn" id="2_cjb10"]
 [ext_resource type="Texture2D" uid="uid://ddxq6of8xesw3" path="res://ast/ui/image/banner.png" id="3_0bcd4"]
 [ext_resource type="LabelSettings" uid="uid://weqtjt6ioq07" path="res://ast/ui/BodyLabelSettings.tres" id="3_h3ru6"]
@@ -24,7 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 ratio = 0.7
-script = ExtResource("1_qfa0v")
+script = ExtResource("1_4lj65")
 view_pack_popup_scn = ExtResource("2_cjb10")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

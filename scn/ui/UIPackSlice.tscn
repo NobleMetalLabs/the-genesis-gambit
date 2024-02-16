@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://glyatt0by8rj"]
+
+[ext_resource type="Script" path="res://src/ui/UIPackSlice.gd" id="1_cpe2p"]
+[ext_resource type="FontFile" uid="uid://d2oaifr2k5au7" path="res://ast/ui/fonts/counting_apples.ttf" id="4_tji0j"]
+[ext_resource type="Script" path="res://src/ui/AutoSizeLabel.gd" id="5_oxjis"]
+[ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="7_1rjlg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_65ulp"]
+resource_local_to_scene = true
+font = ExtResource("4_tji0j")
+font_size = 39
+outline_color = Color(0, 0, 0, 0)
+
+[node name="UIPackSlice" type="AspectRatioContainer"]
+custom_minimum_size = Vector2(10, 15)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+ratio = 4.0
+script = ExtResource("1_cpe2p")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+clip_contents = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="FULL-BUTTON" type="Button" parent="PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="IMAGE" type="TextureRect" parent="PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+stretch_mode = 6
+
+[node name="TITLE-LABEL" type="Label" parent="PanelContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+text = "Card Positioning"
+label_settings = SubResource("LabelSettings_65ulp")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+script = ExtResource("5_oxjis")
+
+[node name="BORDER-COMPONENT" parent="." instance=ExtResource("7_1rjlg")]
+unique_name_in_owner = true
+layout_mode = 2

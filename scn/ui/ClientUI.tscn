@@ -1,10 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4fmewjxtuggy"]
+[gd_scene load_steps=9 format=3 uid="uid://b4fmewjxtuggy"]
 
 [ext_resource type="Script" path="res://src/ui/ClientUI.gd" id="1_68p1r"]
 [ext_resource type="PackedScene" uid="uid://db8am01hwwg1q" path="res://scn/ui/UIFullCard.tscn" id="2_5wpux"]
 [ext_resource type="Script" path="res://src/ui/CardInfoPanel.gd" id="3_73koh"]
 [ext_resource type="Texture2D" uid="uid://djjhjh04iwame" path="res://ast/game/cards/fgs/target-placeholder.png" id="5_kgfmm"]
+[ext_resource type="Shader" uid="uid://d1sv7gt7fll0d" path="res://genesis_universe_shader.tres" id="6_214rx"]
 [ext_resource type="PackedScene" uid="uid://dp0ichqwouy35" path="res://scn/ui/HandUI.tscn" id="7_ce31p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mh706"]
+shader = ExtResource("6_214rx")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_os51v"]
 
 [node name="CLIENT-UI" type="Control"]
 layout_mode = 3
@@ -65,3 +71,17 @@ grow_vertical = 0
 [node name="HAND-UI" parent="HAND-PANEL" instance=ExtResource("7_ce31p")]
 unique_name_in_owner = true
 layout_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_mh706")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 283.0
+offset_top = 254.0
+offset_right = -307.0
+offset_bottom = 87.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_os51v")

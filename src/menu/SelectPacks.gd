@@ -21,11 +21,7 @@ func scan_packs(path : String) -> void:
 		pack_container.add_child(new_pack, true)
 		new_pack.set_metadata(new_pack_data)
 		new_pack.custom_minimum_size = Vector2(135,200)
-		new_pack.full_button.pressed.connect(
-			func() -> void:
-				add_slice(new_pack_data)
-				SaveData.selected_decks[new_pack_data.rarity].append(new_pack_data)
-		)
+		new_pack.full_button.pressed.connect(add_slice.bind(new_pack_data))
 
 var selected_rarity : int = 0
 var selected_type : int = 0
@@ -48,3 +44,13 @@ func add_slice(_metadata : PackMetadata) -> void:
 		slice_container.add_child(new_pack_slice)
 		new_pack_slice.name = _metadata.name
 		new_pack_slice.set_metadata(_metadata)
+		new_pack_slice.full_button.pressed.connect(remove_slice.bindv([_metadata, new_pack_slice]))
+	selected_rarity_array.append(_metadata)
+
+func remove_slice(_metadata : PackMetadata, pack_slice_in_question : UIPackSlice) -> void:
+	var selected_rarity_array : Array = SaveData.selected_decks[_metadata.rarity]
+	selected_rarity_array.erase(_metadata)
+	var count : int = selected_rarity_array.count(_metadata)
+	if count >= 1: 
+		pack_slice_in_question.set_label_multiplier(count)
+	else: pack_slice_in_question.queue_free()

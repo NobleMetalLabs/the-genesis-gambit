@@ -12,7 +12,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_65ulp"]
 resource_local_to_scene = true
 font = ExtResource("4_kb103")
-font_size = 39
+font_size = 1
 outline_color = Color(0, 0, 0, 0)
 
 [node name="UIFullPack" type="AspectRatioContainer"]

@@ -14,7 +14,6 @@ bg_color = Color(0.321569, 0.690196, 0.415686, 1)
 script = ExtResource("1_cwgrl")
 pack_scene = ExtResource("2_n0gj3")
 pack_slice_scene = ExtResource("3_5avu2")
-metadata/_edit_lock_ = true
 
 [node name="CurrentDeckPanel" type="PanelContainer" parent="."]
 clip_contents = true

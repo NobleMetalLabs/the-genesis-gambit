@@ -14,4 +14,6 @@ func set_metadata(metadata : PackMetadata) -> void:
 	border_component.set_rarity(metadata.rarity)
 
 func set_label_multiplier(count : int) -> void:
-	title_label.text = _metadata.name + " (x%s)"%count
+	if count > 1: title_label.text = _metadata.name + " (x%s)"%count
+	else: title_label.text = _metadata.name
+	title_label.emit_signal("item_rect_changed")

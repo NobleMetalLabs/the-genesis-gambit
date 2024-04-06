@@ -8,7 +8,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_65ulp"]
 resource_local_to_scene = true
 font = ExtResource("4_tji0j")
-font_size = 39
+font_size = 59
 outline_color = Color(0, 0, 0, 0)
 
 [node name="UIPackSlice" type="AspectRatioContainer"]
@@ -30,6 +30,7 @@ mouse_filter = 2
 [node name="FULL-BUTTON" type="Button" parent="PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+button_mask = 2
 
 [node name="IMAGE" type="TextureRect" parent="PanelContainer"]
 unique_name_in_owner = true

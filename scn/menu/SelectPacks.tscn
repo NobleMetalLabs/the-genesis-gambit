@@ -109,5 +109,13 @@ size_flags_vertical = 3
 theme_override_constants/v_separation = -3
 columns = 5
 
+[node name="BackButton" type="Button" parent="."]
+offset_left = 832.0
+offset_top = 480.0
+offset_right = 960.0
+offset_bottom = 544.0
+text = "Back"
+
 [connection signal="item_selected" from="FiltersPanel/HBoxContainer/HBoxContainer/RARITY-FILTER" to="." method="filter_packs"]
 [connection signal="item_selected" from="FiltersPanel/HBoxContainer/HBoxContainer/TYPE-FILTER" to="." method="filter_packs"]
+[connection signal="pressed" from="BackButton" to="." method="back_pressed"]

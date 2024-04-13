@@ -56,3 +56,8 @@ func add_slice(_metadata : PackMetadata) -> void:
 func remove_slice(_metadata : PackMetadata) -> void:
 	deck.remove_pack(_metadata)
 	update_pack_slices(deck)
+
+# temporary.
+func back_pressed():
+	SaveData.selected_deck = deck
+	get_tree().change_scene_to_file("scn/tests/test-drafting.tscn")

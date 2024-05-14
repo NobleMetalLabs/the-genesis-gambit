@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://cuplcsyljwebq"]
+
+[ext_resource type="Texture2D" uid="uid://dd2twv00xms4p" path="res://ast/game/cards/fgs/fish/swordfish.png" id="1_8vn61"]
+[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_e0ymb"]
+
+[resource]
+script = ExtResource("2_e0ymb")
+id = 0
+name = "Swordfish"
+image = ExtResource("1_8vn61")
+type = "Attacker"
+rarity = "Common"
+cost = 0
+hp = 0
+power = 0
+defense = 0

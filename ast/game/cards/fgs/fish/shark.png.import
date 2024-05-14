@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dd2twv00xms4p"
-path="res://.godot/imported/test-fish4.png-a7086f6919ab33f3a1171aa932e635f8.ctex"
+uid="uid://cxjax7t5fgbvy"
+path="res://.godot/imported/shark.png-a81cd5e8b3f0967879964dccb918772e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/game/cards/fgs/test-fish4.png"
-dest_files=["res://.godot/imported/test-fish4.png-a7086f6919ab33f3a1171aa932e635f8.ctex"]
+source_file="res://ast/game/cards/fgs/fish/shark.png"
+dest_files=["res://.godot/imported/shark.png-a81cd5e8b3f0967879964dccb918772e.ctex"]
 
 [params]
 

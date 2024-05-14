@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b45vl3j2r3402"
-path="res://.godot/imported/test-fish3.png-3ff0b8bf1d48ba391d03c64be1cffb5d.ctex"
+uid="uid://crenob258c7re"
+path="res://.godot/imported/puffer.png-90f0697e974297e22b48994818be27ec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/game/cards/fgs/test-fish3.png"
-dest_files=["res://.godot/imported/test-fish3.png-3ff0b8bf1d48ba391d03c64be1cffb5d.ctex"]
+source_file="res://ast/game/cards/fgs/fish/puffer.png"
+dest_files=["res://.godot/imported/puffer.png-90f0697e974297e22b48994818be27ec.ctex"]
 
 [params]
 

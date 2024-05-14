@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://blyhwfh1qykat"]
+
+[ext_resource type="Texture2D" uid="uid://bqohr0aqtdu35" path="res://ast/game/cards/fgs/birds/falcon.png" id="1_stixs"]
+[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_tn8jj"]
+
+[resource]
+script = ExtResource("2_tn8jj")
+id = 5
+name = "Falcon"
+image = ExtResource("1_stixs")
+type = "Attacker"
+rarity = "Common"
+cost = 0
+hp = 0
+power = 0
+defense = 0

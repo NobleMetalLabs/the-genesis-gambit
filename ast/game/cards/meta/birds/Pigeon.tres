@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://paw8x65of1wu"]
+
+[ext_resource type="Texture2D" uid="uid://bnnvknjvv0ljn" path="res://ast/game/cards/fgs/birds/toucan.png" id="1_wswve"]
+[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_3jqoi"]
+
+[resource]
+script = ExtResource("2_3jqoi")
+id = 1
+name = "Toucan"
+image = ExtResource("1_wswve")
+type = "Attacker"
+rarity = "Common"
+cost = 0
+hp = 0
+power = 0
+defense = 0

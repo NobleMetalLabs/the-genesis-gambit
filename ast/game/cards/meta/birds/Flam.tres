@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://d2h0ly737f1u4"]
+
+[ext_resource type="Texture2D" uid="uid://cbbpqehmwdtme" path="res://ast/game/cards/fgs/birds/duck.png" id="1_ppq52"]
+[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_r8asb"]
+
+[resource]
+script = ExtResource("2_r8asb")
+id = 3
+name = "Flam"
+image = ExtResource("1_ppq52")
+type = "Attacker"
+rarity = "Common"
+cost = 0
+hp = 0
+power = 0
+defense = 0

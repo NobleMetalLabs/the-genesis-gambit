@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://r33gqcd2ojf6"]
+
+[ext_resource type="Texture2D" uid="uid://ujhhe64hiot7" path="res://ast/game/cards/fgs/fish/fish.png" id="1_4i50s"]
+[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="3_ixl3k"]
+
+[resource]
+script = ExtResource("3_ixl3k")
+id = 0
+name = "Fish"
+image = ExtResource("1_4i50s")
+type = "Attacker"
+rarity = "Common"
+cost = 0
+hp = 0
+power = 0
+defense = 0

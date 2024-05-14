@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxjax7t5fgbvy"
-path="res://.godot/imported/test-fish2.png-5f27cafe90bcab00d860e9636cc04cca.ctex"
+uid="uid://b45vl3j2r3402"
+path="res://.godot/imported/eel.png-624e05f08d05c955dc227d85bc666a5e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/game/cards/fgs/test-fish2.png"
-dest_files=["res://.godot/imported/test-fish2.png-5f27cafe90bcab00d860e9636cc04cca.ctex"]
+source_file="res://ast/game/cards/fgs/fish/eel.png"
+dest_files=["res://.godot/imported/eel.png-624e05f08d05c955dc227d85bc666a5e.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqohr0aqtdu35"
-path="res://.godot/imported/test-bird3.png-4252b4e7c8f07d71f4c66d5ccdb581d6.ctex"
+uid="uid://bnnvknjvv0ljn"
+path="res://.godot/imported/toucan.png-2a814938756ac033ea123b2f9b8a0650.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/game/cards/fgs/test-bird3.png"
-dest_files=["res://.godot/imported/test-bird3.png-4252b4e7c8f07d71f4c66d5ccdb581d6.ctex"]
+source_file="res://ast/game/cards/fgs/birds/toucan.png"
+dest_files=["res://.godot/imported/toucan.png-2a814938756ac033ea123b2f9b8a0650.ctex"]
 
 [params]
 

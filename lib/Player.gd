@@ -5,7 +5,7 @@ var hand : Array[CardMetadata] = []
 
 signal hand_updated(data : Dictionary)
 
-var test_hand_metadata : CardMetadata = preload("res://ast/game/cards/logic/ShiftRegister.tres")
+var test_hand_metadata : CardMetadata = preload("res://ast/game/cards/meta/ShiftRegister.tres")
 
 func _process(_delta : float) -> void:
 	if Input.is_action_just_pressed("debug_action"):

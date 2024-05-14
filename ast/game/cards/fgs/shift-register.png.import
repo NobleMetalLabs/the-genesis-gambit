@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnnvknjvv0ljn"
-path="res://.godot/imported/test-bird2.png-b2c9f7497d3def6b032474c851ce0e82.ctex"
+uid="uid://mxqovcc74tr"
+path="res://.godot/imported/shift-register.png-a60912472ef9b1b8e21eaf3ae2c4be87.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/game/cards/fgs/test-bird2.png"
-dest_files=["res://.godot/imported/test-bird2.png-b2c9f7497d3def6b032474c851ce0e82.ctex"]
+source_file="res://ast/game/cards/fgs/shift-register.png"
+dest_files=["res://.godot/imported/shift-register.png-a60912472ef9b1b8e21eaf3ae2c4be87.ctex"]
 
 [params]
 

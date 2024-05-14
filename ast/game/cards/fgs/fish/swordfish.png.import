@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mxqovcc74tr"
-path="res://.godot/imported/test-chip.png-b783d2006fe6e36855fce2baa8926a73.ctex"
+uid="uid://dd2twv00xms4p"
+path="res://.godot/imported/swordfish.png-8e7af3cc48a528fc7a739faed3646ea2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/game/cards/fgs/test-chip.png"
-dest_files=["res://.godot/imported/test-chip.png-b783d2006fe6e36855fce2baa8926a73.ctex"]
+source_file="res://ast/game/cards/fgs/fish/swordfish.png"
+dest_files=["res://.godot/imported/swordfish.png-8e7af3cc48a528fc7a739faed3646ea2.ctex"]
 
 [params]
 

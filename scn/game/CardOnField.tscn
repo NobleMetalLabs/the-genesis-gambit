@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://ms1n2nfejqmb"]
+
+[ext_resource type="Script" path="res://src/game/CardOnField.gd" id="1_tkv1q"]
+[ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="2_d3fqe"]
+[ext_resource type="Script" path="res://lib/identifiers/ICardInstance.gd" id="3_de6rx"]
+[ext_resource type="Script" path="res://lib/identifiers/ITargetable.gd" id="4_v3eks"]
+
+[node name="CardOnField" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tkv1q")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardBorderComponent" parent="TextureRect" instance=ExtResource("2_d3fqe")]
+layout_mode = 1
+
+[node name="ICardInstance" type="Node" parent="."]
+script = ExtResource("3_de6rx")
+
+[node name="ITargetable" type="Node" parent="."]
+script = ExtResource("4_v3eks")

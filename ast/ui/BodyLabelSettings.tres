@@ -3,5 +3,7 @@
 [ext_resource type="FontFile" uid="uid://d2oaifr2k5au7" path="res://ast/ui/fonts/counting_apples.ttf" id="1_2krov"]
 
 [resource]
+resource_local_to_scene = true
 font = ExtResource("1_2krov")
+font_size = 32
 outline_color = Color(0, 0, 0, 0)

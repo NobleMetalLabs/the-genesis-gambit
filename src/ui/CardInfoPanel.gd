@@ -1,7 +1,7 @@
 class_name CardInfoPanel
 extends Panel
 
-@onready var card_display : CardDisplay = $"%CARD-DISPLAY"
+@onready var card_display : UIFullCard = $"%CARD-DISPLAY"
 
 func set_card_metadata(metadata : CardMetadata) -> void:
 	card_display.set_metadata(metadata)

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=2 format=3 uid="uid://dpnspaqkdfr86"]
+
+[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="1_x4gkg"]
+
+[resource]
+script = ExtResource("1_x4gkg")
+id = 0
+name = ""
+type = ""
+rarity = "Common"
+cost = 0
+hp = 0
+power = 0
+defense = 0

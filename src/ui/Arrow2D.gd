@@ -1,7 +1,7 @@
 class_name Arrow2D
 extends Line2D
 
-@export var arrowhead_sprite : Texture2D = preload("res://ast/image/ui/arrowheadfull.png")
+@export var arrowhead_sprite : Texture2D = preload("res://ast/ui/image/arrowheadfull.png")
 var _arrowhead : Sprite2D
 
 var end_position : Vector2 : 

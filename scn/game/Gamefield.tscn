@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://ct78rnvd5iwus"]
 
-[ext_resource type="Script" path="res://src/game/Gamefield.gd" id="1_fgrj6"]
+[ext_resource type="Script" path="res://src/game/Gamefield.gd" id="1_3t7r7"]
 
 [node name="GAMEFIELD" type="Node2D"]
-script = ExtResource("1_fgrj6")
+script = ExtResource("1_3t7r7")
 
 [node name="Cards" type="Node2D" parent="."]

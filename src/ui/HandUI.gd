@@ -2,14 +2,20 @@ class_name HandUI
 extends Control
 
 var client_ui : ClientUI
-var player_owner : Player
 
 @onready var card_stack_container : HBoxContainer = $"CardStack"
 
-func _setup(_client_ui : ClientUI, _player_owner : Player) -> void:
+func _setup(_client_ui : ClientUI) -> void:
 	client_ui = _client_ui
-	player_owner = _player_owner
-	player_owner.hand_updated.connect(_handle_hand_update)
+	AuthoritySourceProvider.provider.reflect_action.connect(_handle_hand_action)
+
+func _handle_hand_action(action : Dictionary) -> void:
+	if action["type"] != "hand": return
+	#var action_type : String = action["action"]
+	_handle_hand_update({
+		"type": "add",
+		"metadata": CardDB.get_card_by_id(action["data"]["metadata_id"]),
+	})
 
 func _handle_hand_update(data : Dictionary) -> void:
 	var event_type : String = data["type"]

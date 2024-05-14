@@ -25,6 +25,8 @@ AudioDispatcher="*res://src/autoloads/AudioDispatcher.gd"
 SaveData="*res://src/autoloads/SaveData.gd"
 Utils="*res://src/autoloads/Utils.gd"
 CardDB="*res://src/autoloads/CardDB.gd"
+AuthoritySourceProvider="*res://src/autoloads/AuthoritySourceProvider.gd"
+InputManager="*res://src/autoloads/InputManager.gd"
 
 [debug]
 

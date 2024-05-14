@@ -3,17 +3,16 @@ extends Node
 
 var hand : Array[CardMetadata] = []
 
-signal hand_updated(data : Dictionary)
+func _ready():
+	AuthoritySourceProvider.provider.reflect_action.connect(_handle_player_action)
 
-var test_hand_metadata : CardMetadata = preload("res://ast/game/cards/meta/ShiftRegister.tres")
-
-func _process(_delta : float) -> void:
-	if Input.is_action_just_pressed("debug_action"):
-		self.add_card_to_hand(test_hand_metadata)
-
-func add_card_to_hand(card : CardMetadata) -> void:
-	hand.append(card)
-	emit_signal("hand_updated", {
-		"type" : "add",
-		"metadata" : card
-	})
+func _handle_player_action(action : Dictionary) -> void:
+	if action["type"] != "hand": return
+	match action["action"]:
+		"add_card":
+			var card_meta = CardDB.get_card_by_id(action["data"]["metadata_id"])
+			hand.append(card_meta)
+		"burn_hand":
+			burn_hand()
+		_:
+			pass

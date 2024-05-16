@@ -10,3 +10,6 @@ func _init(_player : Player, _from_deck : bool = true, _specific_card : bool = f
 	self.from_deck = _from_deck
 	self.specific_card = _specific_card
 	self.card_metadata_id = _card_metadata_id
+
+func _to_string() -> String:
+	return "HandAddCardAction(%s,%s,%s,%s)" % [self.player, self.from_deck, self.specific_card, self.card_metadata_id]

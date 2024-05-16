@@ -21,3 +21,6 @@ func _init(_player : Player, _card : CardInHand, _leave_reason : LeaveReason, _a
 	self.card = _card
 	self.leave_reason = _leave_reason
 	self.animation = _animation
+
+func _to_string() -> String:
+	return "HandRemoveCardAction(%s,%s,%s,%s)" % [self.player, self.card, self.leave_reason, self.animation]

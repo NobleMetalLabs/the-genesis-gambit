@@ -16,3 +16,6 @@ func _init(_creature : CardOnField, _type : CooldownType, _stage : CooldownStage
 	self.creature = _creature
 	self.type = _type
 	self.stage = _stage
+
+func _to_string() -> String:
+	return "CreatureCooldownAction(%s,%s,%s)" % [self.creature, self.type, self.stage]

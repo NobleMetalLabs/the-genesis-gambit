@@ -12,3 +12,6 @@ func _init(_creature : CardOnField, _source : ICardInstance, _reason : LeavePlay
 	self.creature = _creature
 	self.source = _source
 	self.reason = _reason
+
+func _to_string() -> String:
+	return "CreatureLeavePlayAction(%s,%s,%s)" % [self.creature, self.source, self.reason]

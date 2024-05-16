@@ -11,3 +11,8 @@ enum CooldownStage {
 	FINISH,
 }
 var time : int = 0
+
+func _init(_creature : CardOnField, _type : CooldownType, _stage : CooldownStage) -> void:
+	self.creature = _creature
+	self.type = _type
+	self.stage = _stage

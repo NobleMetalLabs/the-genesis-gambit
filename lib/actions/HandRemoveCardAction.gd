@@ -15,3 +15,9 @@ enum CardRemoveAnimation {
 	BURN,
 	BANISH,
 }
+
+func _init(_player : Player, _card : CardInHand, _leave_reason : LeaveReason, _animation : CardRemoveAnimation) -> void:
+	self.player = _player
+	self.card = _card
+	self.leave_reason = _leave_reason
+	self.animation = _animation

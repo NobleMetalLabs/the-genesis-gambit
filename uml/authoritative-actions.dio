@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="DRP3TRpmxiCUeoNAmPRP" name="AuthoritySourceClassDiagram">
-        <mxGraphModel dx="2686" dy="1987" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+        <mxGraphModel dx="1946" dy="2027" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -50,7 +50,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="ActionClassDiagram" id="SyAzAgFn7BTSdQMZ5tHF">
-        <mxGraphModel dx="2772" dy="2256" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+        <mxGraphModel dx="2346" dy="2427" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
             <root>
                 <mxCell id="YlGuR3tyBmcKfDzW1rRZ-0"/>
                 <mxCell id="YlGuR3tyBmcKfDzW1rRZ-1" parent="YlGuR3tyBmcKfDzW1rRZ-0"/>
@@ -218,10 +218,10 @@
                 <mxCell id="Y_SCHda-cTG9XvxB5rFb-11" value="from_deck : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Y_SCHda-cTG9XvxB5rFb-10" vertex="1">
                     <mxGeometry y="26" width="150" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="1A83alaZUpcSYFfHAcNi-1" value="specific_card : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="Y_SCHda-cTG9XvxB5rFb-10">
+                <mxCell id="1A83alaZUpcSYFfHAcNi-1" value="specific_card : bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Y_SCHda-cTG9XvxB5rFb-10" vertex="1">
                     <mxGeometry y="52" width="150" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="1A83alaZUpcSYFfHAcNi-0" value="card? : CardMetadata" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="Y_SCHda-cTG9XvxB5rFb-10">
+                <mxCell id="1A83alaZUpcSYFfHAcNi-0" value="card? : CardMetadata" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="Y_SCHda-cTG9XvxB5rFb-10" vertex="1">
                     <mxGeometry y="78" width="150" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="Y_SCHda-cTG9XvxB5rFb-12" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="Y_SCHda-cTG9XvxB5rFb-10" vertex="1">

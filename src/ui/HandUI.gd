@@ -9,25 +9,23 @@ func _setup(_client_ui : ClientUI) -> void:
 	client_ui = _client_ui
 	AuthoritySourceProvider.provider.reflect_action.connect(_handle_hand_action)
 
-func _handle_hand_action(action : Dictionary) -> void:
-	if action["type"] != "hand": return
-	var action_type : String = action["action"]
-	match action_type:
-		"add_card":
-			_handle_hand_update({
-				"type": "add",
-				"metadata": CardDB.get_card_by_id(action["data"]["metadata_id"]),
-			})
-		"burn_hand":
-			_handle_hand_update({
-				"type": "clear",
-			})
-		_:
-			return
+func _handle_hand_action(action : Action) -> void:
+	if not action is HandAction: return
+
+	if action is HandAddCardAction:
+		var add_action : HandAddCardAction = action as HandAddCardAction
+		_handle_hand_update({
+			"type": "add",
+			"metadata": CardDB.get_card_by_id(add_action.card_metadata_id),
+		})
+	
+	if action is HandBurnHandAction:
+		_handle_hand_update({
+			"type": "clear",
+		})
 
 func _handle_hand_update(data : Dictionary) -> void:
 	var event_type : String = data["type"]
-	print(data)
 	match event_type:
 		"add":
 			_add_card_to_hand(data["metadata"])

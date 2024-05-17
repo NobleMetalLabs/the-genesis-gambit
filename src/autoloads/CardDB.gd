@@ -25,7 +25,7 @@ func _scan_path_for_cards(path : String = "res://ast/game/cards/meta/") -> Array
 				scanned_cards.append_array(_scan_path_for_cards(path + file_name + "/"))
 			else:
 				print("Found file: " + file_name)
-				var obj : Object = load(path + file_name)
+				var obj : Object = load(path + file_name.trim_suffix(".remap").trim_suffix(".import"))
 				if obj is CardMetadata:
 					scanned_cards.append(obj)
 			file_name = dir.get_next()
@@ -36,4 +36,3 @@ func _scan_path_for_cards(path : String = "res://ast/game/cards/meta/") -> Array
 func _assign_ids() -> void:
 	for i in range(cards.size()):
 		cards[i].id = i
-

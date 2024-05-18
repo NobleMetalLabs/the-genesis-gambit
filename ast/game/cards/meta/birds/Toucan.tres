@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://dpnspaqkdfr86"]
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://dpnspaqkdfr86"]
 
 [ext_resource type="Script" path="res://ast/game/cards/logic/ShiftRegister.gd" id="1_s77eq"]
+[ext_resource type="Texture2D" uid="uid://bnnvknjvv0ljn" path="res://ast/game/cards/fgs/birds/toucan.png" id="1_wx74m"]
 [ext_resource type="Script" path="res://lib/CardMetadata.gd" id="1_x4gkg"]
 
 [resource]
 script = ExtResource("1_x4gkg")
 id = 0
-name = ""
+name = "Toucan"
+image = ExtResource("1_wx74m")
 type = ""
 rarity = "Common"
 cost = 0

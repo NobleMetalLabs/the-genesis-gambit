@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://d2h0ly737f1u4"]
 
-[ext_resource type="Texture2D" uid="uid://cbbpqehmwdtme" path="res://ast/game/cards/fgs/birds/duck.png" id="1_ppq52"]
+[ext_resource type="Texture2D" uid="uid://bqlbcjufruv6r" path="res://ast/game/cards/fgs/birds/flam.png" id="1_5i0gv"]
 [ext_resource type="Script" path="res://ast/game/cards/logic/ShiftRegister.gd" id="2_0o6g5"]
 [ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_r8asb"]
 
@@ -8,7 +8,7 @@
 script = ExtResource("2_r8asb")
 id = 3
 name = "Flam"
-image = ExtResource("1_ppq52")
+image = ExtResource("1_5i0gv")
 type = "Attacker"
 rarity = "Common"
 cost = 0

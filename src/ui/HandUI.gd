@@ -7,21 +7,17 @@ var client_ui : ClientUI #TODO: used for client_ui.request_card_ghost() LMAO
 
 func _setup(_client_ui : ClientUI) -> void:
 	client_ui = _client_ui
-	AuthoritySourceProvider.authority_source.reflect_action.connect(_handle_hand_action)
+	UIEventBus.event.connect(_handle_ui_event)
 
-func _handle_hand_action(action : Action) -> void:
-	if not action is HandAction: return
+func _handle_ui_event(data : Dictionary) -> void:
+	if data["name"] != "player_hand_changed": return
+	_refresh_hand(data["player"])
 
-	if action is HandAddCardAction:
-		var add_action : HandAddCardAction = action as HandAddCardAction
-		_add_card_to_hand(CardDB.get_card_by_id(add_action.card_metadata_id))
-	
-	if action is HandBurnHandAction:
-		_clear_hand()
-
-	if action is HandRemoveCardAction:
-		var remove_action : HandRemoveCardAction = action as HandRemoveCardAction
-		_remove_card_from_hand(remove_action.card)
+func _refresh_hand(player : Player) -> void:
+	_clear_hand()
+	for card in player.hand:
+		print("Adding card to hand: ", card.name)
+		_add_card_to_hand(card)
 
 var hovered_hand_card : CardInHand = null
 
@@ -36,9 +32,6 @@ func _add_card_to_hand(metadata : CardMetadata) -> void:
 		func() -> void:
 			hovered_hand_card = null
 	)
-
-func _remove_card_from_hand(_instance : CardInHand) -> void:
-	_instance.queue_free()
 
 func _clear_hand() -> void:
 	for child in card_stack_container.get_children():

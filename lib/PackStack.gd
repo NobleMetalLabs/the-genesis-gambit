@@ -1,4 +1,4 @@
-class_name DeckData
+class_name PackStack
 extends Resource
 
 var _contents : Array[PackMetadata]

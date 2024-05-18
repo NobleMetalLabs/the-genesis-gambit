@@ -8,7 +8,7 @@ func _process(_delta : float) -> void:
 	if Input.is_action_just_pressed("debug_action"):
 		AuthoritySourceProvider.authority_source.request_action(
 			HandAddCardAction.new(
-				Player.new(), true, true, test_hand_metadata.id
+				Player.new()
 			)
 		)
 	if Input.is_action_just_pressed("hand_burn"):

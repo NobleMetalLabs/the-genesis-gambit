@@ -10,6 +10,9 @@ func _ready() -> void:
 func get_card_by_id(id : int) -> CardMetadata:
 	return cards[id]
 
+func get_card_count() -> int:
+	return cards.size()
+
 func _scan_cards() -> void:
 	cards = _scan_path_for_cards()
 

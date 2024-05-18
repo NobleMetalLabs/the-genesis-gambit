@@ -8,5 +8,8 @@ static func id(node : Node) -> ICardInstance:
 	
 var metadata : CardMetadata
 
+func _init(_metadata : CardMetadata = null) -> void:
+	metadata = _metadata
+
 func get_metadata() -> CardMetadata:
 	return metadata

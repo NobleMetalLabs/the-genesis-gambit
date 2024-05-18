@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://paw8x65of1wu"]
 
-[ext_resource type="Texture2D" uid="uid://bnnvknjvv0ljn" path="res://ast/game/cards/fgs/birds/toucan.png" id="1_wswve"]
+[ext_resource type="Texture2D" uid="uid://bsci0algcx3j5" path="res://ast/game/cards/fgs/birds/pigeon.png" id="1_uvgnx"]
 [ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_3jqoi"]
 [ext_resource type="Script" path="res://ast/game/cards/logic/ShiftRegister.gd" id="2_jv8yk"]
 
 [resource]
 script = ExtResource("2_3jqoi")
 id = 1
-name = "Toucan"
-image = ExtResource("1_wswve")
+name = "Pigeon"
+image = ExtResource("1_uvgnx")
 type = "Attacker"
 rarity = "Common"
 cost = 0

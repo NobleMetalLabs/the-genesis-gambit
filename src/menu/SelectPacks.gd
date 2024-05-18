@@ -8,7 +8,7 @@ extends Node
 @onready var type_filter : OptionButton = $"%TYPE-FILTER"
 @onready var slice_container : VBoxContainer = $"%SLICE-CONTAINER"
 
-var deck : DeckData = SaveData.selected_deck
+var deck : PackStack = SaveData.selected_deck
 
 func _ready() -> void:
 	scan_packs(cardpack_path)
@@ -33,7 +33,7 @@ func filter_packs(_index : int) -> void:
 		var type_good : bool = (selected_type == 0 or pack._metadata.type == type_filter.get_item_text(selected_type))
 		pack.visible = rarity_good and type_good
 
-func update_pack_slices(_deck: DeckData) -> void:
+func update_pack_slices(_deck: PackStack) -> void:
 	for slice : UIPackSlice in slice_container.get_children(): slice.queue_free()
 	
 	var pack_counts : Dictionary # [PackMetadata, int]

@@ -7,7 +7,7 @@ var client_ui : ClientUI
 
 func _setup(_client_ui : ClientUI) -> void:
 	client_ui = _client_ui
-	AuthoritySourceProvider.provider.reflect_action.connect(_handle_hand_action)
+	AuthoritySourceProvider.authority_source.reflect_action.connect(_handle_hand_action)
 
 func _handle_hand_action(action : Action) -> void:
 	if not action is HandAction: return
@@ -22,6 +22,13 @@ func _handle_hand_action(action : Action) -> void:
 	if action is HandBurnHandAction:
 		_handle_hand_update({
 			"type": "clear",
+		})
+
+	if action is HandRemoveCardAction:
+		var remove_action : HandRemoveCardAction = action as HandRemoveCardAction
+		_handle_hand_update({
+			"type": "remove",
+			"instance": remove_action.card,
 		})
 
 func _handle_hand_update(data : Dictionary) -> void:

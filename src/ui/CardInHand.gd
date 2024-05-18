@@ -33,6 +33,21 @@ func _gui_input(event : InputEvent) -> void:
 	new_card_ghost.was_placed.connect(
 		func(_position : Vector2) -> void:
 			var gamefield : Gamefield = hand_ui.client_ui.gamefield
-			gamefield.place_card(gamefield.get_own_player(), new_card_ghost.metadata, _position)
-			hand_ui._remove_card_from_hand(self)
+			# gamefield.place_card(gamefield.get_own_player(), new_card_ghost.metadata, _position)
+
+			var new_card : CardOnField = ObjectDB._CardOnField.create(gamefield, new_card_ghost.metadata, Player.new())
+			AuthoritySourceProvider.authority_source.request_action(
+				CreatureSpawnAction.new(
+					new_card,
+					_position,
+				)
+			)
+			AuthoritySourceProvider.authority_source.request_action(
+				HandRemoveCardAction.new(
+					Player.new(),
+					self,
+					HandRemoveCardAction.LeaveReason.PLAYED,
+					HandRemoveCardAction.CardRemoveAnimation.PLAY,
+				)
+			)
 	)

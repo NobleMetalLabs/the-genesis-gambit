@@ -3,9 +3,9 @@ extends Node
 
 class _CardOnField:
 	const scene : PackedScene = preload("res://scn/game/CardOnField.tscn")
-	static func create(gamefield : Gamefield, metadata : CardMetadata, player_owner : Player) -> CardOnField:
+	static func create(gamefield : Gamefield, metadata : CardMetadata) -> CardOnField:
 		var new_obj : CardOnField = scene.instantiate()
-		new_obj._setup(gamefield, metadata, player_owner)
+		new_obj._setup(gamefield, metadata)
 		return new_obj
 
 class _CardInHand:

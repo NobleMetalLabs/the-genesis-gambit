@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("3_jlqp8")
-id = 0
+id = 10
 name = "Shift Register"
 image = ExtResource("1_lxcfb")
 type = "Attacker"

@@ -14,17 +14,15 @@ func get_boundary_rectangle() -> Rect2:
 
 var logic : CardLogic
 var gamefield : Gamefield
-var player_owner : Player
 
 @onready var texture_rect : TextureRect = $TextureRect
 @onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent
 
-func _setup(_gamefield: Gamefield, _metadata : CardMetadata, _player_owner: Player) -> void:
+func _setup(_gamefield: Gamefield, _metadata : CardMetadata) -> void:
 	metadata = _metadata
 	logic = metadata.logic_script.new()
 	logic.owner = ICardInstance.id(self)
 	gamefield = _gamefield
-	player_owner = _player_owner
 
 func _ready() -> void:
 	texture_rect.texture = metadata.image

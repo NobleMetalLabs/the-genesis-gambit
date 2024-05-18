@@ -1,9 +1,9 @@
 class_name HandUI
 extends Control
 
-var client_ui : ClientUI
-
 @onready var card_stack_container : HBoxContainer = $"CardStack"
+
+var client_ui : ClientUI #TODO: used for client_ui.request_card_ghost() LMAO
 
 func _setup(_client_ui : ClientUI) -> void:
 	client_ui = _client_ui
@@ -14,32 +14,14 @@ func _handle_hand_action(action : Action) -> void:
 
 	if action is HandAddCardAction:
 		var add_action : HandAddCardAction = action as HandAddCardAction
-		_handle_hand_update({
-			"type": "add",
-			"metadata": CardDB.get_card_by_id(add_action.card_metadata_id),
-		})
+		_add_card_to_hand(CardDB.get_card_by_id(add_action.card_metadata_id))
 	
 	if action is HandBurnHandAction:
-		_handle_hand_update({
-			"type": "clear",
-		})
+		_clear_hand()
 
 	if action is HandRemoveCardAction:
 		var remove_action : HandRemoveCardAction = action as HandRemoveCardAction
-		_handle_hand_update({
-			"type": "remove",
-			"instance": remove_action.card,
-		})
-
-func _handle_hand_update(data : Dictionary) -> void:
-	var event_type : String = data["type"]
-	match event_type:
-		"add":
-			_add_card_to_hand(data["metadata"])
-		"remove":
-			_remove_card_from_hand(data["instance"])
-		"clear":
-			_clear_hand()
+		_remove_card_from_hand(remove_action.card)
 
 var hovered_hand_card : CardInHand = null
 

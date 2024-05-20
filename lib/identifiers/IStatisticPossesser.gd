@@ -19,3 +19,5 @@ func get_statistic(statistic_name : String) -> Variant:
 
 func set_statistic(statistic_name : String, value : Variant) -> void:
 	_statistic_db[statistic_name] = value
+
+#TODO: handle mood modifiers if object is also IMoodPossessor

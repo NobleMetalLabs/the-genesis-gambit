@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://ms1n2nfejqmb"]
+[gd_scene load_steps=7 format=3 uid="uid://ms1n2nfejqmb"]
 
 [ext_resource type="Script" path="res://src/game/CardOnField.gd" id="1_tkv1q"]
 [ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="2_d3fqe"]
 [ext_resource type="Script" path="res://lib/identifiers/ICardInstance.gd" id="3_de6rx"]
 [ext_resource type="Script" path="res://lib/identifiers/ITargetable.gd" id="4_v3eks"]
 [ext_resource type="Script" path="res://lib/identifiers/IStatisticPossesser.gd" id="5_gos88"]
+[ext_resource type="Script" path="res://lib/identifiers/IMoodPossessor.gd" id="6_jp8ag"]
 
 [node name="CardOnField" type="Control"]
 layout_mode = 3
@@ -40,3 +41,6 @@ script = ExtResource("4_v3eks")
 
 [node name="IStatisticPossessor" type="Node" parent="."]
 script = ExtResource("5_gos88")
+
+[node name="IMoodPossessor" type="Node" parent="."]
+script = ExtResource("6_jp8ag")

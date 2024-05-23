@@ -19,6 +19,10 @@ var _hovered_card : CardOnField = null
 func get_hovered_card() -> CardOnField:
 	return _hovered_card
 
+func _process(_delta : float) -> void: #TODO: do this somewhere else. CardBehaviorProcessor?
+	for card : CardOnField in cards_holder.get_children():
+		card.logic.process()
+
 func _handle_gamefield_action(action : Action) -> void:
 	if not action is GamefieldAction: return
 
@@ -42,6 +46,8 @@ func place_card(card : CardOnField, position : Vector2) -> void:
 		func() -> void:
 			_hovered_card = null
 	)
+
+	IStatisticPossessor.id(card).set_statistic("just_placed", true)
 	
 	cards_holder.add_child(card, true)
 	var ap : AudioStreamPlayer2D = AudioDispatcher.dispatch_positional_audio(card, "res://ast/sound/cardplace.tres")

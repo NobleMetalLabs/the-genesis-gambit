@@ -1,10 +1,17 @@
 extends CardLogic
 
 func _init() -> void:
-	description = "When played, shift the board in a random direction."
-	event_handlers = {
-		"on_placement" : print_funny_to_console
-	}
+	description = "Yep"
 
-func print_funny_to_console(_data : Dictionary) -> void:
-	print("Funny")
+func process() -> void:
+	var my_card : CardOnField = owner.get_object()
+	var my_stats := IStatisticPossessor.id(my_card)
+
+	if my_stats.get_statistic("just_placed"):
+		my_stats.set_statistic("just_placed", false)
+		var board : Node2D = my_card.get_parent()
+		for card in board.get_children():
+			print(card)
+			print(my_card)
+			if card == my_card: continue
+			IStatisticPossessor.id(card).set_statistic("stick_bugged", true)

@@ -4,8 +4,8 @@ func _init() -> void:
 	description = "Yep"
 
 func process() -> void:
+	var my_stats := IStatisticPossessor.id(owner)
 	var my_card : CardOnField = owner.get_object()
-	var my_stats := IStatisticPossessor.id(my_card)
 
 	if my_stats.get_statistic("just_placed"):
 		my_stats.set_statistic("just_placed", false)
@@ -14,4 +14,7 @@ func process() -> void:
 			print(card)
 			print(my_card)
 			if card == my_card: continue
-			IStatisticPossessor.id(card).set_statistic("stick_bugged", true)
+			IMoodPossessor.id(card).apply_mood({
+				"name" : "sadness",
+				"amount" : 1
+			})

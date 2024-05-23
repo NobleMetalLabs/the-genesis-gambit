@@ -15,9 +15,11 @@ const DEFAULTS : Dictionary = {
 var _statistic_db : Dictionary = {}
 
 func get_statistic(statistic_name : String) -> Variant:
-	return _statistic_db.get(statistic_name, DEFAULTS)
+	var value : Variant = _statistic_db.get(statistic_name, DEFAULTS)
+	var mp_sibling := IMoodPossessor.id(self)
+	if mp_sibling != null:
+		return mp_sibling._get_statistic(statistic_name, value)
+	return value
 
 func set_statistic(statistic_name : String, value : Variant) -> void:
 	_statistic_db[statistic_name] = value
-
-#TODO: handle mood modifiers if object is also IMoodPossessor

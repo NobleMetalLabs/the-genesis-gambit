@@ -9,13 +9,13 @@ static func id(node : Node) -> IStatisticPossessor:
 	return node.get_node("IStatisticPossessor")
 
 const DEFAULTS : Dictionary = {
-
+	"health" : 10,
 }
 
 var _statistic_db : Dictionary = {}
 
 func get_statistic(statistic_name : String) -> Variant:
-	var value : Variant = _statistic_db.get(statistic_name, DEFAULTS)
+	var value : Variant = _statistic_db.get(statistic_name, DEFAULTS.get(statistic_name, null))
 	var mp_sibling := IMoodPossessor.id(self)
 	if mp_sibling != null:
 		return mp_sibling._get_statistic(statistic_name, value)

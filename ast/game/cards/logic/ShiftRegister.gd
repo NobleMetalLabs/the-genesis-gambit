@@ -14,7 +14,7 @@ func process() -> void:
 			print(card)
 			print(my_card)
 			if card == my_card: continue
-			IMoodPossessor.id(card).apply_mood({
-				"name" : "sadness",
-				"amount" : 1
-			})
+			IMoodPossessor.id(card).apply_mood(StatisticMood.new(
+				"health", Mood.MoodEffect.EXPOSITIVE
+			))
+			print("here is the health: %s" % IStatisticPossessor.id(card).get_statistic("health"))

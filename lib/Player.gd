@@ -1,5 +1,5 @@
 class_name Player
-extends Node
+extends Control
 
 var deck : Deck
 var hand : Array[CardMetadata] = []

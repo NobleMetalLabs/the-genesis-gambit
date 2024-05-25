@@ -11,10 +11,7 @@ func process() -> void:
 		my_stats.set_statistic("just_placed", false)
 		var board : Node2D = my_card.get_parent()
 		for card in board.get_children():
-			print(card)
-			print(my_card)
 			if card == my_card: continue
 			IMoodPossessor.id(card).apply_mood(StatisticMood.new(
 				"health", Mood.MoodEffect.EXPOSITIVE
 			))
-			print("here is the health: %s" % IStatisticPossessor.id(card).get_statistic("health"))

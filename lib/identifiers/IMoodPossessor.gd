@@ -18,7 +18,6 @@ func remove_mood(mood : Mood) -> void:
 func _get_statistic(statistic_name : String, base_value : Variant) -> Variant:
 	if typeof(base_value) != TYPE_INT: 
 		return base_value
-	print("BASED!")
 	for mood in _active_moods:
 		if not mood is StatisticMood: continue
 		mood = mood as StatisticMood

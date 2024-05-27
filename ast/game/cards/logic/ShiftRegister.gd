@@ -1,7 +1,6 @@
 extends CardLogic
 
-func _init() -> void:
-	description = "Yep"
+static var description : StringName = "Yep"
 
 func process() -> void:
 	var my_stats := IStatisticPossessor.id(owner)

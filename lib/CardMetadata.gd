@@ -6,7 +6,7 @@ extends Resource
 @export var id : int
 @export var name : String
 var description : String : 
-	get: return logic_script.new().description
+	get: return logic_script.description
 @export var image : Texture
 @export_enum("Instant", "Attacker", "Support") var type : String
 @export_enum("Common", "Rare", "Mythic", "Epic") var rarity: String = "Common"

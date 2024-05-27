@@ -10,6 +10,9 @@ func _ready() -> void:
 	player.name = "Player"
 	gamefield.add_child(player)
 
+	UIEventBus.reflect_action.connect(handle_ui_event)
+	UIEventBus.UI_root = self
+
 @export var gamefield : Gamefield
 
 func _input(event : InputEvent) -> void:
@@ -42,8 +45,37 @@ func update_target_sprite(target : ICardInstance) -> void:
 		target_sprite.show()
 		target_sprite.position = target.position
 
-func request_card_ghost(hand_instance : ICardInstance) -> CardGhost:
-	var hand_card : CardInHand = hand_instance.get_object() as CardInHand
-	var new_card_ghost : CardGhost = ObjectDB._CardGhost.create(hand_card, hand_instance.metadata)
+func handle_ui_event(action : Action) -> void:
+	if not action is CustomAction: return
+	action = action as CustomAction
+	if action.name == "player_card_ghost_requested":
+		_create_card_ghost(action.data["card_in_hand"])
+	else:
+		print("Unknown action: ", action.name)
+
+func _create_card_ghost(hand_card : CardInHand) -> void:
+	var new_card_ghost := CardGhost.new(hand_card)
 	self.add_child(new_card_ghost, true)
-	return new_card_ghost
+	
+	new_card_ghost.was_placed.connect(
+		func(_position : Vector2) -> void:
+			var new_card := CardOnField.new(gamefield, [
+				ICardInstance.dupe(hand_card),
+				IStatisticPossessor.id(hand_card).duplicate(),
+				IMoodPossessor.id(hand_card).duplicate(),
+			])
+			AuthoritySourceProvider.authority_source.request_action(
+				CreatureSpawnAction.new(
+					new_card,
+					_position,
+				)
+			)
+			AuthoritySourceProvider.authority_source.request_action(
+				HandRemoveCardAction.new(
+					Player.new(),
+					hand_card,
+					HandRemoveCardAction.LeaveReason.PLAYED,
+					HandRemoveCardAction.CardRemoveAnimation.PLAY,
+				)
+			)
+	)

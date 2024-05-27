@@ -30,23 +30,10 @@ func _gui_input(event : InputEvent) -> void:
 	if not event.button_index == MOUSE_BUTTON_LEFT: return
 	if not event.pressed: return
 
-	# var new_card_ghost : CardGhost = hand_ui.client_ui.request_card_ghost(ICardInstance.id(self))
-	# new_card_ghost.was_placed.connect(
-	# 	func(_position : Vector2) -> void:
-	# 		var gamefield : Gamefield = hand_ui.client_ui.gamefield
-	# 		var new_card : CardOnField = ObjectDB._CardOnField.create(gamefield, new_card_ghost.metadata)
-	# 		AuthoritySourceProvider.authority_source.request_action(
-	# 			CreatureSpawnAction.new(
-	# 				new_card,
-	# 				_position,
-	# 			)
-	# 		)
-	# 		AuthoritySourceProvider.authority_source.request_action(
-	# 			HandRemoveCardAction.new(
-	# 				Player.new(),
-	# 				self,
-	# 				HandRemoveCardAction.LeaveReason.PLAYED,
-	# 				HandRemoveCardAction.CardRemoveAnimation.PLAY,
-	# 			)
-	# 		)
-	# )
+	UIEventBus.submit_action(
+		CustomAction.new(
+			"player_card_ghost_requested",
+			{
+				"card_in_hand" : self,
+			},
+	))

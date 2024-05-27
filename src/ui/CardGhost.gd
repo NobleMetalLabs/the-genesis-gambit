@@ -4,23 +4,16 @@ extends Control
 signal was_placed(global_position : Vector2)
 signal was_canceled()
 
-var metadata : CardMetadata :
-	get:
-		return ICardInstance.id(self).metadata
-	set(value):
-		ICardInstance.id(self).metadata = value
-
-@onready var texture_rect : TextureRect = $TextureRect
-@onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent
 var card_in_hand_mirror : CardInHand
+var card_frontend : CardFrontend
 
-func _ready() -> void:
-	texture_rect.texture = metadata.image
-	border_component.set_rarity(metadata.rarity)
+func _init(card_in_hand : CardInHand) -> void:
+	card_in_hand_mirror = card_in_hand
+	self.add_child(ICardInstance.dupe(card_in_hand))
 
-func _setup(_hand_mirror : CardInHand, _metadata : CardMetadata) -> void:
-	card_in_hand_mirror = _hand_mirror
-	metadata = _metadata
+	card_frontend = card_in_hand.card_frontend.duplicate()
+	self.add_child(card_frontend)
+	card_frontend.modulate = Color(1, 1, 1, 0.5)
 
 func _input(event : InputEvent) -> void:
 	if not event is InputEventMouseButton: return
@@ -39,7 +32,7 @@ func _place() -> void:
 	self.queue_free()
 
 func _is_in_hand_region() -> bool:
-	var value : bool = card_in_hand_mirror.hand_ui.get_global_rect().intersects(self.get_global_rect())
+	var value : bool = UIEventBus.UI_root.hand_ui.get_global_rect().intersects(self.get_global_rect())
 	return value
 
 func _process(_delta : float) -> void:

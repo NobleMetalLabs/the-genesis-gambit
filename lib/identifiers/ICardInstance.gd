@@ -7,11 +7,18 @@ static func id(node : Node) -> ICardInstance:
 	if not node.has_node("ICardInstance"): return null
 	return node.get_node("ICardInstance")
 	
-var metadata : CardMetadata
+static func dupe(node : Node) -> ICardInstance:
+	if not node is ICardInstance:
+		node = ICardInstance.id(node)
+	return ICardInstance.new(node.metadata)
 
-func _init(_metadata : CardMetadata = null) -> void:
+var metadata : CardMetadata
+var logic : CardLogic
+
+func _init(_metadata : CardMetadata) -> void:
 	self.name = "ICardInstance"
 	metadata = _metadata
+	logic = metadata.logic_script.new(self)
 
 func get_metadata() -> CardMetadata:
 	return metadata

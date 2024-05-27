@@ -3,9 +3,6 @@ class_name CardLogic
 extends RefCounted
 
 var owner : ICardInstance
-var description : String
-var event_handlers : Dictionary #[StringName (event), Callable] 
 
-func process_event(event_name : String, data : Dictionary) -> void:
-	if event_handlers.has(event_name):
-		event_handlers.get(event_name).call(data)
+func _init(_owner : ICardInstance) -> void:
+	self.owner = _owner

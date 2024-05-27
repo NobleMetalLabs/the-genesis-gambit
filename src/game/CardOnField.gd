@@ -1,33 +1,34 @@
 class_name CardOnField
 extends Control
 
-#implements ICardInstance
-var metadata : CardMetadata :
-	get:
-		return ICardInstance.id(self).metadata
-	set(value):
-		ICardInstance.id(self).metadata = value
-
 #implements ITargetable
 func get_boundary_rectangle() -> Rect2:
-	return texture_rect.get_global_rect()
+	return card_frontend.get_global_rect()
 
-var logic : CardLogic
 var gamefield : Gamefield
+var card_frontend : CardFrontend
 
-@onready var texture_rect : TextureRect = $TextureRect
-@onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent
+func _init(_gamefield : Gamefield, provided_identifiers : Array[Identifier]) -> void:
+	self.gamefield = _gamefield
 
-func _setup(_gamefield: Gamefield, _metadata : CardMetadata) -> void:
-	metadata = _metadata
-	logic = metadata.logic_script.new()
-	logic.owner = ICardInstance.id(self)
-	gamefield = _gamefield
+	for identifier in provided_identifiers:
+		print("added identifier: %s" % identifier)
+		self.add_child(identifier)
 
-func _ready() -> void:
-	texture_rect.texture = metadata.image
-	border_component.set_rarity(metadata.rarity)
+	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is ICardInstance):
+		push_error("CardOnField must be provided with ICardInstance identifier.")
+		return
+	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is ITargetable): 
+		self.add_child(ITargetable.new())
+	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is IStatisticPossessor): 
+		self.add_child(IStatisticPossessor.new())
+	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is IMoodPossessor): 
+		self.add_child(IMoodPossessor.new())
+
+	card_frontend = CardFrontend.instantiate()
+	self.add_child(card_frontend)
 	
+func _ready() -> void:
 	gui_input.connect(
 		func (event : InputEvent) -> void:
 			if not event is InputEventMouseButton: return
@@ -37,7 +38,6 @@ func _ready() -> void:
 				if event.pressed: start_target()
 			get_viewport().set_input_as_handled()
 	)
-	gamefield.event.emit("card_placement", {"card_instance": self})
 	
 	target_arrow.z_index = 2
 	target_arrow.modulate = Color.RED

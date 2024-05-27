@@ -21,7 +21,7 @@ func get_hovered_card() -> CardOnField:
 
 func _process(_delta : float) -> void: #TODO: do this somewhere else. CardBehaviorProcessor?
 	for card : CardOnField in cards_holder.get_children():
-		card.logic.process()
+		ICardInstance.id(card).logic.process()
 
 func _handle_gamefield_action(action : Action) -> void:
 	if not action is GamefieldAction: return

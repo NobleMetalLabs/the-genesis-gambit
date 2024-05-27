@@ -15,9 +15,6 @@ func _handle_ui_event(action : Action) -> void:
 func _refresh_hand(player : Player) -> void:
 	_clear_hand()
 	for card : CardInHand in player.cards_in_hand:
-		print(card)
-		print(card.get_children())
-		print("Adding card to hand: ", card.name)
 		_add_card_to_hand(card)
 
 var hovered_hand_card : CardInHand = null
@@ -35,5 +32,5 @@ func _add_card_to_hand(card_in_hand : CardInHand) -> void:
 
 func _clear_hand() -> void:
 	for child in card_stack_container.get_children():
-		child.queue_free()
+		card_stack_container.remove_child(child)
 

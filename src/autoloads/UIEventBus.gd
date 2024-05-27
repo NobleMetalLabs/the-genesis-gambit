@@ -2,6 +2,7 @@
 extends Node
 
 var action_queue : Array[Action] = []
+var UI_root : ClientUI
 
 signal reflect_action(action : Action)
 

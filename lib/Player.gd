@@ -3,6 +3,8 @@ extends Control
 
 var deck : Deck
 var hand : Array[CardMetadata] = []
+var cards_in_hand : Array[CardInHand] = []
+var cards_on_field : Array[CardOnField] = []
 
 func _ready() -> void:
 	deck = Deck.new()
@@ -13,11 +15,28 @@ func _ready() -> void:
 		deck.add_card(card_instance)
 	deck.shuffle()
 
-	AuthoritySourceProvider.authority_source.reflect_action.connect(_handle_player_action)
+	AuthoritySourceProvider.authority_source.reflect_action.connect(_handle_action)
 
-func _handle_player_action(action : Action) -> void:
-	if not action is PlayerAction: return
+func _handle_action(action : Action) -> void:
+	if action is GamefieldAction: _handle_gamefield_action(action as GamefieldAction)
+	if action is PlayerAction: _handle_player_action(action as PlayerAction)
 
+func _handle_gamefield_action(action : GamefieldAction) -> void:
+	if action is CreatureSpawnAction:
+		var spawn_action := action as CreatureSpawnAction
+		cards_on_field.append(spawn_action.creature)
+	if action is CreatureLeavePlayAction:
+		var leave_action := action as CreatureLeavePlayAction
+		cards_on_field.erase(leave_action.creature)
+	UIEventBus.submit_action(action)
+
+func _handle_player_action(action : PlayerAction) -> void:
+	if action is HandAction:
+		_handle_hand_action(action as HandAction)
+	if action is CursorAction:
+		UIEventBus.submit_action(action)
+
+func _handle_hand_action(action : HandAction) -> void:
 	if action is HandAddCardAction:
 		var add_action : HandAddCardAction = action as HandAddCardAction
 		match [add_action.from_deck, add_action.specific_card]:
@@ -47,7 +66,10 @@ func _handle_player_action(action : Action) -> void:
 		var remove_action : HandRemoveCardAction = action as HandRemoveCardAction
 		hand.erase(remove_action.card.metadata)
 
-	UIEventBus.submit_event({
-		"name" : "player_hand_changed",
-		"player" : self,
-	})
+	UIEventBus.submit_action(
+		CustomAction.new(
+			"player_hand_changed",
+			{
+				"player" : self
+			}
+	))

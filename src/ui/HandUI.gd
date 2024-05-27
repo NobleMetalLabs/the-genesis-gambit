@@ -7,11 +7,13 @@ var client_ui : ClientUI #TODO: used for client_ui.request_card_ghost() LMAO
 
 func _setup(_client_ui : ClientUI) -> void:
 	client_ui = _client_ui
-	UIEventBus.event.connect(_handle_ui_event)
+	UIEventBus.reflect_action.connect(_handle_ui_event)
 
-func _handle_ui_event(data : Dictionary) -> void:
-	if data["name"] != "player_hand_changed": return
-	_refresh_hand(data["player"])
+func _handle_ui_event(action : Action) -> void:
+	if not action is CustomAction: return
+	var custom_action := action as CustomAction
+	if custom_action.name != "player_hand_changed": return
+	_refresh_hand(custom_action.data["player"])
 
 func _refresh_hand(player : Player) -> void:
 	_clear_hand()

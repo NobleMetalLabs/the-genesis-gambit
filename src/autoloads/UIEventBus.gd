@@ -1,14 +1,14 @@
-#class_name UIEventBussy
+#class_name UIEventBus
 extends Node
 
-var event_queue : Array[Dictionary] = []
+var action_queue : Array[Action] = []
 
-signal event(data : Dictionary)
+signal reflect_action(action : Action)
 
 func _process(_delta : float) -> void:
-	for event_dict in event_queue:
-		event.emit(event_dict)
-	event_queue.clear()
+	for action in action_queue:
+		reflect_action.emit(action)
+	action_queue.clear()
 
-func submit_event(data : Dictionary) -> void:
-	event_queue.push_back(data)
+func submit_action(action : Action) -> void:
+	action_queue.push_back(action)

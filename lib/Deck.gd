@@ -1,7 +1,7 @@
 class_name Deck
 extends Resource
 
-var _cards : Array[ICardInstance]
+var _cards : Array[ICardInstance] #TODO: Cards in deck being ICardInstance denies them from being able to possess other identifiers
 
 func _init() -> void:
 	_cards = []

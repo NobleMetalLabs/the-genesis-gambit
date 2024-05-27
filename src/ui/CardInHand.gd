@@ -1,6 +1,8 @@
 class_name CardInHand
 extends Control
 
+# TODO: Change the way CardInstance possessors are created to use a constructor with Identifier composition. Move the Controls nodes to a scene that is instantced in _init().
+
 #implements ICardInstance
 var metadata : CardMetadata :
 	get:

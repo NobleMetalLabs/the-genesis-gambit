@@ -1,8 +1,7 @@
 class_name Player
-extends Control
+extends Node
 
-var deck : Deck
-var hand : Array[CardMetadata] = []
+var deck : Deck 
 var cards_in_hand : Array[CardInHand] = []
 var cards_on_field : Array[CardOnField] = []
 
@@ -41,12 +40,18 @@ func _handle_hand_action(action : HandAction) -> void:
 		var add_action : HandAddCardAction = action as HandAddCardAction
 		match [add_action.from_deck, add_action.specific_card]:
 			[true, false]: # Regular Draw
-				var card : ICardInstance = deck.draw_card()
-				if card == null: return #TODO: Actually handle this
-				hand.append(card.metadata)
+				var drawn_card : ICardInstance = deck.draw_card()
+				if drawn_card == null: 
+					push_warning("Somehow deck has no cards.")
+					return 
+				var card_in_hand : CardInHand = CardInHand.new([drawn_card])
+				cards_in_hand.append(card_in_hand)
+				
 			[false, true]: # Spawn New Card
-				var card_meta : CardMetadata = CardDB.get_card_by_id(add_action.card_metadata_id)
-				hand.append(card_meta)
+				# var card_meta : CardMetadata = CardDB.get_card_by_id(add_action.card_metadata_id)
+				# hand.append(card_meta)
+				# TODO: fix
+				pass # BRO I DO NOT FUCKING CARE
 			[true, true]: # Search
 				pass
 			[false, false]: 
@@ -54,9 +59,10 @@ func _handle_hand_action(action : HandAction) -> void:
 				#TODO: Give a totally random card?
 
 	if action is HandBurnHandAction:
-		var num_cards : int = hand.size()
-		hand.clear()
+		var num_cards : int = cards_in_hand.size()
+		cards_in_hand.clear()
 		#TODO: clearing hand occurs through action
+		# ^ bro what why. show your mf work dog.
 		for i in range(num_cards):
 			AuthoritySourceProvider.authority_source.request_action(
 				HandAddCardAction.new(self, false, true, 0)
@@ -64,7 +70,7 @@ func _handle_hand_action(action : HandAction) -> void:
 
 	if action is HandRemoveCardAction:
 		var remove_action : HandRemoveCardAction = action as HandRemoveCardAction
-		hand.erase(remove_action.card.metadata)
+		cards_in_hand.erase(remove_action.card)
 
 	UIEventBus.submit_action(
 		CustomAction.new(

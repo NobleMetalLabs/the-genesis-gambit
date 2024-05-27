@@ -2,12 +2,17 @@ class_name IMoodPossessor
 extends Identifier
 
 static func id(node : Node) -> IMoodPossessor:
-	if node == null: return null
 	if node is Identifier:
 		node = node.get_object()
+	if node == null: return null
+	if not node.has_node("IMoodPossessor"): return null
 	return node.get_node("IMoodPossessor")
 
-var _active_moods : Array[Mood] = []
+var _active_moods : Array[Mood] 
+
+func _init(_metadata : CardMetadata = null) -> void:
+	self.name = "IMoodPossessor"
+	_active_moods = []
 
 func apply_mood(mood : Mood) -> void:
 	_active_moods.append(mood)

@@ -4,7 +4,11 @@ static func id(node : Node) -> ITargetable:
 	if node == null: return null
 	if node is Identifier:
 		node = node.get_object()
+	if not node.has_node("ITargetable"): return null
 	return node.get_node("ITargetable")
+
+func _init() -> void:
+	self.name = "ITargetable"
 
 func get_boundary_rectangle() -> Rect2:
 	if self.get_object().has_method("get_boundary_rectangle"):

@@ -3,10 +3,7 @@ extends Control
 
 @onready var card_stack_container : HBoxContainer = $"CardStack"
 
-var client_ui : ClientUI #TODO: used for client_ui.request_card_ghost() LMAO
-
-func _setup(_client_ui : ClientUI) -> void:
-	client_ui = _client_ui
+func _ready() -> void:
 	UIEventBus.reflect_action.connect(_handle_ui_event)
 
 func _handle_ui_event(action : Action) -> void:
@@ -17,20 +14,21 @@ func _handle_ui_event(action : Action) -> void:
 
 func _refresh_hand(player : Player) -> void:
 	_clear_hand()
-	for card in player.hand:
+	for card : CardInHand in player.cards_in_hand:
+		print(card)
+		print(card.get_children())
 		print("Adding card to hand: ", card.name)
 		_add_card_to_hand(card)
 
 var hovered_hand_card : CardInHand = null
 
-func _add_card_to_hand(metadata : CardMetadata) -> void:
-	var new_hand_card : CardInHand = ObjectDB._CardInHand.create(self, metadata)
-	card_stack_container.add_child(new_hand_card, true)
-	new_hand_card.mouse_entered.connect(
+func _add_card_to_hand(card_in_hand : CardInHand) -> void:
+	card_stack_container.add_child(card_in_hand, true)
+	card_in_hand.mouse_entered.connect(
 		func() -> void:
-			hovered_hand_card = new_hand_card
+			hovered_hand_card = card_in_hand
 	)
-	new_hand_card.mouse_exited.connect(
+	card_in_hand.mouse_exited.connect(
 		func() -> void:
 			hovered_hand_card = null
 	)

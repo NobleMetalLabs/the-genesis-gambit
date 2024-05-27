@@ -6,13 +6,18 @@ static func id(node : Node) -> IStatisticPossessor:
 	if node == null: return null
 	if node is Identifier:
 		node = node.get_object()
+	if not node.has_node("IStatisticPossessor"): return null
 	return node.get_node("IStatisticPossessor")
 
 const DEFAULTS : Dictionary = {
 	"health" : 10,
 }
 
-var _statistic_db : Dictionary = {}
+var _statistic_db : Dictionary
+
+func _init() -> void:
+	self.name = "IStatisticPossessor"
+	_statistic_db = {}
 
 func get_statistic(statistic_name : String) -> Variant:
 	var value : Variant = _statistic_db.get(statistic_name, DEFAULTS.get(statistic_name, null))

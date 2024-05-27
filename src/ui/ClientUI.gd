@@ -7,8 +7,8 @@ extends Control
 
 func _ready() -> void:
 	var player : Player = Player.new() #TODO: change this 
-	self.add_child(player) #TODO: change this
-	hand_ui._setup(self)
+	player.name = "Player"
+	gamefield.add_child(player)
 
 @export var gamefield : Gamefield
 

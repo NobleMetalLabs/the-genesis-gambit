@@ -42,10 +42,6 @@ window/size/viewport_height=540
 window/size/mode=2
 window/stretch/mode="viewport"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/gut/plugin.cfg")
-
 [input]
 
 ui_inspect={

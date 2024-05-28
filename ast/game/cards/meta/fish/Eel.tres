@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://dgwsojx64iy7d"]
 
 [ext_resource type="Texture2D" uid="uid://b45vl3j2r3402" path="res://ast/game/cards/fgs/fish/eel.png" id="1_v4ogc"]
-[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_hbdvp"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_hbdvp"]
 [ext_resource type="Script" path="res://ast/game/cards/logic/Nothing.gd" id="2_qv5kq"]
 
 [resource]

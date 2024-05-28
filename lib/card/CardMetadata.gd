@@ -1,4 +1,4 @@
-@icon("res://lib/CardMetadata.png")
+@icon("res://lib/card/CardMetadata.png")
 class_name CardMetadata
 extends Resource
 

@@ -3,8 +3,8 @@ extends CardLogic
 static var description : StringName = "Yep"
 
 func process() -> void:
-	var my_stats := IStatisticPossessor.id(owner)
-	var my_card : CardOnField = owner.get_object()
+	var my_stats := IStatisticPossessor.id(instance_owner)
+	var my_card : CardOnField = instance_owner.get_object()
 
 	if my_stats.get_statistic("just_placed"):
 		my_stats.set_statistic("just_placed", false)

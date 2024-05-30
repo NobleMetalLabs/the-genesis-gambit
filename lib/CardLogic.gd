@@ -2,7 +2,7 @@
 class_name CardLogic
 extends RefCounted
 
-var owner : ICardInstance
+var instance_owner : ICardInstance
 
 func _init(_owner : ICardInstance) -> void:
-	self.owner = _owner
+	self.instance_owner = _owner

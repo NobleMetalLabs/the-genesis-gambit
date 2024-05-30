@@ -27,4 +27,10 @@ func get_statistic(statistic_name : String) -> Variant:
 	return value
 
 func set_statistic(statistic_name : String, value : Variant) -> void:
+	print("%s set to %s" % [statistic_name, value])
 	_statistic_db[statistic_name] = value
+
+func modify_statistic(statistic_name : String, value : Variant) -> void:
+	var current_value : Variant = get_statistic(statistic_name)
+	var new_value : Variant = current_value + value
+	set_statistic(statistic_name, new_value)

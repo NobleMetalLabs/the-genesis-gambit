@@ -9,7 +9,8 @@ func _ready() -> void:
 	deck = Deck.new()
 	for i in range(0, 25):
 		var card_instance := ICardInstance.new(
-			CardDB.cards.pick_random()
+			CardDB.cards.pick_random(),
+			self
 		)
 		deck.add_card(card_instance)
 	deck.shuffle()

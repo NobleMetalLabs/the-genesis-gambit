@@ -24,3 +24,6 @@ func _init(_player : Player, _card : CardInHand, _leave_reason : LeaveReason, _a
 
 func _to_string() -> String:
 	return "HandRemoveCardAction(%s,%s,%s,%s)" % [self.player, self.card, self.leave_reason, self.animation]
+
+func to_effect() -> HandRemoveCardEffect:
+	return HandRemoveCardEffect.new(player, card, leave_reason, animation)

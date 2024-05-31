@@ -9,3 +9,6 @@ func _init(_creature : CardOnField, _position : Vector2) -> void:
 
 func _to_string() -> String:
 	return "CreatureSpawnAction(%s,%s)" % [self.creature, self.position]
+
+func to_effect() -> CreatureSpawnEffect:
+	return CreatureSpawnEffect.new(creature, position)

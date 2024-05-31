@@ -6,3 +6,6 @@ func _init(_player : Player) -> void:
 
 func _to_string() -> String:
 	return "HandBurnHandAction(%s)" % self.player
+
+func to_effect() -> HandBurnHandEffect:
+	return HandBurnHandEffect.new(player)

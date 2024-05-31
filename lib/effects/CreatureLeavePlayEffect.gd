@@ -2,13 +2,9 @@ class_name CreatureLeavePlayEffect
 extends CreatureEffect
 
 var source : ICardInstance
-var reason : LeavePlayReason
-enum LeavePlayReason {
-	DIED,
-	BANISHED,
-}
+var reason : CreatureLeavePlayAction.LeavePlayReason
 
-func _init(_creature : CardOnField, _source : ICardInstance, _reason : LeavePlayReason) -> void:
+func _init(_creature : CardOnField, _source : ICardInstance, _reason : CreatureLeavePlayAction.LeavePlayReason) -> void:
 	self.creature = _creature
 	self.source = _source
 	self.reason = _reason

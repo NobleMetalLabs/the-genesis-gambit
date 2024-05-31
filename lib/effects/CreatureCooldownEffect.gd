@@ -1,18 +1,10 @@
 class_name CreatureCooldownEffect
 
-var type : CooldownType
-enum CooldownType {
-	ATTACK,
-	ACTIVATE,
-}
-var stage : CooldownStage
-enum CooldownStage {
-	START,
-	FINISH,
-}
+var type : CreatureCooldownAction.CooldownType
+var stage : CreatureCooldownAction.CooldownStage
 var time : int = 0
 
-func _init(_creature : CardOnField, _type : CooldownType, _stage : CooldownStage) -> void:
+func _init(_creature : CardOnField, _type : CreatureCooldownAction.CooldownType, _stage : CreatureCooldownAction.CooldownStage) -> void:
 	self.creature = _creature
 	self.type = _type
 	self.stage = _stage

@@ -3,9 +3,9 @@ extends Identifier
 ## 統計情報を持つクラスのインターフェース
 
 static func id(node : Node) -> IStatisticPossessor:
-	if node == null: return null
 	if node is Identifier:
 		node = node.get_object()
+	if node == null: return null
 	if not node.has_node("IStatisticPossessor"): return null
 	return node.get_node("IStatisticPossessor")
 

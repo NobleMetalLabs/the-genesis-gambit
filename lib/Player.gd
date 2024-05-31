@@ -1,13 +1,13 @@
 class_name Player
-extends Node
+extends Object
 
 var deck : Deck 
 var cards_in_hand : Array[CardInHand] = []
 var cards_on_field : Array[CardOnField] = []
 
-func _ready() -> void:
+func _init() -> void:
 	deck = Deck.new()
-	for i in range(0, 25):
+	for i in range(0, 1):
 		var card_instance := ICardInstance.new(
 			CardDB.cards.pick_random(),
 			self
@@ -15,7 +15,7 @@ func _ready() -> void:
 		deck.add_card(card_instance)
 	deck.shuffle()
 
-	AuthoritySourceProvider.authority_source.reflect_action.connect(_handle_action)
+	#AuthoritySourceProvider.authority_source.reflect_action.connect(_handle_action)
 
 func _handle_action(action : Action) -> void:
 	if action is GamefieldAction: _handle_gamefield_action(action as GamefieldAction)

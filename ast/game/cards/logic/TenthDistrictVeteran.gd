@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "Whenever this creature attacks, gain a charge. Whenever this is activated, the creature its targeting completes its activation cooldown."
 
-func process() -> void:
+func process(_effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic("just_attacked"):
 		my_stats.modify_statistic("activation_charges", 1)

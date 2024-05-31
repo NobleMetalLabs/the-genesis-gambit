@@ -6,11 +6,7 @@ extends Control
 @onready var hand_ui : HandUI = $"%HAND-UI"
 
 func _ready() -> void:
-	var player : Player = Player.new() #TODO: change this 
-	player.name = "Player"
-	gamefield.add_child(player)
-
-	UIEventBus.reflect_action.connect(handle_ui_event)
+	#UIEventBus.reflect_action.connect(handle_ui_event)
 	UIEventBus.UI_root = self
 
 @export var gamefield : Gamefield

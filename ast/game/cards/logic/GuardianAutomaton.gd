@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "When this creature dies, gain 3 health."
 
-func process() -> void:
+func process(_effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic("just_died"):
 		var my_player : Player = instance_owner.player

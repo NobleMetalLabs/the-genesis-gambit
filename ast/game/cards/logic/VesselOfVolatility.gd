@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "Activate creature to sacrifice it. Gain 5 maximum energy."
 
-func process() -> void:
+func process(_effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic("just_activated"):
 		my_stats.set_statistic("just_died", true)

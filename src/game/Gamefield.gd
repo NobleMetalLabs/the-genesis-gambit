@@ -6,22 +6,21 @@ signal event(name : StringName, data : Dictionary)
 @onready var cards_holder : Node2D = get_node("Cards")
 @onready var client_ui : ClientUI = get_parent().get_node("CLIENT-UI")
 
+var effect_resolver : EffectResolver = EffectResolver.new()
+var players : Array[Player]
+
 func _ready() -> void:
-	AuthoritySourceProvider.authority_source.reflect_action.connect(_handle_gamefield_action)
-
-func export_gamefield_state() -> GamefieldState:
-	return null
-
-func load_gamefield_state(_state: GamefieldState) -> void:
-	pass
+	#AuthoritySourceProvider.authority_source.reflect_action.connect(_handle_gamefield_action)
+	players.append(Player.new())
 
 var _hovered_card : CardOnField = null
 func get_hovered_card() -> CardOnField:
 	return _hovered_card
 
-func _process(_delta : float) -> void: #TODO: do this somewhere else. CardBehaviorProcessor?
-	for card : CardOnField in cards_holder.get_children():
-		ICardInstance.id(card).logic.process()
+func _process(_delta : float) -> void: 
+	if Input.is_action_just_pressed("debug_advance_frame"):
+		print("Advancing frame")
+		effect_resolver.resolve_effects(GamefieldState.new(players))
 
 func _handle_gamefield_action(action : Action) -> void:
 	if not action is GamefieldAction: return

@@ -4,7 +4,8 @@ extends Control
 @onready var card_stack_container : HBoxContainer = $"CardStack"
 
 func _ready() -> void:
-	UIEventBus.reflect_action.connect(_handle_ui_event)
+	#UIEventBus.reflect_action.connect(_handle_ui_event)
+	pass
 
 func _handle_ui_event(action : Action) -> void:
 	if not action is CustomAction: return

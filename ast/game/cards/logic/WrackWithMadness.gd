@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "Target creature attacks itself."
 
-func process() -> void:
+func process(_effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic("has_target"):
 		var target : ITargetable = my_stats.get_statistic("target")

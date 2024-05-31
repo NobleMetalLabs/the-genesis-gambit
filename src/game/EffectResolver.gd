@@ -1,5 +1,7 @@
 class_name EffectResolver
 
+signal reflect_effect(effect : Effect)
+
 var effect_queue : Array[Effect] = []
 var effect_by_requester : Dictionary = {} # [Object, Effect]
 
@@ -38,6 +40,8 @@ func resolve_effects_of_requester(requester : Object) -> void:
 	var requesters_existing_effects : Array[Effect] = effect_by_requester[requester]
 	for effect : Effect in requesters_existing_effects.duplicate():
 		print("Resolving effect: " + str(effect))
+		print("Commanding effect to be reflected: " + str(effect))
+		self.reflect_effect.emit(effect)
 		if effect.has_method("resolve"):
 			effect.resolve()
 		else:

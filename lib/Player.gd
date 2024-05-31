@@ -5,41 +5,45 @@ var deck : Deck
 var cards_in_hand : Array[CardInHand] = []
 var cards_on_field : Array[CardOnField] = []
 
-func _init() -> void:
+var effect_resolver : EffectResolver
+
+func _init(_effect_resolver : EffectResolver) -> void:
 	deck = Deck.new()
-	for i in range(0, 1):
+	for i in range(0, 2):
 		var card_instance := ICardInstance.new(
 			CardDB.cards.pick_random(),
 			self
 		)
 		deck.add_card(card_instance)
+	deck.add_card(ICardInstance.new(CardDB.get_card_by_id(10), self))
 	deck.shuffle()
 
-	#AuthoritySourceProvider.authority_source.reflect_action.connect(_handle_action)
+	if _effect_resolver == null: return #TODO: remove this. required due to null passes on bad local news of players
+	effect_resolver = _effect_resolver
+	effect_resolver.reflect_effect.connect(_handle_effect)
 
-func _handle_action(action : Action) -> void:
-	if action is GamefieldAction: _handle_gamefield_action(action as GamefieldAction)
-	if action is PlayerAction: _handle_player_action(action as PlayerAction)
+func _handle_effect(effect : Effect) -> void:
+	print("Reflecting effect '%s'." % [effect])
+	# if effect is GamefieldEffect: _handle_gamefield_effect(effect as GamefieldEffect)
+	if effect is PlayerEffect: _handle_player_effect(effect as PlayerEffect)
 
-func _handle_gamefield_action(action : GamefieldAction) -> void:
-	if action is CreatureSpawnAction:
-		var spawn_action := action as CreatureSpawnAction
-		cards_on_field.append(spawn_action.creature)
-	if action is CreatureLeavePlayAction:
-		var leave_action := action as CreatureLeavePlayAction
-		cards_on_field.erase(leave_action.creature)
-	UIEventBus.submit_action(action)
+# func _handle_gamefield_effect(effect : GamefieldEffect) -> void:
+# 	if effect is CreatureSpawnEffect:
+# 		var spawn_effect := effect as CreatureSpawnEffect
+# 		cards_on_field.append(spawn_effect.creature)
+# 	if effect is CreatureLeavePlayEffect:
+# 		var leave_effect := effect as CreatureLeavePlayEffect
+# 		cards_on_field.erase(leave_effect.creature)
+# 	UIEventBus.submit_effect(effect)
 
-func _handle_player_action(action : PlayerAction) -> void:
-	if action is HandAction:
-		_handle_hand_action(action as HandAction)
-	if action is CursorAction:
-		UIEventBus.submit_action(action)
+func _handle_player_effect(effect : PlayerEffect) -> void:
+	if effect is HandEffect:
+		_handle_hand_effect(effect as HandEffect)
 
-func _handle_hand_action(action : HandAction) -> void:
-	if action is HandAddCardAction:
-		var add_action : HandAddCardAction = action as HandAddCardAction
-		match [add_action.from_deck, add_action.specific_card]:
+func _handle_hand_effect(effect : HandEffect) -> void:
+	if effect is HandAddCardEffect:
+		var add_effect : HandAddCardEffect = effect as HandAddCardEffect
+		match [add_effect.from_deck, add_effect.specific_card]:
 			[true, false]: # Regular Draw
 				var drawn_card : ICardInstance = deck.draw_card()
 				if drawn_card == null: 
@@ -49,29 +53,29 @@ func _handle_hand_action(action : HandAction) -> void:
 				cards_in_hand.append(card_in_hand)
 				
 			[false, true]: # Spawn New Card
-				# var card_meta : CardMetadata = CardDB.get_card_by_id(add_action.card_metadata_id)
+				# var card_meta : CardMetadata = CardDB.get_card_by_id(add_effect.card_metadata_id)
 				# hand.append(card_meta)
 				# TODO: fix
 				pass # BRO I DO NOT FUCKING CARE
 			[true, true]: # Search
 				pass
 			[false, false]: 
-				print("Invalid HandAddCardAction")
+				print("Invalid HandAddCardEffect")
 				#TODO: Give a totally random card?
 
-	if action is HandBurnHandAction:
-		var num_cards : int = cards_in_hand.size()
-		cards_in_hand.clear()
-		#TODO: clearing hand occurs through action
-		# ^ bro what why. show your mf work dog.
-		for i in range(num_cards):
-			AuthoritySourceProvider.authority_source.request_action(
-				HandAddCardAction.new(self, false, true, 0)
-			)
+	# if effect is HandBurnHandEffect:
+	# 	var num_cards : int = cards_in_hand.size()
+	# 	cards_in_hand.clear()
+	# 	#TODO: clearing hand occurs through effect
+	# 	# ^ bro what why. show your mf work dog.
+	# 	for i in range(num_cards):
+	# 		AuthoritySourceProvider.authority_source.request_effect(
+	# 			HandAddCardEffect.new(self, false, true, 0)
+	# 		)
 
-	if action is HandRemoveCardAction:
-		var remove_action : HandRemoveCardAction = action as HandRemoveCardAction
-		cards_in_hand.erase(remove_action.card)
+	# if effect is HandRemoveCardEffect:
+	# 	var remove_effect : HandRemoveCardEffect = effect as HandRemoveCardEffect
+	# 	cards_in_hand.erase(remove_effect.card)
 
 	UIEventBus.submit_action(
 		CustomAction.new(

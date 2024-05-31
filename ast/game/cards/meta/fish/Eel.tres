@@ -2,11 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://b45vl3j2r3402" path="res://ast/game/cards/fgs/fish/eel.png" id="1_v4ogc"]
 [ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_hbdvp"]
-[ext_resource type="Script" path="res://ast/game/cards/logic/ShiftRegister.gd" id="2_p1ttl"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/Nothing.gd" id="2_qv5kq"]
 
 [resource]
 script = ExtResource("2_hbdvp")
 id = 6
+logic_script = ExtResource("2_qv5kq")
 name = "Eel"
 image = ExtResource("1_v4ogc")
 type = "Attacker"
@@ -15,4 +16,3 @@ cost = 0
 hp = 0
 power = 0
 defense = 0
-logic_script = ExtResource("2_p1ttl")

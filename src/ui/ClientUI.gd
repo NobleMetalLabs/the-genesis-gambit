@@ -6,7 +6,7 @@ extends Control
 @onready var hand_ui : HandUI = $"%HAND-UI"
 
 func _ready() -> void:
-	#UIEventBus.reflect_action.connect(handle_ui_event)
+	UIEventBus.reflect_action.connect(handle_ui_event)
 	UIEventBus.UI_root = self
 
 @export var gamefield : Gamefield
@@ -68,7 +68,7 @@ func _create_card_ghost(hand_card : CardInHand) -> void:
 			)
 			AuthoritySourceProvider.authority_source.request_action(
 				HandRemoveCardAction.new(
-					Player.new(),
+					Player.new(null),
 					hand_card,
 					HandRemoveCardAction.LeaveReason.PLAYED,
 					HandRemoveCardAction.CardRemoveAnimation.PLAY,

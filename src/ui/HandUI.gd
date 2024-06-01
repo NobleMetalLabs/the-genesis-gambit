@@ -18,13 +18,13 @@ func _refresh_hand(player : Player) -> void:
 	for card : CardInHand in player.cards_in_hand:
 		_add_card_to_hand(card)
 
-var hovered_hand_card : CardInHand = null
+var hovered_hand_card : ICardInstance = null
 
 func _add_card_to_hand(card_in_hand : CardInHand) -> void:
 	card_stack_container.add_child(card_in_hand, true)
 	card_in_hand.mouse_entered.connect(
 		func() -> void:
-			hovered_hand_card = card_in_hand
+			hovered_hand_card = ICardInstance.id(card_in_hand)
 	)
 	card_in_hand.mouse_exited.connect(
 		func() -> void:

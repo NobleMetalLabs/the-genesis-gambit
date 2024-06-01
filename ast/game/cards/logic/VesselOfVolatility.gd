@@ -8,6 +8,6 @@ func process(_effect_resolver : EffectResolver) -> void:
 		my_stats.set_statistic(Genesis.Statistic.JUST_DIED, true)
 		my_stats.set_statistic(Genesis.Statistic.WAS_JUST_SACRIFICED, true)
 		var my_player : Player = instance_owner.player
-		#IStatisticPossessor.id(my_player).modify_statistic(Genesis.Statistic.MAX_ENERGY, 5)
+		IStatisticPossessor.id(my_player).modify_statistic(Genesis.Statistic.MAX_ENERGY, 5)
 
 

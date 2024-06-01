@@ -11,7 +11,9 @@ var players : Array[Player]
 
 func _ready() -> void:
 	#AuthoritySourceProvider.authority_source.reflect_action.connect(_handle_gamefield_action)
-	players.append(Player.new(effect_resolver))
+	var new_player := Player.new(effect_resolver)
+	players.append(new_player)
+	self.add_child(new_player)
 
 var _hovered_card : CardOnField = null
 func get_hovered_card() -> CardOnField:

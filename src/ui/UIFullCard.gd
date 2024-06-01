@@ -11,5 +11,5 @@ func set_metadata(metadata : CardMetadata) -> void:
 	title_label.text = metadata.name
 	image_trect.texture = metadata.image
 	type_label.text = metadata.type
-	description_label.text = metadata.description
+	description_label.text = metadata.logic_script.description
 	border_component.set_rarity(metadata.rarity)

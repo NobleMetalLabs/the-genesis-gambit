@@ -1,5 +1,5 @@
 class_name Player
-extends Object
+extends Node
 
 var deck : Deck 
 var cards_in_hand : Array[CardInHand] = []
@@ -47,7 +47,7 @@ func _handle_hand_effect(effect : HandEffect) -> void:
 			[true, false]: # Regular Draw
 				var drawn_card : ICardInstance = deck.draw_card()
 				if drawn_card == null: 
-					push_warning("Somehow deck has no cards.")
+					push_warning("Deck has no cards. Did you run out?")
 					return 
 				var card_in_hand : CardInHand = CardInHand.new([drawn_card])
 				cards_in_hand.append(card_in_hand)

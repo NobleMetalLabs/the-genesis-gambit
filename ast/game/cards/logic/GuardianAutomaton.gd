@@ -6,7 +6,7 @@ func process(_effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.JUST_DIED):
 		var my_player : Player = instance_owner.player
-		#IStatisticPossessor.id(my_player).modify_statistic(Genesis.Statistic.HEALTH, 3)
+		IStatisticPossessor.id(my_player).modify_statistic(Genesis.Statistic.HEALTH, 3)
 
 
 

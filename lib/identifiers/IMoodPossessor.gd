@@ -20,7 +20,7 @@ func apply_mood(mood : Mood) -> void:
 func remove_mood(mood : Mood) -> void:
 	_active_moods.erase(mood)
 
-func _get_statistic(statistic_name : String, base_value : Variant) -> Variant:
+func _get_statistic(statistic_name : Genesis.Statistic, base_value : Variant) -> Variant:
 	if typeof(base_value) != TYPE_INT: 
 		return base_value
 	for mood in _active_moods:

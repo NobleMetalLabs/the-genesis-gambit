@@ -4,8 +4,8 @@ static var description : StringName = "Target creature gains Anger."
 
 func process(_effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
-	if my_stats.get_statistic("has_target"):
-		var target : ITargetable = my_stats.get_statistic("target")
+	if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
+		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
 		IMoodPossessor.id(target).apply_mood(StatisticMood.new(
-			"damage", Mood.MoodEffect.POSITIVE, instance_owner, 1
+			Genesis.Statistic.STRENGTH, Mood.MoodEffect.POSITIVE, instance_owner, 1
 		))

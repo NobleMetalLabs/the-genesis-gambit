@@ -46,7 +46,7 @@ func place_card(card : CardOnField, position : Vector2) -> void:
 			_hovered_card = null
 	)
 
-	IStatisticPossessor.id(card).set_statistic("just_placed", true)
+	IStatisticPossessor.id(card).set_statistic(Genesis.Statistic.WAS_JUST_PLAYED, true)
 	
 	cards_holder.add_child(card, true)
 	var ap : AudioStreamPlayer2D = AudioDispatcher.dispatch_positional_audio(card, "res://ast/sound/cardplace.tres")

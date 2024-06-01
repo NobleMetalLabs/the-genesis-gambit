@@ -70,8 +70,8 @@ func _create_card_ghost(hand_card : CardInHand) -> void:
 				HandRemoveCardAction.new(
 					Player.new(null),
 					hand_card,
-					HandRemoveCardAction.LeaveReason.PLAYED,
-					HandRemoveCardAction.CardRemoveAnimation.PLAY,
+					Genesis.LeaveReason.PLAYED,
+					Genesis.CardRemoveAnimation.PLAY,
 				)
 			)
 	)

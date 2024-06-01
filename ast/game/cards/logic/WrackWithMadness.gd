@@ -4,12 +4,12 @@ static var description : StringName = "Target creature attacks itself."
 
 func process(_effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
-	if my_stats.get_statistic("has_target"):
-		var target : ITargetable = my_stats.get_statistic("target")
+	if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
+		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
 		var target_card : CardOnField = target.get_object()
 		AuthoritySourceProvider.authority_source.request_action(
 			CreatureAttackAction.new(
-				target_card, target_card, IStatisticPossessor.id(target).get_statistic("strength")
+				target_card, target_card, IStatisticPossessor.id(target).get_statistic(Genesis.Statistic.STRENGTH)
 			)
 		)
 
@@ -31,10 +31,10 @@ func process(_effect_resolver : EffectResolver) -> void:
 
 # 	for card in opponent_cards:
 # 		var card_stats := IStatisticPossessor.id(card)
-# 		if card_stats.get_statistic("was_just_attacked"):
+# 		if card_stats.get_statistic(Genesis.Statistic.WAS_JUST_ATTACKED):
 # 			AuthoritySourceProvider.authority_source.request_action(
 # 				CreatureAttackAction.new(
-# 					instance_owner, card, my_stats.get_statistic("strength")
+# 					instance_owner, card, my_stats.get_statistic(Genesis.Statistic.STRENGTH)
 # 				)
 # 			)
 

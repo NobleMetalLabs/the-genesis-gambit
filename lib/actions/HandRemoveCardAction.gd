@@ -2,21 +2,10 @@ class_name HandRemoveCardAction
 extends HandAction
 
 var card : CardInHand
-var leave_reason : LeaveReason
-enum LeaveReason {
-	PLAYED,
-	DISCARDED,
-	BANISHED,
-}
-var animation : CardRemoveAnimation
-enum CardRemoveAnimation {
-	PLAY,
-	DISCARD,
-	BURN,
-	BANISH,
-}
+var leave_reason : Genesis.LeaveReason
+var animation : Genesis.CardRemoveAnimation
 
-func _init(_player : Player, _card : CardInHand, _leave_reason : LeaveReason, _animation : CardRemoveAnimation) -> void:
+func _init(_player : Player, _card : CardInHand, _leave_reason : Genesis.LeaveReason, _animation : Genesis.CardRemoveAnimation) -> void:
 	self.player = _player
 	self.card = _card
 	self.leave_reason = _leave_reason

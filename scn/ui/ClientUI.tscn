@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4fmewjxtuggy"]
+[gd_scene load_steps=7 format=3 uid="uid://b4fmewjxtuggy"]
 
 [ext_resource type="Script" path="res://src/ui/ClientUI.gd" id="1_68p1r"]
 [ext_resource type="PackedScene" uid="uid://db8am01hwwg1q" path="res://scn/ui/UIFullCard.tscn" id="2_5wpux"]
 [ext_resource type="Script" path="res://src/ui/CardInfoPanel.gd" id="3_73koh"]
 [ext_resource type="Texture2D" uid="uid://djjhjh04iwame" path="res://ast/game/cards/fgs/target-placeholder.png" id="5_kgfmm"]
+[ext_resource type="PackedScene" uid="uid://p22xihxignf0" path="res://scn/ui/dev/EffectQueueViewer.tscn" id="6_6ht5e"]
 [ext_resource type="PackedScene" uid="uid://dp0ichqwouy35" path="res://scn/ui/HandUI.tscn" id="7_ce31p"]
 
 [node name="CLIENT-UI" type="Control"]
@@ -65,3 +66,12 @@ grow_vertical = 0
 [node name="HAND-UI" parent="HAND-PANEL" instance=ExtResource("7_ce31p")]
 unique_name_in_owner = true
 layout_mode = 1
+
+[node name="DEVELOPER" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EFFECT-QUEUE-VIEWER" parent="DEVELOPER" instance=ExtResource("6_6ht5e")]
+unique_name_in_owner = true

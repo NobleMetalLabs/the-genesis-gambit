@@ -24,3 +24,6 @@ func _init(_metadata : CardMetadata, _player : Player) -> void:
 
 func get_metadata() -> CardMetadata:
 	return metadata
+
+func _to_string() -> String:
+	return "ICardInstance(%s, %s)" % [metadata.name, player.name]

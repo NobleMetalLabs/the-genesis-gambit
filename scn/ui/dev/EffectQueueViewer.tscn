@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://p22xihxignf0"]
+
+[ext_resource type="Script" path="res://src/ui/dev/EffectQueueViewer.gd" id="1_e251c"]
+
+[node name="EFFECT-QUEUE-VIEWER" type="Window"]
+title = "Effect Queue Viewer"
+initial_position = 1
+size = Vector2i(960, 540)
+script = ExtResource("1_e251c")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TREE" type="Tree" parent="PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 3
+column_titles_visible = true
+hide_root = true

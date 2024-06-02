@@ -9,13 +9,13 @@ var effect_resolver : EffectResolver
 
 func _init(_effect_resolver : EffectResolver) -> void:
 	deck = Deck.new()
-	for i in range(0, 2):
+	for i in range(0, 1):
 		var card_instance := ICardInstance.new(
 			CardDB.cards.pick_random(),
 			self
 		)
 		deck.add_card(card_instance)
-	deck.add_card(ICardInstance.new(CardDB.get_card_by_id(10), self))
+	#deck.add_card(ICardInstance.new(CardDB.get_card_by_id(10), self))
 	deck.shuffle()
 
 	if _effect_resolver == null: return #TODO: remove this. required due to null passes on bad local news of players

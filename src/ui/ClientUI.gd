@@ -5,6 +5,9 @@ extends Control
 @onready var target_sprite : Sprite2D = $TargetSprite
 @onready var hand_ui : HandUI = $"%HAND-UI"
 
+@onready var dev_effect_viewer : EffectResolverViewer = $"%EFFECT-RESOLVER-VIEWER"
+@onready var dev_card_viewer : CardDataViewer = $"%CARD-DATA-VIEWER"
+
 @export var gamefield : Gamefield
 
 func _input(event : InputEvent) -> void:
@@ -13,11 +16,13 @@ func _input(event : InputEvent) -> void:
 		if hand_ui.hovered_hand_card != null:
 			card_info_panel.set_card_metadata(hand_ui.hovered_hand_card.metadata)
 			card_info_panel.display()
+			dev_card_viewer.set_card(hand_ui.hovered_hand_card)
 		else:
 			var hovered_card : ICardInstance = ICardInstance.id(gamefield.get_hovered_card())
 			if hovered_card != null:
 				card_info_panel.set_card_metadata(hovered_card.metadata)
 				card_info_panel.display()
+				dev_card_viewer.set_card(hovered_card)
 				#update_target_sprite(hovered_card.target)
 			else:
 				card_info_panel.undisplay()

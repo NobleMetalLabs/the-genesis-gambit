@@ -63,6 +63,10 @@ func resolve_effects(gamefield_state : GamefieldState) -> void:
 		
 	#process all cards
 	for card : ICardInstance in gamefield_state.cards:
+		if card == null:
+			push_error("Card is somehow fucking null.")
+			print(gamefield_state.cards)
+			continue
 		#resolve existing effects
 		resolve_existing_effects_of_requester(card)
 		if card.is_queued_for_deletion(): continue

@@ -1,18 +1,19 @@
 [gd_scene load_steps=9 format=3 uid="uid://db8am01hwwg1q"]
 
-[ext_resource type="LabelSettings" uid="uid://cw57svhh0ogg2" path="res://ast/ui/TitleLabelSettings.tres" id="1_7rt17"]
 [ext_resource type="Script" path="res://src/ui/UIFullCard.gd" id="1_c4m40"]
 [ext_resource type="Script" path="res://src/ui/AutoSizeLabel.gd" id="3_fxsx7"]
 [ext_resource type="FontFile" uid="uid://d2oaifr2k5au7" path="res://ast/ui/fonts/counting_apples.ttf" id="3_g4b44"]
 [ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="5_xixdo"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_j77t4"]
+font = ExtResource("3_g4b44")
+font_size = 50
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jjl1y"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_yl11k"]
-resource_local_to_scene = true
+[sub_resource type="LabelSettings" id="LabelSettings_r2y6c"]
 font = ExtResource("3_g4b44")
-font_size = 8
-outline_color = Color(0, 0, 0, 0)
+font_size = 42
 
 [sub_resource type="LabelSettings" id="LabelSettings_sw8rr"]
 resource_local_to_scene = true
@@ -71,7 +72,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
 text = "Black Lotus"
-label_settings = ExtResource("1_7rt17")
+label_settings = SubResource("LabelSettings_j77t4")
 vertical_alignment = 1
 script = ExtResource("3_fxsx7")
 
@@ -100,7 +101,7 @@ theme_override_constants/margin_right = 10
 unique_name_in_owner = true
 layout_mode = 2
 text = "Artifact"
-label_settings = SubResource("LabelSettings_yl11k")
+label_settings = SubResource("LabelSettings_r2y6c")
 vertical_alignment = 1
 script = ExtResource("3_fxsx7")
 fill_percentage = 0.6

@@ -7,7 +7,7 @@ var cards_on_field : Array[CardOnField] = []
 
 func _init() -> void:
 	deck = Deck.new()
-	for i in range(0, 10):
+	for i in range(0, 3):
 		var card_instance := ICardInstance.new(
 			CardDB.cards.pick_random(),
 			self

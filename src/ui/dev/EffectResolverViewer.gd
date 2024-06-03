@@ -7,6 +7,8 @@ func _ready() -> void:
 	self.show()
 	self.close_requested.connect(self.hide)
 
+	self.position = DisplayServer.window_get_position() + Vector2i(10, 40)
+
 	tree.set_column_title(0, "Effect by Requester")
 	tree.set_column_expand(0, true)
 	tree.set_column_expand_ratio(0, 3)
@@ -66,6 +68,9 @@ func _process(_delta : float) -> void:
 
 func setup_card_row(item : TreeItem, card : ICardInstance) -> void:
 	item.set_text(0, str(card))
+	if card == null:
+		push_warning("Card is null.")
+		return
 	var req_stats := IStatisticPossessor.id(card)
 	var in_deck : bool = req_stats.get_statistic(Genesis.Statistic.IS_IN_DECK)
 	var in_hand : bool = req_stats.get_statistic(Genesis.Statistic.IS_IN_HAND)

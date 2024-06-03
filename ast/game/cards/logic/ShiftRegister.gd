@@ -3,7 +3,7 @@ extends CardLogic
 static var description : StringName = "Yep"
 
 func process(_effect_resolver : EffectResolver) -> void:
-	for outstanding_effect : Effect in _effect_resolver.effect_queue:
+	for outstanding_effect : Effect in _effect_resolver.effect_list:
 		if outstanding_effect is HandAddCardEffect:
 			print("HandAddCardEffect detected in effect queue")
 			outstanding_effect = outstanding_effect as HandAddCardEffect

@@ -1,12 +1,12 @@
 [gd_scene load_steps=2 format=3 uid="uid://p22xihxignf0"]
 
-[ext_resource type="Script" path="res://src/ui/dev/EffectQueueViewer.gd" id="1_e251c"]
+[ext_resource type="Script" path="res://src/ui/dev/EffectResolverViewer.gd" id="1_hsd4f"]
 
-[node name="EFFECT-QUEUE-VIEWER" type="Window"]
-title = "Effect Queue Viewer"
+[node name="EFFECT-RESOLVER-VIEWER" type="Window"]
+title = "Effect Resolver Viewer"
 initial_position = 1
 size = Vector2i(960, 540)
-script = ExtResource("1_e251c")
+script = ExtResource("1_hsd4f")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15

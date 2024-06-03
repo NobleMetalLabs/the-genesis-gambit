@@ -1,4 +1,4 @@
-class_name EffectQueueViewer
+class_name EffectResolverViewer
 extends Window
 
 
@@ -7,6 +7,8 @@ extends Window
 @onready var effect_resolver : EffectResolver = gamefield.effect_resolver
 
 func _ready() -> void:
+	self.close_requested.connect(self.hide)
+
 	tree.set_column_title(0, "Effect by Requester")
 	tree.set_column_expand(0, true)
 	tree.set_column_expand_ratio(0, 3)
@@ -44,7 +46,7 @@ func _process(_delta : float) -> void:
 		_object_to_treeitem[card] = card_item
 	
 	# assign effects in queue / just removed (to show them as done)
-	for effect : Effect in effect_resolver.effect_queue + effect_resolver._effects_processed_this_frame:
+	for effect : Effect in effect_resolver.effect_list:
 		var requester : Object = effect.requester
 		var item_parent : TreeItem
 		var is_orphan : bool
@@ -63,13 +65,13 @@ func _process(_delta : float) -> void:
 
 func setup_row(item : TreeItem, effect : Effect, is_orphan : bool, requester : Object) -> void:
 	item.set_text(0, str(effect))
-	if effect in effect_resolver._effects_requested_this_frame:
-		item.set_text(1, "NEW")
-	if effect in effect_resolver._effects_processed_this_frame:
-		item.set_text(1, "DONE")
+	match(effect.resolve_status):
+		Effect.ResolveStatus.REQUESTED:
+			item.set_text(1, "NEW")
+		Effect.ResolveStatus.RESOLVED:
+			item.set_text(1, "RESOLVED")
 	if is_orphan:
-		item.set_text(1, "ORPHAN")
 		if requester:
-			item.set_text(2, str(requester).get_slice("(", 0))
+			item.set_text(2, "ORPHAN to " + str(requester).get_slice("(", 0))
 		else:
-			item.set_text(2, "<Freed Object>")
+			item.set_text(2, "ORPHAN to <Freed Object>")

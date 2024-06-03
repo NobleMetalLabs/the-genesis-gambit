@@ -14,6 +14,9 @@ func _init(_metadata : CardMetadata = null) -> void:
 	self.name = "IMoodPossessor"
 	_active_moods = []
 
+func clone() -> IMoodPossessor:
+	return IMoodPossessor.new().copy(self)
+
 func apply_mood(mood : Mood) -> void:
 	_active_moods.append(mood)
 

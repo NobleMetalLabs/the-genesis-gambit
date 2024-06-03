@@ -10,7 +10,7 @@ var effect_resolver : EffectResolver = EffectResolver.new()
 var players : Array[Player]
 
 func _ready() -> void:
-	#AuthoritySourceProvider.authority_source.reflect_action.connect(_handle_gamefield_action)
+	effect_resolver.reflect_effect.connect(_handle_gamefield_effect)
 	var new_player := Player.new(effect_resolver)
 	new_player.name = "Player 1"
 	players.append(new_player)
@@ -25,12 +25,12 @@ func _process(_delta : float) -> void:
 		print("Advancing frame")
 		effect_resolver.resolve_effects(GamefieldState.new(players))
 
-func _handle_gamefield_action(action : Action) -> void:
-	if not action is GamefieldAction: return
+func _handle_gamefield_effect(effect : Effect) -> void:
+	if not effect is GamefieldEffect: return
 
-	if action is CreatureSpawnAction:
-		var spawn_action : CreatureSpawnAction = action as CreatureSpawnAction
-		place_card(spawn_action.creature, spawn_action.position)
+	if effect is CreatureSpawnEffect:
+		var spawn_effect : CreatureSpawnEffect = effect as CreatureSpawnEffect
+		place_card(spawn_effect.creature, spawn_effect.position)
 		return
 
 # make panning strength a user setting
@@ -49,9 +49,11 @@ func place_card(card : CardOnField, position : Vector2) -> void:
 			_hovered_card = null
 	)
 
-	IStatisticPossessor.id(card).set_statistic(Genesis.Statistic.WAS_JUST_PLAYED, true)
-	
+	var card_stats := IStatisticPossessor.id(card)
 	cards_holder.add_child(card, true)
+	card_stats.set_statistic(Genesis.Statistic.WAS_JUST_PLAYED, true)
+	card_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, true)
+
 	var ap : AudioStreamPlayer2D = AudioDispatcher.dispatch_positional_audio(card, "res://ast/sound/cardplace.tres")
 	ap.panning_strength = 0.25
 

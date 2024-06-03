@@ -9,7 +9,7 @@ var card_frontend : CardFrontend
 
 func _init(card_in_hand : CardInHand) -> void:
 	card_in_hand_mirror = card_in_hand
-	self.add_child(ICardInstance.dupe(card_in_hand))
+	self.add_child(ICardInstance.id(card_in_hand).clone())
 
 	card_frontend = card_in_hand.card_frontend.duplicate()
 	self.add_child(card_frontend)

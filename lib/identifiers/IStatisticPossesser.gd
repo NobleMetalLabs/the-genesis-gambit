@@ -9,26 +9,27 @@ static func id(node : Node) -> IStatisticPossessor:
 	if not node.has_node("IStatisticPossessor"): return null
 	return node.get_node("IStatisticPossessor")
 
-const DEFAULTS : Dictionary = {
-	"health" : 10,
-}
-
 var _statistic_db : Dictionary
 
 func _init() -> void:
 	self.name = "IStatisticPossessor"
 	_statistic_db = {}
 
+func clone() -> IStatisticPossessor:
+	return IStatisticPossessor.new().copy(self)
+
 func get_statistic(statistic_name : Genesis.Statistic) -> Variant:
-	var value : Variant = _statistic_db.get(statistic_name, DEFAULTS.get(statistic_name, null))
+	var value : Variant = _statistic_db.get(statistic_name, Genesis.STATISTIC_DEFAULTS.get(statistic_name, null))
+	if value == null:
+		push_warning("No default value for %s" % [Genesis.Statistic.keys()[statistic_name]])
 	var mp_sibling := IMoodPossessor.id(self)
 	if mp_sibling != null:
 		return mp_sibling._get_statistic(statistic_name, value)
 	return value
 
-func set_statistic(statistic_name : Genesis.Statistic, value : Variant) -> void:
-	print("%s set to %s" % [statistic_name, value])
-	_statistic_db[statistic_name] = value
+func set_statistic(statistic : Genesis.Statistic, value : Variant) -> void:
+	print("%s set to %s" % [Genesis.Statistic.keys()[statistic], value])
+	_statistic_db[statistic] = value
 
 func modify_statistic(statistic_name : Genesis.Statistic, value : Variant) -> void:
 	var current_value : Variant = get_statistic(statistic_name)

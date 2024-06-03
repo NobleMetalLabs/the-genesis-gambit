@@ -3,6 +3,9 @@ extends CardLogic
 static var description : StringName = "Yep"
 
 func process(_effect_resolver : EffectResolver) -> void:
+	var my_stats := IStatisticPossessor.id(instance_owner)
+	var is_in_hand : bool = my_stats.get_statistic(Genesis.Statistic.IS_IN_HAND)
+	if not is_in_hand: return
 	for outstanding_effect : Effect in _effect_resolver.effect_list:
 		if outstanding_effect is HandAddCardEffect:
 			print("HandAddCardEffect detected in effect queue")

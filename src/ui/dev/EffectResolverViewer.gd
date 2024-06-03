@@ -7,6 +7,7 @@ extends Window
 @onready var effect_resolver : EffectResolver = gamefield.effect_resolver
 
 func _ready() -> void:
+	self.show()
 	self.close_requested.connect(self.hide)
 
 	tree.set_column_title(0, "Effect by Requester")

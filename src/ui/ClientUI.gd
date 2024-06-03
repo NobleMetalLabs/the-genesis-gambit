@@ -56,9 +56,9 @@ func _create_card_ghost(hand_card : CardInHand) -> void:
 	new_card_ghost.was_placed.connect(
 		func(_position : Vector2) -> void:
 			var new_card := CardOnField.new(gamefield, [
-				ICardInstance.dupe(hand_card),
-				IStatisticPossessor.id(hand_card).duplicate(),
-				IMoodPossessor.id(hand_card).duplicate(),
+				ICardInstance.id(hand_card),
+				IStatisticPossessor.id(hand_card),
+				IMoodPossessor.id(hand_card),
 			])
 			AuthoritySourceProvider.authority_source.request_action(
 				CreatureSpawnAction.new(

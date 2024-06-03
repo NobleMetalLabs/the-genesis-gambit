@@ -9,8 +9,8 @@ var card_frontend : CardFrontend
 
 func _init(provided_identifiers : Array[Identifier]) -> void:
 	for identifier in provided_identifiers:
-		print("added identifier: %s" % identifier)
-		self.add_child(identifier)
+		print("Adding provided identifier: " + str(identifier))
+		self.add_child(identifier.clone())
 
 	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is ICardInstance):
 		push_error("CardInHand must be provided with ICardInstance identifier.")

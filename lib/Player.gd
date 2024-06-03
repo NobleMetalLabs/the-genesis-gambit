@@ -9,13 +9,14 @@ var effect_resolver : EffectResolver
 
 func _init(_effect_resolver : EffectResolver) -> void:
 	deck = Deck.new()
-	for i in range(0, 1):
+	for i in range(0, 10):
 		var card_instance := ICardInstance.new(
 			CardDB.cards.pick_random(),
 			self
 		)
-		deck.add_card(card_instance)
-	#deck.add_card(ICardInstance.new(CardDB.get_card_by_id(10), self))
+		var stats := IStatisticPossessor.new()
+		stats.set_statistic(Genesis.Statistic.IS_IN_DECK, true)
+		deck.add_card(CardInDeck.new([card_instance, stats]))
 	deck.shuffle()
 
 	if _effect_resolver == null: return #TODO: remove this. required due to null passes on bad local news of players
@@ -45,12 +46,18 @@ func _handle_hand_effect(effect : HandEffect) -> void:
 		var add_effect : HandAddCardEffect = effect as HandAddCardEffect
 		match [add_effect.from_deck, add_effect.specific_card]:
 			[true, false]: # Regular Draw
-				var drawn_card : ICardInstance = deck.draw_card()
+				var drawn_card : CardInDeck = deck.draw_card()
 				if drawn_card == null: 
 					push_warning("Deck has no cards. Did you run out?")
 					return 
-				var card_in_hand : CardInHand = CardInHand.new([drawn_card])
+				var card_in_hand : CardInHand = CardInHand.new([
+					ICardInstance.id(drawn_card), 
+					IStatisticPossessor.id(drawn_card), 
+					IMoodPossessor.id(drawn_card),
+				])
+				print(card_in_hand.get_children())
 				cards_in_hand.append(card_in_hand)
+				IStatisticPossessor.id(card_in_hand).set_statistic(Genesis.Statistic.IS_IN_HAND, true)
 				
 			[false, true]: # Spawn New Card
 				# var card_meta : CardMetadata = CardDB.get_card_by_id(add_effect.card_metadata_id)
@@ -60,7 +67,7 @@ func _handle_hand_effect(effect : HandEffect) -> void:
 			[true, true]: # Search
 				pass
 			[false, false]: 
-				print("Invalid HandAddCardEffect")
+				push_error("Invalid HandAddCardEffect")
 				#TODO: Give a totally random card?
 
 	# if effect is HandBurnHandEffect:
@@ -73,9 +80,10 @@ func _handle_hand_effect(effect : HandEffect) -> void:
 	# 			HandAddCardEffect.new(self, false, true, 0)
 	# 		)
 
-	# if effect is HandRemoveCardEffect:
-	# 	var remove_effect : HandRemoveCardEffect = effect as HandRemoveCardEffect
-	# 	cards_in_hand.erase(remove_effect.card)
+	if effect is HandRemoveCardEffect:
+		var remove_effect : HandRemoveCardEffect = effect as HandRemoveCardEffect
+		cards_in_hand.erase(remove_effect.card)
+		IStatisticPossessor.id(remove_effect.card).set_statistic(Genesis.Statistic.IS_IN_HAND, false)
 
 	UIEventBus.submit_action(
 		CustomAction.new(

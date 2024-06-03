@@ -9,11 +9,8 @@ var gamefield : Gamefield
 var card_frontend : CardFrontend
 
 func _init(_gamefield : Gamefield, provided_identifiers : Array[Identifier]) -> void:
-	self.gamefield = _gamefield
-
 	for identifier in provided_identifiers:
-		print("added identifier: %s" % identifier)
-		self.add_child(identifier)
+		self.add_child(identifier.clone())
 
 	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is ICardInstance):
 		push_error("CardOnField must be provided with ICardInstance identifier.")
@@ -24,6 +21,8 @@ func _init(_gamefield : Gamefield, provided_identifiers : Array[Identifier]) -> 
 		self.add_child(IStatisticPossessor.new())
 	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is IMoodPossessor): 
 		self.add_child(IMoodPossessor.new())
+
+	self.gamefield = _gamefield
 
 	card_frontend = CardFrontend.instantiate()
 	self.add_child(card_frontend)

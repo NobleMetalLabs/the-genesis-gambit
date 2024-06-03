@@ -23,9 +23,9 @@ func get_gamefield_state() -> GamefieldState:
 	return GamefieldState.new(players)
 
 func _process(_delta : float) -> void: 
-	if Input.is_action_just_pressed("debug_advance_frame"):
-		print("Advancing frame")
-		effect_resolver.resolve_effects(get_gamefield_state())
+	# if Input.is_action_just_pressed("debug_advance_frame"):
+	# 	print("Advancing frame")
+	effect_resolver.resolve_effects(get_gamefield_state())
 
 # TODO: make panning strength a user setting
 func place_card(card : CardOnField, position : Vector2) -> void:

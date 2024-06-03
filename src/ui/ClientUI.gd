@@ -40,6 +40,8 @@ func update_target_sprite(target : ICardInstance) -> void:
 		target_sprite.show()
 		target_sprite.position = target.position
 
+var current_card_ghost : CardGhost = null
+
 func _create_card_ghost(hand_card : CardInHand) -> void:
 	var new_card_ghost := CardGhost.new(hand_card)
 	self.add_child(new_card_ghost, true)
@@ -66,3 +68,5 @@ func _create_card_ghost(hand_card : CardInHand) -> void:
 				)
 			)
 	)
+
+	current_card_ghost = new_card_ghost

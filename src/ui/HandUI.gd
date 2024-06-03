@@ -3,19 +3,9 @@ extends Control
 
 @onready var card_stack_container : HBoxContainer = $"CardStack"
 
-func _ready() -> void:
-	UIEventBus.reflect_action.connect(_handle_ui_event)
-	pass
-
-func _handle_ui_event(action : Action) -> void:
-	if not action is CustomAction: return
-	var custom_action := action as CustomAction
-	if custom_action.name != "player_hand_changed": return
-	_refresh_hand(custom_action.data["player"])
-
-func _refresh_hand(player : Player) -> void:
+func _refresh_hand() -> void:
 	_clear_hand()
-	for card : CardInHand in player.cards_in_hand:
+	for card : CardInHand in Router.gamefield.players[0].cards_in_hand:
 		_add_card_to_hand(card)
 
 var hovered_hand_card : ICardInstance = null

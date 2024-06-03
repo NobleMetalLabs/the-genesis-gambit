@@ -27,7 +27,7 @@ Utils="*res://src/autoloads/Utils.gd"
 CardDB="*res://src/autoloads/CardDB.gd"
 AuthoritySourceProvider="*res://src/autoloads/AuthoritySourceProvider.gd"
 InputManager="*res://src/autoloads/InputManager.gd"
-UIEventBus="*res://src/autoloads/UIEventBus.gd"
+Router="*res://src/autoloads/Router.gd"
 
 [debug]
 

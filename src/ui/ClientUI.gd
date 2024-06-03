@@ -5,10 +5,6 @@ extends Control
 @onready var target_sprite : Sprite2D = $TargetSprite
 @onready var hand_ui : HandUI = $"%HAND-UI"
 
-func _ready() -> void:
-	UIEventBus.reflect_action.connect(handle_ui_event)
-	UIEventBus.UI_root = self
-
 @export var gamefield : Gamefield
 
 func _input(event : InputEvent) -> void:
@@ -34,20 +30,15 @@ func get_hovered_card() -> ICardInstance:
 	if hnd != null: return hnd
 	return null
 
+func refresh_hand_ui() -> void:
+	hand_ui._refresh_hand()
+
 func update_target_sprite(target : ICardInstance) -> void:
 	target = target.get_object()
 	if target == null: target_sprite.hide()
 	else:
 		target_sprite.show()
 		target_sprite.position = target.position
-
-func handle_ui_event(action : Action) -> void:
-	if not action is CustomAction: return
-	action = action as CustomAction
-	if action.name == "player_card_ghost_requested":
-		_create_card_ghost(action.data["card_in_hand"])
-	else:
-		print("Unknown action: ", action.name)
 
 func _create_card_ghost(hand_card : CardInHand) -> void:
 	var new_card_ghost := CardGhost.new(hand_card)
@@ -68,7 +59,7 @@ func _create_card_ghost(hand_card : CardInHand) -> void:
 			)
 			AuthoritySourceProvider.authority_source.request_action(
 				HandRemoveCardAction.new(
-					Player.new(null),
+					Router.gamefield.players[0],
 					hand_card,
 					Genesis.LeaveReason.PLAYED,
 					Genesis.CardRemoveAnimation.PLAY,

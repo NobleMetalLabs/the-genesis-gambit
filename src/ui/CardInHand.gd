@@ -30,10 +30,4 @@ func _gui_input(event : InputEvent) -> void:
 	if not event.button_index == MOUSE_BUTTON_LEFT: return
 	if not event.pressed: return
 
-	UIEventBus.submit_action(
-		CustomAction.new(
-			"player_card_ghost_requested",
-			{
-				"card_in_hand" : self,
-			},
-	))
+	Router.client_ui._create_card_ghost(self)

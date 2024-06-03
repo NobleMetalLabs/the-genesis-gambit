@@ -1,7 +1,5 @@
 class_name EffectResolver
 
-signal reflect_effect(effect : Effect)
-
 var effect_list : Array[Effect] :
 	get:
 		var effects : Array[Effect] = []
@@ -36,7 +34,6 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 		return
 	var requesters_existing_effects : Array[Effect] = effects_by_requester[requester]
 	for effect : Effect in requesters_existing_effects.duplicate():
-		self.reflect_effect.emit(effect)
 		if effect.has_method("resolve"):
 			effect.resolve()
 		else:

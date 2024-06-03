@@ -1,10 +1,7 @@
 class_name EffectResolverViewer
 extends Window
 
-
-@onready var gamefield : Gamefield = get_tree().get_root().find_child("GAMEFIELD", true, false)
 @onready var tree : Tree = $"%TREE"
-@onready var effect_resolver : EffectResolver = gamefield.effect_resolver
 
 func _ready() -> void:
 	self.show()
@@ -41,13 +38,13 @@ func _process(_delta : float) -> void:
 	# tally cards
 	var cards_parent : TreeItem = tree.create_item(root)
 	cards_parent.set_text(0, "Cards")
-	for card : ICardInstance in GamefieldState.new(gamefield.players).cards:
+	for card : ICardInstance in Router.gamefield.get_gamefield_state().cards:
 		var card_item : TreeItem = tree.create_item(cards_parent)
 		card_item.set_text(0, str(card))
 		_object_to_treeitem[card] = card_item
 	
 	# assign effects in queue / just removed (to show them as done)
-	for effect : Effect in effect_resolver.effect_list:
+	for effect : Effect in Router.gamefield.effect_resolver.effect_list:
 		var requester : Object = effect.requester
 		var item_parent : TreeItem
 		var is_orphan : bool

@@ -32,7 +32,7 @@ func _place() -> void:
 	self.queue_free()
 
 func _is_in_hand_region() -> bool:
-	var value : bool = UIEventBus.UI_root.hand_ui.get_global_rect().intersects(self.get_global_rect())
+	var value : bool = Router.client_ui.hand_ui.get_global_rect().intersects(self.get_global_rect())
 	return value
 
 func _process(_delta : float) -> void:

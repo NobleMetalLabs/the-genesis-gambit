@@ -1,6 +1,6 @@
 extends CardLogic
 
-static var description : StringName = "Yep"
+static var description : StringName = "When held in the players hand, whenever you would draw a card, draw two instead."
 
 func process(_effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)

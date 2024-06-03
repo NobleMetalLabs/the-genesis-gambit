@@ -19,7 +19,7 @@ func process(_effect_resolver : EffectResolver) -> void:
 
 # static var description : StringName = "Whenever an opponents creature is attacked, this creature attacks the same target."
 
-# func _process(game_state := GamefieldState.new()) -> void:
+# func _process(game_state) -> void:
 # 	var my_stats := IStatisticPossessor.id(instance_owner)
 # 	var opponent_cards : Array[ICardInstance] = []
 # 	opponent_cards = game_state.players.map(

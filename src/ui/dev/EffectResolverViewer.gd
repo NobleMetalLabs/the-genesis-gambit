@@ -13,9 +13,12 @@ func _ready() -> void:
 	tree.set_column_title(1, "Status")
 	tree.set_column_expand(1, true)
 	tree.set_column_expand_ratio(1, 1)
-	tree.set_column_title(2, "Meta")
+	tree.set_column_title(2, "Location")
 	tree.set_column_expand(2, true)
-	tree.set_column_expand_ratio(2, 3)
+	tree.set_column_expand_ratio(2, 1)
+	tree.set_column_title(3, "Meta")
+	tree.set_column_expand(3, true)
+	tree.set_column_expand_ratio(3, 3)
 
 var _object_to_treeitem : Dictionary = {} #[Object, TreeItem]
 
@@ -40,7 +43,7 @@ func _process(_delta : float) -> void:
 	cards_parent.set_text(0, "Cards")
 	for card : ICardInstance in Router.gamefield.get_gamefield_state().cards:
 		var card_item : TreeItem = tree.create_item(cards_parent)
-		card_item.set_text(0, str(card))
+		setup_card_row(card_item, card)
 		_object_to_treeitem[card] = card_item
 	
 	# assign effects in queue / just removed (to show them as done)
@@ -59,9 +62,28 @@ func _process(_delta : float) -> void:
 		effect_item.set_text(0, str(effect))
 
 		_object_to_treeitem[effect] = effect_item
-		setup_row(effect_item, effect, is_orphan, requester)
+		setup_effect_row(effect_item, effect, is_orphan, requester)
 
-func setup_row(item : TreeItem, effect : Effect, is_orphan : bool, requester : Object) -> void:
+func setup_card_row(item : TreeItem, card : ICardInstance) -> void:
+	item.set_text(0, str(card))
+	var req_stats := IStatisticPossessor.id(card)
+	var in_deck : bool = req_stats.get_statistic(Genesis.Statistic.IS_IN_DECK)
+	var in_hand : bool = req_stats.get_statistic(Genesis.Statistic.IS_IN_HAND)
+	var on_field : bool = req_stats.get_statistic(Genesis.Statistic.IS_ON_FIELD)
+	if not (in_deck != in_hand != on_field):
+		item.set_text(2, "ERROR")
+	else:
+		if in_deck:
+			item.set_text(2, "DECK")
+		elif in_hand:
+			item.set_text(2, "HAND")
+		elif on_field:
+			item.set_text(2, "FIELD")
+		else:
+			item.set_text(2, "ERROR")
+
+
+func setup_effect_row(item : TreeItem, effect : Effect, is_orphan : bool, requester : Object) -> void:
 	item.set_text(0, str(effect))
 	match(effect.resolve_status):
 		Effect.ResolveStatus.REQUESTED:
@@ -70,6 +92,6 @@ func setup_row(item : TreeItem, effect : Effect, is_orphan : bool, requester : O
 			item.set_text(1, "RESOLVED")
 	if is_orphan:
 		if requester:
-			item.set_text(2, "ORPHAN to " + str(requester).get_slice("(", 0))
+			item.set_text(3, "ORPHAN to " + str(requester).get_slice("(", 0))
 		else:
-			item.set_text(2, "ORPHAN to <Freed Object>")
+			item.set_text(3, "ORPHAN to <Freed Object>")

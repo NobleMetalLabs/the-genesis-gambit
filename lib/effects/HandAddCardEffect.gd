@@ -27,6 +27,7 @@ func resolve() -> void:
 				IMoodPossessor.id(drawn_card),
 			])
 			self.player.cards_in_hand.append(card_in_hand)
+			IStatisticPossessor.id(card_in_hand).set_statistic(Genesis.Statistic.IS_IN_DECK, false)
 			IStatisticPossessor.id(card_in_hand).set_statistic(Genesis.Statistic.IS_IN_HAND, true)
 			
 		[false, true]: # Spawn New Card

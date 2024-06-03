@@ -19,6 +19,6 @@ grow_vertical = 2
 [node name="TREE" type="Tree" parent="PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-columns = 3
+columns = 4
 column_titles_visible = true
 hide_root = true

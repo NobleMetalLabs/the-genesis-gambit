@@ -11,5 +11,5 @@ func _init(_callable : Callable, _args : Array[Variant] = []) -> void:
 func _to_string() -> String:
 	return "InvokeCallableEffect(%s, %s)" % [callable, args]
 
-func resolve() -> void:
+func resolve(_er : EffectResolver) -> void:
 	callable.callv(args)

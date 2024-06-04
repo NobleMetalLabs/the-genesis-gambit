@@ -14,7 +14,7 @@ func _init(_player : Player, _from_deck : bool = true, _specific_card : bool = f
 func _to_string() -> String:
 	return "HandAddCardEffect(%s,%s,%s,%s)" % [self.player, self.from_deck, self.specific_card, self.card_metadata_id]
 
-func resolve() -> void:
+func resolve(_er : EffectResolver) -> void:
 	match [self.from_deck, self.specific_card]:
 		[true, false]: # Regular Draw
 			var drawn_card : CardInDeck = self.player.deck.draw_card()

@@ -10,7 +10,7 @@ func _init(_creature : CardOnField, _position : Vector2) -> void:
 func _to_string() -> String:
 	return "CreatureSpawnEffect(%s,%s)" % [self.creature, self.position]
 
-func resolve() -> void:
+func resolve(effect_resolver : EffectResolver) -> void:
 	Router.gamefield.place_card(self.creature, self.position)
 	ICardInstance.id(self.creature).player.cards_on_field.append(self.creature)
 	if self.requester is Action:
@@ -18,4 +18,7 @@ func resolve() -> void:
 			Router.client_ui.current_card_ghost.queue_free()
 	var creature_stats := IStatisticPossessor.id(self.creature)
 	creature_stats.set_statistic(Genesis.Statistic.WAS_JUST_PLAYED, true)
+	var just_played_expire_effect := SetStatisticEffect.new(IStatisticPossessor.id(self.creature), Genesis.Statistic.WAS_JUST_PLAYED, false)
+	just_played_expire_effect.requester = self.requester
+	effect_resolver.request_effect(just_played_expire_effect)
 	creature_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, true)

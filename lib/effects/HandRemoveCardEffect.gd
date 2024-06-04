@@ -14,7 +14,7 @@ func _init(_player : Player, _card : CardInHand, _leave_reason : Genesis.LeaveRe
 func _to_string() -> String:
 	return "HandRemoveCardEffect(%s,%s,%s,%s)" % [self.player, self.card, self.leave_reason, self.animation]
 
-func resolve() -> void:
+func resolve(_er : EffectResolver) -> void:
 	self.player.cards_in_hand.erase(self.card)
 	IStatisticPossessor.id(self.card).set_statistic(Genesis.Statistic.IS_IN_HAND, false)
 	Router.client_ui.refresh_hand_ui()

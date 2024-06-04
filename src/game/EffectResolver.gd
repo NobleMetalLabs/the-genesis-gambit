@@ -9,6 +9,8 @@ var effect_list : Array[Effect] :
 
 var effects_by_requester : Dictionary = {} # [Object, Array[Effect]]
 
+var already_processed_actions : Array[Action] = []
+
 func request_effect(effect : Effect) -> void:
 	var requester_exists : bool = effects_by_requester.has(effect.requester)
 	if not requester_exists:
@@ -35,7 +37,7 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 	var requesters_existing_effects : Array[Effect] = effects_by_requester[requester]
 	for effect : Effect in requesters_existing_effects.duplicate():
 		if effect.has_method("resolve"):
-			effect.resolve()
+			effect.resolve(self)
 		else:
 			push_warning("Error: Effect '%s' does not have a resolve method." % [effect])
 		effect.resolve_status = Effect.ResolveStatus.RESOLVED
@@ -51,15 +53,21 @@ func resolve_effects(gamefield_state : GamefieldState) -> void:
 			resolve_existing_effects_of_requester(action)
 		else:
 			#request new effects
+			if action in already_processed_actions:
+				already_processed_actions.erase(action)
+				AuthoritySourceProvider.authority_source.action_queue.erase(action)
+				action.free()
+				continue
 			var effect : Effect = action.to_effect()
 			effect.requester = action
 			self.request_effect(effect)
-			var kill_effect : Effect = InvokeCallableEffect.new(
-				func remove_action_from_actionqueue() -> void:
-					AuthoritySourceProvider.authority_source.action_queue.erase(action)
-			)
-			kill_effect.requester = action
-			self.request_effect(kill_effect)
+			already_processed_actions.append(action)
+			# var kill_effect : Effect = InvokeCallableEffect.new(
+			# 	func remove_action_from_actionqueue() -> void:
+			# 		AuthoritySourceProvider.authority_source.action_queue.erase(action)
+			# )
+			# kill_effect.requester = action
+			# self.request_effect(kill_effect)
 		
 	#process all cards
 	for card : ICardInstance in gamefield_state.cards:

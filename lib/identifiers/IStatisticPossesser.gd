@@ -19,16 +19,22 @@ func clone() -> IStatisticPossessor:
 	return IStatisticPossessor.new().copy(self)
 
 func get_statistic(statistic_name : Genesis.Statistic) -> Variant:
-	var value : Variant = _statistic_db.get(statistic_name, Genesis.STATISTIC_DEFAULTS.get(statistic_name, null))
-	if value == null:
-		push_warning("No default value for %s" % [Genesis.Statistic.keys()[statistic_name]])
+	var value : Variant = null
+	
+	if _statistic_db.has(statistic_name):
+		value = _statistic_db.get(statistic_name)
+	else:
+		if Genesis.STATISTIC_DEFAULTS.has(statistic_name):
+			value = Genesis.STATISTIC_DEFAULTS.get(statistic_name)
+		else:
+			push_warning("No default value for %s" % [Genesis.Statistic.keys()[statistic_name]])
+
 	var mp_sibling := IMoodPossessor.id(self)
 	if mp_sibling != null:
 		return mp_sibling._get_statistic(statistic_name, value)
 	return value
 
 func set_statistic(statistic : Genesis.Statistic, value : Variant) -> void:
-	print("%s set to %s" % [Genesis.Statistic.keys()[statistic], value])
 	_statistic_db[statistic] = value
 
 func modify_statistic(statistic_name : Genesis.Statistic, value : Variant) -> void:

@@ -84,11 +84,12 @@ func end_drag() -> void:
 
 func start_target() -> void:
 	selecting_target = true
-	target = null
 
 func end_target() -> void:
 	selecting_target = false
 	var hovered : ICardInstance = gamefield.client_ui.get_hovered_card()
-	target = null
-	if hovered != null:
-		target = ITargetable.id(hovered)
+	AuthoritySourceProvider.authority_source.request_action(
+		CreatureTargetAction.new(
+			self, ITargetable.id(hovered)
+		)
+	)

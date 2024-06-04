@@ -75,17 +75,18 @@ func setup_card_row(item : TreeItem, card : ICardInstance) -> void:
 	var in_deck : bool = req_stats.get_statistic(Genesis.Statistic.IS_IN_DECK)
 	var in_hand : bool = req_stats.get_statistic(Genesis.Statistic.IS_IN_HAND)
 	var on_field : bool = req_stats.get_statistic(Genesis.Statistic.IS_ON_FIELD)
-	if not (in_deck != in_hand != on_field):
-		item.set_text(2, "ERROR")
-	else:
+	var state_sum : int = int(in_deck) + int(in_hand) + int(on_field)
+	if state_sum == 0:
+		item.set_text(2, "!!!NONE")
+	elif state_sum == 1:
 		if in_deck:
 			item.set_text(2, "DECK")
 		elif in_hand:
 			item.set_text(2, "HAND")
-		elif on_field:
-			item.set_text(2, "FIELD")
 		else:
-			item.set_text(2, "ERROR")
+			item.set_text(2, "FIELD")
+	else:
+		item.set_text(2, "!!!MULTIPLE")
 
 
 func setup_effect_row(item : TreeItem, effect : Effect, is_orphan : bool, requester : Object) -> void:

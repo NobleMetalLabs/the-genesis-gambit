@@ -1,5 +1,5 @@
 class_name CardOnField
-extends Control
+extends Node2D
 
 #implements ITargetable
 func get_boundary_rectangle() -> Rect2:
@@ -36,7 +36,7 @@ func _to_string() -> String:
 	return "CardOnField<%s>" % ICardInstance.id(self)
 
 func _ready() -> void:
-	gui_input.connect(
+	card_frontend.gui_input.connect(
 		func (event : InputEvent) -> void:
 			if not event is InputEventMouseButton: return
 			if event.button_index == MOUSE_BUTTON_LEFT:

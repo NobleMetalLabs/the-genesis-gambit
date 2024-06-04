@@ -84,4 +84,4 @@ theme = ExtResource("7_ndtgr")
 unique_name_in_owner = true
 handle_input_locally = false
 initial_position = 1
-size = Vector2i(600, 256)
+size = Vector2i(600, 300)

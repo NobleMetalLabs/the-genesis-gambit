@@ -12,6 +12,7 @@ enum CooldownType {
 }
 enum CooldownStage {
 	START,
+	IN_PROGRESS,
 	FINISH,
 }
 # HandRemoveCard*
@@ -40,6 +41,8 @@ enum Statistic {
 	JUST_ATTACKED,
 	WAS_JUST_ATTACKED,
 	WAS_JUST_ACTIVATED,
+	JUST_STARTED_COOLDOWN,
+	IS_IN_COOLDOWN,
 	JUST_FINISHED_COOLDOWN,
 	JUST_TARGETED,
 	WAS_JUST_TARGETED,
@@ -66,6 +69,7 @@ enum Statistic {
 	NUM_ACTIVATIONS,
 	NUM_MOODS,
 	NUM_MOOD_CHANGES,
+	NUM_COOLDOWN_FRAMES_REMAINING,
 	# Player
 	MAX_HAND_SIZE,
 	MAX_ENERGY,
@@ -90,6 +94,8 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.JUST_ATTACKED : false,
 	Statistic.WAS_JUST_ATTACKED : false,
 	Statistic.WAS_JUST_ACTIVATED : false,
+	Statistic.JUST_STARTED_COOLDOWN : false,
+	Statistic.IS_IN_COOLDOWN : false,
 	Statistic.JUST_FINISHED_COOLDOWN : false,
 	Statistic.JUST_TARGETED : false,
 	Statistic.WAS_JUST_TARGETED : false,
@@ -116,6 +122,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.NUM_ACTIVATIONS : 0,
 	Statistic.NUM_MOODS : 0,
 	Statistic.NUM_MOOD_CHANGES : 0,
+	Statistic.NUM_COOLDOWN_FRAMES_REMAINING : 0,
 	# Player
 	Statistic.MAX_HAND_SIZE : 10,
 	Statistic.MAX_ENERGY : 10,

@@ -34,11 +34,11 @@ func place_card(card : CardOnField, position : Vector2) -> void:
 	self.event.connect(func(event_name : StringName, data : Dictionary) -> void:
 		card.logic.process_event(event_name, data)
 	)
-	card.mouse_entered.connect(
+	card.card_frontend.mouse_entered.connect(
 		func() -> void:
 			_hovered_card = card
 	)
-	card.mouse_exited.connect(
+	card.card_frontend.mouse_exited.connect(
 		func() -> void:
 			_hovered_card = null
 	)

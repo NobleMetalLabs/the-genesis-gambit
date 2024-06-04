@@ -14,5 +14,5 @@ func resolve(effect_resolver : EffectResolver) -> void:
 	just_activated_expire_effect.requester = self.requester
 	effect_resolver.request_effect(just_activated_expire_effect)
 	var flash_tween : Tween = Router.get_tree().create_tween()
-	flash_tween.tween_property(self.creature, "modulate", Color(1, 0, 0, 1), 0)
+	flash_tween.tween_property(self.creature, "modulate", Color(0, 1, 0, 1), 0)
 	flash_tween.tween_property(self.creature, "modulate", Color(1, 1, 1, 1), 0.5)

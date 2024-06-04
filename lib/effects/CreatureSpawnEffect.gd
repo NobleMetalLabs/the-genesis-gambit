@@ -12,6 +12,7 @@ func _to_string() -> String:
 
 func resolve() -> void:
 	Router.gamefield.place_card(self.creature, self.position)
+	ICardInstance.id(self.creature).player.cards_on_field.append(self.creature)
 	if self.requester is Action:
 		if Router.client_ui.current_card_ghost != null:
 			Router.client_ui.current_card_ghost.queue_free()

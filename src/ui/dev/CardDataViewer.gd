@@ -16,7 +16,6 @@ func _ready() -> void:
 var current_card : ICardInstance = null
 
 func set_card(card : ICardInstance) -> void:
-	print('uh huh')
 	current_card = card
 
 func _process(_delta : float) -> void:

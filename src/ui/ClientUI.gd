@@ -13,20 +13,21 @@ extends Control
 func _input(event : InputEvent) -> void:
 	if not event is InputEventKey: return
 	if Input.is_action_just_pressed("ui_inspect"):
-		if hand_ui.hovered_hand_card != null:
-			card_info_panel.set_card_metadata(hand_ui.hovered_hand_card.metadata)
+		var hovered_card : ICardInstance = get_hovered_card()
+		if hovered_card != null:
+			card_info_panel.set_card_metadata(hovered_card.metadata)
 			card_info_panel.display()
-			dev_card_viewer.set_card(hand_ui.hovered_hand_card)
+			dev_card_viewer.set_card(hovered_card)
 		else:
-			var hovered_card : ICardInstance = ICardInstance.id(gamefield.get_hovered_card())
-			if hovered_card != null:
-				card_info_panel.set_card_metadata(hovered_card.metadata)
-				card_info_panel.display()
-				dev_card_viewer.set_card(hovered_card)
-				#update_target_sprite(hovered_card.target)
-			else:
-				card_info_panel.undisplay()
-				#update_target_sprite(null)
+			card_info_panel.undisplay()
+			dev_card_viewer.set_card(null)
+
+	if Input.is_action_just_pressed("ui_activate"):
+		var hovered_card := ICardInstance.id(gamefield.get_hovered_card())
+		if hovered_card != null:
+			AuthoritySourceProvider.authority_source.request_action(
+				CreatureActivateAction.new(hovered_card.get_object())
+			)
 
 func get_hovered_card() -> ICardInstance:
 	var gc : ICardInstance = ICardInstance.id(gamefield.get_hovered_card())

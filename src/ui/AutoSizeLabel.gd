@@ -26,6 +26,7 @@ func resize_from_current_text() -> void:
 func does_text_fit(_size : int) -> bool:
 	var settings : LabelSettings = self.label_settings
 	var font : Font
+	# TODO: THIS BLOWS!!!!!!!!! DIVINE SKELETON DEATH BLAST!!!!!!!!!!!!!!!
 	if settings.font:
 		font = settings.font
 	else:

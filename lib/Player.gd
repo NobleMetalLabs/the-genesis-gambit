@@ -16,6 +16,7 @@ func _init() -> void:
 		stats.set_statistic(Genesis.Statistic.IS_IN_DECK, true)
 		deck.add_card(CardInDeck.new([card_instance, stats]))
 	deck.add_card(CardInDeck.new([ICardInstance.new(CardDB.get_card_by_id(10), self)]))
+	deck.add_card(CardInDeck.new([ICardInstance.new(CardDB.get_card_by_id(9), self)]))
 	deck.shuffle()
 
 func _to_string() -> String:

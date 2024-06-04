@@ -32,6 +32,9 @@ func _init(_gamefield : Gamefield, provided_identifiers : Array[Identifier]) -> 
 	card_frontend = CardFrontend.instantiate()
 	self.add_child(card_frontend)
 	
+func _to_string() -> String:
+	return "CardOnField<%s>" % ICardInstance.id(self)
+
 func _ready() -> void:
 	gui_input.connect(
 		func (event : InputEvent) -> void:

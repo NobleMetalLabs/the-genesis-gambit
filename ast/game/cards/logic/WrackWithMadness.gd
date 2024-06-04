@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "Target creature attacks itself."
 
-func process(_effect_resolver : EffectResolver) -> void:
+func process(_gs : GamefieldState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
 		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
@@ -12,32 +12,7 @@ func process(_effect_resolver : EffectResolver) -> void:
 				target_card, target_card, IStatisticPossessor.id(target).get_statistic(Genesis.Statistic.STRENGTH)
 			)
 		)
-
-
-# Bandwagoner
-# extends CardLogic
-
-# static var description : StringName = "Whenever an opponents creature is attacked, this creature attacks the same target."
-
-# func _process(game_state) -> void:
-# 	var my_stats := IStatisticPossessor.id(instance_owner)
-# 	var opponent_cards : Array[ICardInstance] = []
-# 	opponent_cards = game_state.players.map(
-# 		func(p : Player) -> Array: 
-# 			return p.cards_in_hand.map(func (c : CardInHand) -> ICardInstance: return ICardInstance.id(c)) + \
-# 				p.cards_on_field.map(func (c : CardOnField) -> ICardInstance: return ICardInstance.id(c)) + \
-# 				p.deck.get_cards()
-# 	).filter(func(c : ICardInstance) -> bool: return c.player != instance_owner.player)
-
-# 	for card in opponent_cards:
-# 		var card_stats := IStatisticPossessor.id(card)
-# 		if card_stats.get_statistic(Genesis.Statistic.WAS_JUST_ATTACKED):
-# 			AuthoritySourceProvider.authority_source.request_action(
-# 				CreatureAttackAction.new(
-# 					instance_owner, card, my_stats.get_statistic(Genesis.Statistic.STRENGTH)
-# 				)
-# 			)
-
+		
 # Gain Experience
 # extends CardLogic
 

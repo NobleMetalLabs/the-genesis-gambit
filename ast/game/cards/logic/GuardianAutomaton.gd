@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "When this creature dies, gain 3 health."
 
-func process(_effect_resolver : EffectResolver) -> void:
+func process(_gs : GamefieldState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.JUST_DIED):
 		var my_player : Player = instance_owner.player
@@ -15,5 +15,5 @@ func process(_effect_resolver : EffectResolver) -> void:
 
 # static var description : StringName = "When any friendly creature dies, this creature gains Anger."
 
-# func process() -> void:
+# func process(_gs : GamefieldState, ) -> void:
 #	pass

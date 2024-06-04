@@ -53,7 +53,7 @@ func resolve_effects(gamefield_state : GamefieldState) -> void:
 			resolve_existing_effects_of_requester(action)
 		else:
 			#request new effects
-			if action in already_processed_actions:
+			if action in already_processed_actions: # dont if it did already
 				already_processed_actions.erase(action)
 				AuthoritySourceProvider.authority_source.action_queue.erase(action)
 				action.free()
@@ -62,12 +62,6 @@ func resolve_effects(gamefield_state : GamefieldState) -> void:
 			effect.requester = action
 			self.request_effect(effect)
 			already_processed_actions.append(action)
-			# var kill_effect : Effect = InvokeCallableEffect.new(
-			# 	func remove_action_from_actionqueue() -> void:
-			# 		AuthoritySourceProvider.authority_source.action_queue.erase(action)
-			# )
-			# kill_effect.requester = action
-			# self.request_effect(kill_effect)
 		
 	#process all cards
 	for card : ICardInstance in gamefield_state.cards:
@@ -79,4 +73,4 @@ func resolve_effects(gamefield_state : GamefieldState) -> void:
 		resolve_existing_effects_of_requester(card)
 		if card.is_queued_for_deletion(): continue
 		#request new effects
-		card.logic.process(self)
+		card.logic.process(gamefield_state, self) #TODO: Should a cache / interop be provided here?

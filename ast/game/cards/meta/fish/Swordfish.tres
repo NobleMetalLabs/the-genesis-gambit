@@ -2,12 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://dd2twv00xms4p" path="res://ast/game/cards/fgs/fish/swordfish.png" id="1_8vn61"]
 [ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_e0ymb"]
-[ext_resource type="Script" path="res://ast/game/cards/logic/Nothing.gd" id="2_lxjft"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/Bandwagoner.gd" id="2_q07tk"]
 
 [resource]
 script = ExtResource("2_e0ymb")
 id = 10
-logic_script = ExtResource("2_lxjft")
+logic_script = ExtResource("2_q07tk")
 name = "Swordfish"
 image = ExtResource("1_8vn61")
 type = "Attacker"

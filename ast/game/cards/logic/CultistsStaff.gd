@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "Targeted Creature gains 2 Weak."
 
-func process(_effect_resolver : EffectResolver) -> void:
+func process(_gs : GamefieldState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
 		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)

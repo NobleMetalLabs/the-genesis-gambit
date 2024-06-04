@@ -75,7 +75,7 @@ func setup_card_row(item : TreeItem, card : ICardInstance) -> void:
 	var in_deck : bool = req_stats.get_statistic(Genesis.Statistic.IS_IN_DECK)
 	var in_hand : bool = req_stats.get_statistic(Genesis.Statistic.IS_IN_HAND)
 	var on_field : bool = req_stats.get_statistic(Genesis.Statistic.IS_ON_FIELD)
-	var state_sum : int = int(in_deck) + int(in_hand) + int(on_field)
+	var state_sum : int = (in_deck as int) + (in_hand as int) + (on_field as int)
 	if state_sum == 0:
 		item.set_text(2, "!!!NONE")
 	elif state_sum == 1:

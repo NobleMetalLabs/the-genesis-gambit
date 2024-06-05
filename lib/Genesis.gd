@@ -15,6 +15,14 @@ enum CooldownStage {
 	IN_PROGRESS,
 	FINISH,
 }
+
+# CreatureLeavePlay*
+enum LeavePlayReason {
+	DIED,
+	BANISHED,
+	SACRIFICED,
+}
+
 # HandRemoveCard*
 enum LeaveReason {
 	PLAYED,
@@ -53,6 +61,9 @@ enum Statistic {
 	IS_IN_HAND,
 	IS_ON_FIELD,
 	IS_IN_DECK,
+	IS_MARKED,
+	WAS_JUST_MARKED,
+	WAS_JUST_UNMARKED,
 	# References
 	TARGET,
 	# Ability
@@ -106,6 +117,9 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.IS_IN_HAND : false,
 	Statistic.IS_ON_FIELD : false,
 	Statistic.IS_IN_DECK : false,
+	Statistic.IS_MARKED : false,
+	Statistic.WAS_JUST_MARKED : false,
+	Statistic.WAS_JUST_UNMARKED : false,
 	# References
 	Statistic.TARGET : null,
 	# Ability

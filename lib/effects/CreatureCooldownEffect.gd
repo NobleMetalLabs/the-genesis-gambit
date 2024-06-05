@@ -18,6 +18,8 @@ func resolve(effect_resolver : EffectResolver) -> void:
 	var creature_stats := IStatisticPossessor.id(self.creature)
 	creature_stats.set_statistic(Genesis.Statistic.NUM_COOLDOWN_FRAMES_REMAINING, self.frames)
 
+	#TODO: Handle CooldownType, interplay with CreatureActivateEffect
+
 	if self.stage != Genesis.CooldownStage.FINISH:
 		if self.stage == Genesis.CooldownStage.START:
 			creature_stats.set_statistic(Genesis.Statistic.JUST_STARTED_COOLDOWN, true)

@@ -8,7 +8,7 @@ func get_boundary_rectangle() -> Rect2:
 var gamefield : Gamefield
 var card_frontend : CardFrontend
 
-func _init(_gamefield : Gamefield, provided_identifiers : Array[Identifier]) -> void:
+func _init(provided_identifiers : Array[Identifier]) -> void:
 	for identifier in provided_identifiers:
 		var old_parent : Node = identifier.get_parent()
 		if old_parent != null: 
@@ -27,7 +27,7 @@ func _init(_gamefield : Gamefield, provided_identifiers : Array[Identifier]) -> 
 	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is IMoodPossessor): 
 		self.add_child(IMoodPossessor.new())
 
-	self.gamefield = _gamefield
+	self.gamefield = Router.gamefield
 
 	card_frontend = CardFrontend.instantiate()
 	self.add_child(card_frontend)

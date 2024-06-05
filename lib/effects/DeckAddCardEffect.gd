@@ -2,12 +2,17 @@ class_name DeckAddCardEffect
 extends PlayerEffect
 
 var card : ICardInstance
+var as_marked : bool
 var keep_stats : bool
 var keep_moods : bool
 
-func _init(_player : Player, _card : ICardInstance, _keep_stats : bool = false, _keep_moods : bool = false) -> void:
+func _init(_player : Player, _card : ICardInstance, _as_marked : bool = true, _keep_stats : bool = false, _keep_moods : bool = false) -> void:
 	self.player = _player
 	self.card = _card
+	self.as_marked = _as_marked
+	self.keep_stats = _keep_stats
+	self.keep_moods = _keep_moods
+	
 
 func _to_string() -> String:
 	return "DeckAddCardEffect(%s,%s,%s,%s)" % [self.player, self.card, self.keep_stats, self.keep_moods]
@@ -34,10 +39,12 @@ func resolve(effect_resolver : EffectResolver) -> void:
 			card_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, false)
 		previous_object_owner.queue_free()
 	card_stats.set_statistic(Genesis.Statistic.IS_IN_DECK, true)
-	card_stats.set_statistic(Genesis.Statistic.IS_MARKED, true)
-	card_stats.set_statistic(Genesis.Statistic.WAS_JUST_MARKED, true)
-	var was_just_marked_expire_effect := SetStatisticEffect.new(
-		card_stats, Genesis.Statistic.WAS_JUST_MARKED, false
-	)
-	was_just_marked_expire_effect.requester = self.requester
-	effect_resolver.request_effect(was_just_marked_expire_effect)
+	
+	if self.as_marked:
+		card_stats.set_statistic(Genesis.Statistic.IS_MARKED, true)
+		card_stats.set_statistic(Genesis.Statistic.WAS_JUST_MARKED, true)
+		var was_just_marked_expire_effect := SetStatisticEffect.new(
+			card_stats, Genesis.Statistic.WAS_JUST_MARKED, false
+		)
+		was_just_marked_expire_effect.requester = self.requester
+		effect_resolver.request_effect(was_just_marked_expire_effect)

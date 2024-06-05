@@ -54,25 +54,15 @@ func _create_card_ghost(hand_card : CardInHand) -> void:
 	
 	new_card_ghost.was_placed.connect(
 		func(_position : Vector2) -> void:
-			var new_card := CardOnField.new(gamefield, [
-				ICardInstance.id(hand_card),
-				IStatisticPossessor.id(hand_card),
-				IMoodPossessor.id(hand_card),
-			])
-			AuthoritySourceProvider.authority_source.request_action(
-				CreatureSpawnAction.new(
-					new_card,
-					_position,
-				)
+			var card_instance := ICardInstance.id(hand_card)
+			IStatisticPossessor.id(card_instance).set_statistic(
+				Genesis.Statistic.POSITION, _position
 			)
-			AuthoritySourceProvider.authority_source.request_action(
-				HandRemoveCardAction.new(
-					Router.gamefield.players[0],
-					hand_card,
-					Genesis.LeaveReason.PLAYED,
-					Genesis.CardRemoveAnimation.PLAY,
-				)
+			var remove_hand_to_play_effect := HandRemoveCardEffect.new(
+				card_instance.player, hand_card, Genesis.LeaveHandReason.PLAYED
 			)
+			remove_hand_to_play_effect.requester = card_instance
+			Router.gamefield.effect_resolver.request_effect(remove_hand_to_play_effect)
 	)
 
 	current_card_ghost = new_card_ghost

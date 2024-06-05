@@ -24,12 +24,14 @@ enum LeavePlayReason {
 }
 
 # HandRemoveCard*
-enum LeaveReason {
+enum LeaveHandReason {
 	PLAYED,
 	DISCARDED,
+	BURNED,
 	BANISHED,
 }
 enum CardRemoveAnimation {
+	INHERIT,
 	PLAY,
 	DISCARD,
 	BURN,
@@ -44,6 +46,7 @@ enum Statistic {
 	STRENGTH,
 	SPEED,
 	CHARGES,
+	POSITION,
 	# State
 	WAS_JUST_PLAYED,
 	JUST_ATTACKED,
@@ -100,6 +103,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.STRENGTH : 10,
 	Statistic.SPEED : 10,
 	Statistic.CHARGES : 0,
+	Statistic.POSITION : Vector2.INF, # Vector type friendly version of null
 	# State
 	Statistic.WAS_JUST_PLAYED : false,
 	Statistic.JUST_ATTACKED : false,

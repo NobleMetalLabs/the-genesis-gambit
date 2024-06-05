@@ -2,10 +2,10 @@ class_name HandRemoveCardAction
 extends HandAction
 
 var card : CardInHand
-var leave_reason : Genesis.LeaveReason
+var leave_reason : Genesis.LeaveHandReason
 var animation : Genesis.CardRemoveAnimation
 
-func _init(_player : Player, _card : CardInHand, _leave_reason : Genesis.LeaveReason, _animation : Genesis.CardRemoveAnimation) -> void:
+func _init(_player : Player, _card : CardInHand, _leave_reason : Genesis.LeaveHandReason, _animation : Genesis.CardRemoveAnimation) -> void:
 	self.player = _player
 	self.card = _card
 	self.leave_reason = _leave_reason

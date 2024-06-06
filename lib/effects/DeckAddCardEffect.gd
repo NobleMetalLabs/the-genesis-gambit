@@ -13,7 +13,6 @@ func _init(_player : Player, _card : ICardInstance, _as_marked : bool = true, _k
 	self.keep_stats = _keep_stats
 	self.keep_moods = _keep_moods
 	
-
 func _to_string() -> String:
 	return "DeckAddCardEffect(%s,%s,%s,%s)" % [self.player, self.card, self.keep_stats, self.keep_moods]
 

@@ -41,5 +41,5 @@ func resolve(effect_resolver : EffectResolver) -> void:
 	Router.client_ui.refresh_hand_ui() #This doesn't act completely as expected. Cards can't be nowhere, so they remain in the last location while statistics report a limbo state. 
 	# Basically a card not in the hand may still render in the hand.
 	# This is generally indiciative of below.
-	# TODO: Remove UI updates from effect resolution. EffectResolver should provide them to ClientUI, and ClientUI should handle them seperately.
+	# TODO: Remove UI updates from effect resolution. EffectResolver should provide effects to ClientUI wholesale, and ClientUI should handle them seperately.
 	

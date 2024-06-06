@@ -9,7 +9,6 @@ func _init(_target : IStatisticPossessor, _statistic : Genesis.Statistic, _value
 	statistic = _statistic
 	value = _value
 
-
 func _to_string() -> String:
 	return "SetStatisticEffect(%s, %s, %s)" % [target, Genesis.Statistic.keys()[statistic], value]
 

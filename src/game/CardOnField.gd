@@ -1,5 +1,5 @@
 class_name CardOnField
-extends Control
+extends Node2D
 
 #implements ITargetable
 func get_boundary_rectangle() -> Rect2:
@@ -8,12 +8,14 @@ func get_boundary_rectangle() -> Rect2:
 var gamefield : Gamefield
 var card_frontend : CardFrontend
 
-func _init(_gamefield : Gamefield, provided_identifiers : Array[Identifier]) -> void:
-	self.gamefield = _gamefield
-
+func _init(provided_identifiers : Array[Identifier]) -> void:
 	for identifier in provided_identifiers:
-		print("added identifier: %s" % identifier)
-		self.add_child(identifier)
+		var old_parent : Node = identifier.get_parent()
+		if old_parent != null: 
+			identifier.reparent(self)
+			old_parent.add_child(identifier.clone())
+		else: 
+			self.add_child(identifier)
 
 	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is ICardInstance):
 		push_error("CardOnField must be provided with ICardInstance identifier.")
@@ -25,11 +27,18 @@ func _init(_gamefield : Gamefield, provided_identifiers : Array[Identifier]) -> 
 	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is IMoodPossessor): 
 		self.add_child(IMoodPossessor.new())
 
+	self.gamefield = Router.gamefield
+
 	card_frontend = CardFrontend.instantiate()
 	self.add_child(card_frontend)
+
+	self.name = "CardOnField"
 	
+func _to_string() -> String:
+	return "CardOnField<%s>" % ICardInstance.id(self)
+
 func _ready() -> void:
-	gui_input.connect(
+	card_frontend.gui_input.connect(
 		func (event : InputEvent) -> void:
 			if not event is InputEventMouseButton: return
 			if event.button_index == MOUSE_BUTTON_LEFT:
@@ -80,11 +89,12 @@ func end_drag() -> void:
 
 func start_target() -> void:
 	selecting_target = true
-	target = null
 
 func end_target() -> void:
 	selecting_target = false
 	var hovered : ICardInstance = gamefield.client_ui.get_hovered_card()
-	target = null
-	if hovered != null:
-		target = ITargetable.id(hovered)
+	AuthoritySourceProvider.authority_source.request_action(
+		CreatureTargetAction.new(
+			self, ITargetable.id(hovered)
+		)
+	)

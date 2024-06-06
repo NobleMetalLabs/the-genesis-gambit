@@ -11,3 +11,6 @@ func _init(_creature : CardOnField, _target : CardOnField, _damage : int) -> voi
 
 func _to_string() -> String:
 	return "CreatureAttackAction(%s)" % self.creature
+
+func to_effect() -> CreatureAttackEffect:
+	return CreatureAttackEffect.new(creature, target, damage)

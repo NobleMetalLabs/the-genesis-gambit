@@ -9,8 +9,12 @@ var card_frontend : CardFrontend
 
 func _init(provided_identifiers : Array[Identifier]) -> void:
 	for identifier in provided_identifiers:
-		print("added identifier: %s" % identifier)
-		self.add_child(identifier)
+		var old_parent : Node = identifier.get_parent()
+		if old_parent != null: 
+			identifier.reparent(self)
+			old_parent.add_child(identifier.clone())
+		else: 
+			self.add_child(identifier)
 
 	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is ICardInstance):
 		push_error("CardInHand must be provided with ICardInstance identifier.")
@@ -24,16 +28,15 @@ func _init(provided_identifiers : Array[Identifier]) -> void:
 
 	card_frontend = CardFrontend.instantiate()
 	self.add_child(card_frontend)
-	
+
+	self.name = "CardInHand"
+
+func _to_string() -> String:
+	return "CardInHand<%s>" % ICardInstance.id(self)
+
 func _gui_input(event : InputEvent) -> void:
 	if not event is InputEventMouseButton: return
 	if not event.button_index == MOUSE_BUTTON_LEFT: return
 	if not event.pressed: return
 
-	UIEventBus.submit_action(
-		CustomAction.new(
-			"player_card_ghost_requested",
-			{
-				"card_in_hand" : self,
-			},
-	))
+	Router.client_ui._create_card_ghost(self)

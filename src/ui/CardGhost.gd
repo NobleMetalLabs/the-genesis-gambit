@@ -9,7 +9,7 @@ var card_frontend : CardFrontend
 
 func _init(card_in_hand : CardInHand) -> void:
 	card_in_hand_mirror = card_in_hand
-	self.add_child(ICardInstance.dupe(card_in_hand))
+	self.add_child(ICardInstance.id(card_in_hand).clone())
 
 	card_frontend = card_in_hand.card_frontend.duplicate()
 	self.add_child(card_frontend)
@@ -29,13 +29,16 @@ func _cancel() -> void:
 
 func _place() -> void:
 	self.was_placed.emit(self.global_position)
-	self.queue_free()
+	follow_cursor = false
 
 func _is_in_hand_region() -> bool:
-	var value : bool = UIEventBus.UI_root.hand_ui.get_global_rect().intersects(self.get_global_rect())
+	var value : bool = Router.client_ui.hand_ui.get_global_rect().intersects(self.get_global_rect())
 	return value
 
+var follow_cursor : bool = true
+
 func _process(_delta : float) -> void:
+	if not follow_cursor: return
 	position = get_global_mouse_position()
 	var is_vis : bool = _is_in_hand_region()
 	visible = not is_vis

@@ -2,11 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://bsci0algcx3j5" path="res://ast/game/cards/fgs/birds/pigeon.png" id="1_uvgnx"]
 [ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_3jqoi"]
-[ext_resource type="Script" path="res://ast/game/cards/logic/ShiftRegister.gd" id="2_jv8yk"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/Nothing.gd" id="2_64cp1"]
 
 [resource]
 script = ExtResource("2_3jqoi")
 id = 1
+logic_script = ExtResource("2_64cp1")
 name = "Pigeon"
 image = ExtResource("1_uvgnx")
 type = "Attacker"
@@ -15,4 +16,3 @@ cost = 0
 hp = 0
 power = 0
 defense = 0
-logic_script = ExtResource("2_jv8yk")

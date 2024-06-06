@@ -24,16 +24,12 @@ func _scan_path_for_cards(path : String = "res://ast/game/cards/meta/") -> Array
 		var file_name : String = dir.get_next()
 		while file_name != "":
 			if dir.current_is_dir():
-				print("Found directory: " + file_name)
 				scanned_cards.append_array(_scan_path_for_cards(path + file_name + "/"))
 			else:
-				print("Found file: " + file_name)
 				var obj : Object = load(path + file_name.trim_suffix(".remap").trim_suffix(".import"))
 				if obj is CardMetadata:
 					scanned_cards.append(obj)
 			file_name = dir.get_next()
-	else:
-		print("An error occurred when trying to access the path.")
 	return scanned_cards
 
 func _assign_ids() -> void:

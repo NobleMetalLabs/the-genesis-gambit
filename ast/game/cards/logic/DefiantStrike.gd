@@ -7,5 +7,5 @@ func process(_gs : GamefieldState, _effect_resolver : EffectResolver) -> void:
 	if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
 		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
 		IMoodPossessor.id(target).apply_mood(StatisticMood.new(
-			Genesis.Statistic.STRENGTH, Mood.MoodEffect.POSITIVE, instance_owner, 1
+			instance_owner, Genesis.Statistic.STRENGTH, Mood.MoodEffect.POSITIVE, 1
 		))

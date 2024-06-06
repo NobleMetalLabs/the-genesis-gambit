@@ -46,7 +46,7 @@ func show_data_for_card(card : ICardInstance) -> void:
 
 	for mood in IMoodPossessor.id(card)._active_moods:
 		var mood_label := Label.new()
-		mood_label.text = mood.name
+		mood_label.text = str(mood)
 		moods_holder.add_child(mood_label)
 
 	var stat_db : Dictionary = IStatisticPossessor.id(card)._statistic_db

@@ -20,6 +20,25 @@ mouse_filter = 1
 script = ExtResource("1_68p1r")
 metadata/_edit_lock_ = true
 
+[node name="DEVELOPER" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="EFFECT-RESOLVER-VIEWER" parent="DEVELOPER" instance=ExtResource("6_6ht5e")]
+unique_name_in_owner = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 3
+gui_disable_input = true
+initial_position = 2
+size = Vector2i(1024, 360)
+theme = ExtResource("7_ndtgr")
+
+[node name="CARD-DATA-VIEWER" parent="DEVELOPER" instance=ExtResource("8_xoc3b")]
+unique_name_in_owner = true
+handle_input_locally = false
+gui_disable_input = true
+initial_position = 1
+size = Vector2i(600, 300)
+
 [node name="CARD-INFO-PANEL" type="Panel" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
@@ -68,20 +87,3 @@ grow_vertical = 0
 [node name="HAND-UI" parent="HAND-PANEL" instance=ExtResource("7_ce31p")]
 unique_name_in_owner = true
 layout_mode = 1
-
-[node name="DEVELOPER" type="Node" parent="."]
-unique_name_in_owner = true
-
-[node name="EFFECT-RESOLVER-VIEWER" parent="DEVELOPER" instance=ExtResource("6_6ht5e")]
-unique_name_in_owner = true
-handle_input_locally = false
-canvas_item_default_texture_filter = 3
-initial_position = 2
-size = Vector2i(1024, 360)
-theme = ExtResource("7_ndtgr")
-
-[node name="CARD-DATA-VIEWER" parent="DEVELOPER" instance=ExtResource("8_xoc3b")]
-unique_name_in_owner = true
-handle_input_locally = false
-initial_position = 1
-size = Vector2i(600, 300)

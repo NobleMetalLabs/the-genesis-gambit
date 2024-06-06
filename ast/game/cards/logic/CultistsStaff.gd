@@ -15,5 +15,5 @@ func process(_gs : GamefieldState, _effect_resolver : EffectResolver) -> void:
 				break
 		if not mood_applied:
 			target_moods.apply_mood(StatisticMood.new(
-				Genesis.Statistic.STRENGTH, Mood.MoodEffect.NEGATIVE, instance_owner, 2
+				instance_owner, Genesis.Statistic.STRENGTH, Mood.MoodEffect.NEGATIVE, 2
 			))

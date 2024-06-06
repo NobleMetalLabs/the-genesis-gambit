@@ -34,7 +34,6 @@ func resolve(effect_resolver : EffectResolver) -> void:
 			#creature_stats.set_statistic(Genesis.Statistic.IS_IN_HAND, false)
 		if previous_object_owner is CardInDeck:
 			player_owner.deck.remove_card(previous_object_owner)
-			creature_stats.set_statistic(Genesis.Statistic.IS_IN_DECK, false) #TODO: DeckRemoveCardEffect???
 		previous_object_owner.queue_free()
 	creature_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, true)
 

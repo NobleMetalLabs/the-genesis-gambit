@@ -17,3 +17,8 @@ func _init(provided_identifiers : Array[Identifier]) -> void:
 		self.add_child(IStatisticPossessor.new())
 	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is IMoodPossessor): 
 		self.add_child(IMoodPossessor.new())
+
+	self.name = "CardInDeck"
+
+func _to_string() -> String:
+	return "CardInDeck<%s>" % ICardInstance.id(self)

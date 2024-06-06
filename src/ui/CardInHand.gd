@@ -28,7 +28,12 @@ func _init(provided_identifiers : Array[Identifier]) -> void:
 
 	card_frontend = CardFrontend.instantiate()
 	self.add_child(card_frontend)
-	
+
+	self.name = "CardInHand"
+
+func _to_string() -> String:
+	return "CardInHand<%s>" % ICardInstance.id(self)
+
 func _gui_input(event : InputEvent) -> void:
 	if not event is InputEventMouseButton: return
 	if not event.button_index == MOUSE_BUTTON_LEFT: return

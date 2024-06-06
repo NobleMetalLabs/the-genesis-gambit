@@ -41,9 +41,8 @@ func resolve(effect_resolver : EffectResolver) -> void:
 	player_owner.cards_on_field.append(creature)
 	Router.gamefield.place_card(creature, position)
 
-	if self.requester is Action:
-		if Router.client_ui.current_card_ghost != null:
-			Router.client_ui.current_card_ghost.queue_free()
+	if Router.client_ui.current_card_ghost != null:
+		Router.client_ui.current_card_ghost.queue_free()
 
 	creature_stats.set_statistic(Genesis.Statistic.WAS_JUST_PLAYED, true)
 	var just_played_expire_effect := SetStatisticEffect.new(creature_stats, Genesis.Statistic.WAS_JUST_PLAYED, false)

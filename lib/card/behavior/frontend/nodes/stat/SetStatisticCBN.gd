@@ -4,7 +4,7 @@ extends CardBehaviorNode
 func _init() -> void:
 	super("SetStatistic",
 	[
-		CardBehaviorArgument.targetable("target"), 
+		#CardBehaviorArgument.targetable("target"), 
 		CardBehaviorArgument.string_name("stat_name"),
 		CardBehaviorArgument.string_name("amount"),
 	], [],

@@ -2,7 +2,7 @@ class_name MathCBN
 extends CardBehaviorNode
 
 func _init() -> void:
-	super(
+	super("Math",
 		[
 			CardBehaviorArgument.variant("num1",
 				[

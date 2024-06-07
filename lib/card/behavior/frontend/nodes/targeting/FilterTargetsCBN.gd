@@ -5,9 +5,9 @@ extends CardBehaviorNode
 func _init() -> void:
 	super("FilterTargets",
 	[
-		CardBehaviorArgumentArray.from(
-			CardBehaviorArgument.targetable("input"),
-		),
+		#CardBehaviorArgumentArray.from(
+			#CardBehaviorArgument.targetable("input"),
+		#),
 		CardBehaviorArgument.string_name("field"),
 		CardBehaviorArgument.variant("value", 
 			[
@@ -18,7 +18,7 @@ func _init() -> void:
 		),
 	], 
 	[
-		CardBehaviorArgumentArray.from(
-			CardBehaviorArgument.targetable("result"),
-		),
+		#CardBehaviorArgumentArray.from(
+			#CardBehaviorArgument.targetable("result"),
+		#),
 	]) 

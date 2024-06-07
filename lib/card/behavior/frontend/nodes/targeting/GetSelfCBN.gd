@@ -4,7 +4,9 @@ extends CardBehaviorNode
 func _init() -> void:
 	super("GetSelf",
 		[], 
-		[CardBehaviorArgument.targetable("self")]
+		[
+			#CardBehaviorArgument.targetable("self")
+		]
 	)
 
 # func process(inputs : Array) -> Array:

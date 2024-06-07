@@ -1,8 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ct0http1wnjx3"]
 
 [ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/DeveloperToolTheme.tres" id="1_onhv0"]
-[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CardBehaviorEditorGraphEdit.gd" id="2_y4uu3"]
-[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CBEditorGraphNode.gd" id="3_8umt2"]
+[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CBEditorGraphEdit.gd" id="2_y4uu3"]
 [ext_resource type="Script" path="res://src/dev/cardbehavioreditor/AddNodeMenu.gd" id="4_kbddx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cgyb"]
@@ -66,13 +65,20 @@ script = ExtResource("2_y4uu3")
 
 [node name="AddNodeMenu" type="PopupPanel" parent="Panel/VBoxContainer/GraphEdit"]
 unique_name_in_owner = true
-size = Vector2i(250, 500)
+size = Vector2i(500, 750)
 script = ExtResource("4_kbddx")
 
 [node name="Tree" type="Tree" parent="Panel/VBoxContainer/GraphEdit/AddNodeMenu"]
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 246.0
-offset_bottom = 496.0
+offset_right = 496.0
+offset_bottom = 746.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+hide_root = true
+
+[node name="GraphElement" type="GraphElement" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

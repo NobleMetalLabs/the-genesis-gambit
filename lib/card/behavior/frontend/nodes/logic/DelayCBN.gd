@@ -2,7 +2,7 @@ class_name DelayCBN
 extends CardBehaviorNode
 
 func _init() -> void:
-	super(
+	super("Delay",
 		[
 			CardBehaviorArgument.bool("input"), 
 			CardBehaviorArgument.int("length"),

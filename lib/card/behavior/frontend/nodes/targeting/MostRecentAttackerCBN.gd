@@ -3,7 +3,11 @@ extends CardBehaviorNode
 
 func _init() -> void:
 	super("MostRecentAttacker",
-		[CardBehaviorArgument.targetable("subject")], 
-		[CardBehaviorArgument.targetable("attacker")],
+		[
+			#CardBehaviorArgument.targetable("subject")
+		], 
+		[
+			#CardBehaviorArgument.targetable("attacker")
+		],
 	)
 

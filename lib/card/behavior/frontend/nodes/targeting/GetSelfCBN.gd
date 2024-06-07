@@ -2,7 +2,7 @@ class_name GetSelfCBN
 extends CardBehaviorNode
 
 func _init() -> void:
-	super(
+	super("GetSelf",
 		[], 
 		[CardBehaviorArgument.targetable("self")]
 	)

@@ -2,7 +2,7 @@ class_name OperationCBN
 extends CardBehaviorNode
 
 func _init() -> void:
-	super(
+	super("Operation",
 		[
 			CardBehaviorArgument.bool("num1"), 
 			CardBehaviorArgument.bool("num2"),

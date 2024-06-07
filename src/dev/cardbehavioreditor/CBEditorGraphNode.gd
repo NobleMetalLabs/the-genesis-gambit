@@ -1,55 +1,39 @@
 class_name CBEditorGraphNode
 extends GraphNode
 
-var targeted : bool :
-	get: return targeted
-	set(value): 
-		targeted = value
-		#self.overlay = GraphNode.OVERLAY_POSITION if value else GraphNode.OVERLAY_DISABLED
-		push_navigation_direction("NONE")
+var node_internal : CardBehaviorNodeInstance
 
-var targeted_index : int
-var targeting_dir : StringName
+func _init(_node_internal : CardBehaviorNodeInstance, _rect : Rect2) -> void:
+	self.node_internal = _node_internal
+	self.position = _rect.position
+	self.size = _rect.size
 
-@export var node : CardBehaviorNode : 
-	get:
-		return node
-	set(value):
-		node = value
-		node.setup(self)
+	self.title = _node_internal.node_logic.name
 
-func _gui_input(event : InputEvent) -> void:
-	if not event is InputEventMouseButton: return
-	event = event as InputEventMouseButton
-	if event.double_click:
-		node_targeted.emit(self)
+	print(_node_internal)
+	print(_node_internal.node_logic)
+	print(_node_internal.node_logic.input_args)
+	print(_node_internal.node_logic.output_args)
 
-func push_navigation_direction(dir : StringName) -> void:
-	if dir == targeting_dir:
-		_advance_selected_idx()
-	else:
-		_new_targeting_dir(dir)
+	var input_args : Array[CardBehaviorArgument] = _node_internal.node_logic.input_args
+	var output_args : Array[CardBehaviorArgument] = _node_internal.node_logic.output_args
 
-func _advance_selected_idx() -> void:
-	var str_dir : String = ""
-	match(targeting_dir.to_upper()):
-		"INPUT": str_dir = "left"
-		"OUTPUT": str_dir = "right"
-		_: return
-	self.call("set_slot_color_%s" % [str_dir], targeted_index, Color.WHITE)
-	targeted_index += 1
-	if not self.call("is_slot_enabled_%s" % [str_dir], targeted_index): 
-		targeted_index = 0
-	self.call("set_slot_color_%s" % [str_dir], targeted_index, Color.YELLOW)
+	for i in range(max(input_args.size(), output_args.size())):
+		var slot_cont := Control.new()
+		slot_cont.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		self.add_child(slot_cont)
 
-func _new_targeting_dir(dir : StringName) -> void:
-	for idx in range(0, self.get_child_count()):
-		self.set_slot_color_left(idx, Color.WHITE)
-		self.set_slot_color_right(idx, Color.WHITE)
-	targeted_index = 0
-	match(dir.to_upper()):
-		"INPUT": self.set_slot_color_left(targeted_index, Color.YELLOW)
-		"OUTPUT": self.set_slot_color_right(targeted_index, Color.YELLOW)
-	targeting_dir = dir
+	# I LOVE GODOT ENGINE!!!!!
+	var cap_cont := Control.new()
+	cap_cont.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	self.add_child(cap_cont)
 
-signal node_targeted(node : CBEditorGraphNode)
+	for i in range(input_args.size()):
+		var input_arg : CardBehaviorArgument = input_args[i]
+		self.set_slot_enabled_left(i, true)
+		self.set_slot_color_left(i, CardBehaviorArgument.ArgumentColors[input_arg.type])
+
+	for i in range(output_args.size()):
+		var output_arg : CardBehaviorArgument = output_args[i]
+		self.set_slot_enabled_right(i, true)
+		self.set_slot_color_right(i, CardBehaviorArgument.ArgumentColors[output_arg.type])

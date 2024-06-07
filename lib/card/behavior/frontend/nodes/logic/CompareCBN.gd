@@ -2,7 +2,7 @@ class_name CompareCBN
 extends CardBehaviorNode
 
 func _init() -> void:
-	super(
+	super("Compare",
 		[
 			CardBehaviorArgument.bool("a"), 
 			CardBehaviorArgument.bool("b"),

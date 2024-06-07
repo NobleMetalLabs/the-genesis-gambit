@@ -1,16 +1,25 @@
-class_name CardBehaviorEditorGraphEdit
+class_name CBEditorGraphEdit
 extends GraphEdit
 
 func _ready() -> void:
 	setup_input_actions()
 	setup_node_creation()
 	setup_node_connection()
+	return
 
 func _input(_event : InputEvent) -> void:
 	poll_node_selection()
 	poll_node_creation()
 	poll_node_movement()
 	poll_node_navigation()
+	return
+
+func load_visual_card_behavior(vcb : VisualCardBehavior) -> void:
+	for node_idx in range(vcb.nodes.size()):
+		var node_instance : CardBehaviorNodeInstance = vcb.nodes[node_idx]
+		var node_position : Rect2 = vcb.node_positions[node_idx]
+		var _ui_node : CBEditorGraphNode = create_node(node_instance, node_position)
+	# connect nodes
 
 @export var targeted_node : CBEditorGraphNode : 
 	get: return targeted_node
@@ -81,8 +90,8 @@ func setup_node_creation() -> void:
 		rect.size = Vector2(add_node_menu.size)
 		add_node_menu.popup(rect)
 	)
-	add_node_menu.create_node.connect(func(node_internal : CardBehaviorNode, pos : Vector2) -> void:
-		var new_node : CBEditorGraphNode = create_node(node_internal, pos)
+	add_node_menu.create_node.connect(func(node_internal : CardBehaviorNodeInstance, pos : Vector2) -> void:
+		var new_node : CBEditorGraphNode = create_node(node_internal, Rect2(pos, Vector2.ONE * 100))
 		if targeted_node != null:
 			match(targeted_node.targeting_dir):
 				"INPUT":
@@ -101,13 +110,10 @@ func setup_node_creation() -> void:
 					return
 	)
 	
-func create_node(node_internal : CardBehaviorNode, pos : Vector2) -> CBEditorGraphNode:
-	var new_node : CBEditorGraphNode = template_node.instantiate()
+func create_node(node_internal : CardBehaviorNodeInstance, rect : Rect2) -> CBEditorGraphNode:
+	var new_node := CBEditorGraphNode.new(node_internal, rect)
 	self.add_child(new_node)
-	new_node.set_position_offset(pos)
-	new_node.set_size(node_internal.get_script().get_node_size())
-	#new_node.node = node_internal
-	new_node.node_targeted.connect(func(n_node : CBEditorGraphNode) -> void: self.targeted_node = n_node)
+	#new_node.node_targeted.connect(func(n_node : CBEditorGraphNode) -> void: self.targeted_node = n_node)
 	return new_node
 
 func poll_node_creation() -> void:

@@ -2,8 +2,10 @@ class_name RequestTargetsCBN
 extends CardBehaviorNode
 
 func _init() -> void:
-	super(
+	super("RequestTargets",
 		[], 
-		[CardBehaviorArgumentArray.targetable("attacker")],
+		[CardBehaviorArgumentArray.from(
+			CardBehaviorArgument.targetable("attacker")
+		)],
 	)
 

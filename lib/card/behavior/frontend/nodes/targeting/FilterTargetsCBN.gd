@@ -3,9 +3,11 @@ extends CardBehaviorNode
 
 #TODO: This will be a nightmare
 func _init() -> void:
-	super(
+	super("FilterTargets",
 	[
-		CardBehaviorArgumentArray.targetable("input"),
+		CardBehaviorArgumentArray.from(
+			CardBehaviorArgument.targetable("input"),
+		),
 		CardBehaviorArgument.string_name("field"),
 		CardBehaviorArgument.variant("value", 
 			[
@@ -16,5 +18,7 @@ func _init() -> void:
 		),
 	], 
 	[
-		CardBehaviorArgumentArray.targetable("result"),
+		CardBehaviorArgumentArray.from(
+			CardBehaviorArgument.targetable("result"),
+		),
 	]) 

@@ -2,7 +2,9 @@ class_name AllTargetsInAreaCBN
 extends CardBehaviorNode
 
 func _init() -> void:
-	super(
+	super("AllTargetsInArea",
 		[CardBehaviorArgument.area("area")], 
-		[CardBehaviorArgumentArray.targetable("hits")],
+		[CardBehaviorArgumentArray.from(
+			CardBehaviorArgument.targetable("hits")
+		)],
 	)

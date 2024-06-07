@@ -2,7 +2,7 @@ class_name HasSignalFiredCBN
 extends CardBehaviorNode
 
 func _init() -> void:
-	super(
+	super("HasSignalFired",
 		[
 			CardBehaviorArgument.targetable("target"), 
 			CardBehaviorArgument.string_name("signal"),

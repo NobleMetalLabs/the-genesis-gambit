@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=9 format=3 uid="uid://buo11jw8ac2ew"]
 
-[ext_resource type="FontFile" uid="uid://d2gqh1qwes1bj" path="res://ast/ui/fonts/unifont.ttf" id="1_c4yin"]
+[ext_resource type="FontFile" uid="uid://ca318g1ssc2cn" path="res://ast/ui/fonts/unifont.ttf" id="1_c4yin"]
 [ext_resource type="FontFile" uid="uid://d2oaifr2k5au7" path="res://ast/ui/fonts/counting_apples.ttf" id="2_dgtyw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_17jlr"]

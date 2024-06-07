@@ -1,0 +1,123 @@
+[gd_scene load_steps=7 format=3 uid="uid://ct0http1wnjx3"]
+
+[ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/DeveloperToolTheme.tres" id="1_onhv0"]
+[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CardBehaviorEditorGraphEdit.gd" id="2_y4uu3"]
+[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CBEditorGraphNode.gd" id="3_8umt2"]
+[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/AddNodeMenu.gd" id="4_kbddx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cgyb"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dup3u"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[node name="CardBehaviorEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_onhv0")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_0cgyb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="MenuBar" type="MenuBar" parent="Panel/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 20
+flat = true
+
+[node name="File" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MenuBar"]
+item_count = 3
+item_0/text = "Open"
+item_0/id = 0
+item_1/text = "Save"
+item_1/id = 1
+item_2/text = "Exit"
+item_2/id = 2
+
+[node name="Edit" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MenuBar"]
+
+[node name="View" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MenuBar"]
+
+[node name="GraphEdit" type="GraphEdit" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+connection_lines_antialiased = false
+minimap_enabled = false
+show_zoom_buttons = false
+show_minimap_button = false
+show_arrange_button = false
+script = ExtResource("2_y4uu3")
+
+[node name="NavigationSelectionIndicator" type="GraphElement" parent="Panel/VBoxContainer/GraphEdit"]
+visible = false
+layout_mode = 0
+offset_left = 441.0
+offset_top = 125.0
+offset_right = 481.0
+offset_bottom = 165.0
+position_offset = Vector2(441, 125)
+
+[node name="Border" type="Panel" parent="Panel/VBoxContainer/GraphEdit/NavigationSelectionIndicator"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_dup3u")
+
+[node name="GraphNode" type="GraphNode" parent="Panel/VBoxContainer/GraphEdit"]
+layout_mode = 0
+offset_left = 443.0
+offset_top = 127.0
+offset_right = 517.0
+offset_bottom = 184.0
+mouse_filter = 1
+position_offset = Vector2(443, 127)
+title = "GetSelf"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("3_8umt2")
+
+[node name="Control" type="Control" parent="Panel/VBoxContainer/GraphEdit/GraphNode"]
+layout_mode = 2
+
+[node name="AddNodeMenu" type="PopupPanel" parent="Panel/VBoxContainer/GraphEdit"]
+unique_name_in_owner = true
+size = Vector2i(250, 500)
+visible = true
+script = ExtResource("4_kbddx")
+
+[node name="Tree" type="Tree" parent="Panel/VBoxContainer/GraphEdit/AddNodeMenu"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 246.0
+offset_bottom = 496.0
+size_flags_horizontal = 3
+size_flags_vertical = 3

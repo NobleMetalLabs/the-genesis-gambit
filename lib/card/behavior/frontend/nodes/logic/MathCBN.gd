@@ -4,19 +4,20 @@ extends CardBehaviorNode
 func _init() -> void:
 	super("Math",
 		[
-			CardBehaviorArgument.variant("num1",
+			CardBehaviorArgument.variant("x"), 
+			CardBehaviorArgument.variant("y"),
+		],
+		[
+			CardBehaviorArgument.variant("result")
+		],
+		[
+			CardBehaviorArgument.indexed_options("domain",
 				[
-					"int",
-					"float",
-				]
-			), 
-			CardBehaviorArgument.variant("num2",
-				[
-					"int",
-					"float",
+					CardBehaviorArgument.ArgumentType.INT,
+					CardBehaviorArgument.ArgumentType.FLOAT
 				]
 			),
-			CardBehaviorArgument.string_name_options("operation",
+			CardBehaviorArgument.indexed_options("operation",
 				[
 					"add", 
 					"subtract", 
@@ -24,14 +25,6 @@ func _init() -> void:
 					"divide", 
 					"modulo",
 					"power",
-				]
-			),
-		], 
-		[
-			CardBehaviorArgument.variant("result",
-				[
-					"int",
-					"float",
 				]
 			)
 		]

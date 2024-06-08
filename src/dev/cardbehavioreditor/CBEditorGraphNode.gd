@@ -19,8 +19,8 @@ func _init(_node_internal : CardBehaviorNodeInstance, _rect : Rect2) -> void:
 	_setup_graphnode()
 
 func _setup_graphnode() -> void:
-	_setup_outputs()
 	_setup_options()
+	_setup_outputs()
 	_setup_inputs()
 
 	# I LOVE GODOT ENGINE!!!!!
@@ -38,6 +38,9 @@ func __new_label() -> Label:
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	return label
 
+func _setup_options() -> void:
+	pass
+
 func _setup_inputs() -> void:
 	var input_args : Array[CardBehaviorArgument] = node_internal.config.input_args
 	var index_offset : int = self.get_child_count()
@@ -48,12 +51,11 @@ func _setup_inputs() -> void:
 		self.add_child(input_label)
 
 		var input_arg : CardBehaviorArgument = input_args[i]
+		if input_arg.type == CardBehaviorArgument.ArgumentType.VARIANT:
+			input_arg.type = node_internal.option_values["domain"]
 		self.set_slot_enabled_left(index_offset + i, true)
 		self.set_slot_type_left(index_offset + i, input_arg.type)
 		self.set_slot_color_left(index_offset + i, CardBehaviorArgument.ArgumentColors[input_arg.type])
-
-func _setup_options() -> void:
-	pass
 
 func _setup_outputs() -> void:
 	var index_offset : int = self.get_child_count()
@@ -65,6 +67,8 @@ func _setup_outputs() -> void:
 		self.add_child(output_label)
 
 		var output_arg : CardBehaviorArgument = output_args[i]
+		if output_arg.type == CardBehaviorArgument.ArgumentType.VARIANT:
+			output_arg.type = node_internal.option_values["domain"]
 		self.set_slot_enabled_right(index_offset + i, true)
 		self.set_slot_type_right(index_offset + i, output_arg.type)
 		self.set_slot_color_right(index_offset + i, CardBehaviorArgument.ArgumentColors[output_arg.type])

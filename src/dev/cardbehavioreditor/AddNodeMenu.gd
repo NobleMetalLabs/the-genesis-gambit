@@ -37,13 +37,21 @@ func _input(_event : InputEvent) -> void:
 		if tree.get_selected() == null: return
 		handle_dialog_accept()
 
+var mouse_position : Vector2 = Vector2()
+func handle_dialog_show(_position : Vector2) -> void:
+	mouse_position = _position
+	var rect : Rect2 = Rect2(0, 0, 0, 0)
+	rect.position = _position
+	rect.size = Vector2(self.size)
+	self.popup(rect)
+
 func handle_dialog_accept() -> void:
 	var node_item : TreeItem = tree.get_selected()
 	if node_item.get_child_count() > 0: return
 	var node_path : StringName = node_item.get_text(0)
 	var node_instance := CardBehaviorNodeInstance.new(tree_to_nodes[node_item])
 	print("Creating node %s at %s" % [node_instance, self.position])
-	create_node.emit(node_instance, Vector2(self.position))
+	create_node.emit(node_instance, mouse_position)
 	while node_item != tree.get_root():
 		node_item = node_item.get_parent()
 		node_path = "%s/%s" % [node_item.get_text(0), node_path]

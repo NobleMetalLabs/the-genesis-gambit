@@ -6,7 +6,18 @@ func _init() -> void:
 	[
 		#CardBehaviorArgument.targetable("target"), 
 		CardBehaviorArgument.string_name("stat_name"),
-		CardBehaviorArgument.string_name("amount"),
-	], [],
+		CardBehaviorArgument.variant("amount"),
+	],
+	[],
+	[
+		CardBehaviorArgument.indexed_options("domain",
+			[
+				CardBehaviorArgument.ArgumentType.INT,
+				CardBehaviorArgument.ArgumentType.FLOAT,
+				CardBehaviorArgument.ArgumentType.BOOL,
+				CardBehaviorArgument.ArgumentType.STRING_NAME,
+			]
+		),
+	]
 	)
 

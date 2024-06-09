@@ -18,6 +18,7 @@ func load_visual_card_behavior(cbg : CardBehaviorGraph) -> void:
 	# connect nodes
 	for edge : CardBehaviorEdge in cbg.edges:
 		connect_node(edge.from_node, edge.from_port, edge.to_node, edge.to_port)
+	self.arrange_nodes()
 
 @onready var add_node_menu : PopupPanel = %"AddNodeMenu"
 
@@ -33,30 +34,24 @@ func setup_input_actions() -> void:
 	InputMap.action_add_event("ui_alternate", alternate_key_event)
 
 func setup_node_creation() -> void:
-	self.popup_request.connect(func(click_pos: Vector2) -> void:
-		var rect : Rect2 = Rect2(0, 0, 0, 0)
-		rect.position = click_pos
-		rect.size = Vector2(add_node_menu.size)
-		add_node_menu.popup(rect)
-	)
+	self.popup_request.connect(add_node_menu.handle_dialog_show)
 	add_node_menu.create_node.connect(
 		func(internal : CardBehaviorNodeInstance, pos : Vector2) -> void:
-			var rect : Rect2 = Rect2(pos, Vector2(200, 100))
-			create_node(internal, rect)
+			create_node(internal, pos)
 	)
 	
-func create_node(node_internal : CardBehaviorNodeInstance, rect : Rect2 = Rect2(Vector2.ZERO, Vector2.ONE)) -> CBEditorGraphNode:
-	var new_node := CBEditorGraphNode.new(node_internal, rect)
+func create_node(node_internal : CardBehaviorNodeInstance, pos : Vector2 = Vector2.ZERO) -> CBEditorGraphNode:
+	var new_node := CBEditorGraphNode.new(node_internal, (pos + self.scroll_offset) / self.zoom)
 	self.add_child(new_node)
 	#new_node.node_targeted.connect(func(n_node : CBEditorGraphNode) -> void: self.targeted_node = n_node)
-	print("Created node %s at %s" % [node_internal, new_node.position])
+	print("Created node %s at %s" % [node_internal, new_node.position_offset])
 	return new_node
 
 func poll_node_creation() -> void:
+	if self.get_viewport().gui_get_focus_owner() != self: return
 	if Input.is_action_just_pressed("ui_node_add"):
 		if Input.is_action_pressed("ui_alternate"): return
-		var menu_pos : Vector2 = get_local_mouse_position()
-		self.popup_request.emit(menu_pos)
+		add_node_menu.handle_dialog_show(get_local_mouse_position())
 
 func setup_node_connection() -> void:
 	self.connection_request.connect(handle_connection_request)

@@ -17,6 +17,7 @@ enum ArgumentType {
 }
 
 static var ArgumentColors : Dictionary = {
+	ArgumentType.VARIANT : Color.WHITE,
 	ArgumentType.INT : Color.CORNFLOWER_BLUE,
 	ArgumentType.FLOAT : Color.DODGER_BLUE,
 	ArgumentType.BOOL : Color.LIME_GREEN,
@@ -37,7 +38,7 @@ static func variant(_name : StringName) -> CardBehaviorArgument:
 	argument.default = null
 	return argument
 
-static func int(_name : StringName) -> CardBehaviorArgument:
+static func int(_name : StringName, _default : int = 0) -> CardBehaviorArgument:
 	var argument := CardBehaviorArgument.new(true)
 	argument.type = ArgumentType.INT
 	argument.name = _name
@@ -80,4 +81,33 @@ static func string_name_options(_name : StringName, _options : Array[StringName]
 	argument.meta = {
 		"options" : _options
 	}
+	return argument
+
+static func indexed_options(_name : StringName, _options : Array) -> CardBehaviorArgument:
+	if _options.is_empty():
+		push_error("CardBehaviorArgument.indexed_options: _options cannot be empty.")
+		return null
+	var argument := CardBehaviorArgument.new(true)
+	argument.type = ArgumentType.INT
+	argument.name = _name
+	argument.default = 0
+	argument.meta = {
+		"options" : _options
+	}
+	return argument
+
+static func area(_name : StringName, _default := Area2D.new()) -> CardBehaviorArgument:
+	var argument := CardBehaviorArgument.new(true)
+	argument.type = ArgumentType.AREA
+	argument.name = _name
+	argument.meta = {}
+	argument.default = _default
+	return argument
+
+static func targetable(_name : StringName, _default : ITargetable = null) -> CardBehaviorArgument:
+	var argument := CardBehaviorArgument.new(true)
+	argument.type = ArgumentType.TARGETABLE
+	argument.name = _name
+	argument.meta = {}
+	argument.default = _default
 	return argument

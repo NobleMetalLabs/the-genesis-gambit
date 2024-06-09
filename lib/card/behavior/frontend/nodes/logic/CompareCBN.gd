@@ -4,21 +4,28 @@ extends CardBehaviorNode
 func _init() -> void:
 	super("Compare",
 		[
-			CardBehaviorArgument.bool("a"), 
-			CardBehaviorArgument.bool("b"),
+			CardBehaviorArgument.variant("x"), 
+			CardBehaviorArgument.variant("y"),
 		],  
 		[
 			CardBehaviorArgument.bool("result")
 		],
 		[
-			CardBehaviorArgument.string_name_options("operation",
+			CardBehaviorArgument.indexed_options("domain",
 				[
-					"AND", 
-					"OR", 
-					"XOR",
-					"NAND", 
-					"NOR", 
-					"XNOR",
+					CardBehaviorArgument.ArgumentType.BOOL,
+					CardBehaviorArgument.ArgumentType.INT,
+					CardBehaviorArgument.ArgumentType.FLOAT
+				]
+			),
+			CardBehaviorArgument.indexed_options("operation",
+				[
+					"x == y", 
+					"x < y",
+					"x <= y", 
+					"x >= y", 
+					"x > y", 
+					"x != y",
 				]
 			)
 		]

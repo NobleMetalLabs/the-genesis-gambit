@@ -56,7 +56,6 @@ item_2/id = 2
 [node name="GraphEdit" type="GraphEdit" parent="Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-connection_lines_thickness = 3.0
 connection_lines_antialiased = false
 minimap_enabled = false
 show_zoom_buttons = false
@@ -78,3 +77,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 30
 hide_root = true
+
+[node name="GraphElement" type="GraphElement" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

@@ -1,13 +1,40 @@
-[gd_scene load_steps=5 format=3 uid="uid://ct0http1wnjx3"]
+[gd_scene load_steps=13 format=3 uid="uid://ct0http1wnjx3"]
 
 [ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/DeveloperToolTheme.tres" id="1_onhv0"]
+[ext_resource type="Script" path="res://src/dev/CardBehaviorEditor.gd" id="2_nu3a7"]
 [ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CBEditorGraphEdit.gd" id="2_y4uu3"]
+[ext_resource type="Script" path="res://src/dev/MenuBarMenu.gd" id="3_yjlo0"]
 [ext_resource type="Script" path="res://src/dev/cardbehavioreditor/AddNodeMenu.gd" id="4_kbddx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cgyb"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="CBEditor" type="Control"]
+[sub_resource type="InputEventKey" id="InputEventKey_okcei"]
+device = -1
+ctrl_pressed = true
+keycode = 79
+
+[sub_resource type="Shortcut" id="Shortcut_d7wip"]
+events = [SubResource("InputEventKey_okcei")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_jc3ou"]
+device = -1
+ctrl_pressed = true
+keycode = 83
+
+[sub_resource type="Shortcut" id="Shortcut_1od64"]
+events = [SubResource("InputEventKey_jc3ou")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_u7sys"]
+device = -1
+alt_pressed = true
+ctrl_pressed = true
+keycode = 81
+
+[sub_resource type="Shortcut" id="Shortcut_s8f34"]
+events = [SubResource("InputEventKey_u7sys")]
+
+[node name="CardBehaviorEditor" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,6 +42,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_onhv0")
+script = ExtResource("2_nu3a7")
 
 [node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -35,12 +63,14 @@ layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_right = 15
 
-[node name="MenuBar" type="MenuBar" parent="Panel/VBoxContainer/MarginContainer"]
+[node name="MENU_BAR" type="MenuBar" parent="Panel/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 20
 flat = true
+prefer_global_menu = false
 
-[node name="File" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MenuBar"]
+[node name="File" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU_BAR"]
 item_count = 3
 item_0/text = "Open"
 item_0/id = 0
@@ -48,12 +78,17 @@ item_1/text = "Save"
 item_1/id = 1
 item_2/text = "Exit"
 item_2/id = 2
+script = ExtResource("3_yjlo0")
+shortcuts = Array[Shortcut]([SubResource("Shortcut_d7wip"), SubResource("Shortcut_1od64"), SubResource("Shortcut_s8f34")])
 
-[node name="Edit" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MenuBar"]
+[node name="Edit" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU_BAR"]
+script = ExtResource("3_yjlo0")
 
-[node name="View" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MenuBar"]
+[node name="View" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU_BAR"]
+script = ExtResource("3_yjlo0")
 
-[node name="GraphEdit" type="GraphEdit" parent="Panel/VBoxContainer"]
+[node name="GRAPH_EDIT" type="GraphEdit" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 connection_lines_antialiased = false
@@ -63,12 +98,12 @@ show_minimap_button = false
 show_arrange_button = false
 script = ExtResource("2_y4uu3")
 
-[node name="AddNodeMenu" type="PopupPanel" parent="Panel/VBoxContainer/GraphEdit"]
+[node name="AddNodeMenu" type="PopupPanel" parent="Panel/VBoxContainer/GRAPH_EDIT"]
 unique_name_in_owner = true
 size = Vector2i(500, 750)
 script = ExtResource("4_kbddx")
 
-[node name="Tree" type="Tree" parent="Panel/VBoxContainer/GraphEdit/AddNodeMenu"]
+[node name="Tree" type="Tree" parent="Panel/VBoxContainer/GRAPH_EDIT/AddNodeMenu"]
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 496.0
@@ -77,8 +112,3 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 30
 hide_root = true
-
-[node name="GraphElement" type="GraphElement" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0

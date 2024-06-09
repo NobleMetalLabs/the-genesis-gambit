@@ -2,6 +2,9 @@ class_name CBEditorGraphNode
 extends GraphNode
 
 var node_internal : CardBehaviorNodeInstance
+var referenced_node : CBEditorGraphNode # only used by cooks
+
+@onready var graph_edit : CBEditorGraphEdit = get_parent()
 
 func _init(_node_internal : CardBehaviorNodeInstance, _pos : Vector2) -> void:
 	self.node_internal = _node_internal
@@ -13,6 +16,7 @@ func _init(_node_internal : CardBehaviorNodeInstance, _pos : Vector2) -> void:
 	_setup_graphnode()
 
 func _setup_graphnode() -> void:
+	#print("New Graphnode: %s" % self.node_internal.node_logic.name)
 	_setup_options()
 	_setup_outputs()
 	_setup_inputs()
@@ -70,7 +74,7 @@ func __get_value_or_default(arg : CardBehaviorArgument) -> Variant:
 
 func __set_domain(index: int ) -> void:
 	node_internal.argument_values["domain"] = index
-	print("domain set to %s" % CardBehaviorArgument.ArgumentType.keys()[index])
+	#print("domain set to %s" % CardBehaviorArgument.ArgumentType.keys()[index])
 
 func __get_domain() -> CardBehaviorArgument.ArgumentType:
 	var domain_arg : CardBehaviorArgument = node_internal.config.option_args[0]
@@ -88,11 +92,11 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 	var label : Label = __new_label(arg.name, type)
 	arg_cont.add_child(label)
 	
-	print("creating control for %s with type %s" % [arg.name, CardBehaviorArgument.ArgumentType.keys()[arg.type]])
+	#print("creating control for %s with type %s" % [arg.name, CardBehaviorArgument.ArgumentType.keys()[arg.type]])
 	var argument_type : CardBehaviorArgument.ArgumentType = arg.type
 	if argument_type == CardBehaviorArgument.ArgumentType.VARIANT:
 		argument_type = __get_domain()
-		print("(as %s)" % CardBehaviorArgument.ArgumentType.keys()[argument_type])
+		#print("(as %s)" % CardBehaviorArgument.ArgumentType.keys()[argument_type])
 	match (argument_type):
 		CardBehaviorArgument.ArgumentType.INT:
 			if arg.name == "domain":
@@ -114,6 +118,9 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 					for arg_option : Variant in arg.meta["options"]:
 						option_button.add_item(str(arg_option).to_pascal_case())
 					option_button.selected = __get_value_or_default(arg)
+					option_button.item_selected.connect(
+						func(index : int) -> void: node_internal.argument_values[arg.name] = arg.meta["options"][index]
+					)
 					arg_cont.add_child(option_button)
 				else:
 					var spinbox := SpinBox.new()
@@ -122,6 +129,9 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 					spinbox.allow_greater = true
 					spinbox.allow_lesser = true
 					spinbox.value = __get_value_or_default(arg)
+					spinbox.value_changed.connect(
+						func(value : float) -> void: node_internal.argument_values[arg.name] = int(value)
+					)
 					arg_cont.add_child(spinbox)	
 		CardBehaviorArgument.ArgumentType.FLOAT:
 			if type != ArgType.OUTPUT:
@@ -132,6 +142,9 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 				spinbox.allow_lesser = true
 				spinbox.value = __get_value_or_default(arg)
 				spinbox.step = 0.01
+				spinbox.value_changed.connect(
+					func(value : float) -> void: node_internal.argument_values[arg.name] = value
+				)
 				arg_cont.add_child(spinbox)
 		CardBehaviorArgument.ArgumentType.BOOL:
 			if type != ArgType.OUTPUT:
@@ -140,6 +153,9 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 				checkbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 				if node_internal.argument_values.has(arg.name):
 					checkbox.button_pressed = __get_value_or_default(arg)
+				checkbox.toggled.connect(
+					func(value : bool) -> void: node_internal.argument_values[arg.name] = value
+				)
 				arg_cont.add_child(checkbox)
 		CardBehaviorArgument.ArgumentType.STRING_NAME:
 			if type != ArgType.OUTPUT:
@@ -149,6 +165,9 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 				label.size_flags_horizontal = Control.SIZE_SHRINK_END
 				if node_internal.argument_values.has(arg.name):
 					line_edit.text = __get_value_or_default(arg)
+				line_edit.text_changed.connect(
+					func(value : String) -> void: node_internal.argument_values[arg.name] = value
+				)
 				arg_cont.add_child(line_edit)
 	if type != ArgType.OPTION:
 		arg_cont.move_child(label, -1)
@@ -185,7 +204,7 @@ func _setup_inputs(overwrite : bool = false) -> void:
 		if self.get_input_port_count() > 0:
 			index_offset = self.get_input_port_slot(0)
 	var input_args : Array[CardBehaviorArgument] = node_internal.config.input_args
-	print(index_offset)
+	print("setting up inputs [%s] at offset <%s>" % [input_args, index_offset])
 	for i in range(input_args.size()):
 		var slot_index : int = index_offset + i
 		var input_arg_cont : Control = __get_control(input_args[i], ArgType.INPUT)
@@ -217,7 +236,7 @@ func _setup_outputs(overwrite : bool = false) -> void:
 		if self.get_output_port_count() > 0:
 			index_offset = self.get_output_port_slot(0)
 	var output_args : Array[CardBehaviorArgument] = node_internal.config.output_args
-	print(index_offset)
+	print("setting up outputs [%s] at offset <%s>" % [output_args, index_offset])
 	for i in range(output_args.size()):
 		var slot_index : int = index_offset + i
 		var output_arg_cont : Control = __get_control(output_args[i], ArgType.OUTPUT)

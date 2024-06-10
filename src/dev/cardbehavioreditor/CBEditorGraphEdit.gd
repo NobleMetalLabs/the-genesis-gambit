@@ -5,7 +5,7 @@ extends GraphEdit
 
 func _ready() -> void:
 	setup_input_actions()
-	setup_node_creation()
+	setup_right_click_menu()
 	setup_node_deletion()
 	setup_node_connection()
 	return
@@ -31,7 +31,7 @@ func refresh() -> void:
 	self.arrange_nodes()
 	self.arrange_nodes() # I LOVE GODOT ENGINE !!!!!!!
 
-@onready var add_node_menu : PopupPanel = %"AddNodeMenu"
+@onready var right_click_menu : RightClickMenu = %"RightClickMenu"
 
 func setup_input_actions() -> void:
 	InputMap.add_action("ui_node_add")
@@ -44,9 +44,9 @@ func setup_input_actions() -> void:
 	alternate_key_event.keycode = KEY_SHIFT
 	InputMap.action_add_event("ui_alternate", alternate_key_event)
 
-func setup_node_creation() -> void:
-	self.popup_request.connect(add_node_menu.handle_dialog_show)
-	add_node_menu.create_node.connect(
+func setup_right_click_menu() -> void:
+	self.popup_request.connect(right_click_menu.handle_dialog_show)
+	right_click_menu.create_node.connect(
 		func(internal : CardBehaviorNodeInstance, pos : Vector2) -> void:
 			var node : CBEditorGraphNode = create_node(internal, pos)
 			editor.currently_editing_card_behavior.nodes.append(node.node_internal)
@@ -85,7 +85,7 @@ func poll_node_creation() -> void:
 	if self.get_viewport().gui_get_focus_owner() != self: return
 	if Input.is_action_just_pressed("ui_node_add"):
 		if Input.is_action_pressed("ui_alternate"): return
-		add_node_menu.handle_dialog_show(get_local_mouse_position())
+		right_click_menu.handle_dialog_show(get_local_mouse_position())
 
 func setup_node_connection() -> void:
 	self.connection_request.connect(handle_connection_request)

@@ -7,6 +7,10 @@ extends Control
 var currently_editing_card_behavior := CardBehaviorGraph.new()
 
 func _ready() -> void:
+	var window : Window = get_tree().get_root()
+	window.title = "Card Behavior Editor"
+	window.content_scale_size = Vector2.ZERO
+
 	for menu : MenuBarMenu in menu_bar.get_children():
 		menu.option_pressed.connect(handle_menu_pressed)
 

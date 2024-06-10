@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://src/dev/CardBehaviorEditor.gd" id="2_nu3a7"]
 [ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CBEditorGraphEdit.gd" id="2_y4uu3"]
 [ext_resource type="Script" path="res://src/dev/MenuBarMenu.gd" id="3_yjlo0"]
-[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/AddNodeMenu.gd" id="4_kbddx"]
+[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/RightClickMenu.gd" id="5_aex4o"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cgyb"]
 bg_color = Color(0, 0, 0, 1)
@@ -90,6 +90,7 @@ script = ExtResource("3_yjlo0")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+scroll_offset = Vector2(-240, -24)
 right_disconnects = true
 connection_lines_antialiased = false
 minimap_enabled = false
@@ -98,19 +99,6 @@ show_minimap_button = false
 show_arrange_button = false
 script = ExtResource("2_y4uu3")
 
-[node name="AddNodeMenu" type="PopupPanel" parent="Panel/VBoxContainer/GRAPH_EDIT"]
+[node name="RightClickMenu" type="PopupMenu" parent="Panel/VBoxContainer/GRAPH_EDIT"]
 unique_name_in_owner = true
-size = Vector2i(500, 750)
-script = ExtResource("4_kbddx")
-
-[node name="Tree" type="Tree" parent="Panel/VBoxContainer/GRAPH_EDIT/AddNodeMenu"]
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 496.0
-offset_bottom = 746.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 30
-hide_root = true
-
-[node name="PopupMenu" type="PopupMenu" parent="."]
+script = ExtResource("5_aex4o")

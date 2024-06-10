@@ -73,7 +73,6 @@ prefer_global_menu = false
 [node name="File" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU_BAR"]
 item_count = 3
 item_0/text = "Open"
-item_0/id = 0
 item_1/text = "Save"
 item_1/id = 1
 item_2/text = "Exit"

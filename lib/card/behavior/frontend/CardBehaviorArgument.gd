@@ -12,8 +12,6 @@ enum ArgumentType {
 	FLOAT,
 	BOOL,
 	STRING_NAME,
-	AREA,
-	TARGETABLE
 }
 
 static var ArgumentColors : Dictionary = {
@@ -22,8 +20,6 @@ static var ArgumentColors : Dictionary = {
 	ArgumentType.FLOAT : Color.DODGER_BLUE,
 	ArgumentType.BOOL : Color.LIME_GREEN,
 	ArgumentType.STRING_NAME : Color.GOLDENROD,
-	ArgumentType.AREA : Color.DARK_ORCHID,
-	ArgumentType.TARGETABLE : Color.CRIMSON,
 }
 
 func _init(static_instant : bool = false) -> void:
@@ -96,18 +92,20 @@ static func indexed_options(_name : StringName, _options : Array) -> CardBehavio
 	}
 	return argument
 
-static func area(_name : StringName, _default := Area2D.new()) -> CardBehaviorArgument:
-	var argument := CardBehaviorArgument.new(true)
-	argument.type = ArgumentType.AREA
-	argument.name = _name
-	argument.meta = {}
-	argument.default = _default
-	return argument
-
-static func targetable(_name : StringName, _default : ITargetable = null) -> CardBehaviorArgument:
-	var argument := CardBehaviorArgument.new(true)
-	argument.type = ArgumentType.TARGETABLE
-	argument.name = _name
-	argument.meta = {}
-	argument.default = _default
+static func tiered_indexed_options_statstic() -> CardBehaviorArgument:
+	var argument := CardBehaviorArgument.indexed_options("statistic", Genesis.Statistic.keys())
+	var options : Array = argument.meta["options"]
+	var tiered_options_schema : Dictionary = {
+		"BASIC" : [0, 4],
+		"STATE" : [5, 23],
+		"REFERENCES" : [24, 24],
+		"ABILITY" : [25, 31],
+		"COUNTS" : [32, 37],
+		"PLAYER" : [38, 47],
+	}
+	var tiered_options : Dictionary = {}
+	for tier : String in tiered_options_schema.keys():
+		var tier_range : Array = tiered_options_schema[tier]
+		tiered_options[tier] = options.slice(tier_range[0], tier_range[1] + 1)
+	argument.meta["tiered_options"] = tiered_options
 	return argument

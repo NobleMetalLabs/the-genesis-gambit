@@ -5,7 +5,7 @@ func _init() -> void:
 	super("SetStatistic",
 	[
 		#CardBehaviorArgument.targetable("target"), 
-		CardBehaviorArgument.string_name("stat_name"),
+		CardBehaviorArgument.tiered_indexed_options_statstic(),
 		CardBehaviorArgument.variant("amount"),
 	],
 	[],

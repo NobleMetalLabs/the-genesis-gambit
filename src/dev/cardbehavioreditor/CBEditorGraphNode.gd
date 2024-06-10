@@ -204,7 +204,7 @@ func _setup_inputs(overwrite : bool = false) -> void:
 		if self.get_input_port_count() > 0:
 			index_offset = self.get_input_port_slot(0)
 	var input_args : Array[CardBehaviorArgument] = node_internal.config.input_args
-	print("setting up inputs [%s] at offset <%s>" % [input_args, index_offset])
+	#print("setting up inputs [%s] at offset <%s>" % [input_args, index_offset])
 	for i in range(input_args.size()):
 		var slot_index : int = index_offset + i
 		var input_arg_cont : Control = __get_control(input_args[i], ArgType.INPUT)
@@ -236,7 +236,7 @@ func _setup_outputs(overwrite : bool = false) -> void:
 		if self.get_output_port_count() > 0:
 			index_offset = self.get_output_port_slot(0)
 	var output_args : Array[CardBehaviorArgument] = node_internal.config.output_args
-	print("setting up outputs [%s] at offset <%s>" % [output_args, index_offset])
+	#print("setting up outputs [%s] at offset <%s>" % [output_args, index_offset])
 	for i in range(output_args.size()):
 		var slot_index : int = index_offset + i
 		var output_arg_cont : Control = __get_control(output_args[i], ArgType.OUTPUT)

@@ -4,7 +4,7 @@ extends Control
 @onready var graph_edit : CBEditorGraphEdit = $"%GRAPH_EDIT"
 @onready var menu_bar : MenuBar = $"%MENU_BAR"
 
-var currently_editting_card_behavior := CardBehaviorGraph.new()
+var currently_editing_card_behavior := CardBehaviorGraph.new()
 
 func _ready() -> void:
 	for menu : MenuBarMenu in menu_bar.get_children():
@@ -23,7 +23,7 @@ func handle_file_pressed(option : StringName) -> void:
 			open_file()
 
 func save_file() -> void:
-	var cereal := CardBehaviorGraphSerializable.serialize(currently_editting_card_behavior)
+	var cereal := CardBehaviorGraphSerializable.serialize(currently_editing_card_behavior)
 	var dict : Dictionary = Utils.object_to_dict(cereal)
 	print(JSON.stringify(dict))
 	var file_access := FileAccess.open("C://Users/ML/Desktop/test_card_behavior.gcb", FileAccess.WRITE)
@@ -37,5 +37,5 @@ func open_file() -> void:
 	file_access.close()
 	var serializable := CardBehaviorGraphSerializable.from_dict(dict)
 	var behavior : CardBehaviorGraph = serializable.deserialize()
-	currently_editting_card_behavior = behavior
+	currently_editing_card_behavior = behavior
 	graph_edit.refresh()

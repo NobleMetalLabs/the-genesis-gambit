@@ -90,6 +90,7 @@ script = ExtResource("3_yjlo0")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+right_disconnects = true
 connection_lines_antialiased = false
 minimap_enabled = false
 show_zoom_buttons = false

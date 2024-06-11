@@ -30,6 +30,8 @@ bg_color = Color(0.12549, 0.12549, 0.12549, 1)
 
 [resource]
 Button/fonts/font = ExtResource("1_c4yin")
+GraphFrameTitleLabel/font_sizes/font_size = 32
+GraphFrameTitleLabel/fonts/font = ExtResource("1_c4yin")
 GraphNode/styles/panel = SubResource("StyleBoxFlat_17jlr")
 GraphNode/styles/panel_selected = SubResource("StyleBoxFlat_10vtl")
 GraphNode/styles/titlebar = SubResource("StyleBoxFlat_r6fg0")

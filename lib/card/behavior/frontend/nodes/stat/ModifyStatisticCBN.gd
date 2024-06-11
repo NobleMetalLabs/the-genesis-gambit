@@ -5,7 +5,6 @@ func _init() -> void:
 	super("ModifyStatistic",
 	[
 		#CardBehaviorArgument.targetable("target"), 
-		CardBehaviorArgument.tiered_indexed_options_statstic(),
 		CardBehaviorArgument.variant("value"),
 	], 
 	[],
@@ -16,6 +15,7 @@ func _init() -> void:
 				CardBehaviorArgument.ArgumentType.FLOAT,
 			]
 		),
+		CardBehaviorArgument.tiered_indexed_options_statstic(),
 	]
 	)
 

@@ -6,6 +6,13 @@ signal create_node(node : CardBehaviorNodeInstance, position : Vector2)
 @onready var window : Window = get_tree().root
 
 func _ready() -> void:
+	self.index_pressed.connect(
+		func invoke_menu_item_metadata(idx : int) -> void:
+			var metadata : Variant = self.get_item_metadata(idx)
+			if metadata == null: return
+			if not metadata is Callable: return
+			metadata.call()
+	)
 	_build_add_node_menu()
 
 func _build_add_node_menu() -> void:
@@ -41,7 +48,7 @@ func handle_dialog_show(_position : Vector2) -> void:
 
 func handle_node_addition(node : CardBehaviorNode, pos : Vector2) -> void:
 	var node_instance := CardBehaviorNodeInstance.new(node)
-	print("Creating node %s at %s" % [node_instance, self.position])
+	print("Creating node %s at %s" % [node_instance, pos])
 	create_node.emit(node_instance, pos)
 	self.hide()
 

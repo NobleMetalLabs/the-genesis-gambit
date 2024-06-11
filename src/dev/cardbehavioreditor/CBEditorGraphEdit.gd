@@ -4,30 +4,26 @@ extends GraphEdit
 @onready var editor : CardBehaviorEditor = get_tree().get_root().get_node("CardBehaviorEditor")
 
 func _ready() -> void:
-	setup_input_actions()
 	setup_right_click_menu()
 	setup_node_deletion()
 	setup_node_connection()
 	return
 
-func _input(_event : InputEvent) -> void:
-	poll_node_creation()
-	return
-
 func refresh() -> void:
+	# Reset
 	for node in nodes:
 		node.queue_free()
 	nodes.clear()
 	internals_to_nodes.clear()
-	internals_to_names.clear()
 
 	var cbg : CardBehaviorGraph = editor.currently_editing_card_behavior
+	# Nodes
 	for node_idx in range(cbg.nodes.size()):
 		var node_instance : CardBehaviorNodeInstance = cbg.nodes[node_idx]
-		var _ui_node : CBEditorGraphNode = create_node(node_instance)
-	# connect nodes
+		create_node(node_instance)
+	# Edges
 	for edge : CardBehaviorEdge in cbg.edges:
-		connect_node(internals_to_names[edge.start_node], edge.start_port, internals_to_names[edge.end_node], edge.end_port)
+		connect_node(internals_to_nodes[edge.start_node].name, edge.start_port, internals_to_nodes[edge.end_node].name, edge.end_port)
 	self.arrange_nodes()
 	self.arrange_nodes() # I LOVE GODOT ENGINE !!!!!!!
 
@@ -48,21 +44,17 @@ func setup_right_click_menu() -> void:
 	self.popup_request.connect(right_click_menu.handle_dialog_show)
 	right_click_menu.create_node.connect(
 		func(internal : CardBehaviorNodeInstance, pos : Vector2) -> void:
-			var node : CBEditorGraphNode = create_node(internal, pos)
-			editor.currently_editing_card_behavior.nodes.append(node.node_internal)
+			editor.currently_editing_card_behavior.nodes.append(internal)
+			create_node(internal, pos)
 	)
 
 func setup_node_deletion() -> void:
 	self.delete_nodes_request.connect(
-		func(del_nodes : Array) -> void:
-			for node_name : String in del_nodes:
-				var node : CBEditorGraphNode = self.get_node(node_name)
-				var internal : CardBehaviorNodeInstance = node.node_internal
-				internals_to_nodes.erase(internal)
-				internals_to_names.erase(internal)
-				editor.currently_editing_card_behavior.nodes.erase(internal)
-				nodes.erase(node)
-				node.queue_free()
+		func remap_nodes(del_nodes : Array) -> void:
+			var remaped : Array[GraphElement] = []
+			for _name : String in del_nodes:
+				remaped.append(self.get_node(_name))
+			handle_deletion_request(remaped)
 	)
 
 func position_offset_to_screen_space(pos : Vector2) -> Vector2:
@@ -70,7 +62,6 @@ func position_offset_to_screen_space(pos : Vector2) -> Vector2:
 
 var nodes : Array[CBEditorGraphNode] = []
 var internals_to_nodes : Dictionary = {} #[CardBehaviorNodeInstance, CBEditorGraphNode]
-var internals_to_names : Dictionary = {} #[CardBehaviorNodeInstance, String]
 
 func create_node(node_internal : CardBehaviorNodeInstance, pos : Vector2 = Vector2.ZERO) -> CBEditorGraphNode:
 	var new_node := CBEditorGraphNode.new(node_internal, position_offset_to_screen_space(pos))
@@ -78,7 +69,6 @@ func create_node(node_internal : CardBehaviorNodeInstance, pos : Vector2 = Vecto
 	print("Created node %s at %s" % [node_internal, new_node.position_offset])
 	nodes.append(new_node)
 	internals_to_nodes[node_internal] = new_node
-	internals_to_names[node_internal] = new_node.name
 	return new_node
 
 func poll_node_creation() -> void:
@@ -90,6 +80,17 @@ func poll_node_creation() -> void:
 func setup_node_connection() -> void:
 	self.connection_request.connect(handle_connection_request)
 	self.disconnection_request.connect(handle_disconnection_request)
+
+func handle_deletion_request(nodes_to_delete : Array[GraphElement]) -> void:
+	for element : GraphElement in nodes_to_delete:
+		if element is CBEditorGraphNode:
+			var internal : CardBehaviorNodeInstance = element.node_internal
+			internals_to_nodes.erase(internal)
+			editor.currently_editing_card_behavior.nodes.erase(internal)
+			nodes.erase(element)
+			element.queue_free()
+		else:
+			print("delete graphelement %s" % [element])
 
 func handle_connection_request(from_node : StringName, from_port : int, to_node : StringName, to_port : int) -> void:
 	print("Connection request from %s:%s to %s:%s" % [from_node, from_port, to_node, to_port])

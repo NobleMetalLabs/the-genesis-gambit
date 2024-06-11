@@ -8,8 +8,9 @@ var output_args : Array[CardBehaviorArgument]
 
 func _init(_name : String, _inputs : Array[CardBehaviorArgument], _outputs : Array[CardBehaviorArgument], _options : Array[CardBehaviorArgument] = []) -> void:
 	name = _name
-	input_args = _inputs
-	output_args = _outputs
+	var run_arg : Array[CardBehaviorArgument] = [CardBehaviorArgument.bool("run")]
+	input_args = run_arg + _inputs
+	output_args = run_arg + _outputs
 	option_args = _options
 	_variant_check()
 

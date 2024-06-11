@@ -6,6 +6,19 @@ var referenced_node : CBEditorGraphNode # only used by cooks
 
 @onready var graph_edit : CBEditorGraphEdit = get_parent()
 
+func refresh_input_fields() -> void:
+	for port_idx in range(0, self.get_input_port_count()):
+		var slot_idx : int = self.get_input_port_slot(port_idx)
+		var is_slot_connected : bool = false
+		for con : Dictionary in graph_edit.get_connection_list():
+			if con["to_port"] != port_idx: continue
+			if con["to_node"] != self.name: continue
+			is_slot_connected = true
+		var control_holder : Control = self.get_child(slot_idx)
+		var control_box : BoxContainer = control_holder.get_child(0)
+		var control : Control = control_box.get_child(0)
+		control.visible = not is_slot_connected
+
 func _init(_node_internal : CardBehaviorNodeInstance, _pos : Vector2) -> void:
 	self.node_internal = _node_internal
 	self.position_offset = _pos
@@ -17,6 +30,7 @@ func _init(_node_internal : CardBehaviorNodeInstance, _pos : Vector2) -> void:
 
 func _setup_graphnode() -> void:
 	#print("New Graphnode: %s" % self.node_internal.node_logic.name)
+	_setup_runs()
 	_setup_options()
 	_setup_outputs()
 	_setup_inputs()
@@ -72,7 +86,7 @@ func __get_value_or_default(arg : CardBehaviorArgument) -> Variant:
 		_:
 			return null
 
-func __set_domain(index: int ) -> void:
+func __set_domain(index: int) -> void:
 	node_internal.argument_values["domain"] = index
 	#print("domain set to %s" % CardBehaviorArgument.ArgumentType.keys()[index])
 
@@ -200,6 +214,19 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 	arg_capsule.add_child(arg_cont)
 	return arg_capsule
 
+func _setup_runs() -> void:
+	var cont : Control = __get_control(node_internal.config.input_args[0], ArgType.INPUT)
+	self.add_child(cont)
+	var slot_index : int = 0
+	var arg_type := CardBehaviorArgument.ArgumentType.BOOL
+	self.set_slot_enabled_left(slot_index, true)
+	self.set_slot_type_left(slot_index, arg_type)
+	self.set_slot_color_left(slot_index, CardBehaviorArgument.ArgumentColors[arg_type])
+	self.set_slot_enabled_right(slot_index, true)
+	self.set_slot_type_right(slot_index, self.get_slot_type_left(slot_index))
+	self.set_slot_color_right(slot_index, self.get_slot_color_left(slot_index))
+	self.add_child(__new_dummy())
+
 func _setup_options() -> void:
 	var option_args : Array[CardBehaviorArgument] = node_internal.config.option_args	
 	var has_domain_option : bool = false
@@ -224,12 +251,8 @@ func _setup_options() -> void:
 		self.add_child(__new_dummy())
 
 func _setup_inputs(overwrite : bool = false) -> void:
-	var index_offset : int = -1
-	if not overwrite: index_offset = self.get_child_count()
-	else:
-		if self.get_input_port_count() > 0:
-			index_offset = self.get_input_port_slot(0)
-	var input_args : Array[CardBehaviorArgument] = node_internal.config.input_args
+	var index_offset : int = self.get_child_count() if not overwrite else self.get_input_port_slot(1)
+	var input_args : Array[CardBehaviorArgument] = node_internal.config.input_args.slice(1)
 	#print("setting up inputs [%s] at offset <%s>" % [input_args, index_offset])
 	for i in range(input_args.size()):
 		var slot_index : int = index_offset + i
@@ -256,12 +279,8 @@ func _setup_inputs(overwrite : bool = false) -> void:
 		self.add_child(__new_dummy())
 
 func _setup_outputs(overwrite : bool = false) -> void:
-	var index_offset : int = -1
-	if not overwrite: index_offset = self.get_child_count()
-	else:
-		if self.get_output_port_count() > 0:
-			index_offset = self.get_output_port_slot(0)
-	var output_args : Array[CardBehaviorArgument] = node_internal.config.output_args
+	var index_offset : int = self.get_child_count() if not overwrite else self.get_output_port_slot(1)
+	var output_args : Array[CardBehaviorArgument] = node_internal.config.output_args.slice(1)
 	#print("setting up outputs [%s] at offset <%s>" % [output_args, index_offset])
 	for i in range(output_args.size()):
 		var slot_index : int = index_offset + i

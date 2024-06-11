@@ -23,7 +23,10 @@ func refresh() -> void:
 		create_node(node_instance)
 	# Edges
 	for edge : CardBehaviorEdge in cbg.edges:
-		connect_node(internals_to_nodes[edge.start_node].name, edge.start_port, internals_to_nodes[edge.end_node].name, edge.end_port)
+		var from_node : CBEditorGraphNode = internals_to_nodes[edge.start_node]
+		var to_node : CBEditorGraphNode = internals_to_nodes[edge.end_node]
+		connect_node(from_node.name, edge.start_port, to_node.name, edge.end_port)
+		to_node.refresh_input_fields()
 	self.arrange_nodes()
 	self.arrange_nodes() # I LOVE GODOT ENGINE !!!!!!!
 
@@ -92,10 +95,11 @@ func handle_deletion_request(nodes_to_delete : Array[GraphElement]) -> void:
 		else:
 			print("delete graphelement %s" % [element])
 
-func handle_connection_request(from_node : StringName, from_port : int, to_node : StringName, to_port : int) -> void:
-	#print("Connection request from %s:%s to %s:%s" % [from_node, from_port, to_node, to_port])
-	var from_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(from_node)).node_internal
-	var to_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(to_node)).node_internal
+func handle_connection_request(from_node_name : StringName, from_port : int, to_node_name : StringName, to_port : int) -> void:
+	#print("Connection request from %s:%s to %s:%s" % [from_node_name, from_port, to_node_name, to_port])
+	var from_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(from_node_name)).node_internal
+	var to_node : CBEditorGraphNode = self.get_node(NodePath(to_node_name))
+	var to_node_instance : CardBehaviorNodeInstance = to_node.node_internal
 	editor.currently_editing_card_behavior.edges.append(
 		CardBehaviorEdge.new(
 			from_node_instance,
@@ -104,13 +108,16 @@ func handle_connection_request(from_node : StringName, from_port : int, to_node 
 			to_port
 		)
 	)
-	self.connect_node(from_node, from_port, to_node, to_port)
+	self.connect_node(from_node_name, from_port, to_node_name, to_port)
+	to_node.refresh_input_fields()
 
-func handle_disconnection_request(from_node : StringName, from_port : int, to_node : StringName, to_port : int) -> void:
-	#print("Disconnection request from %s:%s to %s:%s" % [from_node, from_port, to_node, to_port])
-	var from_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(from_node)).node_internal
-	var to_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(to_node)).node_internal
-	self.disconnect_node(from_node, from_port, to_node, to_port)
+func handle_disconnection_request(from_node_name : StringName, from_port : int, to_node_name : StringName, to_port : int) -> void:
+	#print("Disconnection request from %s:%s to %s:%s" % [from_node_name, from_port, to_node_name, to_port])
+	var from_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(from_node_name)).node_internal
+	var to_node : CBEditorGraphNode = self.get_node(NodePath(to_node_name))
+	var to_node_instance : CardBehaviorNodeInstance = to_node.node_internal
+	self.disconnect_node(from_node_name, from_port, to_node_name, to_port)
+	to_node.refresh_input_fields()
 	for edge in editor.currently_editing_card_behavior.edges:
 		if edge.start_node != from_node_instance: continue
 		if edge.start_port != from_port: continue

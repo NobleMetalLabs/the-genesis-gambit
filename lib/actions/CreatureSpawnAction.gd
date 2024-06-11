@@ -14,4 +14,4 @@ func _to_string() -> String:
 	return "CreatureSpawnAction(%s,%s)" % [self.creature, self.position]
 
 func to_effect() -> CreatureSpawnEffect:
-	return CreatureSpawnEffect.new(card, keep_stats, keep_moods)
+	return CreatureSpawnEffect.new(self, card, keep_stats, keep_moods)

@@ -5,9 +5,10 @@ var target : CardOnField
 var damage : int
 
 static func from_action(_action : CreatureAttackAction) -> CreatureAttackEffect:
-	return CreatureAttackEffect.new(_action.creature, _action.target, _action.damage)
+	return CreatureAttackEffect.new(_action, _action.creature, _action.target, _action.damage)
 
-func _init(_creature : CardOnField, _target : CardOnField, _damage : int) -> void:
+func _init(_requester : Object, _creature : CardOnField, _target : CardOnField, _damage : int) -> void:
+	self.requester = _requester
 	self.creature = _creature
 	self.target = _target
 	self.damage = _damage
@@ -21,23 +22,21 @@ func resolve(effect_resolver : EffectResolver) -> void:
 	var target_stats := IStatisticPossessor.id(self.target)
 
 	creature_stats.set_statistic(Genesis.Statistic.JUST_ATTACKED, true)
-	var just_attacked_expire_effect := SetStatisticEffect.new(creature_stats, Genesis.Statistic.JUST_ATTACKED, false)
-	just_attacked_expire_effect.requester = self.requester
-	effect_resolver.request_effect(just_attacked_expire_effect)
-
-	var attack_cooldown_start_effect := CreatureCooldownEffect.new(
+	effect_resolver.request_effect(SetStatisticEffect.new(
+		self.requester, creature_stats, Genesis.Statistic.JUST_ATTACKED, false
+	))
+	effect_resolver.request_effect(CreatureCooldownEffect.new(
+		self.requester,
 		self.creature,
 		Genesis.CooldownType.ATTACK,
 		Genesis.CooldownStage.START,
 		3 #TODO: get this value from speed
-	)
-	attack_cooldown_start_effect.requester = self.requester
-	effect_resolver.request_effect(attack_cooldown_start_effect)
+	))
 
 	target_stats.set_statistic(Genesis.Statistic.WAS_JUST_ATTACKED, true)
-	var was_just_attacked_expire_effect := SetStatisticEffect.new(target_stats, Genesis.Statistic.WAS_JUST_ATTACKED, false)
-	was_just_attacked_expire_effect.requester = self.requester
-	effect_resolver.request_effect(was_just_attacked_expire_effect)
+	effect_resolver.request_effect(SetStatisticEffect.new(
+		self.requester, target_stats, Genesis.Statistic.WAS_JUST_ATTACKED, false
+	))
 
 	var attack_swing_tween : Tween = Router.get_tree().create_tween()
 	attack_swing_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO).tween_property(self.creature, "rotation_degrees", 20, 0.05)

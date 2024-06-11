@@ -13,10 +13,9 @@ func process(gamefield_state : GamefieldState, _effect_resolver : EffectResolver
 		if not effect is CreatureAttackEffect: continue
 		effect = effect as CreatureAttackEffect
 		if effect.requester in friendly_cards:
-			var attack_effect := CreatureAttackEffect.new(
+			_effect_resolver.request_effect(CreatureAttackEffect.new(
+				instance_owner,
 				instance_owner.get_object(), 
 				effect.target, 
 				my_stats.get_statistic(Genesis.Statistic.STRENGTH)
-			)
-			attack_effect.requester = instance_owner
-			_effect_resolver.request_effect(attack_effect)
+			))

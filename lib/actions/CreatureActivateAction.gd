@@ -8,4 +8,4 @@ func _to_string() -> String:
 	return "CreatureActivateAction(%s)" % self.creature
 
 func to_effect() -> CreatureActivateEffect:
-	return CreatureActivateEffect.new(creature)
+	return CreatureActivateEffect.new(self, creature)

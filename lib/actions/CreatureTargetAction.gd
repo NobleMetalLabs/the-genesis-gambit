@@ -11,4 +11,4 @@ func _to_string() -> String:
 	return "CreatureTargetAction(%s,%s)" % [self.creature, self.target]
 
 func to_effect() -> CreatureTargetEffect:
-	return CreatureTargetEffect.new(creature, target)
+	return CreatureTargetEffect.new(self, creature, target)

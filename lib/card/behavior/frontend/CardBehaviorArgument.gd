@@ -92,7 +92,7 @@ static func indexed_options(_name : StringName, _options : Array) -> CardBehavio
 	}
 	return argument
 
-static func tiered_indexed_options_statstic() -> CardBehaviorArgument:
+static func tiered_indexed_options_statistic() -> CardBehaviorArgument:
 	var argument := CardBehaviorArgument.indexed_options("statistic", Genesis.Statistic.keys())
 	var options : Array = argument.meta["options"]
 	var tiered_options_schema : Dictionary = {

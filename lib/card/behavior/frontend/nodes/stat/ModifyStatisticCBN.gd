@@ -15,7 +15,7 @@ func _init() -> void:
 				CardBehaviorArgument.ArgumentType.FLOAT,
 			]
 		),
-		CardBehaviorArgument.tiered_indexed_options_statstic(),
+		CardBehaviorArgument.tiered_indexed_options_statistic(),
 	]
 	)
 

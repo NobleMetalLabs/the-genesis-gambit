@@ -66,7 +66,7 @@ var internals_to_nodes : Dictionary = {} #[CardBehaviorNodeInstance, CBEditorGra
 func create_node(node_internal : CardBehaviorNodeInstance, pos : Vector2 = Vector2.ZERO) -> CBEditorGraphNode:
 	var new_node := CBEditorGraphNode.new(node_internal, position_offset_to_screen_space(pos))
 	self.add_child(new_node)
-	print("Created node %s at %s" % [node_internal, new_node.position_offset])
+	#print("Created node %s at %s" % [node_internal, new_node.position_offset])
 	nodes.append(new_node)
 	internals_to_nodes[node_internal] = new_node
 	return new_node
@@ -93,7 +93,7 @@ func handle_deletion_request(nodes_to_delete : Array[GraphElement]) -> void:
 			print("delete graphelement %s" % [element])
 
 func handle_connection_request(from_node : StringName, from_port : int, to_node : StringName, to_port : int) -> void:
-	print("Connection request from %s:%s to %s:%s" % [from_node, from_port, to_node, to_port])
+	#print("Connection request from %s:%s to %s:%s" % [from_node, from_port, to_node, to_port])
 	var from_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(from_node)).node_internal
 	var to_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(to_node)).node_internal
 	editor.currently_editing_card_behavior.edges.append(
@@ -107,7 +107,7 @@ func handle_connection_request(from_node : StringName, from_port : int, to_node 
 	self.connect_node(from_node, from_port, to_node, to_port)
 
 func handle_disconnection_request(from_node : StringName, from_port : int, to_node : StringName, to_port : int) -> void:
-	print("Disconnection request from %s:%s to %s:%s" % [from_node, from_port, to_node, to_port])
+	#print("Disconnection request from %s:%s to %s:%s" % [from_node, from_port, to_node, to_port])
 	var from_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(from_node)).node_internal
 	var to_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(to_node)).node_internal
 	self.disconnect_node(from_node, from_port, to_node, to_port)
@@ -118,5 +118,4 @@ func handle_disconnection_request(from_node : StringName, from_port : int, to_no
 		if edge.end_port != to_port: continue
 		print("found the edge")
 		editor.currently_editing_card_behavior.edges.erase(edge)
-		print(editor.currently_editing_card_behavior.edges)
 		return

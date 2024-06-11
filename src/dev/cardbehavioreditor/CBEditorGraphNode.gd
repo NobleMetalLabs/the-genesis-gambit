@@ -119,9 +119,9 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 						option_button.add_item(str(arg_option).to_pascal_case())
 					option_button.selected = __get_value_or_default(arg)
 					option_button.item_selected.connect(
-						func(index : int) -> void: node_internal.argument_values[arg.name] = arg.meta["options"][index]
+						func(index : int) -> void: 
+							node_internal.argument_values[arg.name] = arg.meta["options"][index]
 					)
-
 					if arg.meta.has("tiered_options"):
 						option_button.get_popup().about_to_popup.connect(
 							func() -> void:
@@ -140,13 +140,13 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 											for arg_option : Variant in arg.meta["options"]:
 												option_button.add_item(str(arg_option).to_pascal_case())
 											option_button.selected = (index + index_offset_tally)
+											node_internal.argument_values[arg.name] = (index + index_offset_tally)
 									)
 									index_offset_tally += submenu_options.size()
 									popup.add_submenu_node_item(submenu_name, submenu)
 								popup.min_size = Vector2.ZERO
 								popup.reset_size()
 						)
-
 					arg_cont.add_child(option_button)
 				else:
 					var spinbox := SpinBox.new()

@@ -7,6 +7,7 @@ var referenced_node : CBEditorGraphNode # only used by cooks
 @onready var graph_edit : CBEditorGraphEdit = get_parent()
 
 func refresh_input_fields() -> void:
+	
 	for port_idx in range(0, self.get_input_port_count()):
 		var slot_idx : int = self.get_input_port_slot(port_idx)
 		var is_slot_connected : bool = false
@@ -17,7 +18,8 @@ func refresh_input_fields() -> void:
 		var control_holder : Control = self.get_child(slot_idx)
 		var control_box : BoxContainer = control_holder.get_child(0)
 		var control : Control = control_box.get_child(0)
-		control.visible = not is_slot_connected
+		if not control is Label:
+			control.visible = not is_slot_connected
 
 func _init(_node_internal : CardBehaviorNodeInstance, _pos : Vector2) -> void:
 	self.node_internal = _node_internal
@@ -34,6 +36,7 @@ func _setup_graphnode() -> void:
 	_setup_options()
 	_setup_outputs()
 	_setup_inputs()
+	self.add_child(__new_dummy())
 
 func _setup_meta() -> void:
 	pass
@@ -106,109 +109,109 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 	var label : Label = __new_label(arg.name, type)
 	arg_cont.add_child(label)
 	
-	#print("creating control for %s with type %s" % [arg.name, CardBehaviorArgument.ArgumentType.keys()[arg.type]])
-	var argument_type : CardBehaviorArgument.ArgumentType = arg.type
-	if argument_type == CardBehaviorArgument.ArgumentType.VARIANT:
-		argument_type = __get_domain()
-		#print("(as %s)" % CardBehaviorArgument.ArgumentType.keys()[argument_type])
-	match (argument_type):
-		CardBehaviorArgument.ArgumentType.INT:
-			if arg.name == "domain":
-				arg_cont = OptionButton.new()
-				var arg_type_int_to_key : Dictionary = {}
-				for arg_type : StringName in CardBehaviorArgument.ArgumentType.keys():
-					arg_type_int_to_key[CardBehaviorArgument.ArgumentType[arg_type]] = arg_type
-				for arg_option : int in arg.meta["options"]:
-					arg_cont.add_item(arg_type_int_to_key[arg_option].to_pascal_case())
-				arg_cont.selected = __get_value_or_default(arg)
-				label.queue_free()
-				arg_capsule.add_child(arg_cont)
-				return arg_capsule
-			if type != ArgType.OUTPUT:
-				if arg.meta.has("options"):
-					var option_button := OptionButton.new()
-					option_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-					option_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
-					for arg_option : Variant in arg.meta["options"]:
-						option_button.add_item(str(arg_option).to_pascal_case())
-					option_button.selected = __get_value_or_default(arg)
-					option_button.item_selected.connect(
-						func(index : int) -> void: 
-							node_internal.argument_values[arg.name] = arg.meta["options"][index]
-					)
-					if arg.meta.has("tiered_options"):
-						option_button.get_popup().about_to_popup.connect(
-							func() -> void:
-								var popup : PopupMenu = option_button.get_popup()
-								popup.clear()
-								var tiered_options : Dictionary = arg.meta["tiered_options"]
-								var index_offset_tally : int = 0
-								for submenu_name : StringName in tiered_options.keys():
-									var submenu_options : Array = tiered_options[submenu_name]
-									var submenu := PopupMenu.new()
-									for sub_option : Variant in submenu_options:
-										submenu.add_item(str(sub_option).to_pascal_case())
-									submenu.index_pressed.connect(
-										func(index : int) -> void:
-											option_button.get_popup().clear(true)
-											for arg_option : Variant in arg.meta["options"]:
-												option_button.add_item(str(arg_option).to_pascal_case())
-											option_button.selected = (index + index_offset_tally)
-											node_internal.argument_values[arg.name] = (index + index_offset_tally)
-									)
-									index_offset_tally += submenu_options.size()
-									popup.add_submenu_node_item(submenu_name, submenu)
-								popup.min_size = Vector2.ZERO
-								popup.reset_size()
+	if not arg is CardBehaviorArgumentArray:
+		var argument_type : CardBehaviorArgument.ArgumentType = arg.type
+		if argument_type == CardBehaviorArgument.ArgumentType.VARIANT:
+			argument_type = __get_domain()
+			#print("(as %s)" % CardBehaviorArgument.ArgumentType.keys()[argument_type])
+		match (argument_type):
+			CardBehaviorArgument.ArgumentType.INT:
+				if arg.name == "domain":
+					arg_cont = OptionButton.new()
+					var arg_type_int_to_key : Dictionary = {}
+					for arg_type : StringName in CardBehaviorArgument.ArgumentType.keys():
+						arg_type_int_to_key[CardBehaviorArgument.ArgumentType[arg_type]] = arg_type
+					for arg_option : int in arg.meta["options"]:
+						arg_cont.add_item(arg_type_int_to_key[arg_option].to_pascal_case())
+					arg_cont.selected = __get_value_or_default(arg)
+					label.queue_free()
+					arg_capsule.add_child(arg_cont)
+					return arg_capsule
+				if type != ArgType.OUTPUT:
+					if arg.meta.has("options"):
+						var option_button := OptionButton.new()
+						option_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+						option_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
+						for arg_option : Variant in arg.meta["options"]:
+							option_button.add_item(str(arg_option).to_pascal_case())
+						option_button.selected = __get_value_or_default(arg)
+						option_button.item_selected.connect(
+							func(index : int) -> void: 
+								node_internal.argument_values[arg.name] = arg.meta["options"][index]
 						)
-					arg_cont.add_child(option_button)
-				else:
+						if arg.meta.has("tiered_options"):
+							option_button.get_popup().about_to_popup.connect(
+								func() -> void:
+									var popup : PopupMenu = option_button.get_popup()
+									popup.clear()
+									var tiered_options : Dictionary = arg.meta["tiered_options"]
+									var index_offset_tally : int = 0
+									for submenu_name : StringName in tiered_options.keys():
+										var submenu_options : Array = tiered_options[submenu_name]
+										var submenu := PopupMenu.new()
+										for sub_option : Variant in submenu_options:
+											submenu.add_item(str(sub_option).to_pascal_case())
+										submenu.index_pressed.connect(
+											func(index : int) -> void:
+												option_button.get_popup().clear(true)
+												for arg_option : Variant in arg.meta["options"]:
+													option_button.add_item(str(arg_option).to_pascal_case())
+												option_button.selected = (index + index_offset_tally)
+												node_internal.argument_values[arg.name] = (index + index_offset_tally)
+										)
+										index_offset_tally += submenu_options.size()
+										popup.add_submenu_node_item(submenu_name, submenu)
+									popup.min_size = Vector2.ZERO
+									popup.reset_size()
+							)
+						arg_cont.add_child(option_button)
+					else:
+						var spinbox := SpinBox.new()
+						spinbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+						spinbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+						spinbox.allow_greater = true
+						spinbox.allow_lesser = true
+						spinbox.value = __get_value_or_default(arg)
+						spinbox.value_changed.connect(
+							func(value : float) -> void: node_internal.argument_values[arg.name] = int(value)
+						)
+						arg_cont.add_child(spinbox)	
+			CardBehaviorArgument.ArgumentType.FLOAT:
+				if type != ArgType.OUTPUT:
 					var spinbox := SpinBox.new()
 					spinbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 					spinbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
 					spinbox.allow_greater = true
 					spinbox.allow_lesser = true
 					spinbox.value = __get_value_or_default(arg)
+					spinbox.step = 0.01
 					spinbox.value_changed.connect(
-						func(value : float) -> void: node_internal.argument_values[arg.name] = int(value)
+						func(value : float) -> void: node_internal.argument_values[arg.name] = value
 					)
-					arg_cont.add_child(spinbox)	
-		CardBehaviorArgument.ArgumentType.FLOAT:
-			if type != ArgType.OUTPUT:
-				var spinbox := SpinBox.new()
-				spinbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-				spinbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
-				spinbox.allow_greater = true
-				spinbox.allow_lesser = true
-				spinbox.value = __get_value_or_default(arg)
-				spinbox.step = 0.01
-				spinbox.value_changed.connect(
-					func(value : float) -> void: node_internal.argument_values[arg.name] = value
-				)
-				arg_cont.add_child(spinbox)
-		CardBehaviorArgument.ArgumentType.BOOL:
-			if type != ArgType.OUTPUT:
-				var checkbox := CheckBox.new()
-				checkbox.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN if type == ArgType.INPUT else Control.SIZE_SHRINK_END
-				checkbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
-				if node_internal.argument_values.has(arg.name):
-					checkbox.button_pressed = __get_value_or_default(arg)
-				checkbox.toggled.connect(
-					func(value : bool) -> void: node_internal.argument_values[arg.name] = value
-				)
-				arg_cont.add_child(checkbox)
-		CardBehaviorArgument.ArgumentType.STRING_NAME:
-			if type != ArgType.OUTPUT:
-				var line_edit := LineEdit.new()
-				line_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-				line_edit.expand_to_text_length = true
-				label.size_flags_horizontal = Control.SIZE_SHRINK_END
-				if node_internal.argument_values.has(arg.name):
-					line_edit.text = __get_value_or_default(arg)
-				line_edit.text_changed.connect(
-					func(value : String) -> void: node_internal.argument_values[arg.name] = value
-				)
-				arg_cont.add_child(line_edit)
+					arg_cont.add_child(spinbox)
+			CardBehaviorArgument.ArgumentType.BOOL:
+				if type != ArgType.OUTPUT:
+					var checkbox := CheckBox.new()
+					checkbox.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN if type == ArgType.INPUT else Control.SIZE_SHRINK_END
+					checkbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+					if node_internal.argument_values.has(arg.name):
+						checkbox.button_pressed = __get_value_or_default(arg)
+					checkbox.toggled.connect(
+						func(value : bool) -> void: node_internal.argument_values[arg.name] = value
+					)
+					arg_cont.add_child(checkbox)
+			CardBehaviorArgument.ArgumentType.STRING_NAME:
+				if type != ArgType.OUTPUT:
+					var line_edit := LineEdit.new()
+					line_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+					line_edit.expand_to_text_length = true
+					label.size_flags_horizontal = Control.SIZE_SHRINK_END
+					if node_internal.argument_values.has(arg.name):
+						line_edit.text = __get_value_or_default(arg)
+					line_edit.text_changed.connect(
+						func(value : String) -> void: node_internal.argument_values[arg.name] = value
+					)
+					arg_cont.add_child(line_edit)
 	if type != ArgType.OPTION:
 		arg_cont.move_child(label, -1)
 	arg_capsule.add_child(arg_cont)
@@ -271,9 +274,14 @@ func _setup_inputs(overwrite : bool = false) -> void:
 		var arg_type : CardBehaviorArgument.ArgumentType = input_arg.type
 		if arg_type == CardBehaviorArgument.ArgumentType.VARIANT:
 			arg_type = __get_domain()
+		
 		self.set_slot_enabled_left(slot_index, true)
 		self.set_slot_type_left(slot_index, arg_type)
 		self.set_slot_color_left(slot_index, CardBehaviorArgument.ArgumentColors[arg_type])
+
+		if input_arg is CardBehaviorArgumentArray:
+			self.set_slot_type_left(slot_index, arg_type + 50)
+			self.set_slot_color_left(slot_index, CardBehaviorArgument.ArgumentColors[arg_type].darkened(0.5))
 
 	if input_args.size() > 0 and not overwrite:
 		self.add_child(__new_dummy())
@@ -302,6 +310,10 @@ func _setup_outputs(overwrite : bool = false) -> void:
 		self.set_slot_enabled_right(slot_index, true)
 		self.set_slot_type_right(slot_index, arg_type)
 		self.set_slot_color_right(slot_index, CardBehaviorArgument.ArgumentColors[arg_type])
+
+		if output_arg is CardBehaviorArgumentArray:
+			self.set_slot_type_right(slot_index, arg_type + 50)
+			self.set_slot_color_right(slot_index, CardBehaviorArgument.ArgumentColors[arg_type].darkened(0.5))
 
 	if output_args.size() > 0 and not overwrite:
 		self.add_child(__new_dummy())

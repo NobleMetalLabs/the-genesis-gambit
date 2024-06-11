@@ -41,14 +41,14 @@ func _build_add_node_menu() -> void:
 
 var mouse_position : Vector2 = Vector2()
 func handle_dialog_show(_position : Vector2) -> void:
-	print("Showing dialog at %s -> %s" % [window.position, _position])
+	#print("Showing dialog at %s -> %s" % [window.position, _position])
 	mouse_position = _position
 	self.position = Vector2(window.position) + _position
 	self.popup()
 
 func handle_node_addition(node : CardBehaviorNode, pos : Vector2) -> void:
 	var node_instance := CardBehaviorNodeInstance.new(node)
-	print("Creating node %s at %s" % [node_instance, pos])
+	#print("Creating node %s at %s" % [node_instance, pos])
 	create_node.emit(node_instance, pos)
 	self.hide()
 

@@ -1,18 +1,21 @@
-class_name ModifyStatisticCBN
+class_name SetStatisticCBN
 extends CardBehaviorNode
 
 func _init() -> void:
-	super("ModifyStatistic",
+	super("SetStatistic",
 	[
-		#CardBehaviorArgument.targetable("target"), 
+		CardBehaviorArgument.object("object"), 
 		CardBehaviorArgument.variant("value"),
-	], 
+	],
 	[],
 	[
 		CardBehaviorArgument.indexed_options("domain",
 			[
+				CardBehaviorArgument.ArgumentType.BOOL,
 				CardBehaviorArgument.ArgumentType.INT,
 				CardBehaviorArgument.ArgumentType.FLOAT,
+				CardBehaviorArgument.ArgumentType.STRING_NAME,
+				CardBehaviorArgument.ArgumentType.OBJECT,
 			]
 		),
 		CardBehaviorArgument.tiered_indexed_options_statistic(),

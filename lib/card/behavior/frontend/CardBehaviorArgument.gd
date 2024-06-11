@@ -12,6 +12,7 @@ enum ArgumentType {
 	FLOAT,
 	BOOL,
 	STRING_NAME,
+	OBJECT,
 }
 
 static var ArgumentColors : Dictionary = {
@@ -20,6 +21,7 @@ static var ArgumentColors : Dictionary = {
 	ArgumentType.FLOAT : Color.DODGER_BLUE,
 	ArgumentType.BOOL : Color.LIME_GREEN,
 	ArgumentType.STRING_NAME : Color.GOLDENROD,
+	ArgumentType.OBJECT : Color.PURPLE,
 }
 
 func _init(static_instant : bool = false) -> void:
@@ -108,4 +110,12 @@ static func tiered_indexed_options_statistic() -> CardBehaviorArgument:
 		var tier_range : Array = tiered_options_schema[tier]
 		tiered_options[tier] = options.slice(tier_range[0], tier_range[1] + 1)
 	argument.meta["tiered_options"] = tiered_options
+	return argument
+	
+static func object(_name : StringName) -> CardBehaviorArgument:
+	var argument := CardBehaviorArgument.new(true)
+	argument.type = ArgumentType.OBJECT
+	argument.name = _name
+	argument.meta = {}
+	argument.default = null
 	return argument

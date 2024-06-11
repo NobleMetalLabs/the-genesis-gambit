@@ -24,7 +24,6 @@ static func serialize(behavior : CardBehaviorGraph) -> CardBehaviorGraphSerializ
 static func from_dict(dict : Dictionary) -> CardBehaviorGraphSerializable:
 	var cbgs := CardBehaviorGraphSerializable.new()
 	cbgs.description = dict["description"]
-	print(cbgs.nodes)
 	cbgs.nodes.assign(dict["nodes"])
 	cbgs.edges.assign(dict["edges"])
 	return cbgs

@@ -123,6 +123,5 @@ func handle_disconnection_request(from_node_name : StringName, from_port : int, 
 		if edge.start_port != from_port: continue
 		if edge.end_node != to_node_instance: continue
 		if edge.end_port != to_port: continue
-		print("found the edge")
 		editor.currently_editing_card_behavior.edges.erase(edge)
 		return

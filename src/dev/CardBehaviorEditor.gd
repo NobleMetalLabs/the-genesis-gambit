@@ -18,6 +18,8 @@ func handle_menu_pressed(menu : StringName, option : StringName) -> void:
 	match menu:
 		"File":
 			handle_file_pressed(option)
+		"Edit":
+			handle_edit_pressed(option)
 
 func handle_file_pressed(option : StringName) -> void:
 	match option:
@@ -25,6 +27,11 @@ func handle_file_pressed(option : StringName) -> void:
 			save_file()
 		"Open":
 			open_file()
+
+func handle_edit_pressed(option : StringName) -> void:
+	match option:
+		"Edit Description":
+			self.get_node("EditDescriptionPanel").popup()
 
 func save_file() -> void:
 	var cereal := CardBehaviorGraphSerializable.serialize(currently_editing_card_behavior)

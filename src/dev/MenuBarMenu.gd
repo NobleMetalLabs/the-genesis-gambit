@@ -12,5 +12,5 @@ func _ready() -> void:
 signal option_pressed(menu : StringName, option : StringName)
 
 func assign_shortcuts() -> void:
-	for idx in range(0, self.item_count):
+	for idx in range(0, self.shortcuts.size()):
 		self.set_item_shortcut(idx, shortcuts[idx])

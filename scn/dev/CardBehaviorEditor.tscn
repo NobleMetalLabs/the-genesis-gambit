@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://ct0http1wnjx3"]
+[gd_scene load_steps=14 format=3 uid="uid://ct0http1wnjx3"]
 
 [ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/DeveloperToolTheme.tres" id="1_onhv0"]
 [ext_resource type="Script" path="res://src/dev/CardBehaviorEditor.gd" id="2_nu3a7"]
 [ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CBEditorGraphEdit.gd" id="2_y4uu3"]
 [ext_resource type="Script" path="res://src/dev/MenuBarMenu.gd" id="3_yjlo0"]
 [ext_resource type="Script" path="res://src/dev/cardbehavioreditor/RightClickMenu.gd" id="5_aex4o"]
+[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/EditDescriptionPanel.gd" id="6_dop0d"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cgyb"]
 bg_color = Color(0, 0, 0, 1)
@@ -81,6 +82,8 @@ script = ExtResource("3_yjlo0")
 shortcuts = Array[Shortcut]([SubResource("Shortcut_d7wip"), SubResource("Shortcut_1od64"), SubResource("Shortcut_s8f34")])
 
 [node name="Edit" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU_BAR"]
+item_count = 1
+item_0/text = "Edit Description"
 script = ExtResource("3_yjlo0")
 
 [node name="View" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU_BAR"]
@@ -101,3 +104,32 @@ script = ExtResource("2_y4uu3")
 [node name="RightClickMenu" type="PopupMenu" parent="Panel/VBoxContainer/GRAPH_EDIT"]
 unique_name_in_owner = true
 script = ExtResource("5_aex4o")
+
+[node name="EditDescriptionPanel" type="PopupPanel" parent="."]
+initial_position = 1
+size = Vector2i(500, 300)
+script = ExtResource("6_dop0d")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EditDescriptionPanel"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 496.0
+offset_bottom = 296.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TitleLabel" type="Label" parent="EditDescriptionPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Edit Behavior Description"
+
+[node name="TEXT-EDIT" type="TextEdit" parent="EditDescriptionPanel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+wrap_mode = 1
+
+[node name="BUTTON" type="Button" parent="EditDescriptionPanel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Submit"

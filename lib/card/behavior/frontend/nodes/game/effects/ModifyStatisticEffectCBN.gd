@@ -1,8 +1,8 @@
-class_name ModifyStatisticCBN
+class_name ModifyStatisticEffectCBN
 extends CardBehaviorNode
 
 func _init() -> void:
-	super("ModifyStatistic",
+	super("ModifyStatisticEffect",
 		[
 			CardBehaviorArgument.object("object"),
 			CardBehaviorArgument.variant("value"),

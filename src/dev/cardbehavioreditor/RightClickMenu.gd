@@ -15,29 +15,28 @@ func _ready() -> void:
 	)
 	_build_add_node_menu()
 
+var id_tally : int = 0
+var id_to_node : Dictionary = {} #[int, CardBehaviorNode]
 func _build_add_node_menu() -> void:
-	var nodes : Dictionary = load_nodes() #[String..., CardBehaviorNode]
-	# {
-	# 	"Math" : {
-	# 		"Add" : CardBehaviorNode<add.gd>,
-	# 	}
-	# } 
-	var id_to_node : Dictionary = {} #[int, CardBehaviorNode]
-	var id_tally : int = 0
-	var add_menu := PopupMenu.new()
-	for category_name : String in nodes.keys():
-		var submenu : PopupMenu = PopupMenu.new()
-		if not nodes[category_name] is Dictionary: continue
-		var category_items : Dictionary = nodes[category_name]
-		for node_name : String in category_items.keys():
-			submenu.add_item(node_name.left(-3).to_pascal_case(), id_tally)
-			id_to_node[id_tally] = category_items[node_name]
+	self.add_submenu_node_item("Add Node", _build_node_menu())
+
+func _build_node_menu(menu_dict : Dictionary = load_nodes()) -> PopupMenu:
+	var menu : PopupMenu = PopupMenu.new()
+	for menu_item_name : String in menu_dict.keys():
+		var menu_item : Variant = menu_dict[menu_item_name]
+		if menu_item is CardBehaviorNode:
+			menu.add_item(menu_item_name.left(-3).to_pascal_case(), id_tally)
+			id_to_node[id_tally] = menu_item
 			id_tally += 1
-		add_menu.add_submenu_node_item(category_name.to_pascal_case(), submenu)
-		submenu.id_pressed.connect(func add_node(id : int) -> void:
-			handle_node_addition(id_to_node[id], self.position - window.position)
-		)
-	self.add_submenu_node_item("Add Node", add_menu)
+		elif menu_item is Dictionary:
+			var submenu : PopupMenu = _build_node_menu(menu_item)
+			menu.add_submenu_node_item(menu_item_name.to_pascal_case(), submenu)
+			submenu.id_pressed.connect(func add_node(id : int) -> void:
+				handle_node_addition(id_to_node[id], self.position - window.position)
+			)
+		else:
+			push_warning("Building RightClickMenu, unknown thingie: %s" % [menu_item])
+	return menu
 
 var mouse_position : Vector2 = Vector2()
 func handle_dialog_show(_position : Vector2) -> void:

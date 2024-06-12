@@ -15,4 +15,4 @@ func _to_string() -> String:
 	return "HandAddCardAction(%s,%s,%s,%s)" % [self.player, self.from_deck, self.specific_card, self.card_metadata_id]
 	
 func to_effect() -> HandAddCardEffect:
-	return HandAddCardEffect.new(player, from_deck, specific_card, card_metadata_id)
+	return HandAddCardEffect.new(self, player, from_deck, specific_card, card_metadata_id)

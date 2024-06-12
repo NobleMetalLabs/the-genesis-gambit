@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://blyhwfh1qykat"]
 
 [ext_resource type="Texture2D" uid="uid://cbbpqehmwdtme" path="res://ast/game/cards/fgs/birds/duck.png" id="1_rlgyq"]
-[ext_resource type="Script" path="res://ast/game/cards/logic/Nothing.gd" id="2_e457r"]
-[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_tn8jj"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="2_e457r"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_tn8jj"]
 
 [resource]
 script = ExtResource("2_tn8jj")

@@ -58,11 +58,9 @@ func _create_card_ghost(hand_card : CardInHand) -> void:
 			IStatisticPossessor.id(card_instance).set_statistic(
 				Genesis.Statistic.POSITION, _position
 			)
-			var remove_hand_to_play_effect := HandRemoveCardEffect.new(
-				card_instance.player, hand_card, Genesis.LeaveHandReason.PLAYED
-			)
-			remove_hand_to_play_effect.requester = card_instance
-			Router.gamefield.effect_resolver.request_effect(remove_hand_to_play_effect)
+			Router.gamefield.effect_resolver.request_effect(HandRemoveCardEffect.new(
+				card_instance, card_instance.player, hand_card, Genesis.LeaveHandReason.PLAYED
+			))
 	)
 
 	current_card_ghost = new_card_ghost

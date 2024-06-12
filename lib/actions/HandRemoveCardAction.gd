@@ -15,4 +15,4 @@ func _to_string() -> String:
 	return "HandRemoveCardAction(%s,%s,%s,%s)" % [self.player, self.card, self.leave_reason, self.animation]
 
 func to_effect() -> HandRemoveCardEffect:
-	return HandRemoveCardEffect.new(player, card, leave_reason, animation)
+	return HandRemoveCardEffect.new(self, player, card, leave_reason, animation)

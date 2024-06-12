@@ -6,7 +6,8 @@ var as_marked : bool
 var keep_stats : bool
 var keep_moods : bool
 
-func _init(_player : Player, _card : ICardInstance, _as_marked : bool = true, _keep_stats : bool = false, _keep_moods : bool = false) -> void:
+func _init(_requester : Object, _player : Player, _card : ICardInstance, _as_marked : bool = true, _keep_stats : bool = false, _keep_moods : bool = false) -> void:
+	self.requester = _requester
 	self.player = _player
 	self.card = _card
 	self.as_marked = _as_marked
@@ -42,8 +43,6 @@ func resolve(effect_resolver : EffectResolver) -> void:
 	if self.as_marked:
 		card_stats.set_statistic(Genesis.Statistic.IS_MARKED, true)
 		card_stats.set_statistic(Genesis.Statistic.WAS_JUST_MARKED, true)
-		var was_just_marked_expire_effect := SetStatisticEffect.new(
-			card_stats, Genesis.Statistic.WAS_JUST_MARKED, false
-		)
-		was_just_marked_expire_effect.requester = self.requester
-		effect_resolver.request_effect(was_just_marked_expire_effect)
+		effect_resolver.request_effect(SetStatisticEffect.new(
+			self.requester, card_stats, Genesis.Statistic.WAS_JUST_MARKED, false
+		))

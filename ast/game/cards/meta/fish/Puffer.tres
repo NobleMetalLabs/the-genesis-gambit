@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://c1xocbc3u5wo6"]
 
 [ext_resource type="Texture2D" uid="uid://crenob258c7re" path="res://ast/game/cards/fgs/fish/puffer.png" id="1_3m63s"]
-[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_1logl"]
-[ext_resource type="Script" path="res://ast/game/cards/logic/Nothing.gd" id="2_acyix"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_1logl"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="2_acyix"]
 
 [resource]
 script = ExtResource("2_1logl")

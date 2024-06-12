@@ -5,7 +5,8 @@ var card : ICardInstance
 var keep_stats : bool
 var keep_moods : bool
 
-func _init(_card : ICardInstance,  _keep_stats : bool = true, _keep_moods : bool = true) -> void:
+func _init(_requester : Object, _card : ICardInstance,  _keep_stats : bool = true, _keep_moods : bool = true) -> void:
+	self.requester = _requester
 	self.card = _card
 	self.keep_stats = _keep_stats
 	self.keep_moods = _keep_moods
@@ -44,6 +45,6 @@ func resolve(effect_resolver : EffectResolver) -> void:
 		Router.client_ui.current_card_ghost.queue_free()
 
 	creature_stats.set_statistic(Genesis.Statistic.WAS_JUST_PLAYED, true)
-	var just_played_expire_effect := SetStatisticEffect.new(creature_stats, Genesis.Statistic.WAS_JUST_PLAYED, false)
-	just_played_expire_effect.requester = self.requester
-	effect_resolver.request_effect(just_played_expire_effect)
+	effect_resolver.request_effect(SetStatisticEffect.new(
+		self.requester, creature_stats, Genesis.Statistic.WAS_JUST_PLAYED, false
+	))

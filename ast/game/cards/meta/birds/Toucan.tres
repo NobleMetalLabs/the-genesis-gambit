@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://dpnspaqkdfr86"]
 
 [ext_resource type="Texture2D" uid="uid://bnnvknjvv0ljn" path="res://ast/game/cards/fgs/birds/toucan.png" id="1_wx74m"]
-[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="1_x4gkg"]
-[ext_resource type="Script" path="res://ast/game/cards/logic/Nothing.gd" id="2_srgyc"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="1_x4gkg"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="2_srgyc"]
 
 [resource]
 script = ExtResource("1_x4gkg")

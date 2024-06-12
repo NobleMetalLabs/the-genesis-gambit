@@ -3,7 +3,8 @@ extends CreatureEffect
 
 var target : ITargetable
 
-func _init(_creature : CardOnField, _target : ITargetable) -> void:
+func _init(_requester : Object, _creature : CardOnField, _target : ITargetable) -> void:
+	self.requester = _requester
 	self.creature = _creature
 	self.target = _target
 
@@ -21,14 +22,14 @@ func resolve(effect_resolver : EffectResolver) -> void:
 	else:
 		creature_stats.set_statistic(Genesis.Statistic.HAS_TARGET, true)
 		creature_stats.set_statistic(Genesis.Statistic.JUST_TARGETED, true)
-		var just_targeted_expire_effect := SetStatisticEffect.new(creature_stats, Genesis.Statistic.JUST_TARGETED, false)
-		just_targeted_expire_effect.requester = self.requester
-		effect_resolver.request_effect(just_targeted_expire_effect)
+		effect_resolver.request_effect(SetStatisticEffect.new(
+			self.requester, creature_stats, Genesis.Statistic.JUST_TARGETED, false
+		))
 	
 		var target_stats := IStatisticPossessor.id(self.target)
 		target_stats.set_statistic(Genesis.Statistic.WAS_JUST_TARGETED, true)
-		var was_just_targeted_expire_effect := SetStatisticEffect.new(target_stats, Genesis.Statistic.WAS_JUST_TARGETED, false)
-		was_just_targeted_expire_effect.requester = self.requester
-		effect_resolver.request_effect(was_just_targeted_expire_effect)
+		effect_resolver.request_effect(SetStatisticEffect.new(
+			self.requester, target_stats, Genesis.Statistic.WAS_JUST_TARGETED, false
+		))
 	
 	

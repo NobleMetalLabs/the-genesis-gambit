@@ -13,4 +13,4 @@ func _to_string() -> String:
 	return "CreatureLeavePlayAction(%s,%s,%s)" % [self.creature, self.source, self.reason]
 
 func to_effect() -> CreatureLeavePlayEffect:
-	return CreatureLeavePlayEffect.new(creature, source, reason)
+	return CreatureLeavePlayEffect.new(self, creature, source, reason)

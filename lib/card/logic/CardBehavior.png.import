@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://feoobjou6hhx"
-path="res://.godot/imported/CardLogic.png-ef1da0a2a210420f6c6fd941a27a993f.ctex"
+uid="uid://cg54jbjxuhvfs"
+path="res://.godot/imported/CardBehavior.png-c657ac5072e52c3c4b1fe36b82a005a2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://lib/CardLogic.png"
-dest_files=["res://.godot/imported/CardLogic.png-ef1da0a2a210420f6c6fd941a27a993f.ctex"]
+source_file="res://lib/card/logic/CardBehavior.png"
+dest_files=["res://.godot/imported/CardBehavior.png-c657ac5072e52c3c4b1fe36b82a005a2.ctex"]
 
 [params]
 

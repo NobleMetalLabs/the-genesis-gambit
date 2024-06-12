@@ -17,7 +17,6 @@ func _to_string() -> String:
 	return "CreatureAttackEffect(%s, %s, %d)" % [self.creature, self.target, self.damage]
 
 func resolve(effect_resolver : EffectResolver) -> void:
-	print("%s attacked %s" % [self.creature, self.target])
 	var creature_stats := IStatisticPossessor.id(self.creature)
 	var target_stats := IStatisticPossessor.id(self.target)
 

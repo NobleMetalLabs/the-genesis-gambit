@@ -58,7 +58,6 @@ func handle_open_file() -> void:
 func _save_file(path : String) -> void:
 	var cereal := CardBehaviorGraphSerializable.serialize(currently_editing_card_behavior)
 	var dict : Dictionary = Utils.object_to_dict(cereal)
-	print(JSON.stringify(dict))
 	var file_access := FileAccess.open(path, FileAccess.WRITE)
 	file_access.store_var(dict)
 	file_access.close()
@@ -66,7 +65,6 @@ func _save_file(path : String) -> void:
 func _open_file(path : String) -> void:
 	var file_access := FileAccess.open(path, FileAccess.READ)
 	var dict : Dictionary = file_access.get_var()
-	print(JSON.stringify(dict))
 	file_access.close()
 	var serializable := CardBehaviorGraphSerializable.from_dict(dict)
 	var behavior : CardBehaviorGraph = serializable.deserialize()

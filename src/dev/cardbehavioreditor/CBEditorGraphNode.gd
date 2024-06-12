@@ -31,7 +31,6 @@ func _init(_node_internal : CardBehaviorNodeInstance, _pos : Vector2) -> void:
 	_setup_graphnode()
 
 func _setup_graphnode() -> void:
-	#print("New Graphnode: %s" % self.node_internal.node_logic.name)
 	_setup_runs()
 	_setup_options()
 	_setup_outputs()
@@ -91,7 +90,6 @@ func __get_value_or_default(arg : CardBehaviorArgument) -> Variant:
 
 func __set_domain(index: int) -> void:
 	node_internal.argument_values["domain"] = index
-	#print("domain set to %s" % CardBehaviorArgument.ArgumentType.keys()[index])
 
 func __get_domain() -> CardBehaviorArgument.ArgumentType:
 	var domain_arg : CardBehaviorArgument = node_internal.config.option_args[0]
@@ -113,7 +111,6 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 		var argument_type : CardBehaviorArgument.ArgumentType = arg.type
 		if argument_type == CardBehaviorArgument.ArgumentType.VARIANT:
 			argument_type = __get_domain()
-			#print("(as %s)" % CardBehaviorArgument.ArgumentType.keys()[argument_type])
 		match (argument_type):
 			CardBehaviorArgument.ArgumentType.INT:
 				if arg.name == "domain":
@@ -256,7 +253,6 @@ func _setup_options() -> void:
 func _setup_inputs(overwrite : bool = false) -> void:
 	var index_offset : int = self.get_child_count() if not overwrite else self.get_input_port_slot(1)
 	var input_args : Array[CardBehaviorArgument] = node_internal.config.input_args.slice(1)
-	#print("setting up inputs [%s] at offset <%s>" % [input_args, index_offset])
 	for i in range(input_args.size()):
 		var slot_index : int = index_offset + i
 		var input_arg_cont : Control = __get_control(input_args[i], ArgType.INPUT)
@@ -289,7 +285,6 @@ func _setup_inputs(overwrite : bool = false) -> void:
 func _setup_outputs(overwrite : bool = false) -> void:
 	var index_offset : int = self.get_child_count() if not overwrite else self.get_output_port_slot(1)
 	var output_args : Array[CardBehaviorArgument] = node_internal.config.output_args.slice(1)
-	#print("setting up outputs [%s] at offset <%s>" % [output_args, index_offset])
 	for i in range(output_args.size()):
 		var slot_index : int = index_offset + i
 		var output_arg_cont : Control = __get_control(output_args[i], ArgType.OUTPUT)

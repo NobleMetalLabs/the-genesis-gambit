@@ -69,7 +69,6 @@ var internals_to_nodes : Dictionary = {} #[CardBehaviorNodeInstance, CBEditorGra
 func create_node(node_internal : CardBehaviorNodeInstance, pos : Vector2 = Vector2.ZERO) -> CBEditorGraphNode:
 	var new_node := CBEditorGraphNode.new(node_internal, position_offset_to_screen_space(pos))
 	self.add_child(new_node)
-	#print("Created node %s at %s" % [node_internal, new_node.position_offset])
 	nodes.append(new_node)
 	internals_to_nodes[node_internal] = new_node
 	return new_node
@@ -93,10 +92,9 @@ func handle_deletion_request(nodes_to_delete : Array[GraphElement]) -> void:
 			nodes.erase(element)
 			element.queue_free()
 		else:
-			print("delete graphelement %s" % [element])
+			push_warning("Unhandled deletion request for graphelement %s" % [element])
 
 func handle_connection_request(from_node_name : StringName, from_port : int, to_node_name : StringName, to_port : int) -> void:
-	#print("Connection request from %s:%s to %s:%s" % [from_node_name, from_port, to_node_name, to_port])
 	var from_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(from_node_name)).node_internal
 	var to_node : CBEditorGraphNode = self.get_node(NodePath(to_node_name))
 	var to_node_instance : CardBehaviorNodeInstance = to_node.node_internal
@@ -112,7 +110,6 @@ func handle_connection_request(from_node_name : StringName, from_port : int, to_
 	to_node.refresh_input_fields()
 
 func handle_disconnection_request(from_node_name : StringName, from_port : int, to_node_name : StringName, to_port : int) -> void:
-	#print("Disconnection request from %s:%s to %s:%s" % [from_node_name, from_port, to_node_name, to_port])
 	var from_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(from_node_name)).node_internal
 	var to_node : CBEditorGraphNode = self.get_node(NodePath(to_node_name))
 	var to_node_instance : CardBehaviorNodeInstance = to_node.node_internal

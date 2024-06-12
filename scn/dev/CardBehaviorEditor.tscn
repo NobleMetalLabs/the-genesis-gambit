@@ -1,11 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://ct0http1wnjx3"]
+[gd_scene load_steps=15 format=3 uid="uid://ct0http1wnjx3"]
 
 [ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/DeveloperToolTheme.tres" id="1_onhv0"]
-[ext_resource type="Script" path="res://src/dev/CardBehaviorEditor.gd" id="2_nu3a7"]
+[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CardBehaviorEditor.gd" id="2_nu3a7"]
 [ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CBEditorGraphEdit.gd" id="2_y4uu3"]
 [ext_resource type="Script" path="res://src/dev/MenuBarMenu.gd" id="3_yjlo0"]
-[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/RightClickMenu.gd" id="5_aex4o"]
-[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/EditDescriptionPanel.gd" id="6_dop0d"]
+[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CBERightClickMenu.gd" id="5_aex4o"]
+[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CBEEditDescriptionPanel.gd" id="6_dop0d"]
+[ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CBEFileDialog.gd" id="7_bitwn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cgyb"]
 bg_color = Color(0, 0, 0, 1)
@@ -64,14 +65,14 @@ layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_right = 15
 
-[node name="MENU_BAR" type="MenuBar" parent="Panel/VBoxContainer/MarginContainer"]
+[node name="MENU-BAR" type="MenuBar" parent="Panel/VBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 20
 flat = true
 prefer_global_menu = false
 
-[node name="File" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU_BAR"]
+[node name="File" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU-BAR"]
 item_count = 3
 item_0/text = "Open"
 item_1/text = "Save"
@@ -81,15 +82,15 @@ item_2/id = 2
 script = ExtResource("3_yjlo0")
 shortcuts = Array[Shortcut]([SubResource("Shortcut_d7wip"), SubResource("Shortcut_1od64"), SubResource("Shortcut_s8f34")])
 
-[node name="Edit" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU_BAR"]
+[node name="Edit" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU-BAR"]
 item_count = 1
 item_0/text = "Edit Description"
 script = ExtResource("3_yjlo0")
 
-[node name="View" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU_BAR"]
+[node name="View" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU-BAR"]
 script = ExtResource("3_yjlo0")
 
-[node name="GRAPH_EDIT" type="GraphEdit" parent="Panel/VBoxContainer"]
+[node name="GRAPH-EDIT" type="GraphEdit" parent="Panel/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -101,16 +102,16 @@ show_minimap_button = false
 show_arrange_button = false
 script = ExtResource("2_y4uu3")
 
-[node name="RightClickMenu" type="PopupMenu" parent="Panel/VBoxContainer/GRAPH_EDIT"]
+[node name="CBERightClickMenu" type="PopupMenu" parent="Panel/VBoxContainer/GRAPH-EDIT"]
 unique_name_in_owner = true
 script = ExtResource("5_aex4o")
 
-[node name="EditDescriptionPanel" type="PopupPanel" parent="."]
+[node name="CBEEditDescriptionPanel" type="PopupPanel" parent="."]
 initial_position = 1
 size = Vector2i(500, 300)
 script = ExtResource("6_dop0d")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="EditDescriptionPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CBEEditDescriptionPanel"]
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 496.0
@@ -118,18 +119,28 @@ offset_bottom = 296.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="TitleLabel" type="Label" parent="EditDescriptionPanel/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="CBEEditDescriptionPanel/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Edit Behavior Description"
 
-[node name="TEXT-EDIT" type="TextEdit" parent="EditDescriptionPanel/VBoxContainer"]
+[node name="TEXT-EDIT" type="TextEdit" parent="CBEEditDescriptionPanel/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 wrap_mode = 1
 
-[node name="BUTTON" type="Button" parent="EditDescriptionPanel/VBoxContainer"]
+[node name="BUTTON" type="Button" parent="CBEEditDescriptionPanel/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Submit"
+
+[node name="CBEFileDialog" type="FileDialog" parent="."]
+title = "Save"
+initial_position = 1
+size = Vector2i(800, 600)
+ok_button_text = "Save"
+mode_overrides_title = false
+root_subfolder = "res://ast/game/cards/logic/"
+filters = PackedStringArray("*.gcb;Genesis Card Behavior")
+script = ExtResource("7_bitwn")

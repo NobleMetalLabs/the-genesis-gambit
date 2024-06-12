@@ -30,7 +30,7 @@ func refresh() -> void:
 	self.arrange_nodes()
 	self.arrange_nodes() # I LOVE GODOT ENGINE !!!!!!!
 
-@onready var right_click_menu : RightClickMenu = %"RightClickMenu"
+@onready var right_click_menu : CBERightClickMenu = %"CBERightClickMenu"
 
 func setup_input_actions() -> void:
 	InputMap.add_action("ui_node_add")
@@ -125,3 +125,4 @@ func handle_disconnection_request(from_node_name : StringName, from_port : int, 
 		if edge.end_port != to_port: continue
 		editor.currently_editing_card_behavior.edges.erase(edge)
 		return
+	push_warning("Disconnected edge not present in the graph")

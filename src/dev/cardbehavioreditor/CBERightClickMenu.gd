@@ -1,4 +1,4 @@
-class_name RightClickMenu
+class_name CBERightClickMenu
 extends PopupMenu
 
 signal create_node(node : CardBehaviorNodeInstance, position : Vector2)
@@ -35,7 +35,7 @@ func _build_node_menu(menu_dict : Dictionary = load_nodes()) -> PopupMenu:
 				handle_node_addition(id_to_node[id], self.position - window.position)
 			)
 		else:
-			push_warning("Building RightClickMenu, unknown thingie: %s" % [menu_item])
+			push_warning("Building CBERightClickMenu, unknown thingie: %s" % [menu_item])
 	return menu
 
 var mouse_position : Vector2 = Vector2()

@@ -1,4 +1,4 @@
-class_name EditDescriptionPanel
+class_name CBEEditDescriptionPanel
 extends PopupPanel
 
 @onready var editor : CardBehaviorEditor = get_parent()

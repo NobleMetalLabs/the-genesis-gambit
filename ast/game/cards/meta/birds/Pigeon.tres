@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bsci0algcx3j5" path="res://ast/game/cards/fgs/birds/pigeon.png" id="1_uvgnx"]
 [ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_3jqoi"]
-[ext_resource type="Script" path="res://ast/game/cards/logic/Nothing.gd" id="2_64cp1"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="2_64cp1"]
 
 [resource]
 script = ExtResource("2_3jqoi")

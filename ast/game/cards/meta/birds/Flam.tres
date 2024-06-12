@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://d2h0ly737f1u4"]
 
 [ext_resource type="Texture2D" uid="uid://bqlbcjufruv6r" path="res://ast/game/cards/fgs/birds/flam.png" id="1_5i0gv"]
-[ext_resource type="Script" path="res://ast/game/cards/logic/Nothing.gd" id="2_0gyw8"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="2_0gyw8"]
 [ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_r8asb"]
 
 [resource]

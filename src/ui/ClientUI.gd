@@ -10,6 +10,9 @@ extends Control
 
 @export var gamefield : Gamefield
 
+func _ready() -> void:
+	self.get_tree().get_root().content_scale_size = Vector2.ZERO
+
 func _input(event : InputEvent) -> void:
 	if not event is InputEventKey: return
 	if Input.is_action_just_pressed("ui_inspect"):

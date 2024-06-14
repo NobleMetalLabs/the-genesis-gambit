@@ -24,6 +24,8 @@ func handle_menu_pressed(menu : StringName, option : StringName) -> void:
 
 func handle_file_pressed(option : StringName) -> void:
 	match option:
+		"New":
+			handle_new_file()
 		"Save":
 			handle_save_file()
 		"Open":
@@ -33,6 +35,10 @@ func handle_edit_pressed(option : StringName) -> void:
 	match option:
 		"Edit Description":
 			self.get_node("CBEEditDescriptionPanel").popup()
+
+func handle_new_file() -> void:
+	currently_editing_card_behavior = CardBehaviorGraph.new()
+	graph_edit.refresh()
 
 func handle_save_file() -> void:
 	var file_dialog : FileDialog = self.get_node("CBEFileDialog")

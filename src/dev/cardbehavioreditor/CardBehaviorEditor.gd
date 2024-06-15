@@ -72,7 +72,6 @@ func _save_file(path : String) -> void:
 func _open_file(path : String) -> void:
 	var file_access := FileAccess.open(path, FileAccess.READ)
 	var dict : Dictionary = file_access.get_var()
-	print(dict)
 	file_access.close()
 	var serializable := CardBehaviorGraphSerializable.from_dict(dict)
 	var behavior : CardBehaviorGraph = serializable.deserialize()

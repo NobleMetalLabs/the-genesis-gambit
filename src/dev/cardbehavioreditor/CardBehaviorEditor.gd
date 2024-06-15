@@ -47,7 +47,8 @@ func handle_save_file() -> void:
 	file_dialog.title = "Save"
 	if file_dialog.file_selected.is_connected(_open_file):
 		file_dialog.file_selected.disconnect(_open_file)
-	file_dialog.file_selected.connect(_save_file)
+	if not file_dialog.file_selected.is_connected(_save_file):
+		file_dialog.file_selected.connect(_save_file)
 	file_dialog.popup()
 
 func handle_open_file() -> void:
@@ -57,9 +58,9 @@ func handle_open_file() -> void:
 	file_dialog.title = "Open"
 	if file_dialog.file_selected.is_connected(_save_file):
 		file_dialog.file_selected.disconnect(_save_file)
-	file_dialog.file_selected.connect(_open_file)
+	if not file_dialog.file_selected.is_connected(_open_file):
+		file_dialog.file_selected.connect(_open_file)
 	file_dialog.popup()
-
 
 func _save_file(path : String) -> void:
 	var cereal := CardBehaviorGraphSerializable.serialize(currently_editing_card_behavior)
@@ -71,6 +72,7 @@ func _save_file(path : String) -> void:
 func _open_file(path : String) -> void:
 	var file_access := FileAccess.open(path, FileAccess.READ)
 	var dict : Dictionary = file_access.get_var()
+	print(dict)
 	file_access.close()
 	var serializable := CardBehaviorGraphSerializable.from_dict(dict)
 	var behavior : CardBehaviorGraph = serializable.deserialize()

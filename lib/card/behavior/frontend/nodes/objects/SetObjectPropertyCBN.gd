@@ -2,7 +2,7 @@ class_name SetObjectPropertyCBN
 extends CardBehaviorNode
 
 func _init() -> void:
-	super("GetObjectProperty",
+	super("SetObjectProperty",
 		[
 			CardBehaviorArgument.object("object"),
 			CardBehaviorArgument.string_name("property"),

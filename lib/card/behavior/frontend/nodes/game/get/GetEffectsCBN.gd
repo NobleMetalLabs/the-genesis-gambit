@@ -2,7 +2,7 @@ class_name GetEffectsCBN
 extends CardBehaviorNode
 
 func _init() -> void:
-	super("GetCards",
+	super("GetEffects",
 		[], 
 		[
 			CardBehaviorArgumentArray.from(CardBehaviorArgument.object("effects"))

@@ -134,7 +134,7 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 						option_button.selected = __get_value_or_default(arg)
 						option_button.item_selected.connect(
 							func(index : int) -> void: 
-								node_internal.argument_values[arg.name] = arg.meta["options"][index]
+								node_internal.argument_values[arg.name] = index
 						)
 						if arg.meta.has("tiered_options"):
 							option_button.get_popup().about_to_popup.connect(
@@ -199,16 +199,29 @@ func __get_control(arg : CardBehaviorArgument, type : ArgType) -> Control:
 					arg_cont.add_child(checkbox)
 			CardBehaviorArgument.ArgumentType.STRING_NAME:
 				if type != ArgType.OUTPUT:
-					var line_edit := LineEdit.new()
-					line_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-					line_edit.expand_to_text_length = true
-					label.size_flags_horizontal = Control.SIZE_SHRINK_END
-					if node_internal.argument_values.has(arg.name):
-						line_edit.text = __get_value_or_default(arg)
-					line_edit.text_changed.connect(
-						func(value : String) -> void: node_internal.argument_values[arg.name] = value
-					)
-					arg_cont.add_child(line_edit)
+					if arg.meta.has("options"):
+						var option_button := OptionButton.new()
+						option_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+						option_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
+						for arg_option : Variant in arg.meta["options"]:
+							option_button.add_item(str(arg_option).to_pascal_case())
+						option_button.selected = arg.meta["options"].find(__get_value_or_default(arg))
+						option_button.item_selected.connect(
+							func(index : int) -> void: 
+								node_internal.argument_values[arg.name] = arg.meta["options"][index]
+						)
+						arg_cont.add_child(option_button)
+					else:
+						var line_edit := LineEdit.new()
+						line_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+						line_edit.expand_to_text_length = true
+						label.size_flags_horizontal = Control.SIZE_SHRINK_END
+						if node_internal.argument_values.has(arg.name):
+							line_edit.text = __get_value_or_default(arg)
+						line_edit.text_changed.connect(
+							func(value : String) -> void: node_internal.argument_values[arg.name] = value
+						)
+						arg_cont.add_child(line_edit)
 	if type != ArgType.OPTION:
 		arg_cont.move_child(label, -1)
 	arg_capsule.add_child(arg_cont)

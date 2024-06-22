@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ct0http1wnjx3"]
+[gd_scene load_steps=16 format=3 uid="uid://ct0http1wnjx3"]
 
 [ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/DeveloperToolTheme.tres" id="1_onhv0"]
 [ext_resource type="Script" path="res://src/dev/cardbehavioreditor/CardBehaviorEditor.gd" id="2_nu3a7"]
@@ -9,6 +9,14 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cgyb"]
 bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="InputEventKey" id="InputEventKey_cmi0v"]
+device = -1
+ctrl_pressed = true
+keycode = 78
+
+[sub_resource type="Shortcut" id="Shortcut_ba3u8"]
+events = [SubResource("InputEventKey_cmi0v")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_okcei"]
 device = -1
@@ -72,14 +80,16 @@ flat = true
 prefer_global_menu = false
 
 [node name="File" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU-BAR"]
-item_count = 3
-item_0/text = "Open"
-item_1/text = "Save"
+item_count = 4
+item_0/text = "New"
+item_1/text = "Open"
 item_1/id = 1
-item_2/text = "Exit"
+item_2/text = "Save"
 item_2/id = 2
+item_3/text = "Exit"
+item_3/id = 3
 script = ExtResource("3_yjlo0")
-shortcuts = Array[Shortcut]([SubResource("Shortcut_d7wip"), SubResource("Shortcut_1od64"), SubResource("Shortcut_s8f34")])
+shortcuts = Array[Shortcut]([SubResource("Shortcut_ba3u8"), SubResource("Shortcut_d7wip"), SubResource("Shortcut_1od64"), SubResource("Shortcut_s8f34")])
 
 [node name="Edit" type="PopupMenu" parent="Panel/VBoxContainer/MarginContainer/MENU-BAR"]
 item_count = 1

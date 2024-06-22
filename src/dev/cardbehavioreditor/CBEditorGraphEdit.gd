@@ -98,6 +98,16 @@ func handle_connection_request(from_node_name : StringName, from_port : int, to_
 	var from_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(from_node_name)).node_internal
 	var to_node : CBEditorGraphNode = self.get_node(NodePath(to_node_name))
 	var to_node_instance : CardBehaviorNodeInstance = to_node.node_internal
+	print("NEW EDGE")
+	self.connect_node(from_node_name, from_port, to_node_name, to_port)
+	to_node.refresh_input_fields()
+	for edge in editor.currently_editing_card_behavior.edges:
+		if edge.start_node != from_node_instance: continue
+		if edge.start_port != from_port: continue
+		if edge.end_node != to_node_instance: continue
+		if edge.end_port != to_port: continue
+		# Edge already exists
+		return
 	editor.currently_editing_card_behavior.edges.append(
 		CardBehaviorEdge.new(
 			from_node_instance,
@@ -106,8 +116,6 @@ func handle_connection_request(from_node_name : StringName, from_port : int, to_
 			to_port
 		)
 	)
-	self.connect_node(from_node_name, from_port, to_node_name, to_port)
-	to_node.refresh_input_fields()
 
 func handle_disconnection_request(from_node_name : StringName, from_port : int, to_node_name : StringName, to_port : int) -> void:
 	var from_node_instance : CardBehaviorNodeInstance = self.get_node(NodePath(from_node_name)).node_internal
@@ -120,6 +128,7 @@ func handle_disconnection_request(from_node_name : StringName, from_port : int, 
 		if edge.start_port != from_port: continue
 		if edge.end_node != to_node_instance: continue
 		if edge.end_port != to_port: continue
+		print("REMOVED EDGE")
 		editor.currently_editing_card_behavior.edges.erase(edge)
 		return
 	push_warning("Disconnected edge not present in the graph")

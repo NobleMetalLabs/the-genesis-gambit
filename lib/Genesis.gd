@@ -85,6 +85,14 @@ enum CardRemoveAnimation {
 	BANISH,
 }
 
+# *AwaitEffect
+enum AwaitUIType {
+	YESNO,
+	CHOICE,
+	MULTIPLE_CHOICE,
+	NUMBER,
+}
+
 # Statistics
 
 enum Statistic {

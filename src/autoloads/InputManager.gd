@@ -8,12 +8,12 @@ func _process(_delta : float) -> void:
 	if Input.is_action_just_pressed("debug_action"):
 		AuthoritySourceProvider.authority_source.request_action(
 			HandAddCardAction.new(
-				Player.new()
+				Router.gamefield.players[0],
 			)
 		)
 	if Input.is_action_just_pressed("hand_burn"):
 		AuthoritySourceProvider.authority_source.request_action(
 			HandBurnHandAction.new(
-				Player.new()
+				Router.gamefield.players[0],
 			)
 		)

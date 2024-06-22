@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://dfpmseflf6h0b"]
 
 [ext_resource type="Texture2D" uid="uid://mxqovcc74tr" path="res://ast/game/cards/fgs/shift-register.png" id="1_lxcfb"]
-[ext_resource type="Script" path="res://ast/game/cards/logic/ShiftRegister.gd" id="2_70he8"]
-[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="3_jlqp8"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/ShiftRegister.gd" id="2_70he8"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_jlqp8"]
 
 [resource]
 script = ExtResource("3_jlqp8")
 id = 10
+logic_script = ExtResource("2_70he8")
 name = "Shift Register"
 image = ExtResource("1_lxcfb")
 type = "Attacker"
@@ -15,4 +16,3 @@ cost = 0
 hp = 1
 power = 1
 defense = 1
-logic_script = ExtResource("2_70he8")

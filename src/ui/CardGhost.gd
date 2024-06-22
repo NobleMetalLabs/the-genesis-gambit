@@ -4,23 +4,16 @@ extends Control
 signal was_placed(global_position : Vector2)
 signal was_canceled()
 
-var metadata : CardMetadata :
-	get:
-		return ICardInstance.id(self).metadata
-	set(value):
-		ICardInstance.id(self).metadata = value
-
-@onready var texture_rect : TextureRect = $TextureRect
-@onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent
 var card_in_hand_mirror : CardInHand
+var card_frontend : CardFrontend
 
-func _ready() -> void:
-	texture_rect.texture = metadata.image
-	border_component.set_rarity(metadata.rarity)
+func _init(card_in_hand : CardInHand) -> void:
+	card_in_hand_mirror = card_in_hand
+	self.add_child(ICardInstance.id(card_in_hand).clone())
 
-func _setup(_hand_mirror : CardInHand, _metadata : CardMetadata) -> void:
-	card_in_hand_mirror = _hand_mirror
-	metadata = _metadata
+	card_frontend = card_in_hand.card_frontend.duplicate()
+	self.add_child(card_frontend)
+	card_frontend.modulate = Color(1, 1, 1, 0.5)
 
 func _input(event : InputEvent) -> void:
 	if not event is InputEventMouseButton: return
@@ -36,13 +29,16 @@ func _cancel() -> void:
 
 func _place() -> void:
 	self.was_placed.emit(self.global_position)
-	self.queue_free()
+	follow_cursor = false
 
 func _is_in_hand_region() -> bool:
-	var value : bool = card_in_hand_mirror.hand_ui.get_global_rect().intersects(self.get_global_rect())
+	var value : bool = Router.client_ui.hand_ui.get_global_rect().intersects(self.get_global_rect())
 	return value
 
+var follow_cursor : bool = true
+
 func _process(_delta : float) -> void:
+	if not follow_cursor: return
 	position = get_global_mouse_position()
 	var is_vis : bool = _is_in_hand_region()
 	visible = not is_vis

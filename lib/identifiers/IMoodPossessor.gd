@@ -2,12 +2,20 @@ class_name IMoodPossessor
 extends Identifier
 
 static func id(node : Node) -> IMoodPossessor:
-	if node == null: return null
 	if node is Identifier:
 		node = node.get_object()
+	if node == null: return null
+	if not node.has_node("IMoodPossessor"): return null
 	return node.get_node("IMoodPossessor")
 
-var _active_moods : Array[Mood] = []
+var _active_moods : Array[Mood] 
+
+func _init(_metadata : CardMetadata = null) -> void:
+	self.name = "IMoodPossessor"
+	_active_moods = []
+
+func clone() -> IMoodPossessor:
+	return IMoodPossessor.new().copy(self)
 
 func apply_mood(mood : Mood) -> void:
 	_active_moods.append(mood)
@@ -15,7 +23,7 @@ func apply_mood(mood : Mood) -> void:
 func remove_mood(mood : Mood) -> void:
 	_active_moods.erase(mood)
 
-func _get_statistic(statistic_name : String, base_value : Variant) -> Variant:
+func _get_statistic(statistic_name : Genesis.Statistic, base_value : Variant) -> Variant:
 	if typeof(base_value) != TYPE_INT: 
 		return base_value
 	for mood in _active_moods:

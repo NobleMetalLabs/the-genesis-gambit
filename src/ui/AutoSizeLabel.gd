@@ -4,6 +4,9 @@ extends Label
 
 @export var fill_percentage : float = 1
 
+func _init() -> void:
+	self.label_settings = LabelSettings.new()
+
 func _ready() -> void:
 	item_rect_changed.connect(resize_from_current_text)
 	resize_from_current_text()
@@ -22,7 +25,13 @@ func resize_from_current_text() -> void:
 #TODO: Add multiline functionality
 func does_text_fit(_size : int) -> bool:
 	var settings : LabelSettings = self.label_settings
-	var text_size : Vector2 = settings.font.get_string_size(
+	var font : Font
+	# TODO: THIS BLOWS!!!!!!!!! DIVINE SKELETON DEATH BLAST!!!!!!!!!!!!!!!
+	if settings.font:
+		font = settings.font
+	else:
+		font = load("res://ast/ui/fonts/unifont.ttf")
+	var text_size : Vector2 = font.get_string_size(
 		self.text, self.horizontal_alignment, -1, _size
 	)
 	return text_size.x < (self.size.x * fill_percentage)

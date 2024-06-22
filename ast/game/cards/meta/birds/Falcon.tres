@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://kyo7rvbv24jp"]
 
 [ext_resource type="Texture2D" uid="uid://bqohr0aqtdu35" path="res://ast/game/cards/fgs/birds/falcon.png" id="1_243cq"]
-[ext_resource type="Script" path="res://lib/CardMetadata.gd" id="2_p8wcc"]
-[ext_resource type="Script" path="res://ast/game/cards/logic/ShiftRegister.gd" id="2_stxet"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="2_cmjmn"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_p8wcc"]
 
 [resource]
 script = ExtResource("2_p8wcc")
 id = 4
+logic_script = ExtResource("2_cmjmn")
 name = "Falcon"
 image = ExtResource("1_243cq")
 type = "Attacker"
@@ -15,4 +16,3 @@ cost = 0
 hp = 0
 power = 0
 defense = 0
-logic_script = ExtResource("2_stxet")

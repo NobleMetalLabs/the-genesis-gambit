@@ -10,9 +10,9 @@
 
 [node name="BG" type="Sprite2D" parent="."]
 z_index = -5
-position = Vector2(480, 270)
+position = Vector2(960, 540)
+scale = Vector2(2, 2)
 texture = ExtResource("1_fcxgx")
-metadata/_edit_lock_ = true
 
 [node name="Thing" type="Sprite2D" parent="."]
 position = Vector2(580, 270)

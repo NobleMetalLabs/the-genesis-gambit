@@ -1,34 +1,44 @@
 class_name CardOnField
-extends Control
-
-#implements ICardInstance
-var metadata : CardMetadata :
-	get:
-		return ICardInstance.id(self).metadata
-	set(value):
-		ICardInstance.id(self).metadata = value
+extends Node2D
 
 #implements ITargetable
 func get_boundary_rectangle() -> Rect2:
-	return texture_rect.get_global_rect()
+	return card_frontend.get_global_rect()
 
-var logic : CardLogic
 var gamefield : Gamefield
+var card_frontend : CardFrontend
 
-@onready var texture_rect : TextureRect = $TextureRect
-@onready var border_component : CardBorderComponent = $TextureRect/CardBorderComponent
+func _init(provided_identifiers : Array[Identifier]) -> void:
+	for identifier in provided_identifiers:
+		var old_parent : Node = identifier.get_parent()
+		if old_parent != null: 
+			identifier.reparent(self)
+			old_parent.add_child(identifier.clone())
+		else: 
+			self.add_child(identifier)
 
-func _setup(_gamefield: Gamefield, _metadata : CardMetadata) -> void:
-	metadata = _metadata
-	logic = metadata.logic_script.new()
-	logic.owner = ICardInstance.id(self)
-	gamefield = _gamefield
+	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is ICardInstance):
+		push_error("CardOnField must be provided with ICardInstance identifier.")
+		return
+	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is ITargetable): 
+		self.add_child(ITargetable.new())
+	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is IStatisticPossessor): 
+		self.add_child(IStatisticPossessor.new())
+	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is IMoodPossessor): 
+		self.add_child(IMoodPossessor.new())
+
+	self.gamefield = Router.gamefield
+
+	card_frontend = CardFrontend.instantiate()
+	self.add_child(card_frontend)
+
+	self.name = "CardOnField"
+	
+func _to_string() -> String:
+	return "CardOnField<%s>" % ICardInstance.id(self)
 
 func _ready() -> void:
-	texture_rect.texture = metadata.image
-	border_component.set_rarity(metadata.rarity)
-	
-	gui_input.connect(
+	card_frontend.gui_input.connect(
 		func (event : InputEvent) -> void:
 			if not event is InputEventMouseButton: return
 			if event.button_index == MOUSE_BUTTON_LEFT:
@@ -37,7 +47,6 @@ func _ready() -> void:
 				if event.pressed: start_target()
 			get_viewport().set_input_as_handled()
 	)
-	gamefield.event.emit("card_placement", {"card_instance": self})
 	
 	target_arrow.z_index = 2
 	target_arrow.modulate = Color.RED
@@ -80,11 +89,12 @@ func end_drag() -> void:
 
 func start_target() -> void:
 	selecting_target = true
-	target = null
 
 func end_target() -> void:
 	selecting_target = false
 	var hovered : ICardInstance = gamefield.client_ui.get_hovered_card()
-	target = null
-	if hovered != null:
-		target = ITargetable.id(hovered)
+	AuthoritySourceProvider.authority_source.request_action(
+		CreatureTargetAction.new(
+			self, ITargetable.id(hovered)
+		)
+	)

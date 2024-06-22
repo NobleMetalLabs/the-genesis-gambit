@@ -13,3 +13,6 @@ func _init(_player : Player, _from_deck : bool = true, _specific_card : bool = f
 
 func _to_string() -> String:
 	return "HandAddCardAction(%s,%s,%s,%s)" % [self.player, self.from_deck, self.specific_card, self.card_metadata_id]
+	
+func to_effect() -> HandAddCardEffect:
+	return HandAddCardEffect.new(self, player, from_deck, specific_card, card_metadata_id)

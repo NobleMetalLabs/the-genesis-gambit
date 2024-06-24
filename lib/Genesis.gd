@@ -102,6 +102,7 @@ enum Statistic {
 	CAN_BE_TARGETED,
 	CAN_BE_SACRIFICED,
 	CAN_BE_DESTROYED,
+	ACTS_AS_BLOCKER,
 	# Counts
 	NUM_ATTACKS_MADE,
 	NUM_ATTACKS_RECIEVED,
@@ -120,6 +121,10 @@ enum Statistic {
 	NUM_CARDS_BURNED,
 	NUM_CARDS_MARKED,
 	NUM_CARDS_LEFT_IN_DECK,
+	DECK_TOPCARD_VISIBLE,
+	DECK_TOPCARD_VISIBLE_TO_OPPONENTS,
+	DECK_TOPCARD_VISIBLE_RARITY_ONLY,
+	DECK_TOPCARD_VISIBLE_TYPE_ONLY,
 }
 
 const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
@@ -159,6 +164,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.CAN_BE_TARGETED : true,
 	Statistic.CAN_BE_SACRIFICED : true,
 	Statistic.CAN_BE_DESTROYED : true,
+	Statistic.ACTS_AS_BLOCKER : false,
 	# Counts
 	Statistic.NUM_ATTACKS_MADE : 0,
 	Statistic.NUM_ATTACKS_RECIEVED : 0,
@@ -177,4 +183,8 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.NUM_CARDS_BURNED: 0,
 	Statistic.NUM_CARDS_MARKED: 0,
 	Statistic.NUM_CARDS_LEFT_IN_DECK: 0,
+	Statistic.DECK_TOPCARD_VISIBLE: false,
+	Statistic.DECK_TOPCARD_VISIBLE_TO_OPPONENTS: false,
+	Statistic.DECK_TOPCARD_VISIBLE_RARITY_ONLY: false,
+	Statistic.DECK_TOPCARD_VISIBLE_TYPE_ONLY: false,
 }

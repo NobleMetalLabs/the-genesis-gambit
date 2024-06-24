@@ -1,5 +1,5 @@
 class_name Effect
-extends Object
+extends RefCounted
 
 var requester : Object
 

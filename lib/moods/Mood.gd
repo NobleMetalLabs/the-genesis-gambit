@@ -1,7 +1,7 @@
 class_name Mood
 extends RefCounted
 
-var source : Object
+var source : ICardInstance
 
 static func invert_effect(effect : Mood.MoodEffect) -> Mood.MoodEffect:
 	match effect:

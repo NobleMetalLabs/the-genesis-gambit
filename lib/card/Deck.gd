@@ -9,6 +9,9 @@ func _init() -> void:
 func add_card(card : CardInDeck) -> void:
 	_cards.append(card)
 
+func insert_card(card : CardInDeck, index : int) -> void:
+	_cards.insert(index, card)
+
 func remove_card(card : CardInDeck) -> void:
 	_cards.erase(card)
 

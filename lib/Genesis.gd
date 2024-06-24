@@ -3,6 +3,31 @@ extends Object
 
 ## Genesis is a class that provides objects needed in a global scope for the game. This is mostly data-related enums and constants.
 
+# Cards
+
+
+enum CardType {
+	ATTACKER,
+	SUPPORT,
+	INSTANT,
+	LEADER,
+}
+
+enum CardRarity {
+	COMMON,
+	RARE,
+	MYTHIC,
+	EPIC,
+	LEADER,
+}
+
+enum PackRarity {
+	COMMON,
+	RARE,
+	MYTHIC,
+	EPIC,
+}
+
 # Actions and Events
 
 # CreatureCooldown*

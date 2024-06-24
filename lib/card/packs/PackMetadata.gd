@@ -5,5 +5,4 @@ extends Resource
 @export var image : Texture
 @export var card_pool : Array[CardWithProbability]
 
-@export_enum("Common", "Rare", "Mythic", "Epic") var rarity: String = "Common"
-@export_enum("Instant", "Attacker", "Support") var type : String
+@export var rarity : Genesis.PackRarity

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://sg8ay08n8vnr"]
+
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="1_jyuj3"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_hmj40"]
+
+[resource]
+script = ExtResource("2_hmj40")
+name = "Cockatrice"
+type = 0
+rarity = 0
+logic_script = ExtResource("1_jyuj3")
+health = 5
+strength = 3
+speed = 4
+energy = 5

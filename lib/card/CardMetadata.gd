@@ -14,7 +14,7 @@ var tribe : Genesis.CardTribe = Genesis.CardTribe.NONE
 @export var image : Texture = preload("res://ast/game/cards/fgs/blank84.png")
 @export var logic_script : GDScript = preload("res://ast/game/cards/logic/src/Nothing.gd")
 @export_group("Stats")
-@export var health : int
-@export var strength : int
-@export var speed : int
-@export var energy : int
+@export var health : int = -1
+@export var strength : int = -1
+@export var speed : int = -1
+@export var energy : int = -1

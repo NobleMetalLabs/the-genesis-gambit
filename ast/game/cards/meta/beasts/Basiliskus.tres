@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://c3xo8otq0ek5x"]
+
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/beasts/Basiliskus.gd" id="1_n77sd"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_mwaq4"]
+
+[resource]
+script = ExtResource("2_mwaq4")
+name = "Basiliskus"
+type = 2
+rarity = 2
+logic_script = ExtResource("1_n77sd")
+health = 0
+strength = 0
+speed = 0
+energy = 8

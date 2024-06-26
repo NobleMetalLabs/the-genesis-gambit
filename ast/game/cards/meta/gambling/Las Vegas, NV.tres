@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://gr82spl7tw3w"]
+
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/gambling/Las Vegas, NV.gd" id="1_hucpi"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_7y37v"]
+
+[resource]
+script = ExtResource("2_7y37v")
+name = "Las Vegas, NV"
+type = 1
+rarity = 3
+logic_script = ExtResource("1_hucpi")
+health = 15
+strength = 1
+speed = 7
+energy = 14

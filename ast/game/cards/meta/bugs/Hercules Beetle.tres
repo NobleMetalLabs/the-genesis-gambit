@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://bslshyrpbkmjw"]
+
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="1_d80pf"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_1cjhp"]
+
+[resource]
+script = ExtResource("2_1cjhp")
+name = "Hercules Beetle"
+type = 0
+rarity = 1
+logic_script = ExtResource("1_d80pf")
+health = 14
+strength = 6
+speed = 5
+energy = 10

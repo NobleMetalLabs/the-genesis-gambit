@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://e7akk6jgppox"]
+
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/beasts/Bear-rat.gd" id="1_5ucix"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_vhfer"]
+
+[resource]
+script = ExtResource("2_vhfer")
+name = "Bear-rat"
+type = 1
+rarity = 0
+logic_script = ExtResource("1_5ucix")
+health = 8
+strength = 0
+speed = 3
+energy = 5

@@ -1,6 +1,6 @@
 extends CardLogic
 
-static var description : StringName = "Targetted creature is placed in it's owners deck, third from the top."
+static var description : StringName = "Targeted creature is placed in it's owners deck, third from the top."
 
 func process(_gs : GamefieldState, effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)

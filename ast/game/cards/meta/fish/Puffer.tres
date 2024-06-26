@@ -7,12 +7,12 @@
 [resource]
 script = ExtResource("2_1logl")
 id = 8
-logic_script = ExtResource("2_acyix")
 name = "Puffer"
+type = 2
+rarity = 0
 image = ExtResource("1_3m63s")
-type = "Attacker"
-rarity = "Common"
-cost = 0
+logic_script = ExtResource("2_acyix")
 hp = 0
 power = 0
-defense = 0
+speed = 0
+cost = 0

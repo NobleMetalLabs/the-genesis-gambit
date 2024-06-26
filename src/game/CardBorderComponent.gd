@@ -8,11 +8,11 @@ extends Control
 
 @onready var texture_rect : TextureRect = $TextureRect
 
-func set_rarity(rarity : String) -> void:
+func set_rarity(rarity : Genesis.CardRarity) -> void:
 	var rarity_to_texture : Dictionary = {
-		"Common" : common_texture,
-		"Rare" : rare_texture,
-		"Mythic" : mythic_texture,
-		"Epic" : epic_texture
+		Genesis.CardRarity.COMMON : common_texture,
+		Genesis.CardRarity.RARE : rare_texture,
+		Genesis.CardRarity.MYTHIC : mythic_texture,
+		Genesis.CardRarity.EPIC : epic_texture
 	}
 	texture_rect.texture = rarity_to_texture[rarity]

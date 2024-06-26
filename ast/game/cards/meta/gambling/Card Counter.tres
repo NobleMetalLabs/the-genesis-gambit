@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://bqqy0febkb0pc"]
+
+[ext_resource type="Texture2D" uid="uid://c3uq2t1ebhods" path="res://ast/game/cards/fgs/gambling/card-counter.png" id="1_4m57i"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/gambling/Card Counter.gd" id="2_0ph61"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_jvim6"]
+
+[resource]
+script = ExtResource("2_jvim6")
+name = "Card Counter"
+type = 0
+rarity = 0
+image = ExtResource("1_4m57i")
+logic_script = ExtResource("2_0ph61")
+health = 6
+strength = 2
+speed = 2
+energy = 8

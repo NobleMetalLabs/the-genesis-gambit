@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://bjolbuy6j70sd"]
+
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="1_d032e"]
+[ext_resource type="Texture2D" uid="uid://b0jk8q8uywy7c" path="res://ast/game/cards/fgs/gambling/double-zero.png" id="1_ly4we"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_b6iw8"]
+
+[resource]
+script = ExtResource("2_b6iw8")
+name = "Double Zero"
+type = 0
+rarity = 1
+image = ExtResource("1_ly4we")
+logic_script = ExtResource("1_d032e")
+health = 3
+strength = 0
+speed = 10
+energy = 10

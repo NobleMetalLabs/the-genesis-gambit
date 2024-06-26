@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://ip2ra5v3gmur"]
+
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/bugs/Leafcutter Ant Soldier.gd" id="1_3ibqw"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_8onih"]
+
+[resource]
+script = ExtResource("2_8onih")
+name = "Leafcutter Ant Soldier"
+type = 0
+rarity = 0
+logic_script = ExtResource("1_3ibqw")
+health = 2
+strength = 1
+speed = 3
+energy = 4

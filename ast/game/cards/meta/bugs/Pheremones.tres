@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://dddnxo7ku7jwk"]
+
+[ext_resource type="Texture2D" uid="uid://cf50liknrhsin" path="res://ast/game/cards/fgs/blank84.png" id="1_dd7bj"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/bugs/Pheremones.gd" id="2_cw5q6"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_qqhnx"]
+
+[resource]
+script = ExtResource("3_qqhnx")
+name = "Pheremones"
+type = 2
+rarity = 2
+image = ExtResource("1_dd7bj")
+logic_script = ExtResource("2_cw5q6")
+health = -1
+strength = -1
+speed = -1
+energy = 10

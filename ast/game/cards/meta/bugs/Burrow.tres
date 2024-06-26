@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://c6j5de15q7sd7"]
+
+[ext_resource type="Texture2D" uid="uid://cf50liknrhsin" path="res://ast/game/cards/fgs/blank84.png" id="1_e41oa"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/bugs/Burrow.gd" id="2_ucik6"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_efiuw"]
+
+[resource]
+script = ExtResource("3_efiuw")
+name = "Burrow"
+type = 2
+rarity = 1
+image = ExtResource("1_e41oa")
+logic_script = ExtResource("2_ucik6")
+health = -1
+strength = -1
+speed = -1
+energy = 7

@@ -5,7 +5,6 @@ extends Object
 
 # Cards
 
-
 enum CardType {
 	ATTACKER,
 	SUPPORT,
@@ -27,6 +26,28 @@ enum PackRarity {
 	RARE,
 	MYTHIC,
 	EPIC,
+}
+
+enum CardTribe {
+	NONE,
+	ARCHITECTURE,
+	BEASTS,
+	BIRDS,
+	BUGS,
+	ELECTRONICS,
+	ENTERTAINMENT,
+	EVIL,
+	FISH,
+	FOLKLORE,
+	FOOD,
+	GAMBLING,
+	GOOD,
+	MEDICINE,
+	MONKEY,
+	NERDS_GEEKS,
+	THE_FUEL,
+	VAMPIRE,
+	WEATHER,
 }
 
 # Actions and Events

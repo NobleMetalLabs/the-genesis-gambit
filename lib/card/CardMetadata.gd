@@ -6,6 +6,7 @@ signal value_changed # emit when a property is changed to trigger ui to refresh
 # used when a card modifies a property of another card for sum reason
 
 var id : int
+var tribe : Genesis.CardTribe = Genesis.CardTribe.NONE
 @export_group("Characteristics")
 @export var name : String
 @export var type : Genesis.CardType = Genesis.CardType.INSTANT

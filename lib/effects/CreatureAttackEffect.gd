@@ -1,13 +1,13 @@
 class_name CreatureAttackEffect
 extends CreatureEffect
 
-var target : CardOnField
+var target : ITargetable
 var damage : int
 
 static func from_action(_action : CreatureAttackAction) -> CreatureAttackEffect:
 	return CreatureAttackEffect.new(_action, _action.creature, _action.target, _action.damage)
 
-func _init(_requester : Object, _creature : CardOnField, _target : CardOnField, _damage : int) -> void:
+func _init(_requester : Object, _creature : ICardInstance, _target : ITargetable, _damage : int) -> void:
 	self.requester = _requester
 	self.creature = _creature
 	self.target = _target

@@ -4,7 +4,7 @@ extends CreatureAction
 var source : ICardInstance
 var reason : Genesis.LeavePlayReason
 
-func _init(_creature : CardOnField, _source : ICardInstance, _reason : Genesis.LeavePlayReason) -> void:
+func _init(_creature : ICardInstance, _source : ICardInstance, _reason : Genesis.LeavePlayReason) -> void:
 	self.creature = _creature
 	self.source = _source
 	self.reason = _reason

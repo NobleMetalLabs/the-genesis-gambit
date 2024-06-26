@@ -95,6 +95,6 @@ func end_target() -> void:
 	var hovered : ICardInstance = gamefield.client_ui.get_hovered_card()
 	AuthoritySourceProvider.authority_source.request_action(
 		CreatureTargetAction.new(
-			self, ITargetable.id(hovered)
+			ICardInstance.id(self), ITargetable.id(hovered)
 		)
 	)

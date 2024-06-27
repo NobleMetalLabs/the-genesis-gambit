@@ -2,12 +2,12 @@ extends CardLogic
 
 static var description : StringName = "Targeted creature recieves Enlightened."
 
-var previous_target : ICardInstance = null
+var previous_target : ITargetable = null
 
-func process(_gs : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_gs : GamefieldState, effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.JUST_TARGETED):
-		var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
+		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
 		if target == previous_target: return
 		if previous_target != null:
 			var p_target_moods := IMoodPossessor.id(previous_target)
@@ -15,8 +15,11 @@ func process(_gs : GamefieldState, _effect_resolver : EffectResolver) -> void:
 				if mood.source == instance_owner:
 					p_target_moods.remove_mood(mood)
 					break
-		ApplyMoodEffect.new(
-			IMoodPossessor.id(target), 
-			StatisticMood.ENLIGHTENED(instance_owner))
+		effect_resolver.request_effect(
+			ApplyMoodEffect.new(
+				instance_owner,
+				IMoodPossessor.id(target), 
+				StatisticMood.ENLIGHTENED(instance_owner)
+			)
 		)
 		previous_target = target

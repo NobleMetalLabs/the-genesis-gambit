@@ -16,6 +16,7 @@ func process(_gs : GamefieldState, effect_resolver : EffectResolver) -> void:
 		if not mood_applied:
 			effect_resolver.request_effect(
 				ApplyMoodEffect.new(
+					instance_owner,
 					target_moods,
 					StatisticMood.WEAK(instance_owner, 2)
 				)

@@ -10,6 +10,7 @@ enum CardType {
 	ATTACKER,
 	SUPPORT,
 	INSTANT,
+	PASSIVE,
 	LEADER,
 }
 
@@ -94,6 +95,8 @@ enum Statistic {
 	WAS_JUST_UNMARKED,
 	# References
 	TARGET,
+	MOST_RECENT_ATTACKED,
+	MOST_RECENT_ATTACKED_BY,
 	# Ability
 	CAN_ATTACK,
 	CAN_BE_ATTACKED,
@@ -103,6 +106,7 @@ enum Statistic {
 	CAN_BE_SACRIFICED,
 	CAN_BE_DESTROYED,
 	ACTS_AS_BLOCKER,
+	ACTS_AS_UNMARKED,
 	# Counts
 	NUM_ATTACKS_MADE,
 	NUM_ATTACKS_RECIEVED,
@@ -156,6 +160,8 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.WAS_JUST_UNMARKED : false,
 	# References
 	Statistic.TARGET : null,
+	Statistic.MOST_RECENT_ATTACKED : null,
+	Statistic.MOST_RECENT_ATTACKED_BY : null,
 	# Ability
 	Statistic.CAN_ATTACK : true,
 	Statistic.CAN_BE_ATTACKED : true,
@@ -165,6 +171,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.CAN_BE_SACRIFICED : true,
 	Statistic.CAN_BE_DESTROYED : true,
 	Statistic.ACTS_AS_BLOCKER : false,
+	Statistic.ACTS_AS_UNMARKED : false,
 	# Counts
 	Statistic.NUM_ATTACKS_MADE : 0,
 	Statistic.NUM_ATTACKS_RECIEVED : 0,

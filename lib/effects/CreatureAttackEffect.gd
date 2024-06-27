@@ -37,6 +37,9 @@ func resolve(effect_resolver : EffectResolver) -> void:
 		self.requester, target_stats, Genesis.Statistic.WAS_JUST_ATTACKED, false
 	))
 
+	target_stats.set_statistic(Genesis.Statistic.MOST_RECENT_ATTACKED_BY, ICardInstance.id(self.creature))
+	creature_stats.set_statistic(Genesis.Statistic.MOST_RECENT_ATTACKED, ICardInstance.id(self.target))
+
 	var attack_swing_tween : Tween = Router.get_tree().create_tween()
 	attack_swing_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO).tween_property(self.creature, "rotation_degrees", 20, 0.05)
 	attack_swing_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE).tween_property(self.creature, "rotation_degrees", -20, 0.1)

@@ -8,6 +8,7 @@ enum ResolveStatus {
 	REQUESTED,
 	RESOLVED,
 	DONE,
+	FAILED, #TODO: Allow effects to fail resolution.
 }
 
 func _init() -> void:

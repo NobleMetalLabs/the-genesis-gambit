@@ -16,7 +16,7 @@ func set_metadata(metadata : PackMetadata) -> void:
 	title_label.text = metadata.name
 	image_trect.texture = metadata.image
 	type_label.text = metadata.type
-	border_component.set_rarity(metadata.rarity)
+	border_component.set_rarity(metadata.rarity as Genesis.CardRarity)
 
 func _ready() -> void:
 	inspect_button.pressed.connect(

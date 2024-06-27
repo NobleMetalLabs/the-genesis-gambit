@@ -8,6 +8,7 @@ func process(_gs : GamefieldState, effect_resolver : EffectResolver) -> void:
 	if not is_on_field: return
 	if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_ACTIVATED):
 		var get_mood_effect := ApplyMoodEffect.new(
+			instance_owner,
 			IMoodPossessor.id(instance_owner), 
 			StatisticMood.ANGRY(instance_owner)
 		)

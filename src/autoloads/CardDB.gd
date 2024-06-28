@@ -3,6 +3,7 @@ extends Node
 
 var cards : Array[CardMetadata]
 var _path_by_cards : Dictionary = {} #[CardMetadata, String]
+var _id_by_name : Dictionary = {} #[String, int]
 
 func _ready() -> void:
 	_scan_cards()
@@ -11,6 +12,9 @@ func _ready() -> void:
 
 func get_card_by_id(id : int) -> CardMetadata:
 	return cards[id]
+
+func get_id_by_name(card_name : String) -> int:
+	return _id_by_name[card_name]
 
 func get_card_count() -> int:
 	return cards.size()
@@ -38,6 +42,7 @@ func _scan_path_for_cards(path : String = "res://ast/game/cards/meta/") -> Array
 func _assign_ids() -> void:
 	for i in range(cards.size()):
 		cards[i].id = i
+		_id_by_name[cards[i].name] = i
 
 func _assign_tribes() -> void:
 	for card in cards:

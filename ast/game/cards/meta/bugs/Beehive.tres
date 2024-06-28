@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://bdqn7ltgq7gnu"]
+
+[ext_resource type="Texture2D" uid="uid://cf50liknrhsin" path="res://ast/game/cards/fgs/blank84.png" id="1_hrhsj"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/bugs/Beehive.gd" id="2_nuuia"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_cffuv"]
+
+[resource]
+script = ExtResource("3_cffuv")
+name = "Beehive"
+type = 1
+rarity = 2
+image = ExtResource("1_hrhsj")
+logic_script = ExtResource("2_nuuia")
+health = 16
+strength = 0
+speed = 0
+energy = 16

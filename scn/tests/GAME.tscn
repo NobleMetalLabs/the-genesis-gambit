@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://d04g0mj38qu7c"]
+
+[ext_resource type="Script" path="res://scn/tests/game.gd" id="1_5g1sl"]
+[ext_resource type="Texture2D" uid="uid://cf7gm8mm2duvp" path="res://ast/ui/image/tex.png" id="1_5nvq2"]
+
+[node name="GAME" type="Node"]
+script = ExtResource("1_5g1sl")
+
+[node name="BG" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(960, 540)
+scale = Vector2(2, 2)
+texture = ExtResource("1_5nvq2")

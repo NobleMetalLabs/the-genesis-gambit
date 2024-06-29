@@ -22,3 +22,9 @@ func _init(provided_identifiers : Array[Identifier]) -> void:
 
 func _to_string() -> String:
 	return "CardInDeck<%s>" % ICardInstance.id(self)
+
+static func from_meta(card_meta : CardMetadata, player : Player) -> CardInDeck:
+	var card_instance := ICardInstance.new(card_meta, player)
+	var stats := IStatisticPossessor.new()
+	stats.set_statistic(Genesis.Statistic.IS_IN_DECK, true)
+	return CardInDeck.new([card_instance, stats])	

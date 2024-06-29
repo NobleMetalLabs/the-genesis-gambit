@@ -15,8 +15,8 @@ func _init(_requester : Object, _creature : ICardInstance, _source : ICardInstan
 func _to_string() -> String:
 	return "CreatureLeavePlayEffect(%s,%s,%s)" % [self.creature, self.source, self.reason]
 
-func resolve(effect_resolver : EffectResolver) -> void:
+func resolve(_effect_resolver : EffectResolver) -> void:
 	var player_owner : Player = ICardInstance.id(self.creature).player
-	effect_resolver.request_effect(DeckAddCardEffect.new(
+	_effect_resolver.request_effect(DeckAddCardEffect.new(
 		self, player_owner, ICardInstance.id(self.creature)
 	))

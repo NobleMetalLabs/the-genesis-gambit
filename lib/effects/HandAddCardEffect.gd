@@ -15,10 +15,10 @@ func _init(_requester : Object, _player : Player, _from_deck : bool = true, _spe
 func _to_string() -> String:
 	return "HandAddCardEffect(%s,%s,%s,%s)" % [self.player, self.from_deck, self.specific_card, self.card_metadata_id]
 
-func resolve(_er : EffectResolver) -> void:
+func resolve(_effect_resolver : EffectResolver) -> void:
 	match [self.from_deck, self.specific_card]:
 		[true, false]: # Regular Draw
-			var drawn_card : CardInDeck = self.player.deck.draw_card()
+			var drawn_card : CardInDeck = self.player.cards_in_deck.pop_front()
 			if drawn_card == null: 
 				push_warning("Deck has no cards. Did you run out?")
 				return 

@@ -11,5 +11,5 @@ func _init(_requester : Object, _target : IMoodPossessor, _mood : Mood) -> void:
 func _to_string() -> String:
 	return "RemoveMoodEffect(%s,%s)" % [self.target, self.mood]
 
-func resolve(_er : EffectResolver) -> void:
+func resolve(_effect_resolver : EffectResolver) -> void:
 	target.remove_mood(mood)

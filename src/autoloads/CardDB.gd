@@ -19,6 +19,13 @@ func get_id_by_name(card_name : String) -> int:
 func get_card_count() -> int:
 	return cards.size()
 
+func get_cards_by_tribe(tribe : Genesis.CardTribe) -> Array[CardMetadata]:
+	var tribe_cards : Array[CardMetadata] = []
+	for card in cards:
+		if card.tribe == tribe:
+			tribe_cards.append(card)
+	return tribe_cards 
+
 func _scan_cards() -> void:
 	cards = _scan_path_for_cards()
 

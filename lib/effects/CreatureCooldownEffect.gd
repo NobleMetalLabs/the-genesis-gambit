@@ -15,7 +15,7 @@ func _init(_requester : Object, _creature : ICardInstance, _type : Genesis.Coold
 func _to_string() -> String:
 	return "CreatureCooldownEffect(%s,%s,%s,%s)" % [self.creature, self.type, self.stage, self.frames]
 
-func resolve(effect_resolver : EffectResolver) -> void:
+func resolve(_effect_resolver : EffectResolver) -> void:
 	var creature_stats := IStatisticPossessor.id(self.creature)
 	creature_stats.set_statistic(Genesis.Statistic.NUM_COOLDOWN_FRAMES_REMAINING, self.frames)
 
@@ -25,12 +25,12 @@ func resolve(effect_resolver : EffectResolver) -> void:
 		if self.stage == Genesis.CooldownStage.START:
 			creature_stats.set_statistic(Genesis.Statistic.JUST_STARTED_COOLDOWN, true)
 			creature_stats.set_statistic(Genesis.Statistic.IS_IN_COOLDOWN, true)
-			effect_resolver.request_effect(SetStatisticEffect.new(
+			_effect_resolver.request_effect(SetStatisticEffect.new(
 				self.requester, creature_stats, Genesis.Statistic.JUST_STARTED_COOLDOWN, false
 			))
 		else:
 			if self.frames == 0:
-				effect_resolver.request_effect(CreatureCooldownEffect.new(
+				_effect_resolver.request_effect(CreatureCooldownEffect.new(
 					self.requester,
 					self.creature,
 					self.type,
@@ -38,7 +38,7 @@ func resolve(effect_resolver : EffectResolver) -> void:
 					0
 				))
 				return
-		effect_resolver.request_effect(CreatureCooldownEffect.new(
+		_effect_resolver.request_effect(CreatureCooldownEffect.new(
 			self.requester,
 			self.creature,
 			self.type,
@@ -50,7 +50,7 @@ func resolve(effect_resolver : EffectResolver) -> void:
 
 		creature_stats.set_statistic(Genesis.Statistic.IS_IN_COOLDOWN, false)
 		creature_stats.set_statistic(Genesis.Statistic.JUST_FINISHED_COOLDOWN, true)
-		effect_resolver.request_effect(SetStatisticEffect.new(
+		_effect_resolver.request_effect(SetStatisticEffect.new(
 			self.requester, creature_stats, Genesis.Statistic.JUST_FINISHED_COOLDOWN, false
 		))
 

@@ -4,16 +4,17 @@ extends Node
 signal event(name : StringName, data : Dictionary)
 
 @onready var cards_holder : Node2D = get_node("Cards")
-@onready var client_ui : ClientUI = get_parent().get_node("CLIENT-UI")
 
+var client_ui : ClientUI
 var effect_resolver : EffectResolver = EffectResolver.new()
 var players : Array[Player]
 
-func _ready() -> void:
-	var new_player := Player.new()
-	new_player.name = "Player 1"
-	players.append(new_player)
-	self.add_child(new_player, true)
+func setup(config : NetworkPlayStageConfiguration) -> void:
+	for nplayer : NetworkPlayer in config.players:
+		var player := Player.new(nplayer, config.decks_by_player_uid[nplayer.uid])
+		players.append(player)
+		player.name = nplayer.player_name
+		self.add_child(player, true)
 
 var _hovered_card : CardOnField = null
 func get_hovered_card() -> CardOnField:

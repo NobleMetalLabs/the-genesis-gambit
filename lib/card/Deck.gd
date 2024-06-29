@@ -1,28 +1,24 @@
 class_name Deck
 extends Resource
 
-var _cards : Array[CardInDeck]
+var _cards : Array[CardMetadata]
 
 func _init() -> void:
 	_cards = []
 
-func add_card(card : CardInDeck) -> void:
+func add_card(card : CardMetadata) -> void:
 	_cards.append(card)
 
-func insert_card(card : CardInDeck, index : int) -> void:
-	_cards.insert(index, card)
-
-func remove_card(card : CardInDeck) -> void:
+func remove_card(card : CardMetadata) -> void:
 	_cards.erase(card)
 
-func draw_card() -> CardInDeck:
-	if _cards.size() == 0:
-		return null
-	return _cards.pop_front()
-
-func get_cards() -> Array[CardInDeck]:
+func get_cards() -> Array[CardMetadata]:
 	return _cards
 
-func shuffle() -> void:
-	randomize()
-	_cards.shuffle()
+static func prebuilt_from_tribe(tribe : Genesis.CardTribe) -> Deck:
+	var deck := Deck.new()
+	for card in CardDB.get_cards_by_tribe(tribe):
+		deck.add_card(card)
+	return deck
+
+static var EMPTY := Deck.new()

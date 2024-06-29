@@ -19,7 +19,7 @@ func _init(_requester : Object, _player : Player, _card : ICardInstance, _as_mar
 func _to_string() -> String:
 	return "DeckAddCardEffect(%s,%s,%s,%s)" % [self.player, self.card, self.keep_stats, self.keep_moods]
 
-func resolve(effect_resolver : EffectResolver) -> void:
+func resolve(_effect_resolver : EffectResolver) -> void:
 	var previous_object_owner : Object = self.card.get_object()
 	
 	var idents : Array[Identifier] = [card]
@@ -29,9 +29,9 @@ func resolve(effect_resolver : EffectResolver) -> void:
 		idents.append(IMoodPossessor.id(self.card))
 	var card_in_deck := CardInDeck.new(idents)
 	if at_index == 999:
-		self.player.deck.add_card(card_in_deck)
+		self.player.cards_in_deck.append(card_in_deck)
 	else:
-		self.player.deck.insert_card(card_in_deck, at_index)
+		self.player.cards_in_deck.insert(at_index, card_in_deck)
 
 	var card_stats := IStatisticPossessor.id(card)
 
@@ -48,6 +48,6 @@ func resolve(effect_resolver : EffectResolver) -> void:
 	if self.as_marked:
 		card_stats.set_statistic(Genesis.Statistic.IS_MARKED, true)
 		card_stats.set_statistic(Genesis.Statistic.WAS_JUST_MARKED, true)
-		effect_resolver.request_effect(SetStatisticEffect.new(
+		_effect_resolver.request_effect(SetStatisticEffect.new(
 			self.requester, card_stats, Genesis.Statistic.WAS_JUST_MARKED, false
 		))

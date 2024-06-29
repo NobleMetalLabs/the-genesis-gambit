@@ -15,17 +15,17 @@ func _init(_requester : Object, _player : Player, _card : CardInHand, _leave_rea
 func _to_string() -> String:
 	return "DeckRemoveCardEffect(%s,%s,%s,%s)" % [self.player, self.card, self.leave_reason, self.animation]
 
-func resolve(effect_resolver : EffectResolver) -> void:
+func resolve(_effect_resolver : EffectResolver) -> void:
 	var card_instance := ICardInstance.id(self.card)
 	IStatisticPossessor.id(self.card).set_statistic(Genesis.Statistic.IS_IN_DECK, false)
 
 	if leave_reason == Genesis.LeaveHandReason.DISCARDED or leave_reason == Genesis.LeaveHandReason.BURNED:
-		effect_resolver.request_effect(DeckAddCardEffect.new(
+		_effect_resolver.request_effect(DeckAddCardEffect.new(
 			self.requester, self.player, card_instance
 		))
 
 	if leave_reason == Genesis.LeaveHandReason.PLAYED:
-		effect_resolver.request_effect(CreatureSpawnEffect.new(
+		_effect_resolver.request_effect(CreatureSpawnEffect.new(
 			self.requester, card_instance
 		))
 

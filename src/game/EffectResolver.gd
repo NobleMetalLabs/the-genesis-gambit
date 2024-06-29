@@ -56,7 +56,6 @@ func resolve_effects(gamefield_state : GamefieldState) -> void:
 			if action in already_processed_actions: # dont if it did already
 				already_processed_actions.erase(action)
 				AuthoritySourceProvider.authority_source.action_queue.erase(action)
-				action.free()
 				continue
 			var effect : Effect = action.to_effect()
 			effect.requester = action

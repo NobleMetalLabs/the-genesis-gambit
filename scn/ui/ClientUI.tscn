@@ -25,7 +25,6 @@ unique_name_in_owner = true
 
 [node name="EFFECT-RESOLVER-VIEWER" parent="DEVELOPER" instance=ExtResource("6_6ht5e")]
 unique_name_in_owner = true
-handle_input_locally = false
 canvas_item_default_texture_filter = 3
 gui_disable_input = true
 initial_position = 2

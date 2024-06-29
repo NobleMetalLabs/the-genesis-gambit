@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://cpuu5rh8sntmq"]
 
 [ext_resource type="Script" path="res://ast/game/cards/logic/src/gambling/False Shuffle.gd" id="1_ao7a1"]
-[ext_resource type="Texture2D" uid="uid://cf50liknrhsin" path="res://ast/game/cards/fgs/blank84.png" id="1_eovpx"]
+[ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_mt116"]
 [ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_o6bh0"]
 
 [resource]
@@ -9,7 +9,7 @@ script = ExtResource("3_o6bh0")
 name = "False Shuffle"
 type = 2
 rarity = 1
-image = ExtResource("1_eovpx")
+image = ExtResource("1_mt116")
 logic_script = ExtResource("1_ao7a1")
 health = -1
 strength = -1

@@ -11,7 +11,7 @@ var tribe : Genesis.CardTribe = Genesis.CardTribe.NONE
 @export var name : String
 @export var type : Genesis.CardType = Genesis.CardType.INSTANT
 @export var rarity : Genesis.CardRarity = Genesis.CardRarity.COMMON
-@export var image : Texture = preload("res://ast/game/cards/fgs/blank84.png")
+@export var image : Texture = preload("res://ast/game/cards/fgs/unknown.png")
 @export var logic_script : GDScript = preload("res://ast/game/cards/logic/src/Nothing.gd")
 @export_group("Stats")
 @export var health : int = -1

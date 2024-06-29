@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://1kis0yht6mge"]
 
 [ext_resource type="Script" path="res://ast/game/cards/logic/src/bugs/Leafcutter Ant Worker.gd" id="1_73wvj"]
-[ext_resource type="Texture2D" uid="uid://cf50liknrhsin" path="res://ast/game/cards/fgs/blank84.png" id="1_c7ww8"]
+[ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_qqyqd"]
 [ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_wixj2"]
 
 [resource]
@@ -9,7 +9,7 @@ script = ExtResource("2_wixj2")
 name = "Leafcutter Ant Worker"
 type = 0
 rarity = 0
-image = ExtResource("1_c7ww8")
+image = ExtResource("1_qqyqd")
 logic_script = ExtResource("1_73wvj")
 health = 4
 strength = 1

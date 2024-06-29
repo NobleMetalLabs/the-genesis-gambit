@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://xiruo7klw4el"]
 
 [ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="1_dadwl"]
-[ext_resource type="Texture2D" uid="uid://cf50liknrhsin" path="res://ast/game/cards/fgs/blank84.png" id="1_ow31a"]
+[ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_k3hni"]
 [ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_64bgf"]
 
 [resource]
@@ -9,7 +9,7 @@ script = ExtResource("2_64bgf")
 name = "Mahjong"
 type = 0
 rarity = 0
-image = ExtResource("1_ow31a")
+image = ExtResource("1_k3hni")
 logic_script = ExtResource("1_dadwl")
 health = 6
 strength = 1

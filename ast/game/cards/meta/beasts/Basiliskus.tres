@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://c3xo8otq0ek5x"]
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://c3xo8otq0ek5x"]
 
 [ext_resource type="Script" path="res://ast/game/cards/logic/src/beasts/Basiliskus.gd" id="1_n77sd"]
+[ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_vd2h3"]
 [ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_mwaq4"]
 
 [resource]
@@ -8,8 +9,9 @@ script = ExtResource("2_mwaq4")
 name = "Basiliskus"
 type = 2
 rarity = 2
+image = ExtResource("1_vd2h3")
 logic_script = ExtResource("1_n77sd")
-health = 0
-strength = 0
-speed = 0
+health = -1
+strength = -1
+speed = -1
 energy = 8

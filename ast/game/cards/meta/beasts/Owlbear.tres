@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://cb6mq3yvybgum"]
+
+[ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_kjngq"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/beasts/Owlbear.gd" id="2_o30s2"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_7i4iq"]
+
+[resource]
+script = ExtResource("3_7i4iq")
+name = "Owlbear"
+type = 1
+rarity = 2
+image = ExtResource("1_kjngq")
+logic_script = ExtResource("2_o30s2")
+health = 10
+strength = 6
+speed = 3
+energy = 9

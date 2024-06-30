@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://bqjpahbo8h6he"]
+
+[ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_3crvl"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/beasts/Iron Tusks.gd" id="2_m7wl8"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_y4b3t"]
+
+[resource]
+script = ExtResource("3_y4b3t")
+name = "Iron Tusks"
+type = 1
+rarity = 0
+image = ExtResource("1_3crvl")
+logic_script = ExtResource("2_m7wl8")
+health = 6
+strength = 0
+speed = 2
+energy = 4

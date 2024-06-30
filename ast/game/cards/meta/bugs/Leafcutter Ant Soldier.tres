@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://ip2ra5v3gmur"]
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://ip2ra5v3gmur"]
 
 [ext_resource type="Script" path="res://ast/game/cards/logic/src/bugs/Leafcutter Ant Soldier.gd" id="1_3ibqw"]
+[ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_tiv4t"]
 [ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_8onih"]
 
 [resource]
@@ -8,6 +9,7 @@ script = ExtResource("2_8onih")
 name = "Leafcutter Ant Soldier"
 type = 0
 rarity = 0
+image = ExtResource("1_tiv4t")
 logic_script = ExtResource("1_3ibqw")
 health = 2
 strength = 1

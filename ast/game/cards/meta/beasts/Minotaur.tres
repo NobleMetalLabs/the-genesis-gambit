@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="CardMetadata" load_steps=3 format=3 uid="uid://c6rwp0jsfia5s"]
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://c6rwp0jsfia5s"]
 
 [ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="1_67y3o"]
+[ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_vlcsa"]
 [ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_aueey"]
 
 [resource]
@@ -8,6 +9,7 @@ script = ExtResource("2_aueey")
 name = "Minotaur"
 type = 0
 rarity = 1
+image = ExtResource("1_vlcsa")
 logic_script = ExtResource("1_67y3o")
 health = 10
 strength = 8

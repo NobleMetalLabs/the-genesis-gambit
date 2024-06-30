@@ -1,6 +1,6 @@
 extends CardLogic
 
-static var description : StringName = "Targeted creature recieves Quick."
+static var description : StringName = "Targeted creature receives 3 Anger. If the target is Double Zero, it instead receives 7 Anger."
 
 var previous_target : ITargetable = null
 
@@ -15,11 +15,14 @@ func process(_gs : GamefieldState, effect_resolver : EffectResolver) -> void:
 				if mood.source == instance_owner:
 					p_target_moods.remove_mood(mood)
 					break
+		
+		var anger_count : int = 3
+		if ICardInstance.id(target).metadata.name == "Double Zero": anger_count = 7
 		effect_resolver.request_effect(
 			ApplyMoodEffect.new(
 				instance_owner,
 				IMoodPossessor.id(target), 
-				StatisticMood.QUICK(instance_owner)
+				StatisticMood.ANGRY(instance_owner, anger_count)
 			)
 		)
 		previous_target = target

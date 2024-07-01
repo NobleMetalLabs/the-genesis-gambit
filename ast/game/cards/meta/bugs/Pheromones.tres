@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://dddnxo7ku7jwk"]
+
+[ext_resource type="Texture2D" uid="uid://jwaibq8k4uwe" path="res://ast/game/cards/fgs/bugs/pheromones.png" id="1_g4o1k"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/bugs/Pheremones.gd" id="2_8ec64"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_7dxix"]
+
+[resource]
+script = ExtResource("3_7dxix")
+name = "Pheromones"
+type = 2
+rarity = 2
+image = ExtResource("1_g4o1k")
+logic_script = ExtResource("2_8ec64")
+health = -1
+strength = -1
+speed = -1
+energy = 10

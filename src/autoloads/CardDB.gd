@@ -4,6 +4,7 @@ extends Node
 var cards : Array[CardMetadata]
 var _path_by_cards : Dictionary = {} #[CardMetadata, String]
 var _id_by_name : Dictionary = {} #[String, int]
+var _leader_by_tribe : Dictionary = {} #[Genesis.CardTribe, CardMetadata]
 
 func _ready() -> void:
 	_scan_cards()
@@ -25,6 +26,12 @@ func get_cards_by_tribe(tribe : Genesis.CardTribe) -> Array[CardMetadata]:
 		if card.tribe == tribe:
 			tribe_cards.append(card)
 	return tribe_cards 
+
+func get_leader_by_tribe(tribe : Genesis.CardTribe) -> CardMetadata:
+	return _leader_by_tribe[tribe]
+
+func get_tribe_by_leader(leader : CardMetadata) -> Genesis.CardTribe:
+	return _leader_by_tribe.find_key(leader)
 
 func _scan_cards() -> void:
 	cards = _scan_path_for_cards()
@@ -57,3 +64,5 @@ func _assign_tribes() -> void:
 		var tribe_text : String = path.substr(path.rfind("/") + 1)
 		var tribe : Genesis.CardTribe = Genesis.CardTribe.keys().find(tribe_text.to_upper()) as Genesis.CardTribe
 		card.tribe = tribe
+		if card.type == Genesis.CardType.LEADER:
+			_leader_by_tribe[tribe] = card

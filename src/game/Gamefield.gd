@@ -1,6 +1,7 @@
 class_name Gamefield
 extends Node
 
+signal game_completed()
 signal event(name : StringName, data : Dictionary)
 
 var cards_holder : Node2D
@@ -33,6 +34,11 @@ func _process(_delta : float) -> void:
 	if Input.is_action_just_pressed("debug_advance_frame"):
 		print("Advancing frame")
 		effect_resolver.resolve_effects(get_gamefield_state())
+
+	for player in players:
+		var leader_stats := IStatisticPossessor.id(player.leader)
+		if leader_stats.get_statistic(Genesis.Statistic.JUST_DIED):
+			self.game_completed.emit()
 
 # TODO: make panning strength a user setting
 func place_card(card : CardOnField, position : Vector2) -> void:

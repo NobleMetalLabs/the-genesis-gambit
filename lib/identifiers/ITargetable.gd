@@ -8,11 +8,15 @@ static func id(node : Node) -> ITargetable:
 	if not node.has_node("ITargetable"): return null
 	return node.get_node("ITargetable")
 
+func _init() -> void:
+	self.name = "ITargetable"
+
 func clone() -> ITargetable:
 	return ITargetable.new().copy(self)
 
-func _init() -> void:
-	self.name = "ITargetable"
+func _to_string() -> String:
+	var maybe_ci := ICardInstance.id(self)
+	return "ITargetable(%s)" % [str(self) if not maybe_ci else str(maybe_ci)]
 
 func get_boundary_rectangle() -> Rect2:
 	if self.get_object().has_method("get_boundary_rectangle"):

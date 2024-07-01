@@ -12,7 +12,7 @@ func _to_string() -> String:
 	return "CreatureTargetEffect(%s,%s)" % [self.creature, self.target]
 
 func resolve(_effect_resolver : EffectResolver) -> void:
-	self.creature.target = self.target
+	self.creature.get_object().target = self.target
 	var creature_stats := IStatisticPossessor.id(self.creature)
 	var null_target : bool = self.target == null
 

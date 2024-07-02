@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://dpeu2g3a5m33c"]
+
+[ext_resource type="Texture2D" uid="uid://byk28678idsb1" path="res://ast/game/cards/fgs/bugs/giant-spider.png" id="1_gcr3n"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/bugs/Giant Spider.gd" id="2_cl7ol"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_efahe"]
+
+[resource]
+script = ExtResource("3_efahe")
+name = "Giant Spider"
+type = 0
+rarity = 1
+image = ExtResource("1_gcr3n")
+logic_script = ExtResource("2_cl7ol")
+health = 5
+strength = 3
+speed = 4
+energy = 6

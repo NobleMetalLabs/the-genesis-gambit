@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://606dfy2cy42b"]
+
+[ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_1bxsx"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/gambling/Bands.gd" id="2_nl4qg"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_b06e0"]
+
+[resource]
+script = ExtResource("3_b06e0")
+name = "Bands"
+type = 1
+rarity = 0
+image = ExtResource("1_1bxsx")
+logic_script = ExtResource("2_nl4qg")
+health = 5
+strength = 0
+speed = 0
+energy = 3

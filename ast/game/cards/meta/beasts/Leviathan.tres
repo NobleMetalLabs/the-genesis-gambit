@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://kxi60ib8vo6s"]
+
+[ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_4eram"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/beasts/Leviathan.gd" id="2_1xd46"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_v0ccj"]
+
+[resource]
+script = ExtResource("3_v0ccj")
+name = "Leviathan"
+type = 0
+rarity = 2
+image = ExtResource("1_4eram")
+logic_script = ExtResource("2_1xd46")
+health = 17
+strength = 9
+speed = 3
+energy = 15

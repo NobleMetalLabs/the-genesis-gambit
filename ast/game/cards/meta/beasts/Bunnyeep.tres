@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://sg8ay08n8vnr"]
+
+[ext_resource type="Texture2D" uid="uid://cli6k5jflcpgg" path="res://ast/game/cards/fgs/beasts/bunnyeep.png" id="1_en3yk"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="1_jyuj3"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_hmj40"]
+
+[resource]
+script = ExtResource("2_hmj40")
+name = "Bunnyeep"
+type = 0
+rarity = 0
+image = ExtResource("1_en3yk")
+logic_script = ExtResource("1_jyuj3")
+health = 4
+strength = 2
+speed = 5
+energy = 4

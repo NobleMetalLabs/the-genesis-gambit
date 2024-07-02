@@ -7,12 +7,15 @@ var cards : Array[ICardInstance] :
 	get : 
 		var out : Array[ICardInstance] = []
 		for p in players:
-			for c in p.cards_in_hand:
-				out.append(ICardInstance.id(c))
-			for c in p.cards_on_field:
-				out.append(ICardInstance.id(c))
-			for c in p.deck.get_cards():
-				out.append(ICardInstance.id(c))
+			for card in p.cards_in_hand:
+				if is_instance_valid(card):
+					out.append(ICardInstance.id(card))
+			for card in p.cards_on_field:
+				if is_instance_valid(card):
+					out.append(ICardInstance.id(card))
+			for card in p.deck.get_cards():
+				if is_instance_valid(card):
+					out.append(ICardInstance.id(card))
 		return out
 
 func _init(_players : Array[Player]) -> void:

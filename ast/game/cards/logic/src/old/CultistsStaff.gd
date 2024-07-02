@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "Targeted Creature gains 2 Weak."
 
-func process(_gs : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_gs : GamefieldState, effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
 		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
@@ -14,6 +14,10 @@ func process(_gs : GamefieldState, _effect_resolver : EffectResolver) -> void:
 				mood_applied = true
 				break
 		if not mood_applied:
-			target_moods.apply_mood(StatisticMood.new(
-				instance_owner, Genesis.Statistic.STRENGTH, Mood.MoodEffect.NEGATIVE, 2
-			))
+			effect_resolver.request_effect(
+				ApplyMoodEffect.new(
+					instance_owner,
+					target_moods,
+					StatisticMood.WEAK(instance_owner, 2)
+				)
+			)

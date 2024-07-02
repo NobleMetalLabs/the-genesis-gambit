@@ -1,10 +1,10 @@
 class_name CreatureAttackAction
 extends CreatureAction
 
-var target : CardOnField
+var target : ITargetable
 var damage : int
 
-func _init(_creature : CardOnField, _target : CardOnField, _damage : int) -> void:
+func _init(_creature : ICardInstance, _target : ITargetable, _damage : int) -> void:
 	self.creature = _creature
 	self.target = _target
 	self.damage = _damage

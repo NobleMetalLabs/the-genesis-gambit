@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://buq23epj1mngq"]
+
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="1_exu20"]
+[ext_resource type="Texture2D" uid="uid://k5nq8wlje84" path="res://ast/game/cards/fgs/beasts/cage.png" id="1_glbkj"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_vps0o"]
+
+[resource]
+script = ExtResource("2_vps0o")
+name = "Cage"
+type = 0
+rarity = 0
+image = ExtResource("1_glbkj")
+logic_script = ExtResource("1_exu20")
+health = 5
+strength = 2
+speed = 3
+energy = 4

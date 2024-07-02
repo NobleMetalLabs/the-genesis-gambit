@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://chjlbfp5cieud"]
+
+[ext_resource type="Texture2D" uid="uid://ce02kt6rgah7x" path="res://ast/game/cards/fgs/gambling/over-under.png" id="1_rh4d7"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/gambling/Over Under.gd" id="2_e176b"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_tjcom"]
+
+[resource]
+script = ExtResource("2_tjcom")
+name = "Over Under"
+type = 2
+rarity = 1
+image = ExtResource("1_rh4d7")
+logic_script = ExtResource("2_e176b")
+health = -1
+strength = -1
+speed = -1
+energy = 6

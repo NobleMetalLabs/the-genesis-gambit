@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://bdxuxj4fgyscb"]
+
+[ext_resource type="Texture2D" uid="uid://cf4lnyjte2wbh" path="res://ast/game/cards/fgs/bugs/spider-web.png" id="1_vxqk4"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/bugs/Spider Web.gd" id="2_42k7n"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_pl6pi"]
+
+[resource]
+script = ExtResource("3_pl6pi")
+name = "Spider Web"
+type = 2
+rarity = 1
+image = ExtResource("1_vxqk4")
+logic_script = ExtResource("2_42k7n")
+health = -1
+strength = -1
+speed = -1
+energy = 2

@@ -5,7 +5,7 @@ var type : Genesis.CooldownType
 var stage : Genesis.CooldownStage
 var frames : int = 0
 
-func _init(_creature : CardOnField, _type : Genesis.CooldownType, _stage : Genesis.CooldownStage, _frames : int = 0) -> void:
+func _init(_creature : ICardInstance, _type : Genesis.CooldownType, _stage : Genesis.CooldownStage, _frames : int = 0) -> void:
 	self.creature = _creature
 	self.type = _type
 	self.stage = _stage

@@ -5,14 +5,16 @@ var card : ICardInstance
 var as_marked : bool
 var keep_stats : bool
 var keep_moods : bool
+var at_index : int
 
-func _init(_requester : Object, _player : Player, _card : ICardInstance, _as_marked : bool = true, _keep_stats : bool = false, _keep_moods : bool = false) -> void:
+func _init(_requester : Object, _player : Player, _card : ICardInstance, _as_marked : bool = true, _keep_stats : bool = false, _keep_moods : bool = false, _at_index : int = 999) -> void:
 	self.requester = _requester
 	self.player = _player
 	self.card = _card
 	self.as_marked = _as_marked
 	self.keep_stats = _keep_stats
 	self.keep_moods = _keep_moods
+	self.at_index = _at_index
 	
 func _to_string() -> String:
 	return "DeckAddCardEffect(%s,%s,%s,%s)" % [self.player, self.card, self.keep_stats, self.keep_moods]
@@ -26,7 +28,10 @@ func resolve(effect_resolver : EffectResolver) -> void:
 	if keep_moods:
 		idents.append(IMoodPossessor.id(self.card))
 	var card_in_deck := CardInDeck.new(idents)
-	player.deck.add_card(card_in_deck)
+	if at_index == 999:
+		self.player.deck.add_card(card_in_deck)
+	else:
+		self.player.deck.insert_card(card_in_deck, at_index)
 
 	var card_stats := IStatisticPossessor.id(card)
 

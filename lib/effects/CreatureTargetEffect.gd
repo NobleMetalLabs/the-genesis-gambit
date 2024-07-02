@@ -3,7 +3,7 @@ extends CreatureEffect
 
 var target : ITargetable
 
-func _init(_requester : Object, _creature : CardOnField, _target : ITargetable) -> void:
+func _init(_requester : Object, _creature : ICardInstance, _target : ITargetable) -> void:
 	self.requester = _requester
 	self.creature = _creature
 	self.target = _target

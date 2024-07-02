@@ -1,7 +1,7 @@
 class_name CreatureActivateEffect
 extends CreatureEffect
 
-func _init(_requester : Object, _creature : CardOnField) -> void:
+func _init(_requester : Object, _creature : ICardInstance) -> void:
 	self.requester = _requester
 	self.creature = _creature
 

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://bvlm3aji16ei0"]
+
+[ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_b7kv2"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/beasts/Quetzaxolotl.gd" id="2_wxreh"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_jjaun"]
+
+[resource]
+script = ExtResource("3_jjaun")
+name = "Quetzaxolotl"
+type = 0
+rarity = 3
+image = ExtResource("1_b7kv2")
+logic_script = ExtResource("2_wxreh")
+health = 14
+strength = 6
+speed = 10
+energy = 21

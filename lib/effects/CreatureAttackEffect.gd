@@ -1,13 +1,13 @@
 class_name CreatureAttackEffect
 extends CreatureEffect
 
-var target : CardOnField
+var target : ITargetable
 var damage : int
 
 static func from_action(_action : CreatureAttackAction) -> CreatureAttackEffect:
 	return CreatureAttackEffect.new(_action, _action.creature, _action.target, _action.damage)
 
-func _init(_requester : Object, _creature : CardOnField, _target : CardOnField, _damage : int) -> void:
+func _init(_requester : Object, _creature : ICardInstance, _target : ITargetable, _damage : int) -> void:
 	self.requester = _requester
 	self.creature = _creature
 	self.target = _target
@@ -36,6 +36,9 @@ func resolve(effect_resolver : EffectResolver) -> void:
 	effect_resolver.request_effect(SetStatisticEffect.new(
 		self.requester, target_stats, Genesis.Statistic.WAS_JUST_ATTACKED, false
 	))
+
+	target_stats.set_statistic(Genesis.Statistic.MOST_RECENT_ATTACKED_BY, ICardInstance.id(self.creature))
+	creature_stats.set_statistic(Genesis.Statistic.MOST_RECENT_ATTACKED, ICardInstance.id(self.target))
 
 	var attack_swing_tween : Tween = Router.get_tree().create_tween()
 	attack_swing_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO).tween_property(self.creature, "rotation_degrees", 20, 0.05)

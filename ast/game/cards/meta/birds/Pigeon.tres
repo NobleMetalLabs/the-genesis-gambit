@@ -7,12 +7,12 @@
 [resource]
 script = ExtResource("2_3jqoi")
 id = 1
-logic_script = ExtResource("2_64cp1")
 name = "Pigeon"
+type = 2
+rarity = 0
 image = ExtResource("1_uvgnx")
-type = "Attacker"
-rarity = "Common"
-cost = 0
+logic_script = ExtResource("2_64cp1")
 hp = 0
 power = 0
-defense = 0
+speed = 0
+cost = 0

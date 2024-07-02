@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://dt2aseh2wekrr"]
+
+[ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_vqipy"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/gambling/Box of Chips.gd" id="2_ede46"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_u7d4g"]
+
+[resource]
+script = ExtResource("3_u7d4g")
+name = "Box of Chips"
+type = 1
+rarity = 0
+image = ExtResource("1_vqipy")
+logic_script = ExtResource("2_ede46")
+health = 6
+strength = 0
+speed = 2
+energy = 5

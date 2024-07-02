@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://cjawie4ickpcj"]
+
+[ext_resource type="Texture2D" uid="uid://tkvu3bbulgdm" path="res://ast/game/cards/fgs/gambling/card-shark.png" id="1_fceu0"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/gambling/Card Shark.gd" id="2_jvcgm"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_o6bh0"]
+
+[resource]
+script = ExtResource("3_o6bh0")
+name = "Card Shark"
+type = 0
+rarity = 0
+image = ExtResource("1_fceu0")
+logic_script = ExtResource("2_jvcgm")
+health = 4
+strength = 0
+speed = 2
+energy = 9

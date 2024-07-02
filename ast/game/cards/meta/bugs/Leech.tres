@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://cgfnn64hw624h"]
+
+[ext_resource type="Texture2D" uid="uid://1bk71k5p5ysp" path="res://ast/game/cards/fgs/bugs/leech.png" id="1_o6jsk"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/bugs/Leech.gd" id="2_a6j2c"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_v8bs6"]
+
+[resource]
+script = ExtResource("3_v8bs6")
+name = "Leech"
+type = 2
+rarity = 0
+image = ExtResource("1_o6jsk")
+logic_script = ExtResource("2_a6j2c")
+health = -1
+strength = -1
+speed = -1
+energy = 5

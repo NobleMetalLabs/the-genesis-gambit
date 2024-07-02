@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://coycpnngddf2p"]
+
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="1_nd63q"]
+[ext_resource type="Texture2D" uid="uid://cm1jeqjvvrdmj" path="res://ast/game/cards/fgs/bugs/bee.png" id="1_vr8wr"]
+[ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="2_4bys5"]
+
+[resource]
+script = ExtResource("2_4bys5")
+name = "Bee"
+type = 0
+rarity = 0
+image = ExtResource("1_vr8wr")
+logic_script = ExtResource("1_nd63q")
+health = 1
+strength = 1
+speed = 5
+energy = 1

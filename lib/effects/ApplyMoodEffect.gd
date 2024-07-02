@@ -3,7 +3,8 @@ extends MoodEffect
 
 var mood : Mood
 
-func _init(_target : IMoodPossessor, _mood : Mood) -> void:
+func _init(_requester : Object, _target : IMoodPossessor, _mood : Mood) -> void:
+	self.requester = _requester
 	self.target = _target
 	self.mood = _mood
 

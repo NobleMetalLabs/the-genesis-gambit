@@ -6,13 +6,12 @@
 
 [resource]
 script = ExtResource("3_jlqp8")
-id = 10
-logic_script = ExtResource("2_70he8")
 name = "Shift Register"
+type = 2
+rarity = 0
 image = ExtResource("1_lxcfb")
-type = "Attacker"
-rarity = "Common"
-cost = 0
-hp = 1
-power = 1
-defense = 1
+logic_script = ExtResource("2_70he8")
+health = -1
+strength = -1
+speed = -1
+energy = -1

@@ -6,13 +6,12 @@
 
 [resource]
 script = ExtResource("2_hbdvp")
-id = 6
-logic_script = ExtResource("2_qv5kq")
 name = "Eel"
+type = 2
+rarity = 0
 image = ExtResource("1_v4ogc")
-type = "Attacker"
-rarity = "Common"
-cost = 0
-hp = 0
-power = 0
-defense = 0
+logic_script = ExtResource("2_qv5kq")
+health = 0
+strength = 0
+speed = 0
+energy = 0

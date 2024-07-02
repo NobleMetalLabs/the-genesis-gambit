@@ -1,5 +1,5 @@
 class_name Effect
-extends Object
+extends RefCounted
 
 var requester : Object
 
@@ -8,6 +8,7 @@ enum ResolveStatus {
 	REQUESTED,
 	RESOLVED,
 	DONE,
+	FAILED, #TODO: Allow effects to fail resolution.
 }
 
 func _init() -> void:

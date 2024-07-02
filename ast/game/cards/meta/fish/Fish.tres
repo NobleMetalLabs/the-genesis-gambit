@@ -6,13 +6,12 @@
 
 [resource]
 script = ExtResource("3_ixl3k")
-id = 7
-logic_script = ExtResource("2_0hfbx")
 name = "Fish"
+type = 2
+rarity = 0
 image = ExtResource("1_4i50s")
-type = "Attacker"
-rarity = "Common"
-cost = 0
-hp = 0
-power = 0
-defense = 0
+logic_script = ExtResource("2_0hfbx")
+health = 0
+strength = 0
+speed = 0
+energy = 0

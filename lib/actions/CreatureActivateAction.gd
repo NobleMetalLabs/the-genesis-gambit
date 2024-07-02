@@ -1,7 +1,7 @@
 class_name CreatureActivateAction
 extends CreatureAction
 
-func _init(_creature : CardOnField) -> void:
+func _init(_creature : ICardInstance) -> void:
 	self.creature = _creature
 
 func _to_string() -> String:

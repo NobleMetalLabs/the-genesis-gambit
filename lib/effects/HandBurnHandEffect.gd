@@ -8,8 +8,8 @@ func _init(_requester : Object, _player : Player) -> void:
 func _to_string() -> String:
 	return "HandBurnHandEffect(%s)" % self.player
 
-func resolve(effect_resolver : EffectResolver) -> void:
+func resolve(_effect_resolver : EffectResolver) -> void:
 	for card : CardInHand in self.player.cards_in_hand:
-		effect_resolver.request_effect(HandRemoveCardEffect.new(
+		_effect_resolver.request_effect(HandRemoveCardEffect.new(
 			self.requester, self.player, card, Genesis.LeaveHandReason.BURNED
 		))

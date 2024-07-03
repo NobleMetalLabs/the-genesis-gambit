@@ -5,13 +5,13 @@ static var description : StringName = "Whenever the Fungus Garden gains a charge
 var last_seen_num_garden_tenders : int = 0
 var self_moods : Array[StatisticMood] = []
 
-func process(_gs : GamefieldState, effect_resolver : EffectResolver) -> void:
+func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolver) -> void:
 	var curr_num_tenders : int = 0
-	for card : CardOnField in instance_owner.player.cards_on_field:
+	for card : CardOnField in _gamefield_state.get_player_from_instance(instance_owner).cards_on_field:
 		var card_target : ITargetable = IStatisticPossessor.id(card).get_statistic(Genesis.Statistic.TARGET)
 		var target_card : ICardInstance = ICardInstance.id(card_target)
 		if not target_card: continue
-		if not target_card.player == instance_owner.player: continue
+		if not target_card.player == _gamefield_state.get_player_from_instance(instance_owner): continue
 		if target_card.card_name == "Fungus Garden": #Is this slow? Bad, even?
 			curr_num_tenders += 1
 
@@ -21,7 +21,7 @@ func process(_gs : GamefieldState, effect_resolver : EffectResolver) -> void:
 			for i in range(self_moods.size(), curr_num_tenders):
 				var mood := StatisticMood.HAPPY(instance_owner)
 				self_moods.push_back(mood)
-				effect_resolver.request_effect(
+				_effect_resolver.request_effect(
 					ApplyMoodEffect.new(
 						instance_owner,
 						my_moods,
@@ -31,7 +31,7 @@ func process(_gs : GamefieldState, effect_resolver : EffectResolver) -> void:
 		else:
 			for i in range(curr_num_tenders, self_moods.size()):
 				var mood : Mood = self_moods.pop_back()
-				effect_resolver.request_effect(
+				_effect_resolver.request_effect(
 					RemoveMoodEffect.new(
 						instance_owner,
 						my_moods,

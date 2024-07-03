@@ -13,7 +13,7 @@ func _init(_requester : Object, _card : ICardInstance,  _keep_stats : bool = tru
 func _to_string() -> String:
 	return "CreatureSpawnEffect(%s,%s,%s)" % [self.creature, self.keep_stats, self.keep_moods]
 
-func resolve(effect_resolver : EffectResolver) -> void:
+func resolve(_effect_resolver : EffectResolver) -> void:
 	var previous_object_owner : Object = self.creature.get_object()
 	var previous_stats := IStatisticPossessor.id(self.creature)
 
@@ -33,7 +33,7 @@ func resolve(effect_resolver : EffectResolver) -> void:
 			player_owner.cards_in_hand.erase(previous_object_owner)
 			#creature_stats.set_statistic(Genesis.Statistic.IS_IN_HAND, false)
 		if previous_object_owner is CardInDeck:
-			player_owner.deck.remove_card(previous_object_owner)
+			player_owner.cards_in_deck.erase(previous_object_owner)
 		previous_object_owner.queue_free()
 	creature_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, true)
 
@@ -44,6 +44,6 @@ func resolve(effect_resolver : EffectResolver) -> void:
 		Router.client_ui.current_card_ghost.queue_free()
 
 	creature_stats.set_statistic(Genesis.Statistic.WAS_JUST_PLAYED, true)
-	effect_resolver.request_effect(SetStatisticEffect.new(
+	_effect_resolver.request_effect(SetStatisticEffect.new(
 		self.requester, creature_stats, Genesis.Statistic.WAS_JUST_PLAYED, false
 	))

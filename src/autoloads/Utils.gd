@@ -1,7 +1,7 @@
 #class_name Utils
 extends Node
 
-func get_vector_to_edge_at_angle(rect : Rect2, angle : float) -> Vector2:
+func get_vector_to_rectangle_edge_at_angle(rect : Rect2, angle : float) -> Vector2:
 	# TODO: Make this shit better
 	var half_bounds : Vector2 = rect.size / 2
 	var tri_angle : float = abs(Vector2.from_angle(angle)).angle()

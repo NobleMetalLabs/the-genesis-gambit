@@ -5,7 +5,6 @@ extends Window
 @onready var stats_holder : VBoxContainer = $"%STATS-HOLDER"
 
 func _ready() -> void:
-	self.show()
 	self.close_requested.connect(self.hide)
 
 	self.position = DisplayServer.window_get_position() + \
@@ -22,7 +21,6 @@ func _process(_delta : float) -> void:
 	show_data_for_card(current_card)
 
 func show_data_for_card(card : ICardInstance) -> void:
-
 	$"%meta-label".text = ""
 	$"%location-label".text = ""
 	$"%player-label".text = ""

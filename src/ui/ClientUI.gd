@@ -8,7 +8,7 @@ extends Control
 @onready var dev_effect_viewer : EffectResolverViewer = $"%EFFECT-RESOLVER-VIEWER"
 @onready var dev_card_viewer : CardDataViewer = $"%CARD-DATA-VIEWER"
 
-@export var gamefield : Gamefield
+var gamefield : Gamefield
 
 func _ready() -> void:
 	self.get_tree().get_root().content_scale_size = Vector2.ZERO

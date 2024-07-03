@@ -8,10 +8,10 @@ func _init(_requester : Object, _creature : ICardInstance) -> void:
 func _to_string() -> String:
 	return "CreatureActivateEffect(%s)" % self.creature
 
-func resolve(effect_resolver : EffectResolver) -> void:
+func resolve(_effect_resolver : EffectResolver) -> void:
 	var creature_stats := IStatisticPossessor.id(self.creature)
 	creature_stats.set_statistic(Genesis.Statistic.WAS_JUST_ACTIVATED, true)
-	effect_resolver.request_effect(SetStatisticEffect.new(
+	_effect_resolver.request_effect(SetStatisticEffect.new(
 		self.requester, creature_stats, Genesis.Statistic.WAS_JUST_ACTIVATED, false
 	))
 	var flash_tween : Tween = Router.get_tree().create_tween()

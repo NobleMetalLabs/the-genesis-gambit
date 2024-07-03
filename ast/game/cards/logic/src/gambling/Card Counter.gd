@@ -2,9 +2,9 @@ extends CardLogic
 
 static var description : StringName = "The Rarity of the top card of your deck is visible to you."
 
-func process(_gs : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
-	var player_stats := IStatisticPossessor.id(instance_owner.player)
+	var player_stats := IStatisticPossessor.id(_gamefield_state.get_player_from_instance(instance_owner))
 	var is_on_field : bool = my_stats.get_statistic(Genesis.Statistic.IS_ON_FIELD)
 	var top_card_visible : bool = player_stats.get_statistic(Genesis.Statistic.DECK_TOPCARD_VISIBLE_RARITY_ONLY)
 	if is_on_field != top_card_visible:

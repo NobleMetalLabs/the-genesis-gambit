@@ -4,11 +4,11 @@ static var description : StringName = "Each first attack made by a creature agai
 
 var has_been_attacked_by : Array[ICardInstance] = []
 
-func process(_gs : GamefieldState, effect_resolver : EffectResolver) -> void:
+func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	var my_target := ITargetable.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_ATTACKED):
-		for effect : Effect in effect_resolver.effect_list:
+		for effect : Effect in _effect_resolver.effect_list:
 			if not effect is CreatureAttackEffect: continue
 			var attack_effect := effect as CreatureAttackEffect
 			if attack_effect.target != my_target: continue

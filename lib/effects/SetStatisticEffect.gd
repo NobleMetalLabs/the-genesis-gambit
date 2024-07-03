@@ -13,5 +13,5 @@ func _init(_requester : Object, _target : IStatisticPossessor, _statistic : Gene
 func _to_string() -> String:
 	return "SetStatisticEffect(%s, %s, %s)" % [target, Genesis.Statistic.keys()[statistic], value]
 
-func resolve(_er : EffectResolver) -> void:
+func resolve(_effect_resolver : EffectResolver) -> void:
 	target.set_statistic(statistic, value)

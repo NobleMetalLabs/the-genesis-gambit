@@ -4,7 +4,6 @@ extends Window
 @onready var tree : Tree = $"%TREE"
 
 func _ready() -> void:
-	self.show()
 	self.close_requested.connect(self.hide)
 
 	self.position = DisplayServer.window_get_position() + Vector2i(10, 40)
@@ -25,6 +24,7 @@ func _ready() -> void:
 var _object_to_treeitem : Dictionary = {} #[Object, TreeItem]
 
 func _process(_delta : float) -> void:
+	if not self.visible: return
 	tree.clear()
 	_object_to_treeitem.clear()
 	var root : TreeItem = tree.create_item(null)

@@ -16,15 +16,15 @@ func _init(_requester : Object, _creature : ICardInstance, _target : ITargetable
 func _to_string() -> String:
 	return "CreatureAttackEffect(%s, %s, %d)" % [self.creature, self.target, self.damage]
 
-func resolve(effect_resolver : EffectResolver) -> void:
+func resolve(_effect_resolver : EffectResolver) -> void:
 	var creature_stats := IStatisticPossessor.id(self.creature)
 	var target_stats := IStatisticPossessor.id(self.target)
 
 	creature_stats.set_statistic(Genesis.Statistic.JUST_ATTACKED, true)
-	effect_resolver.request_effect(SetStatisticEffect.new(
+	_effect_resolver.request_effect(SetStatisticEffect.new(
 		self.requester, creature_stats, Genesis.Statistic.JUST_ATTACKED, false
 	))
-	effect_resolver.request_effect(CreatureCooldownEffect.new(
+	_effect_resolver.request_effect(CreatureCooldownEffect.new(
 		self.requester,
 		self.creature,
 		Genesis.CooldownType.ATTACK,
@@ -33,7 +33,7 @@ func resolve(effect_resolver : EffectResolver) -> void:
 	))
 
 	target_stats.set_statistic(Genesis.Statistic.WAS_JUST_ATTACKED, true)
-	effect_resolver.request_effect(SetStatisticEffect.new(
+	_effect_resolver.request_effect(SetStatisticEffect.new(
 		self.requester, target_stats, Genesis.Statistic.WAS_JUST_ATTACKED, false
 	))
 

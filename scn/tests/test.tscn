@@ -22,7 +22,6 @@ script = ExtResource("3_d6e12")
 [node name="GAMEFIELD" parent="." instance=ExtResource("4_2sf5u")]
 unique_name_in_owner = true
 
-[node name="CLIENT-UI" parent="." node_paths=PackedStringArray("gamefield") instance=ExtResource("5_vofwa")]
+[node name="CLIENT-UI" parent="." instance=ExtResource("5_vofwa")]
 unique_name_in_owner = true
 mouse_filter = 2
-gamefield = NodePath("../GAMEFIELD")

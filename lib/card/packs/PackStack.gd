@@ -1,6 +1,7 @@
 class_name PackStack
 extends Resource
 
+var _leader : CardMetadata
 var _contents : Array[PackMetadata]
 var _filter_rarity : Dictionary = {
 	"Common": [],
@@ -24,6 +25,9 @@ func get_contents_of_rarity(rarity: String) -> Array[PackMetadata]:
 func get_contents_of_type(type: String) -> Array[PackMetadata]:
 	if type == "All": return _contents
 	return _filter_type[type]
+
+func get_leader() -> CardMetadata:
+	return _leader
 
 func add_pack(pack: PackMetadata) -> void:
 	_contents.push_back(pack)

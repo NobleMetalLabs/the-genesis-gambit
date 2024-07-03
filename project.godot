@@ -21,10 +21,10 @@ config/icon="res://ast/ui/image/icons/icon.png"
 
 [autoload]
 
-AudioDispatcher="*res://src/autoloads/AudioDispatcher.gd"
 SaveData="*res://src/autoloads/SaveData.gd"
 Utils="*res://src/autoloads/Utils.gd"
 CardDB="*res://src/autoloads/CardDB.gd"
+MultiplayerManager="*res://src/autoloads/MultiplayerManager.gd"
 AuthoritySourceProvider="*res://src/autoloads/AuthoritySourceProvider.gd"
 InputManager="*res://src/autoloads/InputManager.gd"
 Router="*res://src/autoloads/Router.gd"

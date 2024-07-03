@@ -39,8 +39,7 @@ func _process(_delta : float) -> void:
 		var leader_stats := IStatisticPossessor.id(player.leader)
 		if leader_stats.get_statistic(Genesis.Statistic.JUST_DIED):
 			self.game_completed.emit()
-
-# TODO: make panning strength a user setting
+			
 func place_card(card : CardOnField, position : Vector2) -> void:
 	card.position = position
 
@@ -57,6 +56,3 @@ func place_card(card : CardOnField, position : Vector2) -> void:
 	)
 
 	cards_holder.add_child(card, true)
-	
-	var ap : AudioStreamPlayer2D = AudioDispatcher.dispatch_positional_audio(card, "res://ast/sound/cardplace.tres")
-	ap.panning_strength = 0.25

@@ -5,6 +5,7 @@ var test_hand_metadata : CardMetadata = preload("res://ast/game/cards/meta/Shift
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float) -> void:
+	if get_window().gui_get_focus_owner() != Router.client_ui: return
 	if Input.is_action_just_pressed("debug_action"):
 		AuthoritySourceProvider.authority_source.request_action(
 			HandAddCardAction.new(

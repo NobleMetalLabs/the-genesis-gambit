@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://src/ui/CardInfoPanel.gd" id="3_73koh"]
 [ext_resource type="Texture2D" uid="uid://djjhjh04iwame" path="res://ast/game/cards/fgs/target-placeholder.png" id="5_kgfmm"]
 [ext_resource type="PackedScene" uid="uid://p22xihxignf0" path="res://scn/ui/dev/EffectResolverViewer.tscn" id="6_6ht5e"]
+[ext_resource type="Script" path="res://src/ui/MultiplayerPanel.gd" id="6_akdw7"]
 [ext_resource type="PackedScene" uid="uid://dp0ichqwouy35" path="res://scn/ui/HandUI.tscn" id="7_ce31p"]
 [ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/DeveloperToolTheme.tres" id="7_ndtgr"]
 [ext_resource type="PackedScene" uid="uid://dep6a56640e7g" path="res://scn/ui/dev/CardDataViewer.tscn" id="8_xoc3b"]
@@ -88,3 +89,28 @@ grow_vertical = 0
 [node name="HAND-UI" parent="HAND-PANEL" instance=ExtResource("7_ce31p")]
 unique_name_in_owner = true
 layout_mode = 1
+
+[node name="MULTIPLAYER-PANEL" type="Panel" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 83.0
+offset_bottom = 101.0
+script = ExtResource("6_akdw7")
+
+[node name="ButtonStack" type="VBoxContainer" parent="MULTIPLAYER-PANEL"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HostButton" type="Button" parent="MULTIPLAYER-PANEL/ButtonStack"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="MULTIPLAYER-PANEL/ButtonStack"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Join"

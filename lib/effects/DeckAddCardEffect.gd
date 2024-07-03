@@ -48,6 +48,6 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	if self.as_marked:
 		card_stats.set_statistic(Genesis.Statistic.IS_MARKED, true)
 		card_stats.set_statistic(Genesis.Statistic.WAS_JUST_MARKED, true)
-		_effect_resolver.request_effect(SetStatisticEffect.new(
+		_effect_resolver.request_internal_effect(SetStatisticEffect.new(
 			self.requester, card_stats, Genesis.Statistic.WAS_JUST_MARKED, false
 		))

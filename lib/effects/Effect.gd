@@ -6,9 +6,9 @@ var requester : Object
 var resolve_status : ResolveStatus
 enum ResolveStatus {
 	REQUESTED,
-	RESOLVED,
+	RESOLVING,
 	DONE,
-	FAILED, #TODO: Allow effects to fail resolution.
+	FAILED,
 }
 
 func _init() -> void:

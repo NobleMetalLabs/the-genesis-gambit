@@ -94,8 +94,10 @@ func setup_effect_row(item : TreeItem, effect : Effect, is_orphan : bool, reques
 	match(effect.resolve_status):
 		Effect.ResolveStatus.REQUESTED:
 			item.set_text(1, "NEW")
-		Effect.ResolveStatus.RESOLVED:
-			item.set_text(1, "RESOLVED")
+		Effect.ResolveStatus.RESOLVING:
+			item.set_text(1, "RESOLVING")
+		Effect.ResolveStatus.DONE:
+			item.set_text(1, "DONE")
 	if is_orphan:
 		if requester:
 			item.set_text(3, "ORPHAN to " + str(requester).get_slice("(", 0))

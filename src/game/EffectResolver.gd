@@ -7,8 +7,17 @@ var effect_list : Array[Effect] :
 			effects.append_array(effects_by_requester[requester])
 		return effects
 
-var effects_by_requester : Dictionary = {} # [Object, Array[Effect]]
+var requested_effects : Array[Effect] :
+	get:
+		var effects : Array[Effect] = effect_list
+		return effects.filter(func is_requested(e : Effect) -> bool: return e.resolve_status == Effect.ResolveStatus.REQUESTED)
 
+var resolving_effects : Array[Effect] :
+	get:
+		var effects : Array[Effect] = effect_list
+		return effects.filter(func is_resolving(e : Effect) -> bool: return e.resolve_status == Effect.ResolveStatus.RESOLVING)
+
+var effects_by_requester : Dictionary = {} # [Object, Array[Effect]]
 var already_processed_actions : Array[Action] = []
 
 func request_effect(effect : Effect) -> void:
@@ -19,6 +28,14 @@ func request_effect(effect : Effect) -> void:
 		var existing_requests : Array[Effect] = effects_by_requester[effect.requester]
 		existing_requests.append(effect)
 	effect.resolve_status = Effect.ResolveStatus.REQUESTED
+
+# This might be my worst crime yet. 
+# Some state handling (Genesis.Statistic.WAS_*) hijacks the effect resolver to defer a statistic set to next tick.
+# This was fine when effects were resolved in a single tick, but now they arent, so this is a workaround to make effects that are.
+# You could argue that effects used in this way shouldn't be reactible, as they are quite literally internal–they are parts of singular actions–but idfk.
+func request_internal_effect(effect : Effect) -> void:
+	request_effect(effect)
+	effect.resolve_status = Effect.ResolveStatus.RESOLVING
 
 func remove_effect(effect : Effect) -> void:
 	var requester_exists : bool = effects_by_requester.has(effect.requester)
@@ -36,11 +53,14 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 		return
 	var requesters_existing_effects : Array[Effect] = effects_by_requester[requester]
 	for effect : Effect in requesters_existing_effects.duplicate():
+		if effect.resolve_status == Effect.ResolveStatus.REQUESTED:
+			effect.resolve_status = Effect.ResolveStatus.RESOLVING
+			continue
 		if effect.has_method("resolve"):
+			effect.resolve_status = Effect.ResolveStatus.DONE
 			effect.resolve(self)
 		else:
 			push_warning("Error: Effect '%s' does not have a resolve method." % [effect])
-		effect.resolve_status = Effect.ResolveStatus.RESOLVED
 		remove_effect(effect)
 
 func resolve_effects(gamefield_state : GamefieldState) -> void:

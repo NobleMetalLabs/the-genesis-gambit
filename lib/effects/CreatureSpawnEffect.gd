@@ -44,6 +44,6 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 		Router.client_ui.current_card_ghost.queue_free()
 
 	creature_stats.set_statistic(Genesis.Statistic.WAS_JUST_PLAYED, true)
-	_effect_resolver.request_effect(SetStatisticEffect.new(
+	_effect_resolver.request_internal_effect(SetStatisticEffect.new(
 		self.requester, creature_stats, Genesis.Statistic.WAS_JUST_PLAYED, false
 	))

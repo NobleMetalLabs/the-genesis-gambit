@@ -29,7 +29,6 @@ canvas_item_default_texture_filter = 3
 gui_disable_input = true
 initial_position = 2
 size = Vector2i(1024, 360)
-visible = false
 theme = ExtResource("7_ndtgr")
 
 [node name="CARD-DATA-VIEWER" parent="DEVELOPER" instance=ExtResource("8_xoc3b")]
@@ -38,7 +37,6 @@ handle_input_locally = false
 gui_disable_input = true
 initial_position = 1
 size = Vector2i(600, 300)
-visible = false
 
 [node name="CARD-INFO-PANEL" type="Panel" parent="."]
 unique_name_in_owner = true

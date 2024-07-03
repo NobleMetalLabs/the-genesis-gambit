@@ -28,7 +28,7 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	
 		var target_stats := IStatisticPossessor.id(self.target)
 		target_stats.set_statistic(Genesis.Statistic.WAS_JUST_TARGETED, true)
-		_effect_resolver.request_effect(SetStatisticEffect.new(
+		_effect_resolver.request_internal_effect(SetStatisticEffect.new(
 			self.requester, target_stats, Genesis.Statistic.WAS_JUST_TARGETED, false
 		))
 	

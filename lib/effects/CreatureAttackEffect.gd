@@ -33,7 +33,7 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	))
 
 	target_stats.set_statistic(Genesis.Statistic.WAS_JUST_ATTACKED, true)
-	_effect_resolver.request_effect(SetStatisticEffect.new(
+	_effect_resolver.request_internal_effect(SetStatisticEffect.new(
 		self.requester, target_stats, Genesis.Statistic.WAS_JUST_ATTACKED, false
 	))
 

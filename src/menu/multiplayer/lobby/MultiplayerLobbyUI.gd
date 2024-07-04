@@ -22,7 +22,11 @@ func _ready() -> void:
 			request_chat_message(text)
 	)
 
-	MultiplayerManager.players_update.connect(update_player_list)
+	MultiplayerManager.network_update.connect(
+		func update() -> void:
+			update_player_list()
+			update_address_field()
+	)
 
 func request_host_lobby() -> void:
 	MultiplayerManager.host_lobby()
@@ -30,7 +34,11 @@ func request_host_lobby() -> void:
 	reset_chatbox()
 
 func request_join_lobby() -> void:
-	MultiplayerManager.join_lobby()
+	var address : String = address_lineedit.text
+	if not address.is_valid_ip_address(): 
+		address_lineedit.text = "Invalid address."
+		return
+	MultiplayerManager.join_lobby(address)
 	_update_game_buttons(true, false)
 	reset_chatbox()
 
@@ -41,6 +49,7 @@ func request_exit_lobby() -> void:
 	MultiplayerManager.exit_lobby()
 	_update_game_buttons(false, false)
 	reset_chatbox()
+	address_lineedit.text = ""
 
 func _update_game_buttons(is_in_lobby : bool, is_host : bool) -> void:
 	$"%GAME-BUTTONS-STACK/HOST".visible = not is_in_lobby
@@ -89,3 +98,11 @@ func update_player_list() -> void:
 		player_label.text = player.player_name
 		player_label.visible = true
 		player_list.add_child(player_label)
+
+@onready var address_lineedit : LineEdit = $"%ADDRESS-LINEEDIT"
+
+func update_address_field() -> void:
+	if MultiplayerManager.is_instance_server():
+		address_lineedit.text = "Players join with address: %s" % MultiplayerManager.ADDRESS
+	else:
+		address_lineedit.text = "Connected to server at address: %s" % MultiplayerManager.ADDRESS

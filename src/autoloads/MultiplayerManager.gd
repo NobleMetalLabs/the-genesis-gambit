@@ -1,7 +1,7 @@
 #class_name MultiplayerManager
 extends Node
 
-signal players_update()
+signal network_update()
 
 var multiplayer_peer := ENetMultiplayerPeer.new()
 var player_name : String = ""
@@ -9,12 +9,33 @@ var player_name : String = ""
 var network_player : NetworkPlayer
 var peer_id_to_player : Dictionary = {} #[int, NetworkPlayer]
 
-const ADDRESS = "127.0.0.1"
-const PORT = 9999
+var ADDRESS : String
+const PORT = 31570
 
+var upnp : UPNP = UPNP.new()
 func _ready() -> void:
 	multiplayer.peer_connected.connect(on_player_connected)
 	multiplayer.peer_disconnected.connect(on_player_disconnected)
+
+	var discover_result := upnp.discover() as UPNP.UPNPResult
+	if discover_result == UPNP.UPNP_RESULT_SUCCESS:
+		if upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
+			var result_udp := upnp.add_port_mapping(PORT, PORT, "Genesis Gambit Multiplayer", "UDP")
+			var result_tcp := upnp.add_port_mapping(PORT, PORT, "Genesis Gambit Multiplayer", "TCP")
+			if not result_udp == UPNP.UPNP_RESULT_SUCCESS:
+				upnp.add_port_mapping(PORT, PORT, "", "UDP")
+			if not result_tcp == UPNP.UPNP_RESULT_SUCCESS:
+				upnp.add_port_mapping(PORT, PORT, "", "TCP")
+		ADDRESS = upnp.query_external_address()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		upnp.delete_port_mapping(PORT, "UDP")
+		upnp.delete_port_mapping(PORT, "TCP")
+
+func is_instance_server() -> bool:
+	if multiplayer == null: return false
+	return multiplayer.get_unique_id() == 1
 
 func host_lobby() -> void:
 	multiplayer_peer.create_server(PORT)
@@ -22,10 +43,11 @@ func host_lobby() -> void:
 	print("Server started on port %s with clientid %s" % [PORT, multiplayer.get_unique_id()])
 	network_player = NetworkPlayer.new(multiplayer.get_unique_id(), player_name)
 	assign_player_networkplayer(multiplayer.get_unique_id(), network_player.to_dict())
-	players_update.emit()
+	network_update.emit()
 
-func join_lobby() -> void:
-	multiplayer_peer.create_client(ADDRESS, PORT)
+func join_lobby(address : String = "127.0.0.1") -> void:
+	print(address)
+	multiplayer_peer.create_client(address, PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
 	print("Joined server with clientid %s" % [multiplayer.get_unique_id()])
 	network_player = NetworkPlayer.new(multiplayer.get_unique_id(), player_name)
@@ -36,7 +58,7 @@ func exit_lobby() -> void:
 	multiplayer.multiplayer_peer = null
 	peer_id_to_player.clear()
 	print("Left server")
-	players_update.emit()
+	network_update.emit()
 
 func on_player_connected(peer_id : int) -> void:
 	print("%s : Player <%s> connected." % [multiplayer.get_unique_id(), peer_id])
@@ -50,7 +72,7 @@ func on_player_disconnected(peer_id : int) -> void:
 		print("Host disconnected.")
 		return
 	peer_id_to_player.erase(peer_id)
-	players_update.emit()
+	network_update.emit()
 
 @rpc("any_peer")
 func request_player_meta(requester_id : int) -> void:
@@ -68,4 +90,4 @@ func assign_player_networkplayer(peer_id : int, _network_player : Variant) -> vo
 		player = _network_player
 	print(player)
 	peer_id_to_player[peer_id] = player
-	players_update.emit()
+	network_update.emit()

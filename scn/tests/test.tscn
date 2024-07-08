@@ -24,4 +24,3 @@ unique_name_in_owner = true
 
 [node name="CLIENT-UI" parent="." instance=ExtResource("5_vofwa")]
 unique_name_in_owner = true
-mouse_filter = 2

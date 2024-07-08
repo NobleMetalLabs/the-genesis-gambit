@@ -3,9 +3,10 @@ extends CursorAction
 
 var position : Vector2
 
-func _init(_player : Player,_position : Vector2) -> void:
-	self.player = _player
-	self.position = _position
+static func setup(_position : Vector2) -> CursorMotionAction:
+	var cma := CursorMotionAction.new()
+	cma.position = _position
+	return cma
 
 func _to_string() -> String:
 	return "CursorMotionAction(%s,%s)" % [self.player, self.position]

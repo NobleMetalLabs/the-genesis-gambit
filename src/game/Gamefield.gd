@@ -10,12 +10,15 @@ var client_ui : ClientUI
 var effect_resolver : EffectResolver = EffectResolver.new()
 var players : Array[Player]
 
+var network_player_to_player : Dictionary = {} # [NetworkPlayer, Player]
+
 func setup(config : NetworkPlayStageConfiguration) -> void:
 	cards_holder = get_node("Cards")
 
 	for nplayer : NetworkPlayer in config.players:
-		var player_deck : Deck = config.decks_by_player_uid[nplayer.uid]
+		var player_deck : Deck = config.decks_by_player_uid[nplayer.peer_id]
 		var player := Player.new(nplayer, player_deck)
+		network_player_to_player[nplayer] = player
 		players.append(player)
 		player.name = nplayer.player_name
 		player.leader = ICardInstance.new(player_deck.leader, player)
@@ -31,10 +34,6 @@ func get_gamefield_state() -> GamefieldState:
 	return GamefieldState.new(players)
 
 func _process(_delta : float) -> void: 
-	if Input.is_action_just_pressed("debug_advance_frame"):
-		print("Advancing frame")
-		effect_resolver.resolve_effects(get_gamefield_state())
-
 	for player in players:
 		var leader_stats := IStatisticPossessor.id(player.leader)
 		if leader_stats.get_statistic(Genesis.Statistic.JUST_DIED):

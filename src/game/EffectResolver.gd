@@ -1,4 +1,5 @@
 class_name EffectResolver
+extends RefCounted
 
 var effect_list : Array[Effect] :
 	get:
@@ -9,7 +10,16 @@ var effect_list : Array[Effect] :
 
 var effects_by_requester : Dictionary = {} # [Object, Array[Effect]]
 
+var yet_to_process_actions : Array[Action] = []
 var already_processed_actions : Array[Action] = []
+
+func _init() -> void:
+	AuthoritySourceProvider.authority_source.reflect_action.connect(
+		func(action : Action) -> void:
+			print("yea sure thing pal")
+			yet_to_process_actions.append(action)
+			print(yet_to_process_actions)
+	)
 
 func request_effect(effect : Effect) -> void:
 	var requester_exists : bool = effects_by_requester.has(effect.requester)
@@ -44,18 +54,20 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 		remove_effect(effect)
 
 func resolve_effects(gamefield_state : GamefieldState) -> void:
+	print("%s : Resolving effects." % [MultiplayerManager.get_peer_id()])
 	#process all actions
-	var action_queue : Array[Action] = AuthoritySourceProvider.authority_source.action_queue.duplicate()
+	var action_queue : Array[Action] = yet_to_process_actions.duplicate()
+	print("%s : Processing actions: %s" % [MultiplayerManager.get_peer_id(), action_queue])
 	for action : Action in action_queue:
 		#resolve existing effects
 		var has_existing_effects : bool = effects_by_requester.has(action)
 		if has_existing_effects:
 			resolve_existing_effects_of_requester(action)
+			yet_to_process_actions.erase(action)
 		else:
 			#request new effects
 			if action in already_processed_actions: # dont if it did already
 				already_processed_actions.erase(action)
-				AuthoritySourceProvider.authority_source.action_queue.erase(action)
 				continue
 			var effect : Effect = action.to_effect()
 			effect.requester = action

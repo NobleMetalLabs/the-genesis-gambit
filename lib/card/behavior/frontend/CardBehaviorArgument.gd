@@ -1,5 +1,5 @@
 class_name CardBehaviorArgument
-extends Resource
+extends Serializeable
 
 var type : ArgumentType
 var name : StringName

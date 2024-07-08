@@ -1,12 +1,16 @@
 class_name CursorGrabAction
 extends CursorAction
 
-var item #: IGrabbable
-var grabbed : bool = false
+var item : IGrabbable
+var grabbed : bool
 
-func _init(_player : Player, item, grabbed : bool) -> void: #: IGrabbable
-	self.player = _player
-	self.item = item
+static func setup(_item : IGrabbable, _grabbed : bool) -> CursorGrabAction:
+	var cga := CursorGrabAction.new()
+	cga.item = _item
+	cga.grabbed = _grabbed
+	return cga
+
+func _init() -> void: pass
 
 func _to_string() -> String:
 	return "CursorGrabAction(%s,%s,%s)" % [self.player, self.item, self.grabbed]

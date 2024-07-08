@@ -29,7 +29,7 @@ func _ready() -> void:
 	)
 
 func request_host_lobby() -> void:
-	MultiplayerManager.host_lobby()
+	MultiplayerManager.host_lobby(true)
 	_update_game_buttons(true, true)
 	reset_chatbox()
 
@@ -43,6 +43,10 @@ func request_join_lobby() -> void:
 	reset_chatbox()
 
 func request_start_game() -> void:
+	pass
+
+func _start_game(network_match : NetworkMatch) -> void:
+	print("Starting game with match configuration: %s" % network_match)
 	pass
 
 func request_exit_lobby() -> void:

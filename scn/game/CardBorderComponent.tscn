@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdfnnjgo2jc4p"]
+[gd_scene load_steps=8 format=3 uid="uid://bdfnnjgo2jc4p"]
 
 [ext_resource type="Script" path="res://src/game/CardBorderComponent.gd" id="1_8l8ef"]
 [ext_resource type="Texture2D" uid="uid://cmhabwd2frhya" path="res://ast/game/cards/borders/common.png" id="1_mikyf"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bicykyd16octc" path="res://ast/game/cards/borders/mythic.png" id="4_0q074"]
 [ext_resource type="Texture2D" uid="uid://bppbxm02u6cej" path="res://ast/game/cards/borders/epic.png" id="5_g78lu"]
 [ext_resource type="Texture2D" uid="uid://egkx06nqio8w" path="res://ast/game/cards/borders/leader-crown.png" id="6_gsqxj"]
+[ext_resource type="Texture2D" uid="uid://f26okrfpxdsa" path="res://ast/game/cards/borders/leader.png" id="6_taq87"]
 
 [node name="CardBorderComponent" type="Control"]
 layout_mode = 3
@@ -20,6 +21,7 @@ common_texture = ExtResource("1_mikyf")
 rare_texture = ExtResource("3_ekqu2")
 mythic_texture = ExtResource("4_0q074")
 epic_texture = ExtResource("5_g78lu")
+leader_texture = ExtResource("6_taq87")
 
 [node name="CrownRoot" type="Control" parent="."]
 layout_mode = 1

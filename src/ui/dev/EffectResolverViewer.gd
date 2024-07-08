@@ -21,6 +21,11 @@ func _ready() -> void:
 	tree.set_column_expand(3, true)
 	tree.set_column_expand_ratio(3, 3)
 
+	var args := Array(OS.get_cmdline_args())
+	if args.has("-server"):
+		self.show()
+	
+
 var _object_to_treeitem : Dictionary = {} #[Object, TreeItem]
 
 func _process(_delta : float) -> void:
@@ -35,7 +40,9 @@ func _process(_delta : float) -> void:
 	# tally actions
 	var actions_parent : TreeItem = tree.create_item(root)
 	actions_parent.set_text(0, "Actions")
-	for action : Action in AuthoritySourceProvider.authority_source.action_queue:
+
+	var er : EffectResolver = Router.gamefield.effect_resolver
+	for action : Action in er.yet_to_process_actions + er.already_processed_actions:
 		var action_item : TreeItem = tree.create_item(actions_parent)
 		action_item.set_text(0, str(action))
 		_object_to_treeitem[action] = action_item

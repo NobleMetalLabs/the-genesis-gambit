@@ -94,7 +94,7 @@ func end_target() -> void:
 	selecting_target = false
 	var hovered : ICardInstance = Router.client_ui.get_hovered_card()
 	AuthoritySourceProvider.authority_source.request_action(
-		CreatureTargetAction.new(
+		CreatureTargetAction.setup(
 			ICardInstance.id(self), ITargetable.id(hovered)
 		)
 	)

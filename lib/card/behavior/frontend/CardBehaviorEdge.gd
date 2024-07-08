@@ -1,5 +1,5 @@
 class_name CardBehaviorEdge
-extends Resource
+extends Serializeable
 
 var start_node : CardBehaviorNodeInstance
 var start_port : int

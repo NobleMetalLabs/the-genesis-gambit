@@ -9,5 +9,5 @@ func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolve
 		var my_player : Player = _gamefield_state.get_player_from_instance(instance_owner)
 		IStatisticPossessor.id(my_player).modify_statistic(Genesis.Statistic.HEALTH, 3) 
 		AuthoritySourceProvider.authority_source.request_action(
-			HandAddCardAction.new(my_player)
+			HandAddCardAction.setup(my_player)
 		)

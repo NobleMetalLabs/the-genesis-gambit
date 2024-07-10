@@ -8,10 +8,7 @@ static func setup() -> HandDrawCardAction:
 func _init() -> void: pass
 
 func _to_string() -> String:
-	return "HandDrawCardAction(%s)" % self.player
+	return "HandDrawCardAction(%s)" % Router.gamefield.peer_id_to_player[self.player_peer_id]
 
 func to_effect() -> HandAddCardEffect:
-	print(self.player)
-	print(Router.gamefield.network_player_to_player.keys())
-	print(self.player in Router.gamefield.network_player_to_player.keys())
-	return HandAddCardEffect.new(self, Router.gamefield.network_player_to_player[self.player])
+	return HandAddCardEffect.new(self, Router.gamefield.peer_id_to_player[self.player_peer_id])

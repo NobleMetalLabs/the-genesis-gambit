@@ -27,7 +27,6 @@ CardDB="*res://src/autoloads/CardDB.gd"
 MultiplayerManager="*res://src/autoloads/MultiplayerManager.gd"
 UIDDB="*res://src/autoloads/UIDDB.gd"
 AuthoritySourceProvider="*res://src/autoloads/AuthoritySourceProvider.gd"
-InputManager="*res://src/autoloads/InputManager.gd"
 Router="*res://src/autoloads/Router.gd"
 
 [debug]

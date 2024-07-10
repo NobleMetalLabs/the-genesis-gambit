@@ -5,7 +5,7 @@ extends Control
 
 func _refresh_hand() -> void:
 	_clear_hand()
-	for card : CardInHand in Router.gamefield.players[0].cards_in_hand:
+	for card : CardInHand in get_parent().get_parent().associated_player.cards_in_hand:
 		_add_card_to_hand(card)
 
 var hovered_hand_card : ICardInstance = null

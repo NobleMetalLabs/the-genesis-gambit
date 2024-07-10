@@ -15,6 +15,9 @@ func _init(deck : Deck) -> void:
 		var stats := IStatisticPossessor.new()
 		stats.set_statistic(Genesis.Statistic.IS_IN_DECK, true)
 		cards_in_deck.append(CardInDeck.new([card_instance, stats]))
+
+func _ready() -> void:
+	seed(Router.gamefield.player_to_peer_id[self])
 	cards_in_deck.shuffle()
 
 func _to_string() -> String:

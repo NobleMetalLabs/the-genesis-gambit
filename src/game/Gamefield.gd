@@ -10,7 +10,8 @@ var client_ui : ClientUI
 var effect_resolver : EffectResolver = EffectResolver.new()
 
 var players : Array[Player]
-var network_player_to_player : Dictionary = {} # [NetworkPlayer, Player]
+var peer_id_to_player : Dictionary = {} # [int, Player]
+var player_to_peer_id : Dictionary = {} # [Player, int]
 var local_player : Player
 
 func _ready() -> void:
@@ -18,7 +19,7 @@ func _ready() -> void:
 	MultiplayerManager.network_update.connect(func() -> void:
 		if MultiplayerManager.peer_id_to_player.keys().size() < 2: return
 		if not MultiplayerManager.is_instance_server(): return
-		
+
 		var nps : Array[NetworkPlayer] = []
 		nps.assign(MultiplayerManager.peer_id_to_player.values())
 		var decks_by_player_uid : Dictionary = {}
@@ -41,7 +42,8 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		var player_deck : Deck = config.decks_by_player_uid[nplayer.peer_id]
 		var player := Player.new(player_deck)
 		player.name = nplayer.player_name
-		network_player_to_player[nplayer] = player
+		peer_id_to_player[nplayer.peer_id] = player
+		player_to_peer_id[player] = nplayer.peer_id
 		if nplayer.peer_id == MultiplayerManager.network_player.peer_id:
 			print("Local player found")
 			local_player = player

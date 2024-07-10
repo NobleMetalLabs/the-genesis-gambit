@@ -21,7 +21,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	var pui_template : = $"%PUI-TEMPLATE"
 	var grid_cont : GridContainer = $"PlayerAreaGridContainer"
 	for nplayer in config.players:
-		var player : Player = Router.gamefield.network_player_to_player[nplayer]
+		var player : Player = Router.gamefield.peer_id_to_player[nplayer.peer_id]
 		var player_area := pui_template.duplicate()
 		player_area.associated_player = player
 		player_area.name = "PA-%s" % player.name
@@ -47,6 +47,15 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 
 func _input(event : InputEvent) -> void:
 	if not event is InputEventKey: return
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta : float) -> void:
+	#if get_window().gui_get_focus_owner() != Router.client_ui: return
+	if Input.is_action_just_pressed("debug_action"):
+		AuthoritySourceProvider.authority_source.request_action(
+			HandDrawCardAction.setup()
+		)
+
 	if Input.is_action_just_pressed("ui_inspect"):
 		var hovered_card : ICardInstance = local_player_area.get_hovered_card()
 		if hovered_card != null:
@@ -57,12 +66,13 @@ func _input(event : InputEvent) -> void:
 			card_info_panel.undisplay()
 			dev_card_viewer.set_card(null)
 
-	# if Input.is_action_just_pressed("ui_activate"):
-	# 	var hovered_card := ICardInstance.id(gamefield.get_hovered_card())
-	# 	if hovered_card != null:
-	# 		AuthoritySourceProvider.authority_source.request_action(
-	# 			CreatureActivateAction.setup_with_instances(hovered_card.get_object())
-	# 		)
+	if Input.is_action_just_pressed("debug_advance_frame"):
+		AuthoritySourceProvider.authority_source.execute_frame()
+
+
+func refresh_hand_ui() -> void:
+	for pa in player_areas:
+		pa.refresh_hand_ui()
 
 func update_target_sprite(target : ICardInstance) -> void:
 	target = target.get_object()

@@ -1,6 +1,8 @@
 class_name CardGhost
 extends Control
 
+#TODO: maybe rework this to use Control._get_drag_data()/set_data_preview()/_drop_data()
+
 signal was_placed(global_position : Vector2)
 signal was_canceled()
 
@@ -32,7 +34,7 @@ func _place() -> void:
 	follow_cursor = false
 
 func _is_in_hand_region() -> bool:
-	var value : bool = Router.client_ui.hand_ui.get_global_rect().intersects(self.get_global_rect())
+	var value : bool = Router.client_ui.local_player_area.hand_ui.get_global_rect().intersects(self.get_global_rect())
 	return value
 
 var follow_cursor : bool = true

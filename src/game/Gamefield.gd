@@ -47,9 +47,6 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		if nplayer.peer_id == MultiplayerManager.network_player.peer_id:
 			local_player = player
 		players.append(player)
-	 	#player.leader = ICardInstance.new(player_deck.leader, player)
-	 	#var leader : CardOnField = CardOnField.new([player.leader])
-	 	#place_card(leader, Vector2(960, 540 * 1.5))
 		self.add_child(player, true)
 
 	Router.client_ui.setup(config)

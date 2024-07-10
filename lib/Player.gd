@@ -17,7 +17,10 @@ static func setup(deck : Deck) -> Player:
 		)
 		var stats := IStatisticPossessor.new()
 		stats.set_statistic(Genesis.Statistic.IS_IN_DECK, true)
-		player.cards_in_deck.append(CardInDeck.new([card_instance, stats]))
+		if card_instance.metadata.rarity == Genesis.CardRarity.LEADER:
+			player.leader = card_instance
+		else:
+			player.cards_in_deck.append(CardInDeck.new([card_instance, stats]))
 
 	return player
 

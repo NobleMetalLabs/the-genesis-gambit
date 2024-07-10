@@ -30,6 +30,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		player_areas.append(player_area)
 		if player == Router.gamefield.local_player:
 			local_player_area = player_area
+
 	pui_template.free()
 
 	var num_players : int = config.players.size()
@@ -45,6 +46,11 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	for c_idx in range(0, grid_size):
 		grid_cont.get_child(c_idx).flipped = true
 
+	for pa in player_areas:
+		var leader : CardOnField = CardOnField.new([pa.associated_player.leader])
+		print(pa.get_rect())
+		pa.place_card(leader, pa.get_leader_position())
+
 func _input(event : InputEvent) -> void:
 	if not event is InputEventKey: return
 
@@ -57,7 +63,8 @@ func _process(_delta : float) -> void:
 		)
 
 	if Input.is_action_just_pressed("ui_inspect"):
-		var hovered_card : ICardInstance = local_player_area.get_hovered_card()
+		print('hewoo')
+		print(hovered_card)
 		if hovered_card != null:
 			card_info_panel.set_card_metadata(hovered_card.metadata)
 			card_info_panel.display()
@@ -69,10 +76,11 @@ func _process(_delta : float) -> void:
 	if Input.is_action_just_pressed("debug_advance_frame"):
 		AuthoritySourceProvider.authority_source.execute_frame()
 
-
 func refresh_hand_ui() -> void:
 	for pa in player_areas:
 		pa.refresh_hand_ui()
+
+var hovered_card : ICardInstance = null
 
 func update_target_sprite(target : ICardInstance) -> void:
 	target = target.get_object()

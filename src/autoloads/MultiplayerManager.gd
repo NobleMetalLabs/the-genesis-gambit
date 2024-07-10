@@ -29,7 +29,7 @@ func _ready() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		if upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
+		if upnp.get_device_count() > 0:
 			upnp.delete_port_mapping(PORT, "UDP")
 			upnp.delete_port_mapping(PORT, "TCP")
 

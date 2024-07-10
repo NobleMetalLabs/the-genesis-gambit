@@ -1,5 +1,5 @@
 class_name CardOnField
-extends Node2D
+extends Control
 
 #implements ITargetable
 func get_boundary_rectangle() -> Rect2:
@@ -10,6 +10,7 @@ var card_frontend : CardFrontend
 
 func _init(provided_identifiers : Array[Identifier]) -> void:
 	for identifier in provided_identifiers:
+		if identifier == null: continue
 		var old_parent : Node = identifier.get_parent()
 		if old_parent != null: 
 			identifier.reparent(self)
@@ -28,7 +29,7 @@ func _init(provided_identifiers : Array[Identifier]) -> void:
 		self.add_child(IMoodPossessor.new())
 
 	self.gamefield = Router.gamefield
-
+	self.set_anchors_preset(PRESET_FULL_RECT)
 	card_frontend = CardFrontend.instantiate()
 	self.add_child(card_frontend)
 

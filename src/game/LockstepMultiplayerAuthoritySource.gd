@@ -77,6 +77,7 @@ func handle_lockstep_advance_ready_notice(sender_id : int) -> void:
 
 func handle_lockstep_advance(new_frame_number : int) -> void:
 	if new_frame_number > current_frame_number:
+		#TODO: sort the actions for deterministic resolution
 		for action : Action in action_queues.get(current_frame_number, []):
 			print("%s : $$$$$$$$$$$$$$$$$$$Reflecting action: %s" % [MultiplayerManager.get_peer_id(), action])
 			reflect_action.emit(action)

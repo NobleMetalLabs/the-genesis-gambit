@@ -18,5 +18,5 @@ func start_match() -> void:
 	_submit_draft_results(dr)
 
 func _submit_draft_results(decks_by_player_uid : Dictionary) -> void: #[int, Deck]
-	var psc := NetworkPlayStageConfiguration.new(self.match_config.players, decks_by_player_uid)
+	var psc := NetworkPlayStageConfiguration.setup(self.match_config.players, decks_by_player_uid)
 	dispatch_play_stage.emit(psc)

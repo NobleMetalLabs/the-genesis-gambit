@@ -21,9 +21,9 @@ func _ready() -> void:
 	tree.set_column_expand(3, true)
 	tree.set_column_expand_ratio(3, 3)
 
-	var args := Array(OS.get_cmdline_args())
-	if args.has("-server"):
-		self.show()
+	# var args := Array(OS.get_cmdline_args())
+	# if args.has("-server"):
+	# 	self.show()
 	
 
 var _object_to_treeitem : Dictionary = {} #[Object, TreeItem]

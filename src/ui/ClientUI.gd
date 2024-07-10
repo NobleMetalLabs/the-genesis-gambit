@@ -3,25 +3,52 @@ extends Control
 
 @onready var card_info_panel : CardInfoPanel = $"%CARD-INFO-PANEL"
 @onready var target_sprite : Sprite2D = $TargetSprite
-@onready var hand_ui : HandUI = $"%HAND-UI"
+
 
 @onready var dev_effect_viewer : EffectResolverViewer = $"%EFFECT-RESOLVER-VIEWER"
 @onready var dev_card_viewer : CardDataViewer = $"%CARD-DATA-VIEWER"
 
-var gamefield : Gamefield
+var player_areas : Array[PlayerAreaUI] = []
+var local_player_area : PlayerAreaUI 
 
-func _ready() -> void:
+func setup(config : NetworkPlayStageConfiguration) -> void:
 	self.get_tree().get_root().content_scale_size = Vector2.ZERO
 
-	MultiplayerManager.network_update.connect(
-		func() -> void:
-			$"%MULTIPLAYER-PANEL".text = "Server" if MultiplayerManager.is_instance_server() else "Client"
-	)
+	var t : String = "Server" if MultiplayerManager.is_instance_server() else "Client"
+	$"%MULTIPLAYER-PANEL".text = t
+	$"%MULTIPLAYER-PANEL".name = t
+
+	var pui_template : = $"%PUI-TEMPLATE"
+	var grid_cont : GridContainer = $"PlayerAreaGridContainer"
+	for nplayer in config.players:
+		var player : Player = Router.gamefield.network_player_to_player[nplayer]
+		var player_area := pui_template.duplicate()
+		player_area.associated_player = player
+		player_area.name = "PA-%s" % player.name
+		player_area.visible = true
+		grid_cont.add_child(player_area)
+		player_areas.append(player_area)
+		if player == Router.gamefield.local_player:
+			local_player_area = player_area
+	pui_template.free()
+
+	var num_players : int = config.players.size()
+	var grid_size : int = num_players / 2
+
+	# If the local player is not in the bottom half, swap the grid so they are
+	var local_area_idx : int = player_areas.find(local_player_area)
+	if local_area_idx < grid_size:
+		for pa : PlayerAreaUI in grid_cont.get_children().slice(-grid_size):
+			grid_cont.move_child(pa, 0)
+
+	grid_cont.columns = grid_size
+	for c_idx in range(0, grid_size):
+		grid_cont.get_child(c_idx).flipped = true
 
 func _input(event : InputEvent) -> void:
 	if not event is InputEventKey: return
 	if Input.is_action_just_pressed("ui_inspect"):
-		var hovered_card : ICardInstance = get_hovered_card()
+		var hovered_card : ICardInstance = local_player_area.get_hovered_card()
 		if hovered_card != null:
 			card_info_panel.set_card_metadata(hovered_card.metadata)
 			card_info_panel.display()
@@ -36,16 +63,6 @@ func _input(event : InputEvent) -> void:
 	# 		AuthoritySourceProvider.authority_source.request_action(
 	# 			CreatureActivateAction.setup_with_instances(hovered_card.get_object())
 	# 		)
-
-func get_hovered_card() -> ICardInstance:
-	var gc : ICardInstance = ICardInstance.id(gamefield.get_hovered_card())
-	var hnd : ICardInstance = ICardInstance.id(hand_ui.hovered_hand_card)
-	if gc != null: return gc
-	if hnd != null: return hnd
-	return null
-
-func refresh_hand_ui() -> void:
-	hand_ui._refresh_hand()
 
 func update_target_sprite(target : ICardInstance) -> void:
 	target = target.get_object()

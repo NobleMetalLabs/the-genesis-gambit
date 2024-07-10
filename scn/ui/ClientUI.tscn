@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://djjhjh04iwame" path="res://ast/game/cards/fgs/target-placeholder.png" id="5_kgfmm"]
 [ext_resource type="PackedScene" uid="uid://p22xihxignf0" path="res://scn/ui/dev/EffectResolverViewer.tscn" id="6_6ht5e"]
 [ext_resource type="Script" path="res://src/ui/MultiplayerPanel.gd" id="6_akdw7"]
-[ext_resource type="PackedScene" uid="uid://dp0ichqwouy35" path="res://scn/ui/HandUI.tscn" id="7_ce31p"]
 [ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/DeveloperToolTheme.tres" id="7_ndtgr"]
+[ext_resource type="PackedScene" uid="uid://41tfx6ympneu" path="res://scn/ui/PlayerAreaUI.tscn" id="8_lh7gb"]
 [ext_resource type="PackedScene" uid="uid://dep6a56640e7g" path="res://scn/ui/dev/CardDataViewer.tscn" id="8_xoc3b"]
 
 [node name="CLIENT-UI" type="Control"]
@@ -73,22 +73,20 @@ layout_mode = 2
 visible = false
 texture = ExtResource("5_kgfmm")
 
-[node name="HAND-PANEL" type="Panel" parent="."]
+[node name="PlayerAreaGridContainer" type="GridContainer" parent="."]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -160.0
-offset_top = -92.0
-offset_right = 160.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
 
-[node name="HAND-UI" parent="HAND-PANEL" instance=ExtResource("7_ce31p")]
+[node name="PUI-TEMPLATE" parent="PlayerAreaGridContainer" instance=ExtResource("8_lh7gb")]
 unique_name_in_owner = true
-layout_mode = 1
+visible = false
+layout_mode = 2
 
 [node name="MULTIPLAYER-PANEL" type="Panel" parent="."]
 unique_name_in_owner = true

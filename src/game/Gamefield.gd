@@ -8,17 +8,17 @@ var cards_holder : Node2D
 
 var client_ui : ClientUI
 var effect_resolver : EffectResolver = EffectResolver.new()
-var players : Array[Player]
 
+var players : Array[Player]
 var network_player_to_player : Dictionary = {} # [NetworkPlayer, Player]
+var local_player : Player
 
 func _ready() -> void:
+	# debug npsc creation for setup
 	MultiplayerManager.network_update.connect(func() -> void:
 		if MultiplayerManager.peer_id_to_player.keys().size() < 2: return
 		if not MultiplayerManager.is_instance_server(): return
-
-		print(UIDDB.object_to_uid.keys())
-
+		
 		var nps : Array[NetworkPlayer] = []
 		nps.assign(MultiplayerManager.peer_id_to_player.values())
 		var decks_by_player_uid : Dictionary = {}
@@ -36,19 +36,23 @@ func handle_network_message(_sender : NetworkPlayer, message : String, args : Ar
 			setup(args[0])
 
 func setup(config : NetworkPlayStageConfiguration) -> void:
-	cards_holder = get_node("Cards")
-
+	#cards_holder = get_node("Cards")
 	for nplayer : NetworkPlayer in config.players:
 		var player_deck : Deck = config.decks_by_player_uid[nplayer.peer_id]
 		var player := Player.new(player_deck)
-		print("FUCK %s" % nplayer.peer_id)
-		network_player_to_player[nplayer] = player
-		players.append(player)
 		player.name = nplayer.player_name
-		player.leader = ICardInstance.new(player_deck.leader, player)
-		var leader : CardOnField = CardOnField.new([player.leader])
-		place_card(leader, Vector2(960, 540 * 1.5))
+		network_player_to_player[nplayer] = player
+		if nplayer.peer_id == MultiplayerManager.network_player.peer_id:
+			print("Local player found")
+			local_player = player
+		players.append(player)
+	 	#player.leader = ICardInstance.new(player_deck.leader, player)
+	 	#var leader : CardOnField = CardOnField.new([player.leader])
+	 	#place_card(leader, Vector2(960, 540 * 1.5))
 		self.add_child(player, true)
+
+	Router.client_ui.setup(config)
+
 
 var _hovered_card : CardOnField = null
 func get_hovered_card() -> CardOnField:
@@ -58,10 +62,11 @@ func get_gamefield_state() -> GamefieldState:
 	return GamefieldState.new(players)
 
 func _process(_delta : float) -> void: 
-	for player in players:
-		var leader_stats := IStatisticPossessor.id(player.leader)
-		if leader_stats.get_statistic(Genesis.Statistic.JUST_DIED):
-			self.game_completed.emit()
+	pass
+	# for player in players:
+	# 	var leader_stats := IStatisticPossessor.id(player.leader)
+	# 	if leader_stats.get_statistic(Genesis.Statistic.JUST_DIED):
+	# 		self.game_completed.emit()
 			
 func place_card(card : CardOnField, position : Vector2) -> void:
 	card.position = position

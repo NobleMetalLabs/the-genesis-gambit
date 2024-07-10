@@ -40,7 +40,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	#cards_holder = get_node("Cards")
 	for nplayer : NetworkPlayer in config.players:
 		var player_deck : Deck = config.decks_by_player_uid[nplayer.peer_id]
-		var player := Player.new(player_deck)
+		var player := Player.setup(player_deck)
 		player.name = nplayer.player_name
 		peer_id_to_player[nplayer.peer_id] = player
 		player_to_peer_id[player] = nplayer.peer_id
@@ -52,7 +52,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	 	#var leader : CardOnField = CardOnField.new([player.leader])
 	 	#place_card(leader, Vector2(960, 540 * 1.5))
 		self.add_child(player, true)
-
+		
 	Router.client_ui.setup(config)
 
 

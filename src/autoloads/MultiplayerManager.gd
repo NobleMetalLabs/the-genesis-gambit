@@ -29,8 +29,9 @@ func _ready() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		upnp.delete_port_mapping(PORT, "UDP")
-		upnp.delete_port_mapping(PORT, "TCP")
+		if upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
+			upnp.delete_port_mapping(PORT, "UDP")
+			upnp.delete_port_mapping(PORT, "TCP")
 
 func is_instance_server() -> bool:
 	if multiplayer == null: return false

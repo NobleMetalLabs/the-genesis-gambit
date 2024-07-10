@@ -6,15 +6,20 @@ var cards_in_hand : Array[CardInHand] = []
 var cards_on_field : Array[CardOnField] = []
 var leader : ICardInstance
 
-func _init(deck : Deck) -> void:
+static var scn : PackedScene = preload("res://scn/ui/Player.tscn")
+static func setup(deck : Deck) -> Player:
+	var player := scn.instantiate()
+
 	for card : CardMetadata in deck.get_cards():
 		var card_instance := ICardInstance.new(
 			card,
-			self
+			player
 		)
 		var stats := IStatisticPossessor.new()
 		stats.set_statistic(Genesis.Statistic.IS_IN_DECK, true)
-		cards_in_deck.append(CardInDeck.new([card_instance, stats]))
+		player.cards_in_deck.append(CardInDeck.new([card_instance, stats]))
+
+	return player
 
 func _ready() -> void:
 	seed(Router.gamefield.player_to_peer_id[self])

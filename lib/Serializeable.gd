@@ -42,7 +42,7 @@ static func _object_to_uid_dict(obj : Object) -> Dictionary:
 
 static func _object_to_resource_path_dict(obj : Object) -> Dictionary:
 	return {
-		"resource_path" : obj.get_script().resource_path
+		"resource_path" : obj.resource_path
 	}
 
 static func _dict_to_deep_dict(dict : Dictionary) -> Dictionary:
@@ -60,7 +60,7 @@ static func _array_to_deep_array(array : Array) -> Array:
 
 static func _variant_to_deep_variant(variant : Variant) -> Variant:
 	if variant is Object:
-		if variant.get_script().resource_path.ends_with(".tres"):
+		if variant.resource_path.ends_with(".tres"): #Instantiated, resource
 			return _object_to_resource_path_dict(variant)
 		#if variant is NetworkMessage:
 		return _object_to_dict(variant)
@@ -81,11 +81,15 @@ static func _dict_to_object(dict : Dictionary) -> Variant:
 	for vname : String in dict.keys():
 		if vname == "class_path": continue
 		var value : Variant = dict.get(vname)
-		instance.set(vname, _deep_variant_to_variant(value))
+		var dvalue : Variant = _deep_variant_to_variant(value)
+		if value is Array:
+			instance.get(vname).assign(dvalue) # Preserve typed arrays
+		else:
+			instance.set(vname, dvalue)
 	return instance
 
 static func _resource_path_dict_to_object(dict : Dictionary) -> Variant:
-	return load(dict["resource_path"]).new()
+	return load(dict["resource_path"])
 
 static func _uid_dict_to_object(dict : Dictionary) -> Variant:
 	var uid : int = dict["uid"]

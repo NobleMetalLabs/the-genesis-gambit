@@ -12,12 +12,36 @@ var players : Array[Player]
 
 var network_player_to_player : Dictionary = {} # [NetworkPlayer, Player]
 
+func _ready() -> void:
+	MultiplayerManager.network_update.connect(func() -> void:
+		if MultiplayerManager.peer_id_to_player.keys().size() < 2: return
+		if not MultiplayerManager.is_instance_server(): return
+
+		print(UIDDB.object_to_uid.keys())
+
+		var nps : Array[NetworkPlayer] = []
+		nps.assign(MultiplayerManager.peer_id_to_player.values())
+		var decks_by_player_uid : Dictionary = {}
+		for np in nps:
+			decks_by_player_uid[np.peer_id] = Deck.prebuilt_from_tribe(Genesis.CardTribe.BUGS)
+		var npsc := NetworkPlayStageConfiguration.setup(nps, decks_by_player_uid)
+		MultiplayerManager.send_network_message("gamefield/setup", [npsc])
+	)
+
+	MultiplayerManager.received_network_message.connect(handle_network_message)
+
+func handle_network_message(_sender : NetworkPlayer, message : String, args : Array) -> void:
+	match(message):
+		"gamefield/setup":
+			setup(args[0])
+
 func setup(config : NetworkPlayStageConfiguration) -> void:
 	cards_holder = get_node("Cards")
 
 	for nplayer : NetworkPlayer in config.players:
 		var player_deck : Deck = config.decks_by_player_uid[nplayer.peer_id]
-		var player := Player.new(nplayer, player_deck)
+		var player := Player.new(player_deck)
+		print("FUCK %s" % nplayer.peer_id)
 		network_player_to_player[nplayer] = player
 		players.append(player)
 		player.name = nplayer.player_name

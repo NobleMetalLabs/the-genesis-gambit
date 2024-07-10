@@ -6,10 +6,7 @@ var cards_in_hand : Array[CardInHand] = []
 var cards_on_field : Array[CardOnField] = []
 var leader : ICardInstance
 
-var network_player : NetworkPlayer
-
-func _init(_network_player : NetworkPlayer, deck : Deck) -> void:
-	self.network_player = _network_player
+func _init(deck : Deck) -> void:
 	for card : CardMetadata in deck.get_cards():
 		var card_instance := ICardInstance.new(
 			card,

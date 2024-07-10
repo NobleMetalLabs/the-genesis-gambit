@@ -45,14 +45,13 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		peer_id_to_player[nplayer.peer_id] = player
 		player_to_peer_id[player] = nplayer.peer_id
 		if nplayer.peer_id == MultiplayerManager.network_player.peer_id:
-			print("Local player found")
 			local_player = player
 		players.append(player)
 	 	#player.leader = ICardInstance.new(player_deck.leader, player)
 	 	#var leader : CardOnField = CardOnField.new([player.leader])
 	 	#place_card(leader, Vector2(960, 540 * 1.5))
 		self.add_child(player, true)
-		
+
 	Router.client_ui.setup(config)
 
 
@@ -64,11 +63,10 @@ func get_gamefield_state() -> GamefieldState:
 	return GamefieldState.new(players)
 
 func _process(_delta : float) -> void: 
-	pass
-	# for player in players:
-	# 	var leader_stats := IStatisticPossessor.id(player.leader)
-	# 	if leader_stats.get_statistic(Genesis.Statistic.JUST_DIED):
-	# 		self.game_completed.emit()
+	for player : Player in []: #players:
+		var leader_stats := IStatisticPossessor.id(player.leader)
+		if leader_stats.get_statistic(Genesis.Statistic.JUST_DIED):
+			self.game_completed.emit()
 			
 func place_card(card : CardOnField, position : Vector2) -> void:
 	card.position = position

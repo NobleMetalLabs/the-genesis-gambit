@@ -16,9 +16,7 @@ var already_processed_actions : Array[Action] = []
 func _init() -> void:
 	AuthoritySourceProvider.authority_source.reflect_action.connect(
 		func(action : Action) -> void:
-			print("yea sure thing pal")
 			yet_to_process_actions.append(action)
-			print(yet_to_process_actions)
 	)
 
 func request_effect(effect : Effect) -> void:
@@ -78,7 +76,6 @@ func resolve_effects(gamefield_state : GamefieldState) -> void:
 	for card : ICardInstance in gamefield_state.cards:
 		if card == null:
 			push_error("Card is somehow fucking null.")
-			print(gamefield_state.cards)
 			continue
 		#resolve existing effects
 		resolve_existing_effects_of_requester(card)

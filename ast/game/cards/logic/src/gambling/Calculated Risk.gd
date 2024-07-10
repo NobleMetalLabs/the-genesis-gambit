@@ -4,7 +4,7 @@ static var description : StringName = "Each player draws 2 cards. If there are m
 
 func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolver) -> void:
 	if not IStatisticPossessor.id(instance_owner).get_statistic(Genesis.Statistic.WAS_JUST_PLAYED): return
-	for player in _gamefield_state.players:
+	for player : Player in _gamefield_state.players:
 		for _i in range(2):
 			_effect_resolver.request_effect(
 				HandAddCardEffect.new(

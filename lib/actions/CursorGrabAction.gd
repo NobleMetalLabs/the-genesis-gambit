@@ -13,4 +13,4 @@ static func setup(_item : IGrabbable, _grabbed : bool) -> CursorGrabAction:
 func _init() -> void: pass
 
 func _to_string() -> String:
-	return "CursorGrabAction(%s,%s,%s)" % [self.player, self.item, self.grabbed]
+	return "CursorGrabAction(%s,%s,%s)" % [self.player_peer_id, self.item, self.grabbed]

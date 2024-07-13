@@ -14,9 +14,12 @@ var flipped : bool :
 		hand_ui.get_parent().position.y = 0 #I LOVE GODOT ENGINE!!!!
 
 func place_card(card : CardOnField, at_position : Vector2) -> void:
+	print("Placing card at position: %s" % at_position)
 	field_card_holder.add_child(card, true)
-	card.position = at_position - field_card_holder.get_rect().get_center()
-
+	card.set_anchors_preset(PRESET_FULL_RECT)
+	card.position = at_position - field_card_holder.get_global_rect().get_center()
+	#card.position = at_position
+	print("Card position: %s" % card.position)
 	card.card_frontend.mouse_entered.connect(
 		func() -> void:
 			Router.client_ui.hovered_card = ICardInstance.id(card)

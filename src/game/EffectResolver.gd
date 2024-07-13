@@ -45,6 +45,7 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 	var requesters_existing_effects : Array[Effect] = effects_by_requester[requester]
 	for effect : Effect in requesters_existing_effects.duplicate():
 		if effect.has_method("resolve"):
+			print("%s : Resolving effect '%s'." % [MultiplayerManager.get_peer_id(), effect])
 			effect.resolve(self)
 		else:
 			push_warning("Error: Effect '%s' does not have a resolve method." % [effect])
@@ -52,10 +53,8 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 		remove_effect(effect)
 
 func resolve_effects(gamefield_state : GamefieldState) -> void:
-	print("%s : Resolving effects." % [MultiplayerManager.get_peer_id()])
 	#process all actions
-	var action_queue : Array[Action] = yet_to_process_actions.duplicate()
-	print("%s : Processing actions: %s" % [MultiplayerManager.get_peer_id(), action_queue])
+	var action_queue : Array[Action] = yet_to_process_actions.duplicate() + already_processed_actions.duplicate()
 	for action : Action in action_queue:
 		#resolve existing effects
 		var has_existing_effects : bool = effects_by_requester.has(action)

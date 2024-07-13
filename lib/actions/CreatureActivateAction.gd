@@ -9,7 +9,7 @@ static func setup(_creature : ICardInstance) -> CreatureActivateAction:
 func _init() -> void: pass
 
 func _to_string() -> String:
-	return "CreatureActivateAction(%s, %s)" % [self.player, self.creature]
+	return "CreatureActivateAction(%s, %s)" % [self.player_peer_id, self.creature]
 
 func to_effect() -> CreatureActivateEffect:
 	return CreatureActivateEffect.new(self, creature)

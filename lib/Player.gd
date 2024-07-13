@@ -21,7 +21,6 @@ static func setup(deck : Deck) -> Player:
 			player.leader = card_instance
 		else:
 			player.cards_in_deck.append(CardInDeck.new([card_instance, stats]))
-
 	return player
 
 func _ready() -> void:

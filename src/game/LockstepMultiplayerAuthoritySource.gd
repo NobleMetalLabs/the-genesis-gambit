@@ -12,13 +12,11 @@ func _ready() -> void:
 	MultiplayerManager.received_network_message.connect(handle_network_message)
 
 func request_action(action : Action) -> void:
-	print("Action requested: %s" % action)
 	var existing : Array[Action] = []
 	var frame : int = current_frame_number
 	if sent_inputs: frame += 1
 	existing.assign(self_action_queues.get(frame, []))
 	self_action_queues[frame] = existing + [action]
-	print("Queued action: %s" % action)
 
 func execute_frame() -> void:
 	MultiplayerManager.send_network_message(
@@ -50,7 +48,6 @@ func handle_input_request(frame_number : int) -> void:
 	sent_inputs = true
 
 func handle_input_request_response(sender_id : int, frame_number : int, actions : Array[Action]) -> void:
-	print("Received actions: %s" % [actions])
 	var existing : Array[Action] = []
 	existing = action_queues.get(frame_number, existing)
 	existing.append_array(actions)
@@ -79,7 +76,6 @@ func handle_lockstep_advance(new_frame_number : int) -> void:
 	if new_frame_number > current_frame_number:
 		#TODO: sort the actions for deterministic resolution
 		for action : Action in action_queues.get(current_frame_number, []):
-			print("%s : $$$$$$$$$$$$$$$$$$$Reflecting action: %s" % [MultiplayerManager.get_peer_id(), action])
 			reflect_action.emit(action)
 
 		action_queues.erase(current_frame_number)
@@ -88,7 +84,7 @@ func handle_lockstep_advance(new_frame_number : int) -> void:
 		players_ready_for_lockstep_advance.clear()
 
 		current_frame_number = new_frame_number
-		print("%s : FRAAAAAAAAAAAAME %s" % [MultiplayerManager.get_peer_id(), current_frame_number])
+		print("%s : Now processing Frame %s" % [MultiplayerManager.get_peer_id(), current_frame_number])
 	sent_inputs = false
 	var gf : Gamefield = Router.gamefield
 	gf.effect_resolver.resolve_effects(gf.get_gamefield_state())

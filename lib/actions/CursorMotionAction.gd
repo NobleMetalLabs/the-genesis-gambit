@@ -9,4 +9,4 @@ static func setup(_position : Vector2) -> CursorMotionAction:
 	return cma
 
 func _to_string() -> String:
-	return "CursorMotionAction(%s,%s)" % [self.player, self.position]
+	return "CursorMotionAction(%s,%s)" % [self.player_peer_id, self.position]

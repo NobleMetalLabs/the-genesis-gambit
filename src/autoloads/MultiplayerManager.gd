@@ -4,7 +4,7 @@ extends Node
 signal network_update()
 
 var multiplayer_peer := ENetMultiplayerPeer.new()
-var player_name : String = "Player<%s>" % OS.get_process_id()
+var player_name : String = "P%s" % OS.get_process_id()
 
 var network_player : NetworkPlayer
 var peer_id_to_player : Dictionary = {} #[int, NetworkPlayer]

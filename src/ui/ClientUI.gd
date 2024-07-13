@@ -9,6 +9,7 @@ extends Control
 @onready var dev_card_viewer : CardDataViewer = $"%CARD-DATA-VIEWER"
 
 var player_areas : Array[PlayerAreaUI] = []
+var _player_to_area : Dictionary = {} # [Player, PlayerAreaUI]
 var local_player_area : PlayerAreaUI 
 
 func setup(config : NetworkPlayStageConfiguration) -> void:
@@ -28,6 +29,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		player_area.visible = true
 		grid_cont.add_child(player_area)
 		player_areas.append(player_area)
+		_player_to_area[player] = player_area
 		if player == Router.gamefield.local_player:
 			local_player_area = player_area
 
@@ -76,6 +78,9 @@ func _process(_delta : float) -> void:
 	if Input.is_action_just_pressed("debug_advance_frame"):
 		AuthoritySourceProvider.authority_source.execute_frame()
 
+func get_player_area(player : Player) -> PlayerAreaUI:
+	return _player_to_area[player]
+
 func refresh_hand_ui() -> void:
 	for pa in player_areas:
 		pa.refresh_hand_ui()
@@ -101,9 +106,9 @@ func _create_card_ghost(hand_card : CardInHand) -> void:
 			IStatisticPossessor.id(card_instance).set_statistic(
 				Genesis.Statistic.POSITION, _position
 			)
-			Router.gamefield.effect_resolver.request_effect(HandRemoveCardEffect.new(
-				card_instance, card_instance.player, hand_card, Genesis.LeaveHandReason.PLAYED
-			))
+			AuthoritySourceProvider.authority_source.request_action(
+				HandPlayCardAction.setup(hand_card)
+			)
 	)
 
 	current_card_ghost = new_card_ghost

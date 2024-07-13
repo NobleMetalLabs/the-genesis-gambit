@@ -38,7 +38,7 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	creature_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, true)
 
 	player_owner.cards_on_field.append(new_creature)
-	Router.gamefield.place_card(new_creature, position)
+	Router.client_ui.get_player_area(creature.player).place_card(new_creature, position)
 
 	if Router.client_ui.current_card_ghost != null:
 		Router.client_ui.current_card_ghost.queue_free()

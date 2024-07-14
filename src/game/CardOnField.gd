@@ -11,7 +11,6 @@ var card_backend : ICardInstance
 func _init(backend : ICardInstance) -> void:
 	card_backend = backend
 
-	#self.set_anchors_preset(PRESET_FULL_RECT)
 	card_frontend = CardFrontend.instantiate()
 	self.add_child(card_frontend)
 

@@ -47,12 +47,12 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		peer_id_to_player[nplayer.peer_id] = player
 		player_to_peer_id[player] = nplayer.peer_id
 		for ci : ICardInstance in player.cards_in_deck + player.cards_in_hand + player.cards_on_field:
-			var card_in_deck := CardInDeck.new([ci])
+			var card_bk := CardBackend.new(ci)
 			UIDDB.register_object(ci, 
 				nplayer.peer_id * ci.metadata.id
 			)
-			card_in_deck.name = "%s-%s<%s>" % [nplayer.peer_id, ci.metadata.id, ci.metadata.name]
-			card_holder.add_child(card_in_deck, true)
+			card_bk.name = "%s-%s<%s>" % [nplayer.peer_id, ci.metadata.id, ci.metadata.name]
+			card_holder.add_child(card_bk, true)
 		if nplayer.peer_id == MultiplayerManager.network_player.peer_id:
 			local_player = player
 		players.append(player)

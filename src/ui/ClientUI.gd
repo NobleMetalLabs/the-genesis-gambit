@@ -48,7 +48,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		grid_cont.get_child(c_idx).flipped = true
 
 	for pa in player_areas:
-		var leader : CardInDeck = pa.associated_player.leader.get_object()
+		var leader : CardBackend = pa.associated_player.leader.get_object()
 		var leader_stats := IStatisticPossessor.id(pa.associated_player.leader)
 		leader_stats.set_statistic(Genesis.Statistic.POSITION, Vector2.ZERO)
 

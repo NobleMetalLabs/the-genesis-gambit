@@ -22,7 +22,6 @@ config/icon="res://ast/ui/image/icons/icon.png"
 [autoload]
 
 SaveData="*res://src/autoloads/SaveData.gd"
-Utils="*res://src/autoloads/Utils.gd"
 CardDB="*res://src/autoloads/CardDB.gd"
 MultiplayerManager="*res://src/autoloads/MultiplayerManager.gd"
 UIDDB="*res://src/autoloads/UIDDB.gd"

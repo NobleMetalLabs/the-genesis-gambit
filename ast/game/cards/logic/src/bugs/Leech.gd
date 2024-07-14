@@ -8,6 +8,7 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 		if not effect is CreatureTargetEffect: continue
 		var target_effect := effect as CreatureTargetEffect
 		var target_card := ICardInstance.id(target_effect.target)
+		if target_card == null: continue
 		var target_stats := IStatisticPossessor.id(target_card)
 		if target_stats.get_statistic(Genesis.Statistic.HEALTH) >= 5:
 			effect.resolve_status = Effect.ResolveStatus.FAILED

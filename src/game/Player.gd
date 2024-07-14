@@ -6,7 +6,7 @@ var cards_in_hand : Array[ICardInstance] = []
 var cards_on_field : Array[ICardInstance] = []
 var leader : ICardInstance
 
-static var scn : PackedScene = preload("res://scn/ui/Player.tscn")
+static var scn : PackedScene = preload("res://scn/game/Player.tscn")
 static func setup(deck : Deck) -> Player:
 	var player := scn.instantiate()
 

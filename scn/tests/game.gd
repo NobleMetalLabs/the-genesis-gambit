@@ -9,7 +9,7 @@ func _ready() -> void:
 	dummy_match.start_match()
 
 var backend_scene : PackedScene = preload("res://scn/game/MatchBackend.tscn")
-var client_ui_scene : PackedScene = preload("res://scn/ui/ClientUI.tscn")
+var client_ui_scene : PackedScene = preload("res://scn/ui/sections/ClientUI.tscn")
 
 func dispatch_play_stage(config : NetworkPlayStageConfiguration) -> void:
 	var backend : MatchBackend = backend_scene.instantiate()

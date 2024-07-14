@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://da2seysyaf186"]
 
-[ext_resource type="PackedScene" uid="uid://db8am01hwwg1q" path="res://scn/ui/UIFullCard.tscn" id="1_qrygb"]
+[ext_resource type="PackedScene" uid="uid://db8am01hwwg1q" path="res://scn/ui/parts/UIFullCard.tscn" id="1_qrygb"]
 [ext_resource type="Script" path="res://src/menu/ViewPackPool.gd" id="1_ukmt6"]
 
 [node name="ViewPackPool" type="PopupPanel"]

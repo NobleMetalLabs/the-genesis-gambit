@@ -6,11 +6,11 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
 		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
-		AuthoritySourceProvider.authority_source.request_action(
-			CreatureAttackAction.setup(
-				ICardInstance.id(target), target, IStatisticPossessor.id(target).get_statistic(Genesis.Statistic.STRENGTH)
-			)
-		)
+		# AuthoritySourceProvider.authority_source.request_action(
+		# 	CreatureAttackAction.setup(
+		# 		ICardInstance.id(target), target, IStatisticPossessor.id(target).get_statistic(Genesis.Statistic.STRENGTH)
+		# 	)
+		# )
 		
 # Gain Experience
 # extends CardLogic

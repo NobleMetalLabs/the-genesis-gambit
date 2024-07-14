@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://db8am01hwwg1q"]
 
-[ext_resource type="Script" path="res://src/ui/UIFullCard.gd" id="1_c4m40"]
-[ext_resource type="Script" path="res://src/ui/AutoSizeLabel.gd" id="3_fxsx7"]
+[ext_resource type="Script" path="res://src/ui/parts/UIFullCard.gd" id="1_c4m40"]
+[ext_resource type="Script" path="res://src/ui/parts/AutoSizeLabel.gd" id="3_fxsx7"]
 [ext_resource type="FontFile" uid="uid://d2oaifr2k5au7" path="res://ast/ui/fonts/counting_apples.ttf" id="3_g4b44"]
 [ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="5_xixdo"]
 

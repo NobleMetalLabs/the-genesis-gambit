@@ -9,5 +9,5 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 		var my_player : Player = _backend_state.get_player_from_instance(instance_owner)
 		IStatisticPossessor.id(my_player).modify_statistic(Genesis.Statistic.HEALTH, 3) 
 		AuthoritySourceProvider.authority_source.request_action(
-			HandAddCardAction.setup(my_player)
+			HandDrawCardAction.setup()
 		)

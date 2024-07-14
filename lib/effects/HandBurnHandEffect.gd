@@ -9,7 +9,7 @@ func _to_string() -> String:
 	return "HandBurnHandEffect(%s)" % self.player
 
 func resolve(_effect_resolver : EffectResolver) -> void:
-	for card : CardInHand in self.player.cards_in_hand:
+	for card : ICardInstance in self.player.cards_in_hand:
 		_effect_resolver.request_effect(HandRemoveCardEffect.new(
 			self.requester, self.player, card, Genesis.LeaveHandReason.BURNED
 		))

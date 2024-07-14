@@ -52,7 +52,7 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 		effect.resolve_status = Effect.ResolveStatus.RESOLVED
 		remove_effect(effect)
 
-func resolve_effects(gamefield_state : GamefieldState) -> void:
+func resolve_effects(backend_state : MatchBackendState) -> void:
 	#process all actions
 	var action_queue : Array[Action] = yet_to_process_actions.duplicate() + already_processed_actions.duplicate()
 	for action : Action in action_queue:
@@ -72,7 +72,7 @@ func resolve_effects(gamefield_state : GamefieldState) -> void:
 			already_processed_actions.append(action)
 		
 	#process all cards
-	for card : ICardInstance in gamefield_state.cards:
+	for card : ICardInstance in backend_state.cards:
 		if card == null:
 			push_error("Card is somehow fucking null.")
 			continue
@@ -80,4 +80,4 @@ func resolve_effects(gamefield_state : GamefieldState) -> void:
 		resolve_existing_effects_of_requester(card)
 		if card.is_queued_for_deletion(): continue
 		#request new effects
-		card.logic.process(gamefield_state, self) #TODO: Should a cache / interop be provided here?
+		card.logic.process(backend_state, self) #TODO: Should a cache / interop be provided here?

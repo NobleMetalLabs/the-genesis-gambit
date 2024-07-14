@@ -18,18 +18,14 @@ func _to_string() -> String:
 func resolve(_effect_resolver : EffectResolver) -> void:
 	match [self.from_deck, self.specific_card]:
 		[true, false]: # Regular Draw
-			var drawn_card : CardInDeck = self.player.cards_in_deck.pop_front()
+			var drawn_card : ICardInstance = self.player.cards_in_deck.pop_front()
 			if drawn_card == null: 
 				push_warning("Deck has no cards. Did you run out?")
 				return 
-			var card_in_hand : CardInHand = CardInHand.new([
-				ICardInstance.id(drawn_card), 
-				IStatisticPossessor.id(drawn_card), 
-				IMoodPossessor.id(drawn_card),
-			])
-			self.player.cards_in_hand.append(card_in_hand)
-			IStatisticPossessor.id(card_in_hand).set_statistic(Genesis.Statistic.IS_IN_DECK, false)
-			IStatisticPossessor.id(card_in_hand).set_statistic(Genesis.Statistic.IS_IN_HAND, true)
+			self.player.cards_in_hand.append(drawn_card)
+			var card_stats := IStatisticPossessor.id(drawn_card)
+			card_stats.set_statistic(Genesis.Statistic.IS_IN_DECK, false)
+			card_stats.set_statistic(Genesis.Statistic.IS_IN_HAND, true)
 			
 		[false, true]: # Spawn New Card
 			# var card_meta : CardMetadata = CardDB.get_card_by_id(self.card_metadata_id)
@@ -39,4 +35,3 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 			pass
 		[false, false]: 
 			push_error("Invalid HandAddCardEffect")
-	Router.client_ui.refresh_hand_ui()

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cf7gm8mm2duvp" path="res://ast/ui/image/tex.png" id="1_fcxgx"]
 [ext_resource type="Texture2D" uid="uid://d3jr225lwia3f" path="res://scn/tests/thing.png" id="2_bisxq"]
 [ext_resource type="Script" path="res://scn/tests/Thing.gd" id="3_d6e12"]
-[ext_resource type="PackedScene" uid="uid://ct78rnvd5iwus" path="res://scn/game/Gamefield.tscn" id="4_2sf5u"]
+[ext_resource type="PackedScene" uid="uid://ct78rnvd5iwus" path="res://scn/game/Backend.tscn" id="4_2sf5u"]
 [ext_resource type="PackedScene" uid="uid://b4fmewjxtuggy" path="res://scn/ui/ClientUI.tscn" id="5_vofwa"]
 
 [node name="TEST" type="Node"]
@@ -22,7 +22,7 @@ script = ExtResource("3_d6e12")
 [node name="GAMEFIELD" parent="." instance=ExtResource("4_2sf5u")]
 unique_name_in_owner = true
 
-[node name="CLIENT-UI" parent="." node_paths=PackedStringArray("gamefield") instance=ExtResource("5_vofwa")]
+[node name="CLIENT-UI" parent="." node_paths=PackedStringArray("backend") instance=ExtResource("5_vofwa")]
 unique_name_in_owner = true
 mouse_filter = 2
-gamefield = NodePath("../GAMEFIELD")
+backend = NodePath("../GAMEFIELD")

@@ -41,7 +41,7 @@ func _process(_delta : float) -> void:
 	var actions_parent : TreeItem = tree.create_item(root)
 	actions_parent.set_text(0, "Actions")
 
-	var er : EffectResolver = Router.gamefield.effect_resolver
+	var er : EffectResolver = Router.backend.effect_resolver
 	for action : Action in er.yet_to_process_actions + er.already_processed_actions:
 		var action_item : TreeItem = tree.create_item(actions_parent)
 		action_item.set_text(0, str(action))
@@ -50,13 +50,13 @@ func _process(_delta : float) -> void:
 	# tally cards
 	var cards_parent : TreeItem = tree.create_item(root)
 	cards_parent.set_text(0, "Cards")
-	for card : ICardInstance in Router.gamefield.get_gamefield_state().cards:
+	for card : ICardInstance in Router.backend.get_backend_state().cards:
 		var card_item : TreeItem = tree.create_item(cards_parent)
 		setup_card_row(card_item, card)
 		_object_to_treeitem[card] = card_item
 	
 	# assign effects in queue / just removed (to show them as done)
-	for effect : Effect in Router.gamefield.effect_resolver.effect_list:
+	for effect : Effect in Router.backend.effect_resolver.effect_list:
 		var requester : Object = effect.requester
 		var item_parent : TreeItem
 		var is_orphan : bool

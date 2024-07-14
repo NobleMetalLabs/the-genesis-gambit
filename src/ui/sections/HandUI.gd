@@ -4,18 +4,33 @@ extends Control
 @onready var card_stack_container : HBoxContainer = $"CardStack"
 @onready var my_player : Player = get_parent().get_parent().associated_player
 
-func _refresh_hand() -> void:
+func _create_card_ghost(hand_card : CardInHand) -> void:
+	var new_card_ghost := CardGhost.new(hand_card)
+	Router.client_ui.local_player_area.field_ui.add_child(new_card_ghost, true)
+	
+	new_card_ghost.was_placed.connect(
+		func(_position : Vector2) -> void:
+			var card_instance : ICardInstance = hand_card.card_backend
+			AuthoritySourceProvider.authority_source.request_action(
+				HandPlayCardAction.setup(card_instance, _position)
+			)
+			new_card_ghost.queue_free()
+	)
+
+
+func refresh_hand() -> void:
 	_clear_hand()
-	for card : CardInHand in my_player.cards_in_hand:
+	for card : ICardInstance in my_player.cards_in_hand:
 		_add_card_to_hand(card)
 
-func _add_card_to_hand(card_in_hand : CardInHand) -> void:
+func _add_card_to_hand(card_instance : ICardInstance) -> void:
+	var card_in_hand := CardInHand.new(card_instance)
 	card_stack_container.add_child(card_in_hand, true)
 	var card_face_is_visible : bool = false
 	var card_rarity_is_visible : bool = false
 	var card_type_is_visible : bool = false
 	var my_player_stats := IStatisticPossessor.id(my_player)
-	if my_player == Router.gamefield.local_player: 
+	if my_player == Router.backend.local_player: 
 		card_type_is_visible = my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_RARITY_ONLY)
 		card_rarity_is_visible = my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_TYPE_ONLY)
 		card_face_is_visible = not (card_rarity_is_visible or card_type_is_visible)
@@ -23,7 +38,7 @@ func _add_card_to_hand(card_in_hand : CardInHand) -> void:
 		card_rarity_is_visible = my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_TO_OPPONENTS_RARITY_ONLY)
 		card_type_is_visible = my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_TO_OPPONENTS_TYPE_ONLY)
 		card_face_is_visible = not (card_rarity_is_visible or card_type_is_visible)
-	elif Router.gamefield.local_player in my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_PLAYERS):
+	elif Router.backend.local_player in my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_PLAYERS):
 		card_rarity_is_visible = my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_TO_OPPONENTS_RARITY_ONLY)
 		card_type_is_visible = my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_TO_OPPONENTS_TYPE_ONLY)
 		card_face_is_visible = not (card_rarity_is_visible or card_type_is_visible)

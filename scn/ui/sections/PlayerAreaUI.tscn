@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://41tfx6ympneu"]
+[gd_scene load_steps=5 format=3 uid="uid://41tfx6ympneu"]
 
-[ext_resource type="PackedScene" uid="uid://dp0ichqwouy35" path="res://scn/ui/HandUI.tscn" id="1_0myx4"]
-[ext_resource type="Script" path="res://src/ui/PlayerAreaUI.gd" id="1_bw5h4"]
+[ext_resource type="PackedScene" uid="uid://dp0ichqwouy35" path="res://scn/ui/sections/HandUI.tscn" id="1_0myx4"]
+[ext_resource type="Script" path="res://src/ui/sections/PlayerAreaUI.gd" id="1_bw5h4"]
+[ext_resource type="Script" path="res://src/ui/sections/FieldUI.gd" id="2_i1upf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y43fg"]
 
@@ -27,7 +28,7 @@ mouse_filter = 2
 border_width = 3.0
 editor_only = false
 
-[node name="FIELD-HOLDER" type="Control" parent="."]
+[node name="FIELD-UI" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -36,6 +37,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("2_i1upf")
+
+[node name="ReferenceRect" type="ReferenceRect" parent="FIELD-UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0, 1, 0, 1)
+border_width = 2.0
+editor_only = false
 
 [node name="HAND-PANEL" type="Panel" parent="."]
 layout_mode = 1

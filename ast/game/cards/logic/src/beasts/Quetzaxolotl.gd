@@ -9,10 +9,10 @@ enum State {
 
 var state : State = State.QUETZA
 
-func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_staticic(Genesis.Statistic.WAS_JUST_ACTIVATED):
-		for card in _gamefield_state.cards:
+		for card in _backend_state.cards:
 			if card.player != instance_owner.player: continue
 			IStatisticPossessor.id(card).set_statistic(Genesis.Statistic.ACTS_AS_UNMARKED, state == State.XOLOTL)
 		state = ((not ((state as int) as bool) as int) as State)

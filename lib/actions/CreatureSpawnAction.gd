@@ -1,5 +1,5 @@
 class_name CreatureSpawnAction
-extends GamefieldAction
+extends Action
 
 var card : ICardInstance
 

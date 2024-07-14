@@ -5,31 +5,12 @@ extends Control
 func get_boundary_rectangle() -> Rect2:
 	return card_frontend.get_global_rect()
 
-var gamefield : Gamefield
 var card_frontend : CardFrontend
+var card_backend : ICardInstance
 
-func _init(provided_identifiers : Array[Identifier]) -> void:
-	for identifier in provided_identifiers:
-		if identifier == null: continue
-		var old_parent : Node = identifier.get_parent()
-		if old_parent != null: 
-			identifier.reparent(self)
-			old_parent.add_child(identifier.clone())
-		else: 
-			self.add_child(identifier)
+func _init(backend : ICardInstance) -> void:
+	card_backend = backend
 
-	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is ICardInstance):
-		push_error("CardOnField must be provided with ICardInstance identifier.")
-		return
-	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is ITargetable): 
-		self.add_child(ITargetable.new())
-	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is IStatisticPossessor): 
-		self.add_child(IStatisticPossessor.new())
-	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is IMoodPossessor): 
-		self.add_child(IMoodPossessor.new())
-
-	self.gamefield = Router.gamefield
-	self.set_anchors_preset(PRESET_FULL_RECT)
 	card_frontend = CardFrontend.instantiate()
 	self.add_child(card_frontend)
 

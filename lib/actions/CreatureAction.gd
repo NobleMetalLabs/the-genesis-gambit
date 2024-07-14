@@ -1,5 +1,5 @@
 class_name CreatureAction
-extends GamefieldAction
+extends Action
 
 var creature : ICardInstance
 

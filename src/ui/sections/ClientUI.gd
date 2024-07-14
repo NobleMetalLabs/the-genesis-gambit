@@ -4,7 +4,6 @@ extends Control
 @onready var card_info_panel : CardInfoPanel = $"%CARD-INFO-PANEL"
 @onready var target_sprite : Sprite2D = $TargetSprite
 
-
 @onready var dev_effect_viewer : EffectResolverViewer = $"%EFFECT-RESOLVER-VIEWER"
 @onready var dev_card_viewer : CardDataViewer = $"%CARD-DATA-VIEWER"
 
@@ -22,7 +21,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	var pui_template : = $"%PUI-TEMPLATE"
 	var grid_cont : GridContainer = $"PlayerAreaGridContainer"
 	for nplayer in config.players:
-		var player : Player = Router.gamefield.peer_id_to_player[nplayer.peer_id]
+		var player : Player = Router.backend.peer_id_to_player[nplayer.peer_id]
 		var player_area := pui_template.duplicate()
 		player_area.associated_player = player
 		player_area.name = "PA-%s" % player.name
@@ -30,7 +29,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		grid_cont.add_child(player_area)
 		player_areas.append(player_area)
 		_player_to_area[player] = player_area
-		if player == Router.gamefield.local_player:
+		if player == Router.backend.local_player:
 			local_player_area = player_area
 
 	pui_template.free()
@@ -49,12 +48,11 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		grid_cont.get_child(c_idx).flipped = true
 
 	for pa in player_areas:
-		var leader : CardOnField = CardOnField.new([pa.associated_player.leader])
-		print(pa.get_rect())
-		pa.place_card(leader, pa.get_leader_position())
+		var leader : CardBackend = pa.associated_player.leader.get_object()
+		var leader_stats := IStatisticPossessor.id(pa.associated_player.leader)
+		leader_stats.set_statistic(Genesis.Statistic.POSITION, Vector2.ZERO)
 
-func _input(event : InputEvent) -> void:
-	if not event is InputEventKey: return
+	self.refresh_ui()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float) -> void:
@@ -65,8 +63,6 @@ func _process(_delta : float) -> void:
 		)
 
 	if Input.is_action_just_pressed("ui_inspect"):
-		print('hewoo')
-		print(hovered_card)
 		if hovered_card != null:
 			card_info_panel.set_card_metadata(hovered_card.metadata)
 			card_info_panel.display()
@@ -81,9 +77,9 @@ func _process(_delta : float) -> void:
 func get_player_area(player : Player) -> PlayerAreaUI:
 	return _player_to_area[player]
 
-func refresh_hand_ui() -> void:
+func refresh_ui() -> void:
 	for pa in player_areas:
-		pa.refresh_hand_ui()
+		pa.refresh_ui()
 
 var hovered_card : ICardInstance = null
 
@@ -93,22 +89,3 @@ func update_target_sprite(target : ICardInstance) -> void:
 	else:
 		target_sprite.show()
 		target_sprite.position = target.position
-
-var current_card_ghost : CardGhost = null
-
-func _create_card_ghost(hand_card : CardInHand) -> void:
-	var new_card_ghost := CardGhost.new(hand_card)
-	self.add_child(new_card_ghost, true)
-	
-	new_card_ghost.was_placed.connect(
-		func(_position : Vector2) -> void:
-			var card_instance := ICardInstance.id(hand_card)
-			IStatisticPossessor.id(card_instance).set_statistic(
-				Genesis.Statistic.POSITION, _position
-			)
-			AuthoritySourceProvider.authority_source.request_action(
-				HandPlayCardAction.setup(hand_card)
-			)
-	)
-
-	current_card_ghost = new_card_ghost

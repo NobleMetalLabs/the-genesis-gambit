@@ -4,7 +4,7 @@ static var description : StringName = "Targeted creature recieves Enlightened."
 
 var previous_target : ITargetable = null
 
-func process(_gs : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_gs : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.JUST_TARGETED):
 		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)

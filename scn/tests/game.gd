@@ -8,17 +8,17 @@ func _ready() -> void:
 	dummy_match.dispatch_play_stage.connect(dispatch_play_stage)
 	dummy_match.start_match()
 
-var gamefield_scene : PackedScene = preload("res://scn/game/Gamefield.tscn")
-var client_ui_scene : PackedScene = preload("res://scn/ui/ClientUI.tscn")
+var backend_scene : PackedScene = preload("res://scn/game/MatchBackend.tscn")
+var client_ui_scene : PackedScene = preload("res://scn/ui/sections/ClientUI.tscn")
 
 func dispatch_play_stage(config : NetworkPlayStageConfiguration) -> void:
-	var gamefield : Gamefield = gamefield_scene.instantiate()
-	gamefield.setup(config)
-	gamefield.game_completed.connect(game_completed.emit)
+	var backend : MatchBackend = backend_scene.instantiate()
+	backend.setup(config)
+	backend.game_completed.connect(game_completed.emit)
 	var client_ui : ClientUI = client_ui_scene.instantiate()
-	gamefield.client_ui = client_ui
-	client_ui.gamefield = gamefield
-	Router.gamefield = gamefield
+	backend.client_ui = client_ui
+	client_ui.backend = backend
+	Router.backend = backend
 	Router.client_ui = client_ui
-	self.add_child(gamefield)
+	self.add_child(backend)
 	self.add_child(client_ui)

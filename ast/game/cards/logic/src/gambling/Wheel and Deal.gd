@@ -5,7 +5,7 @@ static var description : StringName = "All players discard their hands and draw 
 func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	if not IStatisticPossessor.id(instance_owner).get_statistic(Genesis.Statistic.WAS_JUST_PLAYED): return
 	for player : Player in _backend_state.players:
-		for card : CardInHand in player.cards_in_hand:
+		for card : ICardInstance in player.cards_in_hand:
 			_effect_resolver.request_effect(
 				HandRemoveCardEffect.new(
 					instance_owner,

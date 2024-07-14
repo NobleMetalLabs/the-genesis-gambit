@@ -1,9 +1,9 @@
 class_name Player
 extends Node
 
-var cards_in_deck : Array[CardInDeck] = []
-var cards_in_hand : Array[CardInHand] = []
-var cards_on_field : Array[CardOnField] = []
+var cards_in_deck : Array[ICardInstance] = []
+var cards_in_hand : Array[ICardInstance] = []
+var cards_on_field : Array[ICardInstance] = []
 var leader : ICardInstance
 
 static var scn : PackedScene = preload("res://scn/ui/Player.tscn")
@@ -16,11 +16,13 @@ static func setup(deck : Deck) -> Player:
 			player
 		)
 		var stats := IStatisticPossessor.new()
-		stats.set_statistic(Genesis.Statistic.IS_IN_DECK, true)
 		if card_instance.metadata.rarity == Genesis.CardRarity.LEADER:
 			player.leader = card_instance
+			player.cards_on_field.append(card_instance)
+			stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, true)
 		else:
-			player.cards_in_deck.append(CardInDeck.new([card_instance, stats]))
+			stats.set_statistic(Genesis.Statistic.IS_IN_DECK, true)
+			player.cards_in_deck.append(card_instance)
 	return player
 
 func _ready() -> void:

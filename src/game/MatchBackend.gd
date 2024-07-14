@@ -11,6 +11,9 @@ var peer_id_to_player : Dictionary = {} # [int, Player]
 var player_to_peer_id : Dictionary = {} # [Player, int]
 var local_player : Player
 
+var card_holder : Node
+var player_holder : Node
+
 func _ready() -> void:
 	# debug npsc creation for setup
 	MultiplayerManager.network_update.connect(func() -> void:
@@ -34,21 +37,26 @@ func handle_network_message(_sender : NetworkPlayer, message : String, args : Ar
 			setup(args[0])
 
 func setup(config : NetworkPlayStageConfiguration) -> void:
+	self.card_holder = $"Cards"
+	self.player_holder = $"Players"
+
 	for nplayer : NetworkPlayer in config.players:
 		var player_deck : Deck = config.decks_by_player_uid[nplayer.peer_id]
 		var player := Player.setup(player_deck)
 		player.name = nplayer.player_name
 		peer_id_to_player[nplayer.peer_id] = player
 		player_to_peer_id[player] = nplayer.peer_id
-		for card_in_deck : CardInDeck in player.cards_in_deck:
-			var ci := ICardInstance.id(card_in_deck)
+		for ci : ICardInstance in player.cards_in_deck + player.cards_in_hand + player.cards_on_field:
+			var card_in_deck := CardInDeck.new([ci])
 			UIDDB.register_object(ci, 
 				nplayer.peer_id * ci.metadata.id
 			)
+			card_in_deck.name = "%s-%s<%s>" % [nplayer.peer_id, ci.metadata.id, ci.metadata.name]
+			card_holder.add_child(card_in_deck, true)
 		if nplayer.peer_id == MultiplayerManager.network_player.peer_id:
 			local_player = player
 		players.append(player)
-		self.add_child(player, true)
+		player_holder.add_child(player, true)
 
 	Router.client_ui.setup(config)
 

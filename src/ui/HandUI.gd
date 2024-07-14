@@ -4,12 +4,27 @@ extends Control
 @onready var card_stack_container : HBoxContainer = $"CardStack"
 @onready var my_player : Player = get_parent().get_parent().associated_player
 
-func _refresh_hand() -> void:
+func _create_card_ghost(hand_card : CardInHand) -> void:
+	var new_card_ghost := CardGhost.new(hand_card)
+	Router.client_ui.local_player_area.field_ui.add_child(new_card_ghost, true)
+	
+	new_card_ghost.was_placed.connect(
+		func(_position : Vector2) -> void:
+			var card_instance : ICardInstance = hand_card.card_backend
+			AuthoritySourceProvider.authority_source.request_action(
+				HandPlayCardAction.setup(card_instance, _position)
+			)
+			new_card_ghost.queue_free()
+	)
+
+
+func refresh_hand() -> void:
 	_clear_hand()
-	for card : CardInHand in my_player.cards_in_hand:
+	for card : ICardInstance in my_player.cards_in_hand:
 		_add_card_to_hand(card)
 
-func _add_card_to_hand(card_in_hand : CardInHand) -> void:
+func _add_card_to_hand(card_instance : ICardInstance) -> void:
+	var card_in_hand := CardInHand.new(card_instance)
 	card_stack_container.add_child(card_in_hand, true)
 	var card_face_is_visible : bool = false
 	var card_rarity_is_visible : bool = false

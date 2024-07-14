@@ -8,17 +8,7 @@ var _players_to_state_players : Dictionary = {} # [Player, Player]
 func _init(_players : Array[Player]) -> void:
 	for p : Player in _players:
 		var state_player : Player = Player.setup(Deck.EMPTY)
-		var player_cards : Array[ICardInstance] = []
-		for card : CardInHand in p.cards_in_hand:
-			if is_instance_valid(card):
-				player_cards.append(ICardInstance.id(card))
-		for card :CardOnField in p.cards_on_field:
-			if is_instance_valid(card):
-				player_cards.append(ICardInstance.id(card))
-		for card : CardInDeck in p.cards_in_deck:
-			if is_instance_valid(card):
-				player_cards.append(ICardInstance.id(card))
-		cards.append_array(player_cards)
+		cards = p.cards_in_hand + p.cards_on_field + p.cards_in_deck
 		state_players.append(state_player)
 		_players_to_state_players[p] = state_player
 

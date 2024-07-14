@@ -6,3 +6,5 @@
 script = ExtResource("1_mp8g5")
 
 [node name="Cards" type="Node" parent="."]
+
+[node name="Players" type="Node" parent="."]

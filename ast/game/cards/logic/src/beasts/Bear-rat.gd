@@ -16,5 +16,5 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 				IStatisticPossessor.id(target).set_statistic(Genesis.Statistic.IS_MARKED, false)
 			var my_player : Player = _backend_state.get_player_from_instance(instance_owner)
 			if my_player.cards_in_deck.size() > 21:
-				var twentysecond_card : CardInDeck = instance_owner.player.cards_in_deck[21] #TODO: HOLY MEEBLE WHAT HAVE I DONE
+				var twentysecond_card : ICardInstance = instance_owner.player.cards_in_deck[21]
 				IStatisticPossessor.id(twentysecond_card).set_statistic(Genesis.Statistic.IS_MARKED, false)

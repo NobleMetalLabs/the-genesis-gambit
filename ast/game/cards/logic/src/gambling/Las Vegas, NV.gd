@@ -10,8 +10,7 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 	if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_ACTIVATED):
 		if my_stats.get_statistic(Genesis.Statistic.CHARGES) >= 1:
 			my_stats.modify_statistic(Genesis.Statistic.CHARGES, -1)
-			for cof : CardOnField in _backend_state.get_player_from_instance(instance_owner).cards_on_field:
-				var card := ICardInstance.id(cof)
+			for card : ICardInstance in _backend_state.get_player_from_instance(instance_owner).cards_on_field:
 				_effect_resolver.request_effect(
 					ApplyMoodEffect.new(
 						instance_owner,

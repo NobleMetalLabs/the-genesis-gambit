@@ -7,7 +7,7 @@ var self_moods : Array[StatisticMood] = []
 
 func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var curr_num_tenders : int = 0
-	for card : CardOnField in _backend_state.get_player_from_instance(instance_owner).cards_on_field:
+	for card : ICardInstance in _backend_state.get_player_from_instance(instance_owner).cards_on_field:
 		var card_target : ITargetable = IStatisticPossessor.id(card).get_statistic(Genesis.Statistic.TARGET)
 		var target_card : ICardInstance = ICardInstance.id(card_target)
 		if not target_card: continue

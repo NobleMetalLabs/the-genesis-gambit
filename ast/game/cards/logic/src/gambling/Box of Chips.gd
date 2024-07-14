@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "Activate: Target attacker gets +1 Strength. Box of Chips loses one health."
 
-func process(_gs : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_gs : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_ATTACKED):
 		if my_stats.get_statistic(Genesis.Statistic.CHARGES) == 0:

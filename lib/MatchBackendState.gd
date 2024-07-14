@@ -1,4 +1,4 @@
-class_name GamefieldState
+class_name MatchBackendState
 extends Resource
 
 var state_players : Array[Player] = [] #modified player to remove all invalid instances #TODO: this probably sucks

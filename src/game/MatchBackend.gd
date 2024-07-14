@@ -1,4 +1,4 @@
-class_name Gamefield
+class_name MatchBackend
 extends Node
 
 signal game_completed()
@@ -23,14 +23,14 @@ func _ready() -> void:
 		for np in nps:
 			decks_by_player_uid[np.peer_id] = Deck.prebuilt_from_tribe(Genesis.CardTribe.BUGS)
 		var npsc := NetworkPlayStageConfiguration.setup(nps, decks_by_player_uid)
-		MultiplayerManager.send_network_message("gamefield/setup", [npsc])
+		MultiplayerManager.send_network_message("backend/setup", [npsc])
 	)
 
 	MultiplayerManager.received_network_message.connect(handle_network_message)
 
 func handle_network_message(_sender : NetworkPlayer, message : String, args : Array) -> void:
 	match(message):
-		"gamefield/setup":
+		"backend/setup":
 			setup(args[0])
 
 func setup(config : NetworkPlayStageConfiguration) -> void:
@@ -52,8 +52,8 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 
 	Router.client_ui.setup(config)
 
-func get_gamefield_state() -> GamefieldState:
-	return GamefieldState.new(players)
+func get_backend_state() -> MatchBackendState:
+	return MatchBackendState.new(players)
 
 func _process(_delta : float) -> void: 
 	for player : Player in []: #players:

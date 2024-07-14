@@ -24,7 +24,7 @@ static func setup(deck : Deck) -> Player:
 	return player
 
 func _ready() -> void:
-	seed(Router.gamefield.player_to_peer_id[self])
+	seed(Router.backend.player_to_peer_id[self])
 	cards_in_deck.shuffle()
 
 func _to_string() -> String:

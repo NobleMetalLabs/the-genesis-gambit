@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "Targeted creature is covered in ooze. Attacks made against the creature inflict the attacker with slow."
 
-func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
 		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)

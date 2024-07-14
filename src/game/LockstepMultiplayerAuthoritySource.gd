@@ -86,5 +86,5 @@ func handle_lockstep_advance(new_frame_number : int) -> void:
 		current_frame_number = new_frame_number
 		print("%s : Now processing Frame %s" % [MultiplayerManager.get_peer_id(), current_frame_number])
 	sent_inputs = false
-	var gf : Gamefield = Router.gamefield
-	gf.effect_resolver.resolve_effects(gf.get_gamefield_state())
+	var gf : MatchBackend = Router.backend
+	gf.effect_resolver.resolve_effects(gf.get_backend_state())

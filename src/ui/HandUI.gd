@@ -15,7 +15,7 @@ func _add_card_to_hand(card_in_hand : CardInHand) -> void:
 	var card_rarity_is_visible : bool = false
 	var card_type_is_visible : bool = false
 	var my_player_stats := IStatisticPossessor.id(my_player)
-	if my_player == Router.gamefield.local_player: 
+	if my_player == Router.backend.local_player: 
 		card_type_is_visible = my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_RARITY_ONLY)
 		card_rarity_is_visible = my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_TYPE_ONLY)
 		card_face_is_visible = not (card_rarity_is_visible or card_type_is_visible)
@@ -23,7 +23,7 @@ func _add_card_to_hand(card_in_hand : CardInHand) -> void:
 		card_rarity_is_visible = my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_TO_OPPONENTS_RARITY_ONLY)
 		card_type_is_visible = my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_TO_OPPONENTS_TYPE_ONLY)
 		card_face_is_visible = not (card_rarity_is_visible or card_type_is_visible)
-	elif Router.gamefield.local_player in my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_PLAYERS):
+	elif Router.backend.local_player in my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_PLAYERS):
 		card_rarity_is_visible = my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_TO_OPPONENTS_RARITY_ONLY)
 		card_type_is_visible = my_player_stats.get_statistic(Genesis.Statistic.HAND_VISIBLE_TO_OPPONENTS_TYPE_ONLY)
 		card_face_is_visible = not (card_rarity_is_visible or card_type_is_visible)

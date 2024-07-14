@@ -5,7 +5,7 @@ extends Control
 func get_boundary_rectangle() -> Rect2:
 	return card_frontend.get_global_rect()
 
-var gamefield : Gamefield
+var backend : MatchBackend
 var card_frontend : CardFrontend
 
 func _init(provided_identifiers : Array[Identifier]) -> void:
@@ -28,7 +28,7 @@ func _init(provided_identifiers : Array[Identifier]) -> void:
 	if not provided_identifiers.any(func(i : Identifier) -> bool: return i is IMoodPossessor): 
 		self.add_child(IMoodPossessor.new())
 
-	self.gamefield = Router.gamefield
+	self.backend = Router.backend
 	self.set_anchors_preset(PRESET_FULL_RECT)
 	card_frontend = CardFrontend.instantiate()
 	self.add_child(card_frontend)

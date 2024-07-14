@@ -5,11 +5,11 @@ static var description : StringName = "Each opponent skips their next draw, then
 var standing_players : Array[Player] = []
 var standed_players : Array[Player] = []
 
-func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_PLAYED):
-		for player : Player in _gamefield_state.players:
-			if player != _gamefield_state.get_player_from_instance(instance_owner):
+		for player : Player in _backend_state.players:
+			if player != _backend_state.get_player_from_instance(instance_owner):
 				standing_players.append(player)
 	
 	for effect : Effect in _effect_resolver.effect_list:

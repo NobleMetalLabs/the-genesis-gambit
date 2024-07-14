@@ -22,7 +22,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	var pui_template : = $"%PUI-TEMPLATE"
 	var grid_cont : GridContainer = $"PlayerAreaGridContainer"
 	for nplayer in config.players:
-		var player : Player = Router.gamefield.peer_id_to_player[nplayer.peer_id]
+		var player : Player = Router.backend.peer_id_to_player[nplayer.peer_id]
 		var player_area := pui_template.duplicate()
 		player_area.associated_player = player
 		player_area.name = "PA-%s" % player.name
@@ -30,7 +30,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		grid_cont.add_child(player_area)
 		player_areas.append(player_area)
 		_player_to_area[player] = player_area
-		if player == Router.gamefield.local_player:
+		if player == Router.backend.local_player:
 			local_player_area = player_area
 
 	pui_template.free()

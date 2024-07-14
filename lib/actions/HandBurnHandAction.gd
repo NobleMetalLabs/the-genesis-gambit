@@ -11,4 +11,4 @@ func _to_string() -> String:
 	return "HandBurnHandAction(%s)" % self.player
 
 func to_effect() -> HandBurnHandEffect:
-	return HandBurnHandEffect.new(self, Router.gamefield.network_player_to_player[self.player])
+	return HandBurnHandEffect.new(self, Router.backend.network_player_to_player[self.player])

@@ -119,7 +119,7 @@ func assign_player_networkplayer(peer_id : int, _network_player : Variant) -> vo
 	for pid : int in peer_id_to_player.keys():
 		dr[pid] = Deck.prebuilt_from_tribe(Genesis.CardTribe.BUGS)
 
-	# Router.gamefield.setup.rpc(
+	# Router.backend.setup.rpc(
 	# 	NetworkPlayStageConfiguration.setup(ps,dr)
 	# )
 

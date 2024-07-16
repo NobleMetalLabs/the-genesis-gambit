@@ -16,6 +16,18 @@ func refresh_field() -> void:
 		_place_card(card_on_field, card_stats.get_statistic(Genesis.Statistic.POSITION))
 		field_cards.append(card_on_field)
 		instance_to_field_card[card] = card_on_field
+		check_card_for_animation(card, card_on_field)
+
+func check_card_for_animation(card : ICardInstance, field_card : CardOnField) -> void:
+	var card_stats := IStatisticPossessor.id(card)
+
+	if card_stats.get_statistic(Genesis.Statistic.WAS_JUST_ACTIVATED):
+		var flash_tween : Tween = Router.get_tree().create_tween()
+		flash_tween.tween_property(field_card, "modulate", Color(0, 1, 0, 1), 0)
+		flash_tween.tween_property(field_card, "modulate", Color(1, 1, 1, 1), 0.5)
+
+	
+	
 
 func _place_card(card : CardOnField, at_position : Vector2) -> void:
 	self.add_child(card, true)

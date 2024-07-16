@@ -20,6 +20,7 @@ func _init() -> void:
 	)
 
 func request_effect(effect : Effect) -> void:
+	print("%s : Requesting effect '%s'." % [MultiplayerManager.get_peer_id(), effect])
 	var requester_exists : bool = effects_by_requester.has(effect.requester)
 	if not requester_exists:
 		effects_by_requester[effect.requester] = [effect] as Array[Effect]
@@ -42,8 +43,9 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 	var requester_exists : bool = effects_by_requester.has(requester)
 	if not requester_exists: 
 		return
-	var requesters_existing_effects : Array[Effect] = effects_by_requester[requester]
-	for effect : Effect in requesters_existing_effects.duplicate():
+	var requesters_existing_effects : Array[Effect] = effects_by_requester[requester].duplicate()
+	#print("%s : Resolving effects for requester '%s': %s." % [MultiplayerManager.get_peer_id(), requester, requesters_existing_effects])
+	for effect : Effect in requesters_existing_effects:
 		if effect.has_method("resolve"):
 			print("%s : Resolving effect '%s'." % [MultiplayerManager.get_peer_id(), effect])
 			effect.resolve(self)
@@ -60,6 +62,7 @@ func resolve_effects(backend_state : MatchBackendState) -> void:
 		var has_existing_effects : bool = effects_by_requester.has(action)
 		if has_existing_effects:
 			resolve_existing_effects_of_requester(action)
+			already_processed_actions.append(action)
 			yet_to_process_actions.erase(action)
 		else:
 			#request new effects
@@ -69,7 +72,6 @@ func resolve_effects(backend_state : MatchBackendState) -> void:
 			var effect : Effect = action.to_effect()
 			effect.requester = action
 			self.request_effect(effect)
-			already_processed_actions.append(action)
 		
 	#process all cards
 	for card : ICardInstance in backend_state.cards:

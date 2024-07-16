@@ -30,9 +30,11 @@ func has_uid(_uid : int) -> bool:
 func object(_uid : int) -> Object:
 	if not uid_to_object.has(_uid):
 		push_error("Object with uid %s not found." % [_uid])
+		assert(false)
 	return uid_to_object.get(_uid, null)
 
 func uid(_object : Object) -> int:
 	if not object_to_uid.has(_object):
 		push_error("Object %s not registered." % [_object])
+		assert(false)
 	return object_to_uid.get(_object, -1)

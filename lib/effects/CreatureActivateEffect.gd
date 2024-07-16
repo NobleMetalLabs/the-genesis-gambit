@@ -14,6 +14,3 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	_effect_resolver.request_effect(SetStatisticEffect.new(
 		self.requester, creature_stats, Genesis.Statistic.WAS_JUST_ACTIVATED, false
 	))
-	var flash_tween : Tween = Router.get_tree().create_tween()
-	flash_tween.tween_property(self.creature, "modulate", Color(0, 1, 0, 1), 0)
-	flash_tween.tween_property(self.creature, "modulate", Color(1, 1, 1, 1), 0.5)

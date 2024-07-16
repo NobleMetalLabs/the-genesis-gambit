@@ -71,6 +71,13 @@ func _process(_delta : float) -> void:
 			card_info_panel.undisplay()
 			dev_card_viewer.set_card(null)
 
+	if Input.is_action_just_pressed("ui_activate"):
+		if hovered_card != null:
+			if hovered_card.player == Router.backend.local_player:
+				AuthoritySourceProvider.authority_source.request_action(
+					CreatureActivateAction.setup(hovered_card)
+				)
+
 	if Input.is_action_just_pressed("debug_advance_frame"):
 		AuthoritySourceProvider.authority_source.execute_frame()
 

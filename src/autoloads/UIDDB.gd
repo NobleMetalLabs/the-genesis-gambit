@@ -17,7 +17,7 @@ func register_object(_object : Object, _uid : int = -1) -> int:
 	uid_to_object[_uid] = _object
 	object_to_uid[_object] = _uid
 
-	#print("%s/UIDDB : Assigned object %s with uid %s." % [MultiplayerManager.get_peer_id(), _object, _uid])
+	# print("%s/UIDDB : Assigned object %s with uid %s." % [MultiplayerManager.get_peer_id(), _object, _uid])
 
 	return _uid
 

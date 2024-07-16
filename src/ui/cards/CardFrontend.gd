@@ -16,9 +16,6 @@ func _ready() -> void:
 	
 	border_component.set_rarity(card_instance.metadata.rarity)
 
-func _process(_delta : float) -> void:
-	self.size = self.get_combined_minimum_size()
-
 func set_visibility(face : bool, rarity : bool, _type : bool) -> void:
 	if face:
 		self.texture = card_instance.metadata.image

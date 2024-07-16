@@ -10,6 +10,7 @@ func _init(_config : NetworkMatchConfiguration) -> void:
 	self.match_config = _config
 
 func start_match() -> void:
+	#dispatch_draft_stage.emit(NetworkDraftStageConfiguration.setup(self.match_config.players))
 	#draft_stage.completed.connect(_submit_draft_results)
 
 	var dr : Dictionary = {}

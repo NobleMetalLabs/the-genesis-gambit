@@ -58,6 +58,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	self.refresh_ui()
 
 	#TODO: dont do this. actions in progress during frame update get fucked.
+	#TODO: seriously do action/effect deltaing soon. theres some kinda meh perf issues which i think would be fixed by this not being horrible
 	AuthoritySourceProvider.authority_source.new_frame_index.connect(
 		func(_frame_number : int) -> void:
 			refresh_ui()

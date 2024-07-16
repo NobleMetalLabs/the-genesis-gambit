@@ -9,7 +9,7 @@ static func serialize_variant(variant : Variant) -> Variant:
 
 static func _get_object_variable_names(obj : Object) -> Array[String]:
 	var property_list : Array[Dictionary] = obj.get_property_list()
-	var script_variables : Array[Dictionary] = property_list.filter(func(p : Dictionary) -> bool: return p["usage"] & PROPERTY_USAGE_SCRIPT_VARIABLE)
+	var script_variables : Array[Dictionary] = property_list.filter(func get_script_variables(p : Dictionary) -> bool: return p["usage"] & PROPERTY_USAGE_SCRIPT_VARIABLE)
 	var variable_names : Array[String] = []
 	variable_names.assign(script_variables.map(func(p : Dictionary) -> String: return p.name))
 	return variable_names
@@ -21,7 +21,6 @@ static func _object_to_dict(obj : Object) -> Dictionary:
 	var obj_dict : Dictionary = {
 		"class_path" : obj.get_script().resource_path,
 	}
-	#print("Serializing %s object: %s" % [obj.get_script().get_global_name(), obj])
 	var variable_names : Array[String] = _get_object_variable_names(obj)
 	for vname : String in variable_names:
 		var value : Variant = obj.get(vname)

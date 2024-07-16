@@ -14,7 +14,6 @@ func _ready() -> void:
 	MultiplayerManager.received_network_message.connect(handle_network_message)
 
 func request_action(action : Action) -> void:
-	print("%s : Requesting action %s" % [MultiplayerManager.get_peer_id(), action])
 	var existing : Array[Action] = []
 	var frame : int = current_frame_number
 	if sent_inputs: frame += 1
@@ -87,7 +86,6 @@ func handle_lockstep_advance(new_frame_number : int) -> void:
 		players_ready_for_lockstep_advance.clear()
 
 		current_frame_number = new_frame_number
-		print("%s : Now processing Frame %s" % [MultiplayerManager.get_peer_id(), current_frame_number])
 		new_frame_index.emit(current_frame_number)
 		
 	sent_inputs = false

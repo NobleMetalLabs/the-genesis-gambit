@@ -20,7 +20,7 @@ func _init() -> void:
 	)
 
 func request_effect(effect : Effect) -> void:
-	print("%s : Requesting effect '%s'." % [MultiplayerManager.get_peer_id(), effect])
+	# print("%s : Requesting effect '%s'." % [MultiplayerManager.get_peer_id(), effect])
 	var requester_exists : bool = effects_by_requester.has(effect.requester)
 	if not requester_exists:
 		effects_by_requester[effect.requester] = [effect] as Array[Effect]
@@ -44,10 +44,10 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 	if not requester_exists: 
 		return
 	var requesters_existing_effects : Array[Effect] = effects_by_requester[requester].duplicate()
-	#print("%s : Resolving effects for requester '%s': %s." % [MultiplayerManager.get_peer_id(), requester, requesters_existing_effects])
+	# print("%s : Resolving effects for requester '%s': %s." % [MultiplayerManager.get_peer_id(), requester, requesters_existing_effects])
 	for effect : Effect in requesters_existing_effects:
 		if effect.has_method("resolve"):
-			print("%s : Resolving effect '%s'." % [MultiplayerManager.get_peer_id(), effect])
+			# print("%s : Resolving effect '%s'." % [MultiplayerManager.get_peer_id(), effect])
 			effect.resolve(self)
 		else:
 			push_warning("Error: Effect '%s' does not have a resolve method." % [effect])

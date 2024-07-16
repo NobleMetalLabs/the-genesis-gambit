@@ -3,7 +3,6 @@ extends Node
 
 signal game_completed()
 
-var client_ui : ClientUI
 var effect_resolver : EffectResolver = EffectResolver.new()
 
 var players : Array[Player]
@@ -15,20 +14,6 @@ var card_holder : Node
 var player_holder : Node
 
 func _ready() -> void:
-	# debug npsc creation for setup
-	MultiplayerManager.network_update.connect(func() -> void:
-		if MultiplayerManager.peer_id_to_player.keys().size() < 2: return
-		if not MultiplayerManager.is_instance_server(): return
-
-		var nps : Array[NetworkPlayer] = []
-		nps.assign(MultiplayerManager.peer_id_to_player.values())
-		var decks_by_player_uid : Dictionary = {}
-		for np in nps:
-			decks_by_player_uid[np.peer_id] = Deck.prebuilt_from_tribe(Genesis.CardTribe.BUGS)
-		var npsc := NetworkPlayStageConfiguration.setup(nps, decks_by_player_uid)
-		MultiplayerManager.send_network_message("backend/setup", [npsc])
-	)
-
 	MultiplayerManager.received_network_message.connect(handle_network_message)
 
 func handle_network_message(_sender : NetworkPlayer, message : String, args : Array) -> void:
@@ -58,12 +43,19 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		players.append(player)
 		player_holder.add_child(player, true)
 
+	if MultiplayerManager.is_instance_server():
+		var execute_frame_timer : Timer = Timer.new()
+		execute_frame_timer.name = "ExecuteFrameTimer"
+		execute_frame_timer.wait_time = 0.01
+		execute_frame_timer.one_shot = false
+		execute_frame_timer.autostart = true
+		execute_frame_timer.timeout.connect(AuthoritySourceProvider.authority_source.execute_frame)
+		add_child(execute_frame_timer)
+
 	AuthoritySourceProvider.authority_source.new_frame_index.connect(
 		func(_frame_number : int) -> void:
 			effect_resolver.resolve_effects(Router.backend.get_backend_state())
 	)
-	
-	Router.client_ui.setup(config)
 
 func get_backend_state() -> MatchBackendState:
 	return MatchBackendState.new(players)

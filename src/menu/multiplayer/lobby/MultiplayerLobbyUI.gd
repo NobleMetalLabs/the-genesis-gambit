@@ -26,6 +26,7 @@ func _ready() -> void:
 		func update() -> void:
 			update_player_list()
 			update_address_field()
+			_update_game_buttons(MultiplayerManager.multiplayer_peer.host != null, MultiplayerManager.is_instance_server())
 	)
 
 func request_host_lobby() -> void:
@@ -42,12 +43,8 @@ func request_join_lobby() -> void:
 	_update_game_buttons(true, false)
 	reset_chatbox()
 
-func request_start_game() -> void:
-	pass
-
-func _start_game(network_match : NetworkMatch) -> void:
-	print("Starting game with match configuration: %s" % network_match)
-	pass
+signal match_start_requested()
+func request_start_game() -> void: match_start_requested.emit()
 
 func request_exit_lobby() -> void:
 	MultiplayerManager.exit_lobby()

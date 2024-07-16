@@ -29,7 +29,6 @@ func _cursor_setup() -> void:
 	cursor.set_player_name(my_name)
 
 	if associated_player == Router.backend.local_player:
-		print("%s : PA for local player %s connected to request cursor updates." % [multiplayer.get_unique_id(), associated_player])
 		var auth_source : AuthoritySource = AuthoritySourceProvider.authority_source
 		auth_source.new_frame_index.connect(
 			func request_cursor_motion_action(_frame_number : int) -> void:

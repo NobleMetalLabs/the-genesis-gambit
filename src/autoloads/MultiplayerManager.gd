@@ -64,7 +64,6 @@ func host_lobby(over_lan : bool = false) -> void:
 	network_update.emit()
 
 func join_lobby(address : String = "127.0.0.1") -> void:
-	#print(address)
 	multiplayer_peer.create_client(address, PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
 	print("Joined server with clientid %s" % [multiplayer.get_unique_id()])
@@ -75,33 +74,29 @@ func exit_lobby() -> void:
 	multiplayer_peer = ENetMultiplayerPeer.new()
 	multiplayer.multiplayer_peer = null
 	peer_id_to_player.clear()
-	#print("Left server")
+	print("Left server")
 	network_update.emit()
 
 func on_player_connected(peer_id : int) -> void:
-	#print("%s : Player <%s> connected." % [multiplayer.get_unique_id(), peer_id])
 	var mid : int = multiplayer.get_unique_id()
 	rpc_id(peer_id, "request_player_meta", mid)
 	network_update.emit()
 
 func on_player_disconnected(peer_id : int) -> void:
-	#print("%s : Player <%s> disconnected." % [multiplayer.get_unique_id(), peer_id])
 	if peer_id == 1:
 		exit_lobby.call_deferred()
-		#print("Host disconnected.")
+		print("Host disconnected.")
 		return
 	peer_id_to_player.erase(peer_id)
 	network_update.emit()
 
 @rpc("any_peer")
 func request_player_meta(requester_id : int) -> void:
-	#print("%s : Requested player meta from <%s>" % [multiplayer.get_unique_id(), requester_id])
 	var mid : int = multiplayer.get_unique_id()
 	rpc_id(requester_id, "assign_player_networkplayer", mid, network_player.serialize())
 
 @rpc("any_peer")
 func assign_player_networkplayer(peer_id : int, _network_player : Variant) -> void:
-	#print("%s : Assigning network_player for <%s>" % [multiplayer.get_unique_id(), peer_id])
 	var player : NetworkPlayer
 	if _network_player is Dictionary:
 		player = Serializeable.deserialize(_network_player)
@@ -119,15 +114,11 @@ func assign_player_networkplayer(peer_id : int, _network_player : Variant) -> vo
 	for pid : int in peer_id_to_player.keys():
 		dr[pid] = Deck.prebuilt_from_tribe(Genesis.CardTribe.BUGS)
 
-	# Router.backend.setup.rpc(
-	# 	NetworkPlayStageConfiguration.setup(ps,dr)
-	# )
-
 func send_network_message(message : String, args : Array, recipient_id : int = -1, remote_only : bool = false) -> void:
 	var msg_obj := NetworkMessage.setup(get_peer_id(), message, args)
 	var msg_dict : Dictionary = msg_obj.serialize()
-	#print("%s : Sending message %s" % [get_peer_id(), msg_obj])
-	#print("%s : Sending message %s" % [get_peer_id(), msg_dict])
+	# print("%s : Sending message %s" % [get_peer_id(), msg_obj])
+	# print("%s : Sending message %s" % [get_peer_id(), msg_dict])
 	if recipient_id == -1:
 		rpc("receive_network_message", var_to_bytes(msg_dict))
 	else:
@@ -138,9 +129,9 @@ func send_network_message(message : String, args : Array, recipient_id : int = -
 @rpc("any_peer", "reliable") #some messages should be unreliable probably? idfk assuming bad perf has fd me so hard
 func receive_network_message(bytes : PackedByteArray) -> void:
 	var msg_dict : Dictionary = bytes_to_var(bytes)
-	#print("\n%s : Handling message \n%s\n" % [get_peer_id(), JSON.stringify(msg_dict, "\t")])
+	# print("\n%s : Handling message \n%s\n" % [get_peer_id(), JSON.stringify(msg_dict, "\t")])
 	var message : NetworkMessage = Serializeable.deserialize(msg_dict)
-	#print("%s : Handling message %s" % [get_peer_id(), message])
+	# print("%s : Handling message %s" % [get_peer_id(), message])
 	received_network_message.emit(peer_id_to_player[message.sender_peer_id], message.message, message.args)
 
 signal received_network_message(sender : NetworkPlayer, message : String, args : Array)

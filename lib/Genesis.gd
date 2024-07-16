@@ -95,7 +95,13 @@ enum Statistic {
 	CHARGES,
 	POSITION,
 	# State
+	IS_IN_HAND,
+	IS_ON_FIELD,
+	IS_IN_DECK,
+	IS_MARKED,
 	WAS_JUST_PLAYED,
+	WAS_JUST_BURNED,
+	WAS_JUST_DISCARDED,
 	JUST_ATTACKED,
 	WAS_JUST_ATTACKED,
 	WAS_JUST_ACTIVATED,
@@ -108,10 +114,6 @@ enum Statistic {
 	WAS_JUST_SACRIFICED,
 	WAS_JUST_DESTROYED,
 	HAS_TARGET,
-	IS_IN_HAND,
-	IS_ON_FIELD,
-	IS_IN_DECK,
-	IS_MARKED,
 	WAS_JUST_MARKED,
 	WAS_JUST_UNMARKED,
 	# References
@@ -173,7 +175,12 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.CHARGES : 0,
 	Statistic.POSITION : Vector2.ZERO, # Vector type friendly version of null
 	# State
+	Statistic.IS_IN_HAND : false,
+	Statistic.IS_ON_FIELD : false,
+	Statistic.IS_IN_DECK : false,
 	Statistic.WAS_JUST_PLAYED : false,
+	Statistic.WAS_JUST_BURNED : false,
+	Statistic.WAS_JUST_DISCARDED : false,
 	Statistic.JUST_ATTACKED : false,
 	Statistic.WAS_JUST_ATTACKED : false,
 	Statistic.WAS_JUST_ACTIVATED : false,
@@ -186,10 +193,6 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.WAS_JUST_SACRIFICED : false,
 	Statistic.WAS_JUST_DESTROYED : false,
 	Statistic.HAS_TARGET : false,
-	Statistic.IS_IN_HAND : false,
-	Statistic.IS_ON_FIELD : false,
-	Statistic.IS_IN_DECK : false,
-	Statistic.IS_MARKED : false,
 	Statistic.WAS_JUST_MARKED : false,
 	Statistic.WAS_JUST_UNMARKED : false,
 	# References

@@ -16,20 +16,33 @@ func _to_string() -> String:
 	return "HandRemoveCardEffect(%s,%s,%s,%s)" % [self.player, self.card, self.leave_reason, self.animation]
 
 func resolve(_effect_resolver : EffectResolver) -> void:
-	IStatisticPossessor.id(self.card).set_statistic(Genesis.Statistic.IS_IN_HAND, false)
+	var card_stats := IStatisticPossessor.id(self.card)
+	card_stats.set_statistic(Genesis.Statistic.IS_IN_HAND, false)
 	player.cards_in_hand.erase(self.card)
 
-	if leave_reason == Genesis.LeaveHandReason.DISCARDED or leave_reason == Genesis.LeaveHandReason.BURNED:
+	if leave_reason == Genesis.LeaveHandReason.DISCARDED:
+		card_stats.set_statistic(Genesis.Statistic.WAS_JUST_DISCARDED, true)
+		_effect_resolver.request_effect(SetStatisticEffect.new(
+			self.requester, card_stats, Genesis.Statistic.WAS_JUST_DISCARDED, false
+		))
 		_effect_resolver.request_effect(DeckAddCardEffect.new(
 			self.requester, self.player, self.card
 		))
 
-		if leave_reason == Genesis.LeaveHandReason.BURNED:
-			_effect_resolver.request_effect(HandAddCardEffect.new(
-				self.requester, self.player
-			))
-			
-	if leave_reason == Genesis.LeaveHandReason.PLAYED:
+	elif leave_reason == Genesis.LeaveHandReason.BURNED:
+		card_stats.set_statistic(Genesis.Statistic.WAS_JUST_BURNED, true)
+		_effect_resolver.request_effect(SetStatisticEffect.new(
+			self.requester, card_stats, Genesis.Statistic.WAS_JUST_BURNED, false
+		))
+		_effect_resolver.request_effect(HandAddCardEffect.new(
+			self.requester, self.player
+		))
+		
+	elif leave_reason == Genesis.LeaveHandReason.PLAYED:
+		card_stats.set_statistic(Genesis.Statistic.WAS_JUST_PLAYED, true)
+		_effect_resolver.request_effect(SetStatisticEffect.new(
+			self.requester, card_stats, Genesis.Statistic.WAS_JUST_PLAYED, false
+		))
 		_effect_resolver.request_effect(CreatureSpawnEffect.new(
 			self.requester, self.card
 		))

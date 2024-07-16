@@ -87,6 +87,11 @@ func _process(_delta : float) -> void:
 					CreatureActivateAction.setup(hovered_card)
 				)
 
+	if Input.is_action_just_pressed("hand_burn"):
+		AuthoritySourceProvider.authority_source.request_action(
+			HandBurnHandAction.setup()
+		)
+
 	if Input.is_action_just_pressed("debug_advance_frame"):
 		AuthoritySourceProvider.authority_source.execute_frame()
 

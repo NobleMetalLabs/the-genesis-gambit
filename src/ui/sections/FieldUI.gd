@@ -2,6 +2,7 @@ class_name FieldUI
 extends Control
 
 @onready var my_player : Player = get_parent().associated_player
+@onready var cursor : PlayerCursorUI = $"%PLAYER-CURSOR"
 
 var field_cards : Array[CardOnField]
 var instance_to_field_card : Dictionary = {} #[ICardInstance, CardOnField]
@@ -25,9 +26,6 @@ func check_card_for_animation(card : ICardInstance, field_card : CardOnField) ->
 		var flash_tween : Tween = Router.get_tree().create_tween()
 		flash_tween.tween_property(field_card, "modulate", Color(0, 1, 0, 1), 0)
 		flash_tween.tween_property(field_card, "modulate", Color(1, 1, 1, 1), 0.5)
-
-	
-	
 
 func _place_card(card : CardOnField, at_position : Vector2) -> void:
 	self.add_child(card, true)

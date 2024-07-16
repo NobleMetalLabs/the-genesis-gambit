@@ -171,7 +171,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.STRENGTH : 10,
 	Statistic.SPEED : 10,
 	Statistic.CHARGES : 0,
-	Statistic.POSITION : Vector2.INF, # Vector type friendly version of null
+	Statistic.POSITION : Vector2.ZERO, # Vector type friendly version of null
 	# State
 	Statistic.WAS_JUST_PLAYED : false,
 	Statistic.JUST_ATTACKED : false,

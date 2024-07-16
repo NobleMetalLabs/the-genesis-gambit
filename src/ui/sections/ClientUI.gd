@@ -11,6 +11,8 @@ var player_areas : Array[PlayerAreaUI] = []
 var _player_to_area : Dictionary = {} # [Player, PlayerAreaUI]
 var local_player_area : PlayerAreaUI 
 
+signal client_ui_setup()
+
 func setup(config : NetworkPlayStageConfiguration) -> void:
 	self.get_tree().get_root().content_scale_size = Vector2.ZERO
 
@@ -52,7 +54,14 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		var leader_stats := IStatisticPossessor.id(pa.associated_player.leader)
 		leader_stats.set_statistic(Genesis.Statistic.POSITION, Vector2.ZERO)
 
+	client_ui_setup.emit()
 	self.refresh_ui()
+
+	#TODO: dont do this. actions in progress during frame update get fucked.
+	AuthoritySourceProvider.authority_source.new_frame_index.connect(
+		func(_frame_number : int) -> void:
+			refresh_ui()
+	)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float) -> void:

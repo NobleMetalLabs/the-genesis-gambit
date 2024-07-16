@@ -17,7 +17,6 @@ func _create_card_ghost(hand_card : CardInHand) -> void:
 			new_card_ghost.queue_free()
 	)
 
-
 func refresh_hand() -> void:
 	_clear_hand()
 	for card : ICardInstance in my_player.cards_in_hand:

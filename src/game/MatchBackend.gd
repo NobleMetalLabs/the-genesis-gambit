@@ -58,6 +58,11 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		players.append(player)
 		player_holder.add_child(player, true)
 
+	AuthoritySourceProvider.authority_source.new_frame_index.connect(
+		func(_frame_number : int) -> void:
+			effect_resolver.resolve_effects(Router.backend.get_backend_state())
+	)
+	
 	Router.client_ui.setup(config)
 
 func get_backend_state() -> MatchBackendState:

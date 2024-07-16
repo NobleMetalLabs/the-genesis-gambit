@@ -13,7 +13,8 @@ func _init(backend : ICardInstance) -> void:
 
 	card_frontend = CardFrontend.instantiate()
 	self.add_child(card_frontend)
-
+	self.set_anchors_preset(PRESET_FULL_RECT)
+	self.set_size(Vector2.ZERO)
 	self.name = "CardOnField"
 	
 func _to_string() -> String:

@@ -11,8 +11,6 @@ var card_instance : ICardInstance
 @onready var border_component : CardBorderComponent = $CardBorderComponent
 
 func _ready() -> void:
-	self.set_anchors_preset(PRESET_CENTER)
-
 	card_instance = get_parent().card_backend
 	self.texture = card_instance.metadata.image
 	

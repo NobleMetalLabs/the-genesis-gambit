@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="1_okt5y"]
 
 [node name="CardFrontend" type="TextureRect"]
-custom_minimum_size = Vector2(84, 120)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

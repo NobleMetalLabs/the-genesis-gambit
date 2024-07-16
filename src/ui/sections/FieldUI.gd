@@ -27,11 +27,13 @@ func check_card_for_animation(card : ICardInstance, field_card : CardOnField) ->
 		flash_tween.tween_property(field_card, "modulate", Color(0, 1, 0, 1), 0)
 		flash_tween.tween_property(field_card, "modulate", Color(1, 1, 1, 1), 0.5)
 
+# TODO?: Convert positions to fractional coordinates to guarantee half-decent scaling at any res?
 func _place_card(card : CardOnField, at_position : Vector2) -> void:
+	print("Placing card at position: %s" % at_position)
 	self.add_child(card, true)
 	if get_parent().flipped:
 		at_position.y = -at_position.y
-	card.position = at_position + self.get_rect().get_center()
+	card.position = at_position
 	card.card_frontend.mouse_entered.connect(
 		func() -> void:
 			Router.client_ui.hovered_card = card.card_backend

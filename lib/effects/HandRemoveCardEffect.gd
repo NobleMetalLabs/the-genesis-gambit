@@ -34,6 +34,9 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 		_effect_resolver.request_effect(SetStatisticEffect.new(
 			self.requester, card_stats, Genesis.Statistic.WAS_JUST_BURNED, false
 		))
+		_effect_resolver.request_effect(DeckAddCardEffect.new(
+			self.requester, self.player, self.card
+		))
 		_effect_resolver.request_effect(HandAddCardEffect.new(
 			self.requester, self.player
 		))

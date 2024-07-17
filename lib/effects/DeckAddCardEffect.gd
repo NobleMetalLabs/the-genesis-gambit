@@ -20,29 +20,12 @@ func _to_string() -> String:
 	return "DeckAddCardEffect(%s,%s,%s,%s)" % [self.player, self.card, self.keep_stats, self.keep_moods]
 
 func resolve(_effect_resolver : EffectResolver) -> void:
-	var previous_object_owner : Object = self.card.get_object()
-	
-	# var idents : Array[Identifier] = []
-	# if keep_stats:
-	# 	idents.append(IStatisticPossessor.id(self.card))
-	# if keep_moods:
-	# 	idents.append(IMoodPossessor.id(self.card))
-	var card_in_deck := CardBackend.new(card)
 	if at_index == 999:
-		self.player.cards_in_deck.append(card_in_deck)
+		self.player.cards_in_deck.append(card)
 	else:
-		self.player.cards_in_deck.insert(at_index, card_in_deck)
+		self.player.cards_in_deck.insert(at_index, card)
 
 	var card_stats := IStatisticPossessor.id(card)
-
-	if previous_object_owner != null:
-		if previous_object_owner is CardInHand:
-			self.player.cards_in_hand.erase(previous_object_owner)
-			card_stats.set_statistic(Genesis.Statistic.IS_IN_HAND, false)
-		if previous_object_owner is CardOnField:
-			self.player.cards_on_field.erase(previous_object_owner)
-			card_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, false)
-		previous_object_owner.queue_free()
 	card_stats.set_statistic(Genesis.Statistic.IS_IN_DECK, true)
 	
 	if self.as_marked:

@@ -71,4 +71,5 @@ layout_mode = 1
 
 [node name="PLAYER-CURSOR" parent="." instance=ExtResource("3_456et")]
 unique_name_in_owner = true
+z_index = 1
 script = ExtResource("4_pwj17")

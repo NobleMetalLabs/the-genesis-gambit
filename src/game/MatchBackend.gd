@@ -46,7 +46,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	if MultiplayerManager.is_instance_server():
 		var execute_frame_timer : Timer = Timer.new()
 		execute_frame_timer.name = "ExecuteFrameTimer"
-		execute_frame_timer.wait_time = 0.01
+		execute_frame_timer.wait_time = 0.1
 		execute_frame_timer.one_shot = false
 		execute_frame_timer.autostart = true
 		execute_frame_timer.timeout.connect(AuthoritySourceProvider.authority_source.execute_frame)

@@ -14,8 +14,6 @@ var local_player_area : PlayerAreaUI
 signal client_ui_setup()
 
 func setup(config : NetworkPlayStageConfiguration) -> void:
-	self.get_tree().get_root().content_scale_size = Vector2.ZERO
-
 	var t : String = "Server" if MultiplayerManager.is_instance_server() else "Client"
 	$"%MULTIPLAYER-PANEL".text = t
 	$"%MULTIPLAYER-PANEL".name = t

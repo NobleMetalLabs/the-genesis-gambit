@@ -10,6 +10,8 @@ var client_ui_scene : PackedScene = preload("res://scn/ui/sections/ClientUI.tscn
 @onready var lobby_ui : MultiplayerLobbyUI = $"MultiplayerLobbyUI"
 
 func _ready() -> void:
+	self.get_tree().get_root().content_scale_size = Vector2.ZERO
+
 	lobby_ui.match_start_requested.connect(func () -> void:
 		MultiplayerManager.send_network_message("nmatch/start", [])
 	)

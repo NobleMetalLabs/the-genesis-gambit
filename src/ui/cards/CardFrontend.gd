@@ -8,10 +8,12 @@ static func instantiate() -> CardFrontend:
 static var back_img : Texture = preload("res://ast/game/cards/fgs/back.png")
 var card_instance : ICardInstance
 
-@onready var border_component : CardBorderComponent = $CardBorderComponent
+@onready var border_component : CardBorder = $CardBorder
+@onready var overlay_component : CardOverlay = $CardOverlay
 
 func _ready() -> void:
-	card_instance = get_parent().card_backend
+	card_instance = get_parent().get("card_backend")
+	if card_instance == null: return
 	self.texture = card_instance.metadata.image
 	
 	border_component.set_rarity(card_instance.metadata.rarity)
@@ -28,3 +30,7 @@ func set_visibility(face : bool, rarity : bool, _type : bool) -> void:
 		border_component.set_rarity(Genesis.CardRarity.COMMON)
 	
 	#if _type:
+
+func set_overlays(is_marked : bool, is_frozen : bool) -> void:
+	overlay_component.set_overlays(is_marked, is_frozen)
+

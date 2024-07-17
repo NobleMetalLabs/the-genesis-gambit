@@ -51,6 +51,12 @@ func _add_card_to_hand(card_instance : ICardInstance) -> void:
 		card_type_is_visible
 	)
 
+	var card_stats := IStatisticPossessor.id(card_instance)	
+	card_in_hand.card_frontend.set_overlays(
+		card_stats.get_statistic(Genesis.Statistic.IS_MARKED),
+		card_stats.get_statistic(Genesis.Statistic.IS_FROZEN)
+	)	
+
 	check_card_for_animation(card_instance, card_in_hand)
 
 	card_in_hand.mouse_entered.connect(

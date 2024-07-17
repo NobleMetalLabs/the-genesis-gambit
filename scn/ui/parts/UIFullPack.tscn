@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://src/ui/parts/AutoSizeLabel.gd" id="4_e0jia"]
 [ext_resource type="FontFile" uid="uid://d2oaifr2k5au7" path="res://ast/ui/fonts/counting_apples.ttf" id="4_kb103"]
 [ext_resource type="Texture2D" uid="uid://bds3c6arsw346" path="res://ast/ui/image/icons/show-pack-contents.png" id="5_mv0co"]
-[ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="8_xiwtf"]
+[ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorder.tscn" id="8_xiwtf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_65ulp"]
 resource_local_to_scene = true

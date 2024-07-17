@@ -1,9 +1,9 @@
 class_name CreatureTargetEffect
 extends CreatureEffect
 
-var target : ITargetable
+var target : ICardInstance
 
-func _init(_requester : Object, _creature : ICardInstance, _target : ITargetable) -> void:
+func _init(_requester : Object, _creature : ICardInstance, _target : ICardInstance) -> void:
 	self.requester = _requester
 	self.creature = _creature
 	self.target = _target
@@ -12,7 +12,6 @@ func _to_string() -> String:
 	return "CreatureTargetEffect(%s,%s)" % [self.creature, self.target]
 
 func resolve(_effect_resolver : EffectResolver) -> void:
-	self.creature.get_object().target = self.target
 	var creature_stats := IStatisticPossessor.id(self.creature)
 	var null_target : bool = self.target == null
 

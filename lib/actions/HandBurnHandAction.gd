@@ -1,11 +1,14 @@
 class_name HandBurnHandAction
 extends HandAction
 
-func _init(_player : Player) -> void:
-	self.player = _player
+static func setup() -> HandBurnHandAction:
+	var hbha := HandBurnHandAction.new()
+	return hbha
+
+func _init() -> void: pass
 
 func _to_string() -> String:
-	return "HandBurnHandAction(%s)" % self.player
+	return "HandBurnHandAction()"
 
 func to_effect() -> HandBurnHandEffect:
-	return HandBurnHandEffect.new(self, player)
+	return HandBurnHandEffect.new(self, Router.backend.peer_id_to_player[self.player_peer_id])

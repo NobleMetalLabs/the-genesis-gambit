@@ -1,9 +1,6 @@
 @icon("res://lib/card/CardMetadata.png")
 class_name CardMetadata
-extends Resource
-
-signal value_changed # emit when a property is changed to trigger ui to refresh
-# used when a card modifies a property of another card for sum reason
+extends Serializeable
 
 var id : int
 var tribe : Genesis.CardTribe = Genesis.CardTribe.NONE
@@ -18,3 +15,6 @@ var tribe : Genesis.CardTribe = Genesis.CardTribe.NONE
 @export var strength : int = -1
 @export var speed : int = -1
 @export var energy : int = -1
+
+func _to_string() -> String:
+	return "CardMetadata<%s>[%s]" % [id, name]

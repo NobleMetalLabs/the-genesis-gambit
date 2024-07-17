@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "When targeted creature is killed, the attacker receives summoning sickness."
 
-func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if not my_stats.get_statistic(Genesis.Statistic.HAS_TARGET): return
 	var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)

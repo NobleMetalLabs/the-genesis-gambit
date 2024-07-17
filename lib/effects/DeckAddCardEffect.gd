@@ -22,12 +22,12 @@ func _to_string() -> String:
 func resolve(_effect_resolver : EffectResolver) -> void:
 	var previous_object_owner : Object = self.card.get_object()
 	
-	var idents : Array[Identifier] = [card]
-	if keep_stats:
-		idents.append(IStatisticPossessor.id(self.card))
-	if keep_moods:
-		idents.append(IMoodPossessor.id(self.card))
-	var card_in_deck := CardInDeck.new(idents)
+	# var idents : Array[Identifier] = []
+	# if keep_stats:
+	# 	idents.append(IStatisticPossessor.id(self.card))
+	# if keep_moods:
+	# 	idents.append(IMoodPossessor.id(self.card))
+	var card_in_deck := CardBackend.new(card)
 	if at_index == 999:
 		self.player.cards_in_deck.append(card_in_deck)
 	else:

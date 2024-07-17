@@ -13,6 +13,7 @@ config_version=5
 config/name="The Genesis Gambit"
 run/main_scene="res://scn/tests/GAME.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
+run/max_fps=60
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://ast/ui/image/icons/yurgteam-full.png"
 boot_splash/fullsize=false
@@ -21,12 +22,11 @@ config/icon="res://ast/ui/image/icons/icon.png"
 
 [autoload]
 
-AudioDispatcher="*res://src/autoloads/AudioDispatcher.gd"
 SaveData="*res://src/autoloads/SaveData.gd"
-Utils="*res://src/autoloads/Utils.gd"
 CardDB="*res://src/autoloads/CardDB.gd"
+MultiplayerManager="*res://src/autoloads/MultiplayerManager.gd"
+UIDDB="*res://src/autoloads/UIDDB.gd"
 AuthoritySourceProvider="*res://src/autoloads/AuthoritySourceProvider.gd"
-InputManager="*res://src/autoloads/InputManager.gd"
 Router="*res://src/autoloads/Router.gd"
 
 [debug]

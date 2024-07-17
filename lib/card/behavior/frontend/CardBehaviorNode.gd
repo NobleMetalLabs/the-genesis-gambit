@@ -1,5 +1,5 @@
 class_name CardBehaviorNode
-extends Resource
+extends Serializeable
 
 var name : String 
 var input_args : Array[CardBehaviorArgument]

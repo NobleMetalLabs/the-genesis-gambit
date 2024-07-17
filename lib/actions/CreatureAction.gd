@@ -1,7 +1,7 @@
 class_name CreatureAction
-extends GamefieldAction
+extends Action
 
-var creature : ICardInstance
+var creature_uid : int
 
 func _init() -> void:
 	assert(false, "CreatureAction is an abstract class and should not be instantiated.")

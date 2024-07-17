@@ -4,6 +4,8 @@ extends Action
 var name : StringName
 var data : Dictionary
 
-func _init(_name: StringName, _data: Dictionary) -> void:
-	self.name = _name
-	self.data = _data
+static func setup(_name: StringName, _data: Dictionary) -> CustomAction:
+	var ca := CustomAction.new()
+	ca.name = _name
+	ca.data = _data
+	return ca

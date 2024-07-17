@@ -1,5 +1,5 @@
 class_name CardBehaviorNodeInstance
-extends Resource
+extends Serializeable
 
 var config : CardBehaviorNode
 var argument_values : Dictionary #[StringName, Variant]

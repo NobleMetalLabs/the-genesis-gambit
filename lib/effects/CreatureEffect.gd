@@ -1,5 +1,5 @@
 class_name CreatureEffect
-extends GamefieldEffect
+extends Effect
 
 var creature : ICardInstance
 

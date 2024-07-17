@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyyylgw8u5utk"]
+
+[ext_resource type="Script" path="res://scn/tests/multiplayertest.gd" id="1_mcwpk"]
+
+[node name="Node" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mcwpk")
+
+[node name="host" type="Button" parent="."]
+layout_mode = 0
+offset_left = 348.0
+offset_top = 47.0
+offset_right = 513.0
+offset_bottom = 125.0
+text = "host game"
+
+[node name="join" type="Button" parent="."]
+offset_left = 702.0
+offset_top = 54.0
+offset_right = 867.0
+offset_bottom = 132.0
+text = "join game"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 275.0
+offset_top = 386.0
+offset_right = 734.0
+offset_bottom = 466.0
+placeholder_text = "yer"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+offset_left = 799.0
+offset_top = 407.0
+offset_right = 981.0
+offset_bottom = 449.0
+text = "yer"

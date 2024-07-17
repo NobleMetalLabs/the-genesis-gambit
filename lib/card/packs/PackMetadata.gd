@@ -1,5 +1,5 @@
 class_name PackMetadata
-extends Resource
+extends Serializeable
 
 @export var name : String
 @export var image : Texture

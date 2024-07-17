@@ -4,7 +4,7 @@ static var description : StringName = "Beehive acts as a Blocker. Spawn a Bee ev
 
 var protected_creatures : Array[ICardInstance] = []
 
-func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_PLAYED):
 		my_stats.set_statistic(Genesis.Statistic.ACTS_AS_BLOCKER, true)
@@ -18,7 +18,7 @@ func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolve
 			_effect_resolver.request_effect(
 				HandAddCardEffect.new(
 					instance_owner,
-					_gamefield_state.get_player_from_instance(instance_owner),
+					_backend_state.get_player_from_instance(instance_owner),
 					false,
 					true,
 					CardDB.get_id_by_name("Bee")

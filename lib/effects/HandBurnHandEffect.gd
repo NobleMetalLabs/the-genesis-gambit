@@ -9,7 +9,8 @@ func _to_string() -> String:
 	return "HandBurnHandEffect(%s)" % self.player
 
 func resolve(_effect_resolver : EffectResolver) -> void:
-	for card : CardInHand in self.player.cards_in_hand:
+	for card : ICardInstance in self.player.cards_in_hand:
+		IStatisticPossessor.id(card).set_statistic(Genesis.Statistic.WAS_JUST_BURNED, true)
 		_effect_resolver.request_effect(HandRemoveCardEffect.new(
 			self.requester, self.player, card, Genesis.LeaveHandReason.BURNED
 		))

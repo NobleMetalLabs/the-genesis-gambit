@@ -5,7 +5,7 @@ static var description : StringName = "Targeted attacker burrows. While burrowed
 var burrower : ICardInstance = null
 var burrower_attacks : int = 0
 
-func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if not burrower:
 		if my_stats.get_statistic(Genesis.Statistic.JUST_TARGETED):

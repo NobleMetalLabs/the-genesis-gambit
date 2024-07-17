@@ -1,0 +1,154 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1uvr064rcwfw"]
+
+[ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/DeveloperToolTheme.tres" id="1_2ai5q"]
+[ext_resource type="Script" path="res://src/menu/multiplayer/lobby/MultiplayerLobbyUI.gd" id="2_e2ec7"]
+[ext_resource type="LabelSettings" uid="uid://dc3e6mk1wvjxo" path="res://ast/ui/labelsettings/lobby/lobbylabeltitle.tres" id="3_45u2h"]
+
+[node name="MultiplayerLobbyUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_2ai5q")
+script = ExtResource("2_e2ec7")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Panel" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/Panel/MarginContainer"]
+layout_mode = 2
+split_offset = 200
+
+[node name="CHAT-WINDOW" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/CHAT-WINDOW"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CHAT-MESSAGE-LIST" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/CHAT-WINDOW/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2
+
+[node name="CHAT-MESSAGE-TEMPLATE" type="Label" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/CHAT-WINDOW/ScrollContainer/CHAT-MESSAGE-LIST"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+autowrap_mode = 3
+
+[node name="CHAT-LINEEDIT" type="LineEdit" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/CHAT-WINDOW"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+placeholder_text = "Type here to chat"
+
+[node name="MATCH-WINDOW" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSplitContainer" type="VSplitContainer" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 65
+
+[node name="PLAYER-LIST-WINDOW" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="playerliststack" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/VSplitContainer/PLAYER-LIST-WINDOW"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/VSplitContainer/PLAYER-LIST-WINDOW/playerliststack"]
+layout_mode = 2
+text = "Players"
+label_settings = ExtResource("3_45u2h")
+horizontal_alignment = 1
+
+[node name="PLAYER-LIST" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/VSplitContainer/PLAYER-LIST-WINDOW/playerliststack"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PLAYER-TEMPLATE" type="Label" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/VSplitContainer/PLAYER-LIST-WINDOW/playerliststack/PLAYER-LIST"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Player X"
+horizontal_alignment = 2
+
+[node name="PLAYER-NAME-LINEEDIT" type="LineEdit" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/VSplitContainer/PLAYER-LIST-WINDOW"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Type here to edit name"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/VSplitContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/VSplitContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Match Settings"
+label_settings = ExtResource("3_45u2h")
+horizontal_alignment = 1
+
+[node name="__" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW"]
+layout_mode = 2
+
+[node name="ADDRESS-LINEEDIT" type="LineEdit" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/__"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Network Address"
+
+[node name="GAME-BUTTONS-STACK" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/__"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HOST" type="Button" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/__/GAME-BUTTONS-STACK"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Host Lobby
+"
+
+[node name="JOIN" type="Button" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/__/GAME-BUTTONS-STACK"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Join Lobby"
+
+[node name="START" type="Button" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/__/GAME-BUTTONS-STACK"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Start Game"
+
+[node name="EXIT" type="Button" parent="MarginContainer/Panel/MarginContainer/HSplitContainer/MATCH-WINDOW/__/GAME-BUTTONS-STACK"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Exit Lobby"

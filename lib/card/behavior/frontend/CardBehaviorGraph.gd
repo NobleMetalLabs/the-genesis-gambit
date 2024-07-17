@@ -1,6 +1,6 @@
 @icon("res://lib/cardbehavior/CardBehaviorGraph.png")
 class_name CardBehaviorGraph
-extends Resource
+extends Serializeable
 
 var description : String = ""
 var nodes : Array[CardBehaviorNodeInstance] = []

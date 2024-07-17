@@ -1,24 +1,51 @@
 class_name Game
 extends Node
 
-signal game_completed()
+signal new_match_started(nmatch : NetworkMatch)
+signal match_completed()
+
+var backend_scene : PackedScene = preload("res://scn/game/MatchBackend.tscn")
+var client_ui_scene : PackedScene = preload("res://scn/ui/sections/ClientUI.tscn")
+
+@onready var lobby_ui : MultiplayerLobbyUI = $"MultiplayerLobbyUI"
 
 func _ready() -> void:
-	var dummy_match := NetworkMatch.new(NetworkMatchConfiguration.dummy_config)
-	dummy_match.dispatch_play_stage.connect(dispatch_play_stage)
-	dummy_match.start_match()
+	lobby_ui.match_start_requested.connect(func () -> void:
+		MultiplayerManager.send_network_message("nmatch/start", [])
+	)
 
-var gamefield_scene : PackedScene = preload("res://scn/game/Gamefield.tscn")
-var client_ui_scene : PackedScene = preload("res://scn/ui/ClientUI.tscn")
+	MultiplayerManager.received_network_message.connect(handle_network_message)
 
-func dispatch_play_stage(config : NetworkPlayStageConfiguration) -> void:
-	var gamefield : Gamefield = gamefield_scene.instantiate()
-	gamefield.setup(config)
-	gamefield.game_completed.connect(game_completed.emit)
+	new_match_started.connect(handle_new_match_started)
+	match_completed.connect(handle_match_completed)
+
+func handle_network_message(_sender : NetworkPlayer, message : String, args : Array) -> void:
+	match(message):
+		"nmatch/start":
+			var players : Array[NetworkPlayer] = []
+			players.assign(MultiplayerManager.peer_id_to_player.values())
+			var nmatch := NetworkMatch.new(
+				NetworkMatchConfiguration.new(players, MatchRuleset.new())
+			)
+			new_match_started.emit(nmatch)
+		"nmatch/end":
+			match_completed.emit(args[0])
+
+func handle_new_match_started(nmatch : NetworkMatch) -> void:
+	lobby_ui.hide()
+	nmatch.dispatch_play_stage.connect(_dispatch_play_stage)
+	nmatch.start_match()
+
+func handle_match_completed() -> void:
+	lobby_ui.show()
+
+func _dispatch_play_stage(config : NetworkPlayStageConfiguration) -> void:
+	var backend : MatchBackend = backend_scene.instantiate()
 	var client_ui : ClientUI = client_ui_scene.instantiate()
-	gamefield.client_ui = client_ui
-	client_ui.gamefield = gamefield
-	Router.gamefield = gamefield
+	Router.backend = backend
 	Router.client_ui = client_ui
-	self.add_child(gamefield)
+	self.add_child(backend)
 	self.add_child(client_ui)
+	backend.setup(config)
+	client_ui.setup(config)
+	backend.game_completed.connect(match_completed.emit)

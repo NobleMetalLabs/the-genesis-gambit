@@ -33,12 +33,12 @@ func show_data_for_card(card : ICardInstance) -> void:
 	if card == null: return
 	
 	$"%meta-label".text = "Card: <%s>" % card.metadata.name
-	var card_obj : Object = card.get_object()
-	if card_obj is CardOnField:
+	var card_stats := IStatisticPossessor.id(card)
+	if card_stats.get_statistic(Genesis.Statistic.IS_ON_FIELD):
 		$"%location-label".text = "Location: <On Field>"
-	elif card_obj is CardInHand:
+	elif card_stats.get_statistic(Genesis.Statistic.IS_IN_HAND):
 		$"%location-label".text = "Location: <In Hand>"
-	elif card_obj is CardInDeck:
+	elif card_stats.get_statistic(Genesis.Statistic.IS_IN_DECK):
 		$"%location-label".text = "Location: <In Deck>"
 	$"%player-label".text = "Player: <%s>" % card.player.name
 

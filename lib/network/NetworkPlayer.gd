@@ -1,11 +1,14 @@
 class_name NetworkPlayer
-extends Resource
+extends Serializeable
 
-var uid : int
+var peer_id : int
 var player_name : StringName
-var pack_stack : PackStack 
 
-func _init(_uid : int, _player_name : StringName) -> void:
-	self.uid = _uid
-	self.player_name = _player_name
-	self.pack_stack = PackStack.new()
+static func setup(_peer_id : int, _player_name : StringName) -> NetworkPlayer:
+	var np := NetworkPlayer.new()
+	np.peer_id = _peer_id
+	np.player_name = _player_name
+	return np
+
+func _to_string() -> String:
+	return "NetworkPlayer(%s, \"%s\")" % [peer_id, player_name]

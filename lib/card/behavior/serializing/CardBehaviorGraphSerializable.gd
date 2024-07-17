@@ -10,12 +10,12 @@ static func serialize(behavior : CardBehaviorGraph) -> CardBehaviorGraphSerializ
 	var cbgs := CardBehaviorGraphSerializable.new()
 	cbgs.description = behavior.description
 	for node in behavior.nodes:
-		var node_dict : Dictionary = Utils.object_to_dict(node, true)
+		var node_dict : Dictionary = Serializeable._variant_to_deep_variant(node)
 		var config_name : StringName = node_dict["config"]["name"]
 		node_dict["config"] = config_name
 		cbgs.nodes.append(node_dict)
 	for edge in behavior.edges:
-		var edge_dict : Dictionary = Utils.object_to_dict(edge)
+		var edge_dict : Dictionary = Serializeable._variant_to_deep_variant(edge)
 		edge_dict["start_node"] = behavior.nodes.find(edge.start_node)
 		edge_dict["end_node"] = behavior.nodes.find(edge.end_node)
 		cbgs.edges.append(edge_dict)

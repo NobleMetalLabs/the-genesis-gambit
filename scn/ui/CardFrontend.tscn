@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://t7cggpopkqhl"]
 
 [ext_resource type="Texture2D" uid="uid://dgj66mqu1ea7t" path="res://ast/game/cards/fgs/unknown.png" id="1_1e0aw"]
-[ext_resource type="Script" path="res://src/ui/CardFrontend.gd" id="1_25tha"]
+[ext_resource type="Script" path="res://src/ui/cards/CardFrontend.gd" id="1_25tha"]
 [ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorderComponent.tscn" id="1_okt5y"]
 
 [node name="CardFrontend" type="TextureRect"]

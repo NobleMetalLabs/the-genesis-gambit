@@ -1,11 +1,8 @@
 class_name Deck
-extends Resource
+extends Serializeable
 
-var _cards : Array[CardMetadata]
+var _cards : Array[CardMetadata] = []
 var leader : CardMetadata
-
-func _init() -> void:
-	_cards = []
 
 func add_card(card : CardMetadata) -> void:
 	_cards.append(card)
@@ -15,6 +12,9 @@ func remove_card(card : CardMetadata) -> void:
 
 func get_cards() -> Array[CardMetadata]:
 	return _cards
+
+func _to_string() -> String:
+	return "Deck(<%s>[%s])" % [leader, _cards]
 
 static func prebuilt_from_tribe(tribe : Genesis.CardTribe) -> Deck:
 	var deck := Deck.new()

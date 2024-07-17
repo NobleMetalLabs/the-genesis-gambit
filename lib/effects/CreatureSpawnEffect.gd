@@ -14,34 +14,11 @@ func _to_string() -> String:
 	return "CreatureSpawnEffect(%s,%s,%s)" % [self.creature, self.keep_stats, self.keep_moods]
 
 func resolve(_effect_resolver : EffectResolver) -> void:
-	var previous_object_owner : Object = self.creature.get_object()
-	var previous_stats := IStatisticPossessor.id(self.creature)
-
-	var position : Vector2 = previous_stats.get_statistic(Genesis.Statistic.POSITION)
-
-	var idents : Array[Identifier] = [creature]
-	if keep_stats:
-		idents.append(previous_stats)
-	if keep_moods:
-		idents.append(IMoodPossessor.id(self.creature))
-	var new_creature := CardOnField.new(idents)
-
-	var player_owner : Player = self.creature.player
 	var creature_stats := IStatisticPossessor.id(creature)
-	if previous_object_owner != null:
-		if previous_object_owner is CardInHand:
-			player_owner.cards_in_hand.erase(previous_object_owner)
-			#creature_stats.set_statistic(Genesis.Statistic.IS_IN_HAND, false)
-		if previous_object_owner is CardInDeck:
-			player_owner.cards_in_deck.erase(previous_object_owner)
-		previous_object_owner.queue_free()
+
 	creature_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, true)
-
-	player_owner.cards_on_field.append(new_creature)
-	Router.gamefield.place_card(new_creature, position)
-
-	if Router.client_ui.current_card_ghost != null:
-		Router.client_ui.current_card_ghost.queue_free()
+	self.creature.player.cards_on_field.append(creature)
+	#TODO: keep_stats and keep_moods do anything
 
 	creature_stats.set_statistic(Genesis.Statistic.WAS_JUST_PLAYED, true)
 	_effect_resolver.request_effect(SetStatisticEffect.new(

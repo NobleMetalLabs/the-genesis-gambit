@@ -4,10 +4,9 @@ static var description : StringName = "When Leafcutter Ant Forager kills an enem
 
 var fungus_garden : ICardInstance = null
 
-func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	if not fungus_garden:
-		for cof : CardOnField in _gamefield_state.get_player_from_instance(instance_owner).cards_on_field:
-			var card := ICardInstance.id(cof)
+		for card : ICardInstance in _backend_state.get_player_from_instance(instance_owner).cards_on_field:
 			if not card: continue
 			if card.card_name == "Fungus Garden":
 				fungus_garden = card

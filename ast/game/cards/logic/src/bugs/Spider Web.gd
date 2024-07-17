@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "Targeted creature is inflicted with Slow."
 
-func process(_gamefield_state : GamefieldState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.JUST_TARGETED):
 		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)

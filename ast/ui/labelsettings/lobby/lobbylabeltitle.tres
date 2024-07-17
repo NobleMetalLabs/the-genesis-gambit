@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dc3e6mk1wvjxo"]
+
+[ext_resource type="FontFile" uid="uid://d2oaifr2k5au7" path="res://ast/ui/fonts/counting_apples.ttf" id="1_38byo"]
+
+[resource]
+font = ExtResource("1_38byo")
+font_size = 48

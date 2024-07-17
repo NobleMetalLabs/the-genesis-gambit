@@ -1,9 +1,14 @@
 #class_name AuthoritySourceProvider
 extends Node
 
-var authority_source : AuthoritySource = make_authority_source()
+var authority_source : AuthoritySource = lockstep()
 
-func make_authority_source() -> AuthoritySource:
-	var dummy := DummyAuthoritySource.new()
-	self.add_child(dummy)
-	return dummy
+func dummy() -> AuthoritySource:
+	var _dummy := DummyAuthoritySource.new()
+	self.add_child(_dummy)
+	return _dummy
+
+func lockstep() -> AuthoritySource:
+	var _lockstep := LockstepMultiplayerAuthoritySource.new()
+	self.add_child(_lockstep)
+	return _lockstep

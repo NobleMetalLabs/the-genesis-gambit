@@ -12,6 +12,11 @@ func _ready() -> void:
 		Vector2i(0, self.size.y) + \
 		Vector2i(10, -10)
 
+	var args := Array(OS.get_cmdline_args())
+	if args.has("-client"):
+		self.show()
+	
+
 var current_card : ICardInstance = null
 
 func set_card(card : ICardInstance) -> void:

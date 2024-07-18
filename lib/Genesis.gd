@@ -53,10 +53,6 @@ enum CardTribe {
 # Actions and Events
 
 # CreatureCooldown*
-enum CooldownType {
-	ATTACK,
-	ACTIVATE,
-}
 enum CooldownStage {
 	START,
 	IN_PROGRESS,
@@ -144,6 +140,7 @@ enum Statistic {
 	NUM_ACTIVATIONS,
 	NUM_MOODS,
 	NUM_MOOD_CHANGES,
+	NUM_COOLDOWN_FRAMES_LENGTH,
 	NUM_COOLDOWN_FRAMES_REMAINING,
 	# Player
 	MAX_HAND_SIZE,
@@ -227,6 +224,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.NUM_ACTIVATIONS : 0,
 	Statistic.NUM_MOODS : 0,
 	Statistic.NUM_MOOD_CHANGES : 0,
+	Statistic.NUM_COOLDOWN_FRAMES_LENGTH : 0,
 	Statistic.NUM_COOLDOWN_FRAMES_REMAINING : 0,
 	# Player
 	Statistic.MAX_HAND_SIZE : 10,

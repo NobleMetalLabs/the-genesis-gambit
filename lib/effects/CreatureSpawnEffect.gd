@@ -24,3 +24,21 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	_effect_resolver.request_effect(SetStatisticEffect.new(
 		self.requester, creature_stats, Genesis.Statistic.WAS_JUST_PLAYED, false
 	))
+
+	var creature_moods := IMoodPossessor.id(creature) 
+	var ssickness_mood := SummoningMood.new(creature)
+
+	creature_stats.set_statistic(Genesis.Statistic.CAN_ATTACK, false)
+	creature_moods.apply_mood(ssickness_mood)
+	
+	_effect_resolver.request_effect(
+		CreatureCooldownEffect.new(
+			self.requester,
+			self.creature,
+			Genesis.CooldownStage.START,
+			(10 / max(1, self.creature.metadata.speed)) * 5,
+			(func remove_summoning_sickness() -> void:
+				creature_stats.set_statistic(Genesis.Statistic.CAN_ATTACK, true)
+				creature_moods.remove_mood(ssickness_mood))
+		)
+	)

@@ -62,7 +62,8 @@ func resolve_effects(backend_state : MatchBackendState) -> void:
 		var has_existing_effects : bool = effects_by_requester.has(action)
 		if has_existing_effects:
 			resolve_existing_effects_of_requester(action)
-			already_processed_actions.append(action)
+			if not action in already_processed_actions:
+				already_processed_actions.append(action)
 			yet_to_process_actions.erase(action)
 		else:
 			#request new effects

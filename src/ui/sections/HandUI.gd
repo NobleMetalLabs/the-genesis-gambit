@@ -51,19 +51,7 @@ func _add_card_to_hand(card_instance : ICardInstance) -> void:
 		card_type_is_visible
 	)
 
-	var card_stats := IStatisticPossessor.id(card_instance)
-	var is_shown_marked : bool = false
-	var is_shown_frozen : bool = false
-	if card_face_is_visible:
-		is_shown_marked = card_stats.get_statistic(Genesis.Statistic.IS_MARKED)
-	is_shown_frozen = card_stats.get_statistic(Genesis.Statistic.IS_FROZEN)
-	
-	card_in_hand.card_frontend.set_overlays(
-		is_shown_marked,
-		is_shown_frozen
-	)	
-
-	check_card_for_animation(card_instance, card_in_hand)
+	card_in_hand.card_frontend.check_self_for_animation()
 
 	card_in_hand.mouse_entered.connect(
 		func() -> void:
@@ -73,16 +61,6 @@ func _add_card_to_hand(card_instance : ICardInstance) -> void:
 		func() -> void:
 			Router.client_ui.hovered_card = null
 	)
-	
-func check_card_for_animation(card : ICardInstance, hand_card : CardInHand) -> void:
-	var card_stats := IStatisticPossessor.id(card)
-	if card_stats.get_statistic(Genesis.Statistic.WAS_JUST_BURNED):
-		var burn_tween : Tween = Router.get_tree().create_tween()
-		burn_tween.tween_property(hand_card, "modulate", Color(1, 0.4, 0, 1), 0.2)
-		burn_tween.parallel().tween_interval(0.1)
-		burn_tween.tween_property(hand_card, "modulate", Color(0, 0, 0, 1), 0.3)
-		burn_tween.tween_property(hand_card, "modulate", Color(0, 0, 0, 0), 1)
-
 
 func _clear_hand() -> void:
 	for child in card_stack_container.get_children():

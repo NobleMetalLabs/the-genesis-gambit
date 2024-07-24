@@ -15,7 +15,7 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	var creature_stats := IStatisticPossessor.id(self.creature)
 	var null_target : bool = self.target == null
 
-	creature_stats.set_statistic(Genesis.Statistic.TARGET, self.target)
+	creature_stats.set_statistic(Genesis.Statistic.TARGET, ITargetable.id(self.target))
 	if null_target:
 		creature_stats.set_statistic(Genesis.Statistic.HAS_TARGET, false)
 	else:

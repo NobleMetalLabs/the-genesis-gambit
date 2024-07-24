@@ -34,7 +34,7 @@ func _notification(what: int) -> void:
 			upnp.delete_port_mapping(PORT, "TCP")
 
 func is_instance_server() -> bool:
-	if multiplayer == null: return false
+	if multiplayer.multiplayer_peer == null: return false
 	return multiplayer.get_unique_id() == 1
 
 func get_peer_id() -> int:

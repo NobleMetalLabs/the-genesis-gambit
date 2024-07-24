@@ -30,7 +30,7 @@ func _ready() -> void:
 	)
 
 func request_host_lobby() -> void:
-	MultiplayerManager.host_lobby(true)
+	MultiplayerManager.host_lobby()
 	_update_game_buttons(true, true)
 	reset_chatbox()
 

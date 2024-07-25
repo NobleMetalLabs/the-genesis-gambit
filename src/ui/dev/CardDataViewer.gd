@@ -1,21 +1,8 @@
 class_name CardDataViewer
-extends Window
+extends Control
 
 @onready var moods_holder : VBoxContainer = $"%MOODS-HOLDER"
 @onready var stats_holder : VBoxContainer = $"%STATS-HOLDER"
-
-func _ready() -> void:
-	self.close_requested.connect(self.hide)
-
-	self.position = DisplayServer.window_get_position() + \
-		Vector2i(0, DisplayServer.window_get_size().y) - \
-		Vector2i(0, self.size.y) + \
-		Vector2i(10, -10)
-
-	var args := Array(OS.get_cmdline_args())
-	if args.has("-client"):
-		self.show()
-	
 
 var current_card : ICardInstance = null
 

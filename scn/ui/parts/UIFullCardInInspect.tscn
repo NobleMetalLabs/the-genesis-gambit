@@ -1,0 +1,75 @@
+[gd_scene load_steps=4 format=3 uid="uid://tixsmfbudwd1"]
+
+[ext_resource type="Script" path="res://src/ui/parts/UIFullCard.gd" id="1_16h0p"]
+[ext_resource type="FontFile" uid="uid://d2oaifr2k5au7" path="res://ast/ui/fonts/counting_apples.ttf" id="2_n2e5q"]
+[ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorder.tscn" id="3_80ho4"]
+
+[node name="UIFullCardInInspect" type="PanelContainer"]
+custom_minimum_size = Vector2(301, 430)
+offset_right = 301.0
+offset_bottom = 430.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_16h0p")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="PanelsHolder" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="ImagePanel" type="PanelContainer" parent="MarginContainer/PanelsHolder"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="IMAGE" type="TextureRect" parent="MarginContainer/PanelsHolder/ImagePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+stretch_mode = 5
+
+[node name="TypePanel" type="PanelContainer" parent="MarginContainer/PanelsHolder"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+
+[node name="TYPE-LABEL" type="Label" parent="MarginContainer/PanelsHolder/TypePanel"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_n2e5q")
+theme_override_font_sizes/font_size = 24
+text = "Attacker"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescPanel" type="PanelContainer" parent="MarginContainer/PanelsHolder"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelsHolder/DescPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_right = 6
+
+[node name="DESC-LABEL" type="Label" parent="MarginContainer/PanelsHolder/DescPanel/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_n2e5q")
+text = "Yap"
+autowrap_mode = 3
+
+[node name="BORDER-COMPONENT" parent="." instance=ExtResource("3_80ho4")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TITLE-LABEL" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2

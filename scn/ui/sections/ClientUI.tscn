@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://b4fmewjxtuggy"]
 
 [ext_resource type="Script" path="res://src/ui/sections/ClientUI.gd" id="1_68p1r"]
-[ext_resource type="PackedScene" uid="uid://db8am01hwwg1q" path="res://scn/ui/parts/UIFullCard.tscn" id="2_5wpux"]
 [ext_resource type="Script" path="res://src/ui/sections/CardInfoPanel.gd" id="3_73koh"]
 [ext_resource type="Texture2D" uid="uid://djjhjh04iwame" path="res://ast/game/cards/fgs/target-placeholder.png" id="5_kgfmm"]
+[ext_resource type="PackedScene" uid="uid://tixsmfbudwd1" path="res://scn/ui/parts/UIFullCardInInspect.tscn" id="5_sxn1b"]
 [ext_resource type="PackedScene" uid="uid://p22xihxignf0" path="res://scn/ui/dev/EffectResolverViewer.tscn" id="6_6ht5e"]
 [ext_resource type="Script" path="res://src/ui/sections/MultiplayerPanel.gd" id="6_akdw7"]
 [ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/DeveloperToolTheme.tres" id="7_ndtgr"]
@@ -33,14 +33,6 @@ size = Vector2i(1024, 360)
 visible = false
 theme = ExtResource("7_ndtgr")
 
-[node name="CARD-DATA-VIEWER" parent="DEVELOPER" instance=ExtResource("8_xoc3b")]
-unique_name_in_owner = true
-handle_input_locally = false
-gui_disable_input = true
-initial_position = 2
-size = Vector2i(600, 300)
-visible = false
-
 [node name="CARD-INFO-PANEL" type="Panel" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
@@ -48,9 +40,10 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 301.0
+offset_right = 350.0
 grow_horizontal = 0
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("3_73koh")
 
 [node name="MarginContainer" type="MarginContainer" parent="CARD-INFO-PANEL"]
@@ -60,14 +53,24 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="CARD-DISPLAY" parent="CARD-INFO-PANEL/MarginContainer" instance=ExtResource("2_5wpux")]
+[node name="VBoxContainer" type="VBoxContainer" parent="CARD-INFO-PANEL/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CARD-DISPLAY" parent="CARD-INFO-PANEL/MarginContainer/VBoxContainer" instance=ExtResource("5_sxn1b")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="CARD-DATA-VIEWER" parent="CARD-INFO-PANEL/MarginContainer/VBoxContainer" instance=ExtResource("8_xoc3b")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="TargetSprite" type="Sprite2D" parent="."]
 visible = false
@@ -80,6 +83,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 
@@ -87,12 +91,14 @@ theme_override_constants/v_separation = 0
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
+mouse_filter = 2
 
 [node name="MULTIPLAYER-PANEL" type="Panel" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
 offset_right = 119.0
 offset_bottom = 52.0
+mouse_filter = 2
 script = ExtResource("6_akdw7")
 
 [node name="Label" type="Label" parent="MULTIPLAYER-PANEL"]

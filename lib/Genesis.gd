@@ -88,6 +88,7 @@ enum Statistic {
 	HEALTH,
 	STRENGTH,
 	SPEED,
+	ENERGY,
 	CHARGES,
 	POSITION,
 	# State
@@ -169,9 +170,10 @@ enum Statistic {
 
 const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	# Basic
-	Statistic.HEALTH : 10,
-	Statistic.STRENGTH : 10,
-	Statistic.SPEED : 10,
+	Statistic.HEALTH : -1,
+	Statistic.STRENGTH : -1,
+	Statistic.SPEED : -1,
+	Statistic.ENERGY : -1,
 	Statistic.CHARGES : 0,
 	Statistic.POSITION : Vector2.ZERO, # Vector type friendly version of null
 	# State

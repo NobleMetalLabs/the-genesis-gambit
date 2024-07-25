@@ -5,15 +5,13 @@
 [ext_resource type="FontFile" uid="uid://d2oaifr2k5au7" path="res://ast/ui/fonts/counting_apples.ttf" id="3_g4b44"]
 [ext_resource type="PackedScene" uid="uid://bdfnnjgo2jc4p" path="res://scn/game/CardBorder.tscn" id="5_xixdo"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_j77t4"]
-font = ExtResource("3_g4b44")
-font_size = 50
+[sub_resource type="LabelSettings" id="LabelSettings_j20f4"]
+font_size = 59
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jjl1y"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_r2y6c"]
-font = ExtResource("3_g4b44")
-font_size = 42
+[sub_resource type="LabelSettings" id="LabelSettings_7aqcy"]
+font_size = 59
 
 [sub_resource type="LabelSettings" id="LabelSettings_sw8rr"]
 resource_local_to_scene = true
@@ -72,7 +70,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
 text = "Black Lotus"
-label_settings = SubResource("LabelSettings_j77t4")
+label_settings = SubResource("LabelSettings_j20f4")
 vertical_alignment = 1
 script = ExtResource("3_fxsx7")
 
@@ -101,10 +99,9 @@ theme_override_constants/margin_right = 10
 unique_name_in_owner = true
 layout_mode = 2
 text = "Artifact"
-label_settings = SubResource("LabelSettings_r2y6c")
+label_settings = SubResource("LabelSettings_7aqcy")
 vertical_alignment = 1
 script = ExtResource("3_fxsx7")
-fill_percentage = 0.6
 
 [node name="DescriptionPanel" type="PanelContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelsHolder"]
 layout_mode = 2

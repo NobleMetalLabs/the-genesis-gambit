@@ -13,6 +13,8 @@ var effects_by_requester : Dictionary = {} # [Object, Array[Effect]]
 var yet_to_process_actions : Array[Action] = []
 var already_processed_actions : Array[Action] = []
 
+signal finished_resolving_effects_for_frame()
+
 func _init() -> void:
 	AuthoritySourceProvider.authority_source.reflect_action.connect(
 		func(action : Action) -> void:
@@ -84,3 +86,5 @@ func resolve_effects(backend_state : MatchBackendState) -> void:
 		if card.is_queued_for_deletion(): continue
 		#request new effects
 		card.logic.process(backend_state, self) #TODO: Should a cache / interop be provided here?
+
+	finished_resolving_effects_for_frame.emit()

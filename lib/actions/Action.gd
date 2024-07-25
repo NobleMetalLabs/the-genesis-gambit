@@ -7,3 +7,7 @@ var player_peer_id : int = MultiplayerManager.network_player.peer_id
 
 func _init() -> void:
 	assert(false, "Action is an abstract class and should not be instantiated.")
+
+func to_effect() -> Effect:
+	assert(false, "Abstract method to_effect() is not implemented in a class extending action.")
+	return null

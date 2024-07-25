@@ -38,6 +38,9 @@ func _cursor_setup() -> void:
 		)
 
 func _move_cursor() -> void:
+	if associated_player == Router.backend.local_player:
+		cursor.visible = false
+		return
 	var cursor_pos : Vector2 = IStatisticPossessor.id(associated_player).get_statistic(Genesis.Statistic.POSITION)
 	var local_pos := cursor_pos - self.position
 	if flipped:

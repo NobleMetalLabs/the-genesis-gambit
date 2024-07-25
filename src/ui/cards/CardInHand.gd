@@ -1,10 +1,6 @@
 class_name CardInHand
 extends Control
 
-#implements ITargetable
-func get_boundary_rectangle() -> Rect2:
-	return card_frontend.texture_rect.get_global_rect()
-
 var card_backend : ICardInstance
 var card_frontend : CardFrontend
 

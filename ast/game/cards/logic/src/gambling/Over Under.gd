@@ -5,12 +5,12 @@ static var description : StringName = "Targeted creature is placed in it's owner
 func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
-		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
+		var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
 		_effect_resolver.request_effect(
 			DeckAddCardEffect.new(
 				instance_owner,
 				target.player,
-				ICardInstance.id(target),
+				target,
 				false,
 				false,
 				false,

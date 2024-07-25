@@ -11,10 +11,10 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 
 	if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_ACTIVATED):
 		if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
-			var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
+			var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
 			if my_stats.get_statistic(Genesis.Statistic.CHARGES) >= 1:
 				my_stats.modify_statistic(Genesis.Statistic.CHARGES, -1)
-				protected_creatures.append(ICardInstance.id(target))
+				protected_creatures.append(target)
 			if my_stats.get_statistic(Genesis.Statistic.CHARGES) == 0:
 				_effect_resolver.request_effect(
 					CreatureLeavePlayEffect.new(
@@ -24,11 +24,10 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 
 	if protected_creatures.size() > 0:
 		for protected_creature : ICardInstance in protected_creatures.duplicate():
-			var protected_creature_target := ITargetable.id(protected_creature)
 			for effect in _effect_resolver.effect_list:
 				if not effect is CreatureAttackEffect: continue
 				effect = effect as CreatureAttackEffect
-				if not effect.target == protected_creature_target: continue
+				if not effect.target == protected_creature: continue
 				effect.damage = 0
 				protected_creatures.erase(protected_creature)
 				break

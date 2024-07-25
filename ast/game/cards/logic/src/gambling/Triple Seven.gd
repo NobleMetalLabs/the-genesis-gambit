@@ -2,12 +2,12 @@ extends CardLogic
 
 static var description : StringName = "Targeted creature receives 3 Anger. If the target is Double Zero, it instead receives 7 Anger."
 
-var previous_target : ITargetable = null
+var previous_target : ICardInstance = null
 
 func process(_gs : MatchBackendState, effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.JUST_TARGETED):
-		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
+		var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
 		if target == previous_target: return
 		if previous_target != null:
 			var p_target_moods := IMoodPossessor.id(previous_target)
@@ -17,7 +17,7 @@ func process(_gs : MatchBackendState, effect_resolver : EffectResolver) -> void:
 					break
 		
 		var anger_count : int = 3
-		if ICardInstance.id(target).metadata.name == "Double Zero": anger_count = 7
+		if target.metadata.name == "Double Zero": anger_count = 7
 		effect_resolver.request_effect(
 			ApplyMoodEffect.new(
 				instance_owner,

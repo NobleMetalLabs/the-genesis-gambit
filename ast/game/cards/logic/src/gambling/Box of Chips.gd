@@ -12,7 +12,7 @@ func process(_gs : MatchBackendState, _effect_resolver : EffectResolver) -> void
 		if my_stats.get_statistic(Genesis.Statistic.CHARGES) >= 1:
 			my_stats.modify_statistic(Genesis.Statistic.CHARGES, -1)
 			if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
-				var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
+				var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
 				_effect_resolver.request_effect(
 					ModifyStatisticEffect.new(
 						instance_owner,

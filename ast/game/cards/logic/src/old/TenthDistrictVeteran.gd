@@ -10,7 +10,7 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 	if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_ACTIVATED):
 		my_stats.modify_statistic(Genesis.Statistic.CHARGES, -1)
 		if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
-			var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
+			var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
 			# AuthoritySourceProvider.authority_source.submit_action(
 			# 	CreatureCooldownAction.setup(
 			# 		target.get_owner(),

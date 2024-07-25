@@ -9,8 +9,8 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if not burrower:
 		if my_stats.get_statistic(Genesis.Statistic.JUST_TARGETED):
-			var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
-			burrower = ICardInstance.id(target)
+			var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
+			burrower = target
 			var burrower_stats := IStatisticPossessor.id(burrower)
 			_effect_resolver.request_effect(
 				SetStatisticEffect.new(

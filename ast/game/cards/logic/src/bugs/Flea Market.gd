@@ -6,7 +6,7 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_ACTIVATED):
 		if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
-			var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
+			var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
 			var target_stats := IStatisticPossessor.id(target)
 			if my_stats.get_statistic(Genesis.Statistic.CHARGES) >= 1:
 				my_stats.modify_statistic(Genesis.Statistic.CHARGES, -1)

@@ -1,14 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cb6cecxkynifh"]
+[gd_scene load_steps=3 format=3 uid="uid://cb6cecxkynifh"]
 
 [ext_resource type="Script" path="res://src/game/Player.gd" id="1_v4nx4"]
-[ext_resource type="Script" path="res://lib/identifiers/ITargetable.gd" id="2_8m20q"]
 [ext_resource type="Script" path="res://lib/identifiers/IStatisticPossesser.gd" id="3_h1v15"]
 
 [node name="Player" type="Node"]
 script = ExtResource("1_v4nx4")
-
-[node name="ITargetable" type="Node" parent="."]
-script = ExtResource("2_8m20q")
 
 [node name="IStatisticPossessor" type="Node" parent="."]
 script = ExtResource("3_h1v15")

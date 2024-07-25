@@ -38,6 +38,12 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 			)
 			card_bk.name = "%s-%s<%s>" % [nplayer.peer_id, ci.metadata.id, ci.metadata.name]
 			card_holder.add_child(card_bk, true)
+			
+			var stats := IStatisticPossessor.id(ci)
+			stats.set_statistic(Genesis.Statistic.IS_IN_DECK, ci in player.cards_in_deck)
+			stats.set_statistic(Genesis.Statistic.IS_IN_HAND, ci in player.cards_in_hand)
+			stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, ci in player.cards_on_field)
+
 		if nplayer.peer_id == MultiplayerManager.network_player.peer_id:
 			local_player = player
 		players.append(player)

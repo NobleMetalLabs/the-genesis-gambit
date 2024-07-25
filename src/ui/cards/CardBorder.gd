@@ -1,4 +1,4 @@
-class_name CardBorderComponent
+class_name CardBorder
 extends Control
 
 @export var common_texture : Texture2D

@@ -53,10 +53,6 @@ enum CardTribe {
 # Actions and Events
 
 # CreatureCooldown*
-enum CooldownType {
-	ATTACK,
-	ACTIVATE,
-}
 enum CooldownStage {
 	START,
 	IN_PROGRESS,
@@ -99,6 +95,11 @@ enum Statistic {
 	IS_ON_FIELD,
 	IS_IN_DECK,
 	IS_MARKED,
+	WAS_JUST_MARKED,
+	WAS_JUST_UNMARKED,
+	IS_FROZEN,
+	WAS_JUST_FROZEN,
+	WAS_JUST_UNFROZEN,
 	WAS_JUST_PLAYED,
 	WAS_JUST_BURNED,
 	WAS_JUST_DISCARDED,
@@ -114,8 +115,6 @@ enum Statistic {
 	WAS_JUST_SACRIFICED,
 	WAS_JUST_DESTROYED,
 	HAS_TARGET,
-	WAS_JUST_MARKED,
-	WAS_JUST_UNMARKED,
 	# References
 	TARGET,
 	MOST_RECENT_ATTACKED,
@@ -141,6 +140,7 @@ enum Statistic {
 	NUM_ACTIVATIONS,
 	NUM_MOODS,
 	NUM_MOOD_CHANGES,
+	NUM_COOLDOWN_FRAMES_LENGTH,
 	NUM_COOLDOWN_FRAMES_REMAINING,
 	# Player
 	MAX_HAND_SIZE,
@@ -178,6 +178,12 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.IS_IN_HAND : false,
 	Statistic.IS_ON_FIELD : false,
 	Statistic.IS_IN_DECK : false,
+	Statistic.IS_MARKED : false,
+	Statistic.WAS_JUST_MARKED : false,
+	Statistic.WAS_JUST_UNMARKED : false,
+	Statistic.IS_FROZEN : false,
+	Statistic.WAS_JUST_FROZEN : false,
+	Statistic.WAS_JUST_UNFROZEN : false,
 	Statistic.WAS_JUST_PLAYED : false,
 	Statistic.WAS_JUST_BURNED : false,
 	Statistic.WAS_JUST_DISCARDED : false,
@@ -193,8 +199,6 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.WAS_JUST_SACRIFICED : false,
 	Statistic.WAS_JUST_DESTROYED : false,
 	Statistic.HAS_TARGET : false,
-	Statistic.WAS_JUST_MARKED : false,
-	Statistic.WAS_JUST_UNMARKED : false,
 	# References
 	Statistic.TARGET : null,
 	Statistic.MOST_RECENT_ATTACKED : null,
@@ -220,6 +224,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.NUM_ACTIVATIONS : 0,
 	Statistic.NUM_MOODS : 0,
 	Statistic.NUM_MOOD_CHANGES : 0,
+	Statistic.NUM_COOLDOWN_FRAMES_LENGTH : 0,
 	Statistic.NUM_COOLDOWN_FRAMES_REMAINING : 0,
 	# Player
 	Statistic.MAX_HAND_SIZE : 10,

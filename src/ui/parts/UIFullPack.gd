@@ -6,7 +6,7 @@ extends Control
 @onready var type_label : Label = $"%TYPE-LABEL"
 @onready var full_button : Button = $"%FULL-BUTTON"
 @onready var inspect_button : Button = $"%INSPECT-BUTTON"
-@onready var border_component : CardBorderComponent = $"%BORDER-COMPONENT"
+@onready var border_component : CardBorder = $"%BORDER-COMPONENT"
 var _metadata : PackMetadata
 
 @export var view_pack_popup_scn : PackedScene

@@ -24,9 +24,8 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	_effect_resolver.request_effect(CreatureCooldownEffect.new(
 		self.requester,
 		self.creature,
-		Genesis.CooldownType.ATTACK,
 		Genesis.CooldownStage.START,
-		3 #TODO: get this value from speed
+		(10 / max(1, self.creature.metadata.speed)) * 5,
 	))
 
 	target_stats.set_statistic(Genesis.Statistic.WAS_JUST_ATTACKED, true)

@@ -17,6 +17,8 @@ func _to_string() -> String:
 	return "CardOnField<%s>" % ICardInstance.id(self)
 
 func _ready() -> void:
+	self.mouse_filter = MOUSE_FILTER_IGNORE
+
 	if card_backend.player == Router.backend.local_player:
 		card_frontend.gui_input.connect(
 			func (event : InputEvent) -> void:

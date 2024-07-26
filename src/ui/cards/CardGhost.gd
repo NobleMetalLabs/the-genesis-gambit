@@ -32,6 +32,13 @@ func _cancel() -> void:
 	self.queue_free()
 
 func _place() -> void:
+	var energy_cost : int = IStatisticPossessor.id(card_backend).get_statistic(Genesis.Statistic.ENERGY)
+	var player_stats := IStatisticPossessor.id(card_backend.player)
+	
+	if player_stats.get_statistic(Genesis.Statistic.ENERGY) + energy_cost > player_stats.get_statistic(Genesis.Statistic.MAX_ENERGY):
+		_cancel()
+		return
+	
 	self.was_placed.emit(self.position - Router.client_ui.local_player_area.field_ui.get_rect().get_center())
 	follow_cursor = false
 

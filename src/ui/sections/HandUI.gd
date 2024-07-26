@@ -16,6 +16,8 @@ func _create_card_ghost(hand_card : CardInHand) -> void:
 			)
 			new_card_ghost.queue_free()
 	)
+	
+	new_card_ghost.was_canceled.connect(refresh_hand)
 
 func refresh_hand() -> void:
 	_clear_hand()

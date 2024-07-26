@@ -43,6 +43,10 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 			stats.set_statistic(Genesis.Statistic.IS_IN_DECK, ci in player.cards_in_deck)
 			stats.set_statistic(Genesis.Statistic.IS_IN_HAND, ci in player.cards_in_hand)
 			stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, ci in player.cards_on_field)
+		
+		var player_stats := IStatisticPossessor.id(player)
+		player_stats.set_statistic(Genesis.Statistic.ENERGY, 0)
+		player_stats.set_statistic(Genesis.Statistic.MAX_ENERGY, player.leader.metadata.energy)
 
 		if nplayer.peer_id == MultiplayerManager.network_player.peer_id:
 			local_player = player

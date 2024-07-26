@@ -14,4 +14,4 @@ logic_script = ExtResource("2_syk16")
 health = 40
 strength = -1
 speed = -1
-energy = -1
+energy = 40

@@ -42,3 +42,6 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 				creature_moods.remove_mood(ssickness_mood))
 		)
 	)
+	
+	var energy_to_add : int = IStatisticPossessor.id(creature).get_statistic(Genesis.Statistic.ENERGY)
+	IStatisticPossessor.id(creature.player).modify_statistic(Genesis.Statistic.ENERGY, energy_to_add)

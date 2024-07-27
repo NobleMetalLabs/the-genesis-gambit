@@ -5,6 +5,7 @@ extends Control
 
 signal was_placed(global_position : Vector2)
 signal was_canceled()
+signal was_denied()
 
 var card_in_hand_mirror : CardInHand
 var card_frontend : CardFrontend
@@ -36,6 +37,7 @@ func _place() -> void:
 	var player_stats := IStatisticPossessor.id(card_backend.player)
 	
 	if player_stats.get_statistic(Genesis.Statistic.ENERGY) + energy_cost > player_stats.get_statistic(Genesis.Statistic.MAX_ENERGY):
+		self.was_denied.emit()
 		_cancel()
 		return
 	

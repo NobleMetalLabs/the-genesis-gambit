@@ -5,6 +5,7 @@ var associated_player : Player
 
 @onready var hand_ui : HandUI = $"%HAND-UI"
 @onready var field_ui : FieldUI = $"%FIELD-UI"
+@onready var deck_ui : DeckUI = $"%DECK-UI"
 @onready var cursor : PlayerCursorUI = $"%PLAYER-CURSOR"
 
 var flipped : bool :
@@ -18,6 +19,7 @@ var flipped : bool :
 func refresh_ui() -> void:
 	hand_ui.refresh_hand()
 	field_ui.refresh_field()
+	deck_ui.refresh_deck_ui()
 
 	_move_cursor()
 

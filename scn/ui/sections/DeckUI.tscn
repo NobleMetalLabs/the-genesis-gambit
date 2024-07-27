@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://buqjcifo0r7iq"]
+
+[ext_resource type="Script" path="res://src/ui/sections/DeckUI.gd" id="1_1k0lu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tgjrx"]
+bg_color = Color(0.252, 0.24, 0.6, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_31bcc"]
+bg_color = Color(0.6, 0.24, 0.24, 1)
+
+[node name="DECK-UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1k0lu")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="CARD-HOLDER" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 20.0
+
+[node name="REMAINING-BAR" type="ProgressBar" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_tgjrx")
+fill_mode = 3
+show_percentage = false
+
+[node name="MARKED-BAR" type="ProgressBar" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_31bcc")
+fill_mode = 3
+show_percentage = false

@@ -11,7 +11,7 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 		var card_target : ICardInstance = IStatisticPossessor.id(card).get_statistic(Genesis.Statistic.TARGET)
 		var target_card : ICardInstance = ICardInstance.id(card_target)
 		if not target_card: continue
-		if not target_card.player == _backend_state.get_player_from_instance(instance_owner): continue
+		if not target_card.player == instance_owner.player: continue
 		if target_card.card_name == "Fungus Garden": #Is this slow? Bad, even?
 			curr_num_tenders += 1
 

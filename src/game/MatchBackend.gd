@@ -32,21 +32,21 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		peer_id_to_player[nplayer.peer_id] = player
 		player_to_peer_id[player] = nplayer.peer_id
 		for ci : ICardInstance in player.cards_in_deck + player.cards_in_hand + player.cards_on_field:
-			var card_bk := CardBackend.new(ci)
-			UIDDB.register_object(ci, 
-				nplayer.peer_id * ci.metadata.id
+			_create_card_backend(
+				ci, "%s-%s<%s>" % [nplayer.peer_id, ci.metadata.id, ci.metadata.name]
 			)
-			card_bk.name = "%s-%s<%s>" % [nplayer.peer_id, ci.metadata.id, ci.metadata.name]
-			card_holder.add_child(card_bk, true)
-			
 			var stats := IStatisticPossessor.id(ci)
 			stats.set_statistic(Genesis.Statistic.IS_IN_DECK, ci in player.cards_in_deck)
 			stats.set_statistic(Genesis.Statistic.IS_IN_HAND, ci in player.cards_in_hand)
 			stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, ci in player.cards_on_field)
-		
+
 		var player_stats := IStatisticPossessor.id(player)
 		player_stats.set_statistic(Genesis.Statistic.ENERGY, 0)
 		player_stats.set_statistic(Genesis.Statistic.MAX_ENERGY, player.leader.metadata.energy)
+
+		player_stats.set_statistic(Genesis.Statistic.NUM_CARDS, player.cards_in_deck.size())
+		player_stats.set_statistic(Genesis.Statistic.NUM_CARDS_MARKED_IN_DECK, 0)
+		player_stats.set_statistic(Genesis.Statistic.NUM_CARDS_LEFT_IN_DECK, player.cards_in_deck.size())
 
 		if nplayer.peer_id == MultiplayerManager.network_player.peer_id:
 			local_player = player
@@ -66,6 +66,20 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		func(_frame_number : int) -> void:
 			effect_resolver.resolve_effects(Router.backend.get_backend_state())
 	)
+
+func create_card(instance_id : int, player_owner : Player, internal_name : String) -> ICardInstance:
+	var ci := ICardInstance.new(CardDB.get_card_by_id(instance_id), player_owner)
+	_create_card_backend(ci, internal_name)
+	return ci
+
+func _create_card_backend(card_instance : ICardInstance, internal_name : String) -> CardBackend:
+	var card_bk := CardBackend.new(card_instance)
+	UIDDB.register_object(card_instance, 
+		hash(internal_name)
+	)
+	card_bk.name = internal_name
+	card_holder.add_child(card_bk, true)
+	return card_bk
 
 func get_backend_state() -> MatchBackendState:
 	return MatchBackendState.new(players)

@@ -67,7 +67,6 @@ func start_target() -> void:
 
 func end_target() -> void:
 	selecting_target = false
-	print(Router.client_ui.hovered_card)
 	AuthoritySourceProvider.authority_source.request_action(
 		CreatureTargetAction.setup(
 			card_backend, Router.client_ui.hovered_card

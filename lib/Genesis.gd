@@ -73,6 +73,15 @@ enum LeaveHandReason {
 	BURNED,
 	BANISHED,
 }
+
+# DeckRemoveCard*
+enum LeaveDeckReason {
+	PLAYED,
+	DRAWN,
+	BANISHED,
+}
+
+# *RemoveCard*
 enum CardRemoveAnimation {
 	INHERIT,
 	PLAY,
@@ -152,7 +161,8 @@ enum Statistic {
 	NUM_CARDS_PLAYED,
 	NUM_CARDS_DRAWN,
 	NUM_CARDS_BURNED,
-	NUM_CARDS_MARKED,
+	NUM_CARDS,
+	NUM_CARDS_MARKED_IN_DECK,
 	NUM_CARDS_LEFT_IN_DECK,
 	HAND_VISIBLE,
 	HAND_VISIBLE_TO_OPPONENTS,
@@ -237,7 +247,8 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.NUM_CARDS_PLAYED: 0,
 	Statistic.NUM_CARDS_DRAWN: 0,
 	Statistic.NUM_CARDS_BURNED: 0,
-	Statistic.NUM_CARDS_MARKED: 0,
+	Statistic.NUM_CARDS : 0,
+	Statistic.NUM_CARDS_MARKED_IN_DECK : 0,
 	Statistic.NUM_CARDS_LEFT_IN_DECK: 0,
 	Statistic.HAND_VISIBLE: false,
 	Statistic.HAND_VISIBLE_TO_OPPONENTS: false,

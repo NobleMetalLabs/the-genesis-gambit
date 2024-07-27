@@ -13,13 +13,18 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 				standing_players.append(player)
 	
 	for effect : Effect in _effect_resolver.effect_list:
-		if not effect is HandAddCardEffect: continue
-		var draw_effect := effect as HandAddCardEffect
+		if not effect is DeckDrawCardEffect: continue
+		var draw_effect := effect as DeckDrawCardEffect
 		if draw_effect.player in standing_players:
 			standed_players.append(draw_effect.player)
 			standing_players.erase(draw_effect.player)
 			_effect_resolver.remove_effect(draw_effect)
 		elif draw_effect.player in standed_players:
 			standed_players.erase(draw_effect.player)
-			_effect_resolver.request_effect(draw_effect)
+			_effect_resolver.request_effect(
+				DeckDrawCardEffect.new(
+					instance_owner,
+					draw_effect.player,
+				)
+			)
 	

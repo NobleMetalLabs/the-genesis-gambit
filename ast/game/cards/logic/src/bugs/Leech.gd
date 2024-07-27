@@ -22,6 +22,6 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 				instance_owner,
 			)
 		)
-		var player_stats := IStatisticPossessor.id(_backend_state.get_player_from_instance(instance_owner))
+		var player_stats := IStatisticPossessor.id(instance_owner.player)
 		var target_stats := IStatisticPossessor.id(target)
 		player_stats.modify_statistic(Genesis.Statistic.HEALTH, target_stats.get_statistic(Genesis.Statistic.HEALTH))

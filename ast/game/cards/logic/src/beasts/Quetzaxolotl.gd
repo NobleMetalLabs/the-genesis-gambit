@@ -24,7 +24,7 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 			if effect.creature != instance_owner: continue
 			my_stats.modify_statistic(Genesis.Statistic.MAX_ENERGY, -1)
 			_effect_resolver.request_effect(
-				HandAddCardEffect.new(
+				DeckDrawCardEffect.new(
 					instance_owner,
 					instance_owner.player
 				)

@@ -16,7 +16,7 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 			)
 		for _i in range(7):
 			_effect_resolver.request_effect(
-				HandAddCardEffect.new(
+				DeckDrawCardEffect.new(
 					instance_owner,
 					player,
 				)

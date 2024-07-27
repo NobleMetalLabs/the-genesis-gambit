@@ -20,6 +20,7 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	self.creature.player.cards_on_field.append(creature)
 	#TODO: keep_stats and keep_moods do anything
 
+	#TODO: Cards only WAS_JUST_PLAYED if coming from hand; seperate WAS_JUST_SPAWNED to replace here
 	creature_stats.set_statistic(Genesis.Statistic.WAS_JUST_PLAYED, true)
 	_effect_resolver.request_effect(SetStatisticEffect.new(
 		self.requester, creature_stats, Genesis.Statistic.WAS_JUST_PLAYED, false

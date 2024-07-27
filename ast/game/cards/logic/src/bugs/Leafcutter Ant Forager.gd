@@ -8,7 +8,7 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 	if not fungus_garden:
 		for card : ICardInstance in _backend_state.get_player_from_instance(instance_owner).cards_on_field:
 			if not card: continue
-			if card.card_name == "Fungus Garden":
+			if card.metadata.name == "Fungus Garden":
 				fungus_garden = card
 				break
 	

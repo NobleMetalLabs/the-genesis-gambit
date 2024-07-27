@@ -28,7 +28,11 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	var card_stats := IStatisticPossessor.id(card)
 	card_stats.set_statistic(Genesis.Statistic.IS_IN_DECK, true)
 	
+	IStatisticPossessor.id(player).modify_statistic(Genesis.Statistic.NUM_CARDS_LEFT_IN_DECK, 1)
+
 	if self.as_marked:
+		IStatisticPossessor.id(player).modify_statistic(Genesis.Statistic.NUM_CARDS_MARKED_IN_DECK, 1)
+		
 		card_stats.set_statistic(Genesis.Statistic.IS_MARKED, true)
 		card_stats.set_statistic(Genesis.Statistic.WAS_JUST_MARKED, true)
 		_effect_resolver.request_effect(SetStatisticEffect.new(

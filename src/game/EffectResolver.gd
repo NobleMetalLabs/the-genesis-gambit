@@ -15,6 +15,12 @@ var already_processed_actions : Array[Action] = []
 
 signal finished_resolving_effects_for_frame()
 
+
+# TODO: ER should be able to be queried for all effects that have been relevant to a card, including resolved ones.
+# This would also reduce the amount of effect_list looping in card logics.
+
+# TODO: ER should support effects failing, including cause. This will be really bad for chained effects though, as they will need to be undone?
+
 func _init() -> void:
 	AuthoritySourceProvider.authority_source.reflect_action.connect(
 		func(action : Action) -> void:

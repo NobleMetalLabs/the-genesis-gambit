@@ -43,7 +43,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		for pa : PlayerAreaUI in grid_cont.get_children().slice(-grid_size):
 			grid_cont.move_child(pa, 0)
 
-	grid_cont.columns = grid_size
+	grid_cont.columns = max(1, grid_size)
 	for c_idx in range(0, grid_size):
 		grid_cont.get_child(c_idx).flipped = true
 
@@ -78,6 +78,7 @@ func reflect_action(action : Action) -> void:
 			print("huh")
 	elif action is HandAction:
 		player_area.hand_ui.refresh_hand()
+		player_area.deck_ui.refresh_deck_ui()
 		if action is HandPlayCardAction:
 			player_area.field_ui.refresh_field()
 	elif action is CursorAction:
@@ -96,6 +97,7 @@ func _process(_delta : float) -> void:
 	if Input.is_action_just_pressed("ui_inspect"):
 		if hovered_card != null:
 			card_info_panel.set_card_metadata(hovered_card.metadata)
+			card_info_panel.card_display.description_label.text = hovered_card.logic.description #lol
 			card_info_panel.display()
 			dev_card_viewer.set_card(hovered_card)
 		else:

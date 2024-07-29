@@ -1,10 +1,6 @@
 class_name CardOnField
 extends Control
 
-#implements ITargetable
-func get_boundary_rectangle() -> Rect2:
-	return card_frontend.get_global_rect()
-
 var card_frontend : CardFrontend
 var card_backend : ICardInstance
 
@@ -21,6 +17,8 @@ func _to_string() -> String:
 	return "CardOnField<%s>" % ICardInstance.id(self)
 
 func _ready() -> void:
+	self.mouse_filter = MOUSE_FILTER_IGNORE
+
 	if card_backend.player == Router.backend.local_player:
 		card_frontend.gui_input.connect(
 			func (event : InputEvent) -> void:
@@ -49,13 +47,13 @@ func _process(_delta : float) -> void:
 	var target : ICardInstance = IStatisticPossessor.id(card_backend).get_statistic(Genesis.Statistic.TARGET)
 	target_arrow.visible = (target != null or selecting_target)
 
-	#var self_rect : Rect2 = self.get_boundary_rectangle()
+	target_arrow.start_position = card_frontend.get_rect().get_center()
 	if selecting_target:
-		target_arrow.end_position = get_parent().get_global_mouse_position()
+		target_arrow.end_position = get_global_mouse_position()
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			end_target()
 	elif target != null:
-		var target_rect : Rect2 = Router.client_ui.get_player_area(target.player).field_ui.instance_to_field_card[target].get_boundary_rectangle()
+		var target_rect : Rect2 = Router.client_ui.get_player_area(target.player).field_ui.instance_to_field_card[target].get_global_rect()
 		target_arrow.end_position = target_rect.get_center()
 
 func start_drag() -> void:

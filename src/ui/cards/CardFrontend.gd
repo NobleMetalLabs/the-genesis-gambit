@@ -13,10 +13,36 @@ var card_instance : ICardInstance
 
 func _ready() -> void:
 	card_instance = get_parent().get("card_backend")
-	if card_instance == null: return
+	set_card(card_instance)
+
+func set_card(card : ICardInstance) -> void:
+	if card == null: return
+	card_instance = card
 	self.texture = card_instance.metadata.image
-	
 	border_component.set_rarity(card_instance.metadata.rarity)
+
+var is_face_visible : bool = false
+func set_visibility(face : bool, rarity : bool, _type : bool) -> void:
+	if card_instance == null: return
+
+	is_face_visible = face
+	if face:
+		self.texture = card_instance.metadata.image
+	else:
+		self.texture = back_img
+	
+	if rarity:
+		border_component.set_rarity(card_instance.metadata.rarity)
+	else:
+		border_component.set_rarity(Genesis.CardRarity.COMMON)
+	
+	#if _type:
+
+func set_overlays(is_marked : bool, is_frozen : bool) -> void:
+	overlay_component.set_overlays(is_marked, is_frozen)
+
+func set_cooldown_bar_value(value : float) -> void:
+	overlay_component.set_cooldown_bar_value(value)
 
 func check_self_for_animation() -> void:
 	var card_stats := IStatisticPossessor.id(card_instance)
@@ -43,25 +69,4 @@ func check_self_for_animation() -> void:
 		var cooldown_remaining : int = card_stats.get_statistic(Genesis.Statistic.NUM_COOLDOWN_FRAMES_REMAINING)
 		var cooldown_progress : float = float(cooldown_remaining) / max(1, cooldown_length)
 		set_cooldown_bar_value(cooldown_progress)
-
-var is_face_visible : bool = false
-func set_visibility(face : bool, rarity : bool, _type : bool) -> void:
-	is_face_visible = face
-	if face:
-		self.texture = card_instance.metadata.image
-	else:
-		self.texture = back_img
-	
-	if rarity:
-		border_component.set_rarity(card_instance.metadata.rarity)
-	else:
-		border_component.set_rarity(Genesis.CardRarity.COMMON)
-	
-	#if _type:
-
-func set_overlays(is_marked : bool, is_frozen : bool) -> void:
-	overlay_component.set_overlays(is_marked, is_frozen)
-
-func set_cooldown_bar_value(value : float) -> void:
-	overlay_component.set_cooldown_bar_value(value)
 

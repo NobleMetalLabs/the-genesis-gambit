@@ -5,6 +5,7 @@ var associated_player : Player
 
 @onready var hand_ui : HandUI = $"%HAND-UI"
 @onready var field_ui : FieldUI = $"%FIELD-UI"
+@onready var deck_ui : DeckUI = $"%DECK-UI"
 @onready var cursor : PlayerCursorUI = $"%PLAYER-CURSOR"
 
 var flipped : bool :
@@ -13,10 +14,12 @@ var flipped : bool :
 		flipped = value
 		hand_ui.get_parent().set_anchors_preset(PRESET_CENTER_TOP if flipped else PRESET_CENTER_BOTTOM)
 		hand_ui.get_parent().position.y = 0 #I LOVE GODOT ENGINE!!!!
+		hand_ui.energy_bar.fill_mode = (ProgressBar.FILL_TOP_TO_BOTTOM if flipped else ProgressBar.FILL_BOTTOM_TO_TOP)
 
 func refresh_ui() -> void:
 	hand_ui.refresh_hand()
 	field_ui.refresh_field()
+	deck_ui.refresh_deck_ui()
 
 	_move_cursor()
 
@@ -38,6 +41,9 @@ func _cursor_setup() -> void:
 		)
 
 func _move_cursor() -> void:
+	if associated_player == Router.backend.local_player:
+		cursor.visible = false
+		return
 	var cursor_pos : Vector2 = IStatisticPossessor.id(associated_player).get_statistic(Genesis.Statistic.POSITION)
 	var local_pos := cursor_pos - self.position
 	if flipped:

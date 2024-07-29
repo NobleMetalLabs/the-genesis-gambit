@@ -7,14 +7,14 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 	for player : Player in _backend_state.players:
 		for _i in range(2):
 			_effect_resolver.request_effect(
-				HandAddCardEffect.new(
+				DeckDrawCardEffect.new(
 					instance_owner,
 					player,
 				)
 			)
 	if _backend_state.players.size() > 3:
 		_effect_resolver.request_effect(
-			HandAddCardEffect.new(
+			DeckDrawCardEffect.new(
 				instance_owner,
 				_backend_state.get_player_from_instance(instance_owner),
 			)

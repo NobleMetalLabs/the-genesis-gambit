@@ -26,12 +26,12 @@ func scan_packs(path : String) -> void:
 		new_pack.full_button.pressed.connect(add_slice.bind(new_pack_data))
 
 func filter_packs(_index : int) -> void:
-	var selected_rarity : int = rarity_filter.selected
-	var selected_type : int = type_filter.selected
+	var selected_rarity : Genesis.PackRarity = rarity_filter.selected as Genesis.PackRarity
+	#var selected_type : Genesis.PackType = type_filter.selected as Genesis.PackType
 	for pack : UIFullPack in pack_container.get_children():
-		var rarity_good : bool = (selected_rarity == 0 or pack._metadata.rarity == rarity_filter.get_item_text(selected_rarity))
-		var type_good : bool = (selected_type == 0 or pack._metadata.type == type_filter.get_item_text(selected_type))
-		pack.visible = rarity_good and type_good
+		var rarity_good : bool = (selected_rarity == 0 or pack._metadata.rarity == selected_rarity)
+		#var type_good : bool = (selected_type == 0 or pack._metadata.type == selected_type)
+		pack.visible = rarity_good #and type_good
 
 func update_pack_slices(_deck: PackStack) -> void:
 	for slice : UIPackSlice in slice_container.get_children(): slice.queue_free()

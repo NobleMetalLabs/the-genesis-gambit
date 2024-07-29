@@ -8,10 +8,10 @@ var self_moods : Array[StatisticMood] = []
 func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var curr_num_tenders : int = 0
 	for card : ICardInstance in _backend_state.get_player_from_instance(instance_owner).cards_on_field:
-		var card_target : ITargetable = IStatisticPossessor.id(card).get_statistic(Genesis.Statistic.TARGET)
+		var card_target : ICardInstance = IStatisticPossessor.id(card).get_statistic(Genesis.Statistic.TARGET)
 		var target_card : ICardInstance = ICardInstance.id(card_target)
 		if not target_card: continue
-		if not target_card.player == _backend_state.get_player_from_instance(instance_owner): continue
+		if not target_card.player == instance_owner.player: continue
 		if target_card.card_name == "Fungus Garden": #Is this slow? Bad, even?
 			curr_num_tenders += 1
 

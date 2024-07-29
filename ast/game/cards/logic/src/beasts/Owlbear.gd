@@ -10,8 +10,8 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 		if my_stats.get_statistic(Genesis.Statistic.CHARGES) >= 1:
 			my_stats.modify_statistic(Genesis.Statistic.CHARGES, -1)
 			if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
-				var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
-				watching_creatures.append(ICardInstance.id(target))
+				var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
+				watching_creatures.append(target)
 
 	for effect in _effect_resolver.effect_list:
 		if not effect is CreatureAttackEffect: continue

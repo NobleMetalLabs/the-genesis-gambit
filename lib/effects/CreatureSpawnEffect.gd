@@ -20,6 +20,7 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	self.creature.player.cards_on_field.append(creature)
 	#TODO: keep_stats and keep_moods do anything
 
+	#TODO: Cards only WAS_JUST_PLAYED if coming from hand; seperate WAS_JUST_SPAWNED to replace here
 	creature_stats.set_statistic(Genesis.Statistic.WAS_JUST_PLAYED, true)
 	_effect_resolver.request_effect(SetStatisticEffect.new(
 		self.requester, creature_stats, Genesis.Statistic.WAS_JUST_PLAYED, false
@@ -42,3 +43,6 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 				creature_moods.remove_mood(ssickness_mood))
 		)
 	)
+	
+	var energy_to_add : int = IStatisticPossessor.id(creature).get_statistic(Genesis.Statistic.ENERGY)
+	IStatisticPossessor.id(creature.player).modify_statistic(Genesis.Statistic.ENERGY, energy_to_add)

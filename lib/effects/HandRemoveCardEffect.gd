@@ -37,7 +37,7 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 		_effect_resolver.request_effect(DeckAddCardEffect.new(
 			self.requester, self.player, self.card
 		))
-		_effect_resolver.request_effect(HandAddCardEffect.new(
+		_effect_resolver.request_effect(DeckDrawCardEffect.new(
 			self.requester, self.player
 		))
 		

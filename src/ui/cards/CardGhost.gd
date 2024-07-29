@@ -5,6 +5,7 @@ extends Control
 
 signal was_placed(global_position : Vector2)
 signal was_canceled()
+signal was_denied()
 
 var card_in_hand_mirror : CardInHand
 var card_frontend : CardFrontend
@@ -32,6 +33,14 @@ func _cancel() -> void:
 	self.queue_free()
 
 func _place() -> void:
+	var energy_cost : int = IStatisticPossessor.id(card_backend).get_statistic(Genesis.Statistic.ENERGY)
+	var player_stats := IStatisticPossessor.id(card_backend.player)
+	
+	if player_stats.get_statistic(Genesis.Statistic.ENERGY) + energy_cost > player_stats.get_statistic(Genesis.Statistic.MAX_ENERGY):
+		self.was_denied.emit()
+		_cancel()
+		return
+	
 	self.was_placed.emit(self.position - Router.client_ui.local_player_area.field_ui.get_rect().get_center())
 	follow_cursor = false
 

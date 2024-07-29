@@ -43,7 +43,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		for pa : PlayerAreaUI in grid_cont.get_children().slice(-grid_size):
 			grid_cont.move_child(pa, 0)
 
-	grid_cont.columns = grid_size
+	grid_cont.columns = max(1, grid_size)
 	for c_idx in range(0, grid_size):
 		grid_cont.get_child(c_idx).flipped = true
 
@@ -55,12 +55,36 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	client_ui_setup.emit()
 	self.refresh_ui()
 
-	#TODO: dont do this. actions in progress during frame update get fucked.
-	#TODO: seriously do action/effect deltaing soon. theres some kinda meh perf issues which i think would be fixed by this not being horrible
-	AuthoritySourceProvider.authority_source.new_frame_index.connect(
-		func(_frame_number : int) -> void:
-			refresh_ui()
-	)
+	Router.backend.effect_resolver.finished_resolving_effects_for_frame.connect(update_ui)
+
+func update_ui() -> void:
+	var ef : EffectResolver = Router.backend.effect_resolver
+	for action in ef.yet_to_process_actions + ef.already_processed_actions:
+		reflect_action(action)
+	
+func reflect_action(action : Action) -> void:
+	var player : Player = Router.backend.peer_id_to_player[action.player_peer_id]
+	var player_area : PlayerAreaUI = _player_to_area[player]
+	if action is CreatureAction:
+		if action is CreatureActivateAction:
+			var ci : ICardInstance = action.to_effect().creature
+			player_area.field_ui.refresh_card(ci)
+		elif action is CreatureTargetAction:
+			var ef : CreatureTargetEffect = action.to_effect()
+			player_area.field_ui.refresh_card(ef.creature)
+			if ef.target != null:
+				_player_to_area[ef.target.player].field_ui.refresh_card(ef.target)
+		else:
+			print("huh")
+	elif action is HandAction:
+		player_area.hand_ui.refresh_hand()
+		player_area.deck_ui.refresh_deck_ui()
+		if action is HandPlayCardAction:
+			player_area.field_ui.refresh_field()
+	elif action is CursorAction:
+		player_area._move_cursor()
+	else:
+		print("huh")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float) -> void:
@@ -73,6 +97,7 @@ func _process(_delta : float) -> void:
 	if Input.is_action_just_pressed("ui_inspect"):
 		if hovered_card != null:
 			card_info_panel.set_card_metadata(hovered_card.metadata)
+			card_info_panel.card_display.description_label.text = hovered_card.logic.description #lol
 			card_info_panel.display()
 			dev_card_viewer.set_card(hovered_card)
 		else:

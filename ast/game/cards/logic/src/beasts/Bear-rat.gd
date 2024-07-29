@@ -12,7 +12,7 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 		if my_stats.get_statistic(Genesis.Statistic.CHARGES) >= 1:
 			my_stats.modify_statistic(Genesis.Statistic.CHARGES, -1)
 			if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
-				var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
+				var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
 				IStatisticPossessor.id(target).set_statistic(Genesis.Statistic.IS_MARKED, false)
 			var my_player : Player = _backend_state.get_player_from_instance(instance_owner)
 			if my_player.cards_in_deck.size() > 21:

@@ -1,10 +1,10 @@
 class_name CreatureAttackEffect
 extends CreatureEffect
 
-var target : ITargetable
+var target : ICardInstance
 var damage : int
 
-func _init(_requester : Object, _creature : ICardInstance, _target : ITargetable, _damage : int) -> void:
+func _init(_requester : Object, _creature : ICardInstance, _target : ICardInstance, _damage : int) -> void:
 	self.requester = _requester
 	self.creature = _creature
 	self.target = _target

@@ -7,8 +7,8 @@ var watching_creatures : Array[ICardInstance]
 func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.HAS_TARGET):
-		var target : ITargetable = my_stats.get_statistic(Genesis.Statistic.TARGET)
-		watching_creatures.append(ICardInstance.id(target))
+		var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
+		watching_creatures.append(target)
 
 	for effect in _effect_resolver.effect_list:
 		if not effect is CreatureAttackEffect: continue
@@ -18,7 +18,7 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 			CreatureAttackEffect.new(
 				instance_owner,
 				instance_owner,
-				ITargetable.id(effect.creature),
+				effect.creature,
 				my_stats.get_statistic(Genesis.Statistic.STRENGTH) / 2
 			)
 		)

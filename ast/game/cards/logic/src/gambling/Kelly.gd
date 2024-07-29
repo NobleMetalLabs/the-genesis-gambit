@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "When you have zero cards in hand, sacrifice Kelly and draw three cards."
 
-var previous_target : ITargetable = null
+var previous_target : ICardInstance = null
 
 func process(_gs : MatchBackendState, effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
@@ -18,7 +18,7 @@ func process(_gs : MatchBackendState, effect_resolver : EffectResolver) -> void:
 	)
 	for i in range(3):
 		effect_resolver.request_effect(
-			HandAddCardEffect.new(
+			DeckDrawCardEffect.new(
 				instance_owner,
 				instance_owner.player
 			)

@@ -20,3 +20,6 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	_effect_resolver.request_effect(DeckAddCardEffect.new(
 		self, player_owner, ICardInstance.id(self.creature)
 	))
+	
+	var energy_to_remove : int = IStatisticPossessor.id(creature).get_statistic(Genesis.Statistic.ENERGY)
+	IStatisticPossessor.id(creature.player).modify_statistic(Genesis.Statistic.ENERGY, -energy_to_remove)

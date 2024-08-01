@@ -13,6 +13,14 @@ enum CardType {
 	LEADER,
 }
 
+const COLOR_BY_CARDTYPE : Dictionary = {
+	Genesis.CardType.ATTACKER: Color.FOREST_GREEN,
+	Genesis.CardType.INSTANT: Color.CRIMSON,
+	Genesis.CardType.SUPPORT: Color.CORNFLOWER_BLUE,
+	Genesis.CardType.PASSIVE: Color.DARK_ORCHID,
+	Genesis.CardType.LEADER: Color.WHITE
+}
+
 enum CardRarity {
 	COMMON,
 	RARE,

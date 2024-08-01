@@ -12,7 +12,7 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 		var target_card : ICardInstance = ICardInstance.id(card_target)
 		if not target_card: continue
 		if not target_card.player == instance_owner.player: continue
-		if target_card.card_name == "Fungus Garden": #Is this slow? Bad, even?
+		if target_card.metadata.name == "Fungus Garden": #Is this slow? Bad, even?
 			curr_num_tenders += 1
 
 	var my_moods := IMoodPossessor.id(instance_owner)

@@ -9,7 +9,7 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 	if not my_stats.get_statistic(Genesis.Statistic.WAS_JUST_PLAYED): return
 	for card : ICardInstance in _backend_state.get_player_from_instance(instance_owner).cards_on_field:
 		if not card: continue
-		if card.type != Genesis.CardType.ATTACKER: continue
+		if card.metadata.type != Genesis.CardType.ATTACKER: continue
 		_effect_resolver.request_effect(
 			ApplyMoodEffect.new(
 				instance_owner,

@@ -71,9 +71,17 @@ func reflect_action(action : Action) -> void:
 			player_area.field_ui.refresh_card(ci)
 		elif action is CreatureTargetAction:
 			var ef : CreatureTargetEffect = action.to_effect()
-			player_area.field_ui.refresh_card(ef.creature)
-			if ef.target != null:
+
+			if IStatisticPossessor.id(ef.creature).get_statistic(Genesis.Statistic.IS_ON_FIELD):
+				player_area.field_ui.refresh_card(ef.creature)
+			elif IStatisticPossessor.id(ef.creature).get_statistic(Genesis.Statistic.IS_IN_HAND): 
+				player_area.hand_ui.refresh_hand()
+			
+			if ef.target == null: return
+			if IStatisticPossessor.id(ef.target).get_statistic(Genesis.Statistic.IS_ON_FIELD):
 				_player_to_area[ef.target.player].field_ui.refresh_card(ef.target)
+			elif IStatisticPossessor.id(ef.target).get_statistic(Genesis.Statistic.IS_IN_HAND): 
+				_player_to_area[ef.target.player].hand_ui.refresh_hand()
 		else:
 			print("huh")
 	elif action is HandAction:
@@ -86,6 +94,8 @@ func reflect_action(action : Action) -> void:
 	else:
 		print("huh")
 
+var hovered_card : ICardInstance = null
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float) -> void:
 	#if get_window().gui_get_focus_owner() != Router.client_ui: return
@@ -95,7 +105,7 @@ func _process(_delta : float) -> void:
 		)
 
 	if Input.is_action_just_pressed("ui_inspect"):
-		if hovered_card != null:
+		if hovered_card != null and hovered_card.associated_frontend.is_face_visible:
 			card_info_panel.set_card_metadata(hovered_card.metadata)
 			card_info_panel.card_display.description_label.text = hovered_card.logic.description #lol
 			card_info_panel.display()
@@ -125,8 +135,6 @@ func get_player_area(player : Player) -> PlayerAreaUI:
 func refresh_ui() -> void:
 	for pa in player_areas:
 		pa.refresh_ui()
-
-var hovered_card : ICardInstance = null
 
 func update_target_sprite(target : ICardInstance) -> void:
 	target = target.get_object()

@@ -5,13 +5,15 @@ var card_frontend : CardFrontend
 var card_backend : ICardInstance
 
 func _init(backend : ICardInstance) -> void:
-	card_backend = backend
+	self.card_backend = backend
 
 	card_frontend = CardFrontend.instantiate()
 	self.add_child(card_frontend)
 	self.set_anchors_preset(PRESET_FULL_RECT)
 	self.set_size(Vector2.ZERO)
 	self.name = "CardOnField"
+	
+	card_backend.associated_frontend = card_frontend
 	
 func _to_string() -> String:
 	return "CardOnField<%s>" % ICardInstance.id(self)
@@ -25,13 +27,14 @@ func _ready() -> void:
 				if not event is InputEventMouseButton: return
 				if event.button_index == MOUSE_BUTTON_LEFT:
 					if event.pressed: start_drag()
+					get_viewport().set_input_as_handled()
 				if event.button_index == MOUSE_BUTTON_RIGHT:
 					if event.pressed: start_target()
-				get_viewport().set_input_as_handled()
+					get_viewport().set_input_as_handled()
 		)
 	
 	target_arrow.z_index = 2
-	target_arrow.modulate = Color.RED
+	target_arrow.modulate = Genesis.COLOR_BY_CARDTYPE[card_backend.metadata.type]
 	add_child(target_arrow)
 	
 var dragging : bool = false
@@ -53,7 +56,7 @@ func _process(_delta : float) -> void:
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			end_target()
 	elif target != null:
-		var target_rect : Rect2 = Router.client_ui.get_player_area(target.player).field_ui.instance_to_field_card[target].get_global_rect()
+		var target_rect : Rect2 = target.associated_frontend.get_global_rect()
 		target_arrow.end_position = target_rect.get_center()
 
 func start_drag() -> void:

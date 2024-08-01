@@ -82,8 +82,7 @@ func _add_card_to_hand(card_instance : ICardInstance) -> void:
 
 	card_in_hand.mouse_entered.connect(
 		func() -> void:
-			if card_face_is_visible: Router.client_ui.hovered_card = card_in_hand.card_backend
-			else: Router.client_ui.hovered_card = null
+			Router.client_ui.hovered_card = card_in_hand.card_backend
 	)
 	card_in_hand.mouse_exited.connect(
 		func() -> void:

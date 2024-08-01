@@ -56,6 +56,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	self.refresh_ui()
 
 var hovered_card : ICardInstance = null
+@onready var burn_timer : Timer = $BurnTimer
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float) -> void:
@@ -83,12 +84,33 @@ func _process(_delta : float) -> void:
 				)
 
 	if Input.is_action_just_pressed("hand_burn"):
-		AuthoritySourceProvider.authority_source.request_action(
-			HandBurnHandAction.setup()
-		)
+		if burn_timer.is_stopped():
+			AuthoritySourceProvider.authority_source.request_action(
+				HandBurnHandAction.setup()
+			)
+			burn_timer.start()
+		else:
+			burn_cooldown_animation()
 
 	if Input.is_action_just_pressed("debug_advance_frame"):
 		AuthoritySourceProvider.authority_source.execute_frame()
+	
+	if not burn_timer.is_stopped():
+		$BurnBar.value = 60 - burn_timer.time_left
+
+@onready var burn_bar_label : Label = $BurnBar/Label
+func burn_cooldown_animation() -> void:
+	var flash_tween : Tween = get_tree().create_tween()
+	flash_tween.tween_property(burn_bar_label, "modulate", Color(1, 0, 0, 1), 0)
+	flash_tween.tween_property(burn_bar_label, "modulate", Color(1, 1, 1, 1), 0.5)
+	
+	var wiggle_tween : Tween = get_tree().create_tween()
+	wiggle_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+	wiggle_tween.tween_property(burn_bar_label, "position:x", 5, 0.05)
+	wiggle_tween.tween_property(burn_bar_label, "position:x", -5, 0.05)
+	wiggle_tween.tween_property(burn_bar_label, "position:x", 5, 0.05)
+	wiggle_tween.tween_property(burn_bar_label, "position:x", -5, 0.05)
+	wiggle_tween.tween_property(burn_bar_label, "position:x", 0, 0.1)
 
 func get_player_area(player : Player) -> PlayerAreaUI:
 	return _player_to_area[player]

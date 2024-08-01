@@ -15,8 +15,6 @@ func _ready() -> void:
 	card_instance = get_parent().get("card_backend")
 	set_card(card_instance)
 
-# TODO: refresh_card() function to request refresh from UI controller. 
-# Invokes callable provided by UI controller when frontend is created. :-)
 func set_card(card : ICardInstance) -> void:
 	if card == null: return
 	card_instance = card

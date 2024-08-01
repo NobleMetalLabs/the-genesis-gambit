@@ -20,6 +20,9 @@ func clone() -> IMoodPossessor:
 func apply_mood(mood : Mood) -> void:
 	_active_moods.append(mood)
 
+func get_moods() -> Array[Mood]:
+	return _active_moods
+
 func remove_mood(mood : Mood) -> void:
 	_active_moods.erase(mood)
 

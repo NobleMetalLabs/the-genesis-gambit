@@ -1,6 +1,6 @@
 extends CardLogic
 
-static var description : StringName = "When Exoskeleton is played, gain 3 charges. Activate: The next attack targeted creature receives deals no damage. When Exoskeleton runs out of charges, it is destroyed."
+static var description : StringName = "When Exoskeleton is played, gain 3 charges. Activate: The next attack targeted creature receives deals no damage. When Exoskeleton runs out of charges, it is killed."
 
 var protected_creatures : Array[ICardInstance] = []
 

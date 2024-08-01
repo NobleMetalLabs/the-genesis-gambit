@@ -52,6 +52,7 @@ func refresh_energy_bar() -> void:
 func _add_card_to_hand(card_instance : ICardInstance) -> void:
 	var card_in_hand := CardInHand.new(card_instance)
 	card_stack_container.add_child(card_in_hand, true)
+
 	var card_face_is_visible : bool = false
 	var card_rarity_is_visible : bool = false
 	var card_type_is_visible : bool = false

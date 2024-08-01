@@ -15,7 +15,6 @@ var already_processed_actions : Array[Action] = []
 
 signal finished_resolving_effects_for_frame()
 
-
 # TODO: ER should be able to be queried for all effects that have been relevant to a card, including resolved ones.
 # This would also reduce the amount of effect_list looping in card logics.
 
@@ -61,6 +60,18 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 			push_warning("Error: Effect '%s' does not have a resolve method." % [effect])
 		effect.resolve_status = Effect.ResolveStatus.RESOLVED
 		remove_effect(effect)
+		
+		var effect_properties : Array[Dictionary] = effect.get_property_list()
+		var relevant_cards : Array[ICardInstance] = []
+		relevant_cards.assign(effect_properties.filter(
+			func(dict : Dictionary) -> bool:
+				return dict.get("class_name") == "ICardInstance"
+		).map(
+			func(dict : Dictionary) -> ICardInstance:
+				return effect.get(dict["name"])
+		))
+		for card : ICardInstance in relevant_cards:
+			Router.client_ui.refresh_card(card)
 
 func resolve_effects(backend_objects : BackendObjectCollection) -> void:
 	#process all actions

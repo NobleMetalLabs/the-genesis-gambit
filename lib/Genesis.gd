@@ -131,7 +131,7 @@ enum Statistic {
 	WAS_JUST_TARGETED,
 	JUST_DIED,
 	WAS_JUST_SACRIFICED,
-	WAS_JUST_DESTROYED,
+	WAS_JUST_KILLED,
 	HAS_TARGET,
 	# References
 	TARGET,
@@ -149,7 +149,7 @@ enum Statistic {
 	CAN_TARGET_SUPPORTS,
 	CAN_BE_TARGETED,
 	CAN_BE_SACRIFICED,
-	CAN_BE_DESTROYED,
+	CAN_BE_KILLED,
 	ACTS_AS_BLOCKER,
 	ACTS_AS_UNMARKED,
 	# Counts
@@ -217,7 +217,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.WAS_JUST_TARGETED : false,
 	Statistic.JUST_DIED : false,
 	Statistic.WAS_JUST_SACRIFICED : false,
-	Statistic.WAS_JUST_DESTROYED : false,
+	Statistic.WAS_JUST_KILLED : false,
 	Statistic.HAS_TARGET : false,
 	# References
 	Statistic.TARGET : null,
@@ -235,7 +235,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.CAN_TARGET_SUPPORTS : true,
 	Statistic.CAN_BE_TARGETED : true,
 	Statistic.CAN_BE_SACRIFICED : true,
-	Statistic.CAN_BE_DESTROYED : true,
+	Statistic.CAN_BE_KILLED : true,
 	Statistic.ACTS_AS_BLOCKER : false,
 	Statistic.ACTS_AS_UNMARKED : false,
 	# Counts

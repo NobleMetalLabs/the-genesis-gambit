@@ -55,45 +55,6 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	client_ui_setup.emit()
 	self.refresh_ui()
 
-	Router.backend.effect_resolver.finished_resolving_effects_for_frame.connect(update_ui)
-
-func update_ui() -> void:
-	var ef : EffectResolver = Router.backend.effect_resolver
-	for action in ef.yet_to_process_actions + ef.already_processed_actions:
-		reflect_action(action)
-	
-func reflect_action(action : Action) -> void:
-	var player : Player = Router.backend.peer_id_to_player[action.player_peer_id]
-	var player_area : PlayerAreaUI = _player_to_area[player]
-	if action is CreatureAction:
-		if action is CreatureActivateAction:
-			var ci : ICardInstance = action.to_effect().creature
-			player_area.field_ui.refresh_card(ci)
-		elif action is CreatureTargetAction:
-			var ef : CreatureTargetEffect = action.to_effect()
-
-			if IStatisticPossessor.id(ef.creature).get_statistic(Genesis.Statistic.IS_ON_FIELD):
-				player_area.field_ui.refresh_card(ef.creature)
-			elif IStatisticPossessor.id(ef.creature).get_statistic(Genesis.Statistic.IS_IN_HAND): 
-				player_area.hand_ui.refresh_hand()
-			
-			if ef.target == null: return
-			if IStatisticPossessor.id(ef.target).get_statistic(Genesis.Statistic.IS_ON_FIELD):
-				_player_to_area[ef.target.player].field_ui.refresh_card(ef.target)
-			elif IStatisticPossessor.id(ef.target).get_statistic(Genesis.Statistic.IS_IN_HAND): 
-				_player_to_area[ef.target.player].hand_ui.refresh_hand()
-		else:
-			print("huh")
-	elif action is HandAction:
-		player_area.hand_ui.refresh_hand()
-		player_area.deck_ui.refresh_deck_ui()
-		if action is HandPlayCardAction:
-			player_area.field_ui.refresh_field()
-	elif action is CursorAction:
-		player_area._move_cursor()
-	else:
-		print("huh")
-
 var hovered_card : ICardInstance = null
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -135,6 +96,13 @@ func get_player_area(player : Player) -> PlayerAreaUI:
 func refresh_ui() -> void:
 	for pa in player_areas:
 		pa.refresh_ui()
+
+func refresh_card(card_instance : ICardInstance) -> void:
+	if card_instance in card_instance.player.cards_on_field:
+		Router.client_ui._player_to_area[card_instance.player].field_ui.refresh_card(card_instance)
+		Router.client_ui._player_to_area[card_instance.player].hand_ui.refresh_energy_bar()
+	elif card_instance in card_instance.player.cards_in_hand:
+		Router.client_ui._player_to_area[card_instance.player].hand_ui.refresh_hand()
 
 func update_target_sprite(target : ICardInstance) -> void:
 	target = target.get_object()

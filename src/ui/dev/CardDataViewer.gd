@@ -39,8 +39,9 @@ func show_data_for_card(card : ICardInstance) -> void:
 		mood_label.text = str(mood)
 		moods_holder.add_child(mood_label)
 
-	var stat_db : Dictionary = IStatisticPossessor.id(card)._statistic_db
+	var stats := IStatisticPossessor.id(card)
+	var stat_db : Dictionary = stats._statistic_db
 	for stat : Genesis.Statistic in stat_db.keys():
 		var stat_label := Label.new()
-		stat_label.text = "'%s' = %s" % [Genesis.Statistic.keys()[stat], stat_db[stat]]
+		stat_label.text = "'%s' = %s" % [Genesis.Statistic.keys()[stat], stats.get_statistic(stat)]
 		stats_holder.add_child(stat_label)

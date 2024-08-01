@@ -2,10 +2,10 @@ extends CardLogic
 
 static var description : StringName = "When this creature dies, gain 3 health."
 
-func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.JUST_DIED):
-		var my_player : Player = _backend_state.get_player_from_instance(instance_owner)
+		var my_player : Player = instance_owner.player
 		IStatisticPossessor.id(my_player).modify_statistic(Genesis.Statistic.HEALTH, 3)
 
 
@@ -15,5 +15,5 @@ func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolv
 
 # static var description : StringName = "When any friendly creature dies, this creature gains Anger."
 
-# func process(_backend_state : MatchBackendState, ) -> void:
+# func process(_backend_objects : BackendObjectCollection, ) -> void:
 #	pass

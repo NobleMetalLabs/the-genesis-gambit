@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "Target creature with less than 5 health. Creature dies, and their health count is added to Leech's owners health."
 
-func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	for effect : Effect in _effect_resolver.effect_list:
 		if not effect is CreatureTargetEffect: continue

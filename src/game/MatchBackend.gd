@@ -64,7 +64,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 
 	AuthoritySourceProvider.authority_source.new_frame_index.connect(
 		func(_frame_number : int) -> void:
-			effect_resolver.resolve_effects(Router.backend.get_backend_state())
+			effect_resolver.resolve_effects(Router.backend.get_backend_object_collection())
 	)
 
 func create_card(instance_id : int, player_owner : Player, internal_name : String) -> ICardInstance:
@@ -81,8 +81,8 @@ func _create_card_backend(card_instance : ICardInstance, internal_name : String)
 	card_holder.add_child(card_bk, true)
 	return card_bk
 
-func get_backend_state() -> MatchBackendState:
-	return MatchBackendState.new(players)
+func get_backend_object_collection() -> BackendObjectCollection:
+	return BackendObjectCollection.new(players)
 
 func _process(_delta : float) -> void: 
 	for player : Player in []: #players:

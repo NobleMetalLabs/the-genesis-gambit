@@ -4,10 +4,10 @@ static var description : StringName = "Gains Strength for every card in your han
 
 var saved_hand_card_count : int = -1
 
-func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 
-	var num_handcards : int = _backend_state.get_player_from_instance(instance_owner).cards_in_hand.size()
+	var num_handcards : int = instance_owner.player.cards_in_hand.size()
 	if saved_hand_card_count == -1:
 		saved_hand_card_count = num_handcards
 

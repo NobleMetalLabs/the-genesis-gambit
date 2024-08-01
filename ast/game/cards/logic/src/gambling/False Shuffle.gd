@@ -2,9 +2,9 @@ extends CardLogic
 
 static var description : StringName = "Search your deck for the bottom-most Mythic card, then shuffle and put that card on top."
 
-func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	if not IStatisticPossessor.id(instance_owner).get_statistic(Genesis.Statistic.WAS_JUST_PLAYED): return
-	var player_deck : Array[ICardInstance] = _backend_state.get_player_from_instance(instance_owner).cards_in_deck
+	var player_deck : Array[ICardInstance] = instance_owner.player.cards_in_deck
 	var pdc : Array[ICardInstance] = player_deck.duplicate()
 	pdc.reverse()
 	for card : ICardInstance in pdc:

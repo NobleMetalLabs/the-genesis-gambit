@@ -2,12 +2,12 @@ extends CardLogic
 
 static var description : StringName = "Whenever a friendly creature attacks, this creature attacks the same target."
 
-func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	if not instance_owner.get_object() is CardOnField: return
 	
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	var friendly_cards : Array[ICardInstance] = []
-	friendly_cards = _backend_state.cards.filter(func(c : ICardInstance) -> bool: return c.player == _backend_state.get_player_from_instance(instance_owner))
+	friendly_cards = _backend_objects.cards.filter(func(c : ICardInstance) -> bool: return c.player == instance_owner.player)
 
 	for effect in _effect_resolver.effect_list:
 		if not effect is CreatureAttackEffect: continue

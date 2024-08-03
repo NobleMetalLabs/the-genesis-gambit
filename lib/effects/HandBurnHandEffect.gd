@@ -15,4 +15,11 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 			self.requester, self.player, card, Genesis.LeaveHandReason.BURNED
 		))
 	
-	IStatisticPossessor.id(player).set_statistic(Genesis.Statistic.NUM_BURN_COOLDOWN_FRAMES, 60.0 / Genesis.NETWORK_FRAME_PERIOD)
+	_effect_resolver.request_effect(
+		CooldownEffect.new(
+			self.requester,
+			IStatisticPossessor.id(player),
+			Genesis.CooldownType.BURN,
+			int(60.0 / Genesis.NETWORK_FRAME_PERIOD)
+		)
+	)

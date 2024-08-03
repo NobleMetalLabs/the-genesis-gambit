@@ -69,8 +69,6 @@ func refresh_card(card_instance : ICardInstance) -> void:
 		player_area.field_ui.refresh_card(card_instance)
 		player_area.hand_ui.refresh_card(card_instance)
 		player_area.deck_ui.refresh_card(card_instance)
-		
-
 
 var _card_instance_to_frontend : Dictionary = {} #[ICardInstance, CardFrontend]
 func assign_card_frontend(card_instance : ICardInstance, card_frontend : CardFrontend) -> void:
@@ -106,8 +104,9 @@ func _handle_card_actions() -> void:
 func _handle_hand_actions() -> void:
 	if Input.is_action_just_pressed("hand_burn"):
 		var player_stats := IStatisticPossessor.id(Router.backend.local_player)
+		var burn_cooldown : CooldownEffect = player_stats.get_cooldown_of_type(Genesis.CooldownType.BURN)
 		
-		if player_stats.get_statistic(Genesis.Statistic.NUM_BURN_COOLDOWN_FRAMES) == 0:
+		if burn_cooldown == null:
 			AuthoritySourceProvider.authority_source.request_action(
 				HandBurnHandAction.setup()
 			)

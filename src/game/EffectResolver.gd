@@ -66,13 +66,14 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 		var effect_updated_cards : Array[ICardInstance] = []
 		effect_updated_cards.assign(effect_properties.filter(
 			func(dict : Dictionary) -> bool:
-				return dict.get("class_name") == "ICardInstance"
+				return dict.get("class_name").begins_with("I") # NOTE: Lol
 		).map(
 			func(dict : Dictionary) -> ICardInstance:
-				return effect.get(dict["name"])
+				return ICardInstance.id(effect.get(dict["name"]))
 		))
 		for card : ICardInstance in effect_updated_cards:
 			if card in _updated_cards: continue
+			if card == null: continue
 			_updated_cards.append(card)
 
 func resolve_effects(backend_objects : BackendObjectCollection) -> void:

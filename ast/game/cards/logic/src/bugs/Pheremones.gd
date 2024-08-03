@@ -4,6 +4,7 @@ static var description : StringName = "Each Attacker you control becomes Bored."
 
 var fungus_garden : ICardInstance = null
 
+# TODO: Crashes sometimes when played
 func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if not my_stats.get_statistic(Genesis.Statistic.WAS_JUST_PLAYED): return

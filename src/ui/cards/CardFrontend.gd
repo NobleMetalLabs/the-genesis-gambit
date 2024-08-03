@@ -66,8 +66,11 @@ func check_self_for_animation() -> void:
 		card_stats.get_statistic(Genesis.Statistic.IS_FROZEN)
 	)
 
-	if card_stats.get_statistic(Genesis.Statistic.IS_IN_COOLDOWN):
-		var cooldown_length : int = card_stats.get_statistic(Genesis.Statistic.NUM_COOLDOWN_FRAMES_LENGTH)
-		var cooldown_remaining : int = card_stats.get_statistic(Genesis.Statistic.NUM_COOLDOWN_FRAMES_REMAINING)
-		var cooldown_progress : float = float(cooldown_remaining) / max(1, cooldown_length)
-		set_cooldown_bar_value(cooldown_progress)
+	for cooldown : CooldownEffect in card_stats.get_statistic(Genesis.Statistic.CURRENT_COOLDOWNS):
+		if cooldown.type == Genesis.CooldownType.SSICKNESS:
+			
+			var cooldown_length : int = cooldown.total_frames
+			var cooldown_remaining : int = cooldown.frames
+			var cooldown_progress : float = float(cooldown_remaining) / max(1, cooldown_length)
+			
+			set_cooldown_bar_value(cooldown_progress)

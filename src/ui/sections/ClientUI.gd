@@ -64,11 +64,13 @@ func force_refresh_ui() -> void:
 		pa.force_refresh_ui()
 
 func refresh_card(card_instance : ICardInstance) -> void:
-
+	#print(card_instance)
 	for player_area in player_areas:
 		player_area.field_ui.refresh_card(card_instance)
 		player_area.hand_ui.refresh_card(card_instance)
 		player_area.deck_ui.refresh_card(card_instance)
+		
+
 
 var _card_instance_to_frontend : Dictionary = {} #[ICardInstance, CardFrontend]
 func assign_card_frontend(card_instance : ICardInstance, card_frontend : CardFrontend) -> void:

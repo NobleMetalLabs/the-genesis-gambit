@@ -16,10 +16,10 @@ var flipped : bool :
 		hand_ui.get_parent().position.y = 0 #I LOVE GODOT ENGINE!!!!
 		hand_ui.energy_bar.fill_mode = (ProgressBar.FILL_TOP_TO_BOTTOM if flipped else ProgressBar.FILL_BOTTOM_TO_TOP)
 
-func refresh_ui() -> void:
-	hand_ui.refresh_hand()
-	field_ui.refresh_field()
-	deck_ui.refresh_deck_ui()
+func force_refresh_ui() -> void:
+	hand_ui.force_refresh_ui()
+	field_ui.force_refresh_ui()
+	deck_ui.force_refresh_ui()
 
 func _process(_delta : float) -> void:
 	_move_cursor()

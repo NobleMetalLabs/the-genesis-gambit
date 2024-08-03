@@ -6,13 +6,13 @@ extends Node
 var uid_to_object : Dictionary = {}
 var object_to_uid : Dictionary = {}
 
-func register_object(_object : Object, _uid : int = -1) -> int:
-	if _uid == -1: _uid = hash(_object)
-
+func register_object(_object : Object, _uid : int) -> int:
 	if object_to_uid.has(_object):
 		push_error("Object %s already registered." % [_object])
+		assert(false)
 	if uid_to_object.has(_uid):
 		push_error("Object with uid %s already registered." % [_uid])
+		assert(false)
 
 	uid_to_object[_uid] = _object
 	object_to_uid[_object] = _uid

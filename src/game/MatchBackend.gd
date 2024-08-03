@@ -67,7 +67,13 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 			effect_resolver.resolve_effects(Router.backend.get_backend_object_collection())
 	)
 
+# NOTE: only works if created card order is deterministic across clients. i think it is, but not 100%...
+var _created_card_count : int = 1
+func get_created_card_number() -> int:
+	return _created_card_count
+
 func create_card(instance_id : int, player_owner : Player, internal_name : String) -> ICardInstance:
+	_created_card_count += 1
 	var ci := ICardInstance.new(CardDB.get_card_by_id(instance_id), player_owner)
 	_create_card_backend(ci, internal_name)
 	return ci

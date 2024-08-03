@@ -8,7 +8,6 @@ extends Control
 @onready var dev_card_viewer : CardDataViewer = $"%CARD-DATA-VIEWER"
 
 var player_areas : Array[PlayerAreaUI] = []
-var _player_to_area : Dictionary = {} # [Player, PlayerAreaUI]
 var local_player_area : PlayerAreaUI 
 
 signal client_ui_setup()
@@ -28,7 +27,6 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		player_area.visible = true
 		grid_cont.add_child(player_area)
 		player_areas.append(player_area)
-		_player_to_area[player] = player_area
 		if player == Router.backend.local_player:
 			local_player_area = player_area
 
@@ -52,22 +50,42 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		var leader_stats := IStatisticPossessor.id(pa.associated_player.leader)
 		leader_stats.set_statistic(Genesis.Statistic.POSITION, Vector2.ZERO)
 
+	Router.backend.effect_resolver.finished_resolving_effects_for_frame.connect(
+		func refresh_cards(cards : Array[ICardInstance]) -> void:
+			for card : ICardInstance in cards:
+				refresh_card(card)
+	)
+
 	client_ui_setup.emit()
-	self.refresh_ui()
+	self.force_refresh_ui()
+
+func force_refresh_ui() -> void:
+	for pa in player_areas:
+		pa.force_refresh_ui()
+
+func refresh_card(card_instance : ICardInstance) -> void:
+
+	for player_area in player_areas:
+		player_area.field_ui.refresh_card(card_instance)
+		player_area.hand_ui.refresh_card(card_instance)
+		player_area.deck_ui.refresh_card(card_instance)
+
+var _card_instance_to_frontend : Dictionary = {} #[ICardInstance, CardFrontend]
+func assign_card_frontend(card_instance : ICardInstance, card_frontend : CardFrontend) -> void:
+	_card_instance_to_frontend[card_instance] = card_frontend
+
+func get_card_frontend(card_instance : ICardInstance) -> CardFrontend:
+	return _card_instance_to_frontend.get(card_instance, null)
+
+func _process(_delta : float) -> void:
+	_handle_card_actions()
+	_handle_hand_actions()
+	_handle_debug_actions()
 
 var hovered_card : ICardInstance = null
-@onready var burn_timer : Timer = $BurnTimer
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta : float) -> void:
-	#if get_window().gui_get_focus_owner() != Router.client_ui: return
-	if Input.is_action_just_pressed("debug_action"):
-		AuthoritySourceProvider.authority_source.request_action(
-			HandDrawCardAction.setup()
-		)
-
+func _handle_card_actions() -> void:
 	if Input.is_action_just_pressed("ui_inspect"):
-		if hovered_card != null and hovered_card.associated_frontend.is_face_visible:
+		if hovered_card != null and Router.client_ui.get_card_frontend(hovered_card).is_face_visible:
 			card_info_panel.set_card_metadata(hovered_card.metadata)
 			card_info_panel.card_display.description_label.text = hovered_card.logic.description #lol
 			card_info_panel.display()
@@ -83,6 +101,8 @@ func _process(_delta : float) -> void:
 					CreatureActivateAction.setup(hovered_card)
 				)
 
+@onready var burn_timer : Timer = $BurnTimer
+func _handle_hand_actions() -> void:
 	if Input.is_action_just_pressed("hand_burn"):
 		if burn_timer.is_stopped():
 			AuthoritySourceProvider.authority_source.request_action(
@@ -90,16 +110,22 @@ func _process(_delta : float) -> void:
 			)
 			burn_timer.start()
 		else:
-			burn_cooldown_animation()
+			_burn_cooldown_animation()
 
-	if Input.is_action_just_pressed("debug_advance_frame"):
-		AuthoritySourceProvider.authority_source.execute_frame()
-	
 	if not burn_timer.is_stopped():
 		$BurnBar.value = 60 - burn_timer.time_left
 
+func _handle_debug_actions() -> void:
+	if Input.is_action_just_pressed("debug_action"):
+		AuthoritySourceProvider.authority_source.request_action(
+			HandDrawCardAction.setup()
+		)
+
+	if Input.is_action_just_pressed("debug_advance_frame"):
+		AuthoritySourceProvider.authority_source.execute_frame()
+
 @onready var burn_bar_label : Label = $BurnBar/Label
-func burn_cooldown_animation() -> void:
+func _burn_cooldown_animation() -> void:
 	var flash_tween : Tween = get_tree().create_tween()
 	flash_tween.tween_property(burn_bar_label, "modulate", Color(1, 0, 0, 1), 0)
 	flash_tween.tween_property(burn_bar_label, "modulate", Color(1, 1, 1, 1), 0.5)
@@ -111,24 +137,3 @@ func burn_cooldown_animation() -> void:
 	wiggle_tween.tween_property(burn_bar_label, "position:x", 5, 0.05)
 	wiggle_tween.tween_property(burn_bar_label, "position:x", -5, 0.05)
 	wiggle_tween.tween_property(burn_bar_label, "position:x", 0, 0.1)
-
-func get_player_area(player : Player) -> PlayerAreaUI:
-	return _player_to_area[player]
-
-func refresh_ui() -> void:
-	for pa in player_areas:
-		pa.refresh_ui()
-
-func refresh_card(card_instance : ICardInstance) -> void:
-	if card_instance in card_instance.player.cards_on_field:
-		Router.client_ui._player_to_area[card_instance.player].field_ui.refresh_card(card_instance)
-		Router.client_ui._player_to_area[card_instance.player].hand_ui.refresh_energy_bar()
-	elif card_instance in card_instance.player.cards_in_hand:
-		Router.client_ui._player_to_area[card_instance.player].hand_ui.refresh_hand()
-
-func update_target_sprite(target : ICardInstance) -> void:
-	target = target.get_object()
-	if target == null: target_sprite.hide()
-	else:
-		target_sprite.show()
-		target_sprite.position = target.position

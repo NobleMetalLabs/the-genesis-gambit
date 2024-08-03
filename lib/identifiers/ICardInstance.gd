@@ -10,7 +10,6 @@ static func id(node : Node) -> ICardInstance:
 var metadata : CardMetadata
 var logic : CardLogic
 var player : Player
-var associated_frontend : CardFrontend
 
 func _init(_metadata : CardMetadata, _player : Player) -> void:
 	self.name = "ICardInstance"

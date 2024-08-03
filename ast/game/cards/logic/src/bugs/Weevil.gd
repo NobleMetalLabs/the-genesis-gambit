@@ -10,7 +10,7 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 		var duped_weevil : ICardInstance = Router.backend.create_card(
 			instance_owner.metadata.id,
 			instance_owner.player,
-			"DupeWeevil-%s" % AuthoritySourceProvider.authority_source.current_frame_number
+			"DupeWeevil-%s" % [Router.backend.get_created_card_number()]
 		)
 
 		duped_weevil.logic = CardMetadata.new().logic_script.new(duped_weevil)

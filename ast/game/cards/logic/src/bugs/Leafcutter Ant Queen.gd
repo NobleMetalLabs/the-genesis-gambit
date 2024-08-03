@@ -9,12 +9,10 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if fungus_garden != null: return
 
-	print("YEA")
-
 	fungus_garden = Router.backend.create_card(
 		CardDB.get_id_by_name("Fungus Garden"),
 		instance_owner.player,
-		"Fungus Garden-%s" % hash(instance_owner)
+		"Fungus Garden-%s" % [Router.backend.get_created_card_number()]
 	)
 
 	var fungor_stats := IStatisticPossessor.id(fungus_garden)

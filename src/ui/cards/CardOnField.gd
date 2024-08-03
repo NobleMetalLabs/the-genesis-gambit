@@ -12,8 +12,8 @@ func _init(backend : ICardInstance) -> void:
 	self.set_anchors_preset(PRESET_FULL_RECT)
 	self.set_size(Vector2.ZERO)
 	self.name = "CardOnField"
-	
-	card_backend.associated_frontend = card_frontend
+
+	Router.client_ui.assign_card_frontend(card_backend, card_frontend)
 	
 func _to_string() -> String:
 	return "CardOnField<%s>" % ICardInstance.id(self)
@@ -56,7 +56,7 @@ func _process(_delta : float) -> void:
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			end_target()
 	elif target != null:
-		var target_rect : Rect2 = target.associated_frontend.get_global_rect()
+		var target_rect : Rect2 = Router.client_ui.get_card_frontend(target).get_global_rect()
 		target_arrow.end_position = target_rect.get_center()
 
 func start_drag() -> void:

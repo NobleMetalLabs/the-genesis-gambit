@@ -20,7 +20,7 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 					Router.backend.create_card(
 						CardDB.get_id_by_name("Bee"),
 						instance_owner.player,
-						"Beehive-Bee-%s" % AuthoritySourceProvider.authority_source.current_frame_number
+						"Beehive-Bee-%s" % [Router.backend.get_created_card_number()]
 					)
 				)
 			)

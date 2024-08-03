@@ -6,13 +6,29 @@ extends Control
 @onready var marked_bar : ProgressBar = $"%MARKED-BAR"
 @onready var my_player : Player = get_parent().get_parent().get_parent().associated_player
 
-var card_frontend : CardFrontend
-func refresh_deck_ui() -> void:
-	if card_frontend: card_frontend.queue_free()
-	card_frontend = CardFrontend.instantiate()
-	$"%CARD-HOLDER".add_child(card_frontend, true)
+func force_refresh_ui() -> void:
+	_refresh_deck_ui()
 
-	card_frontend.set_card(my_player.cards_in_deck.front())
+func refresh_card(card_instance : ICardInstance) -> void:
+	if card_instance == current_top_card:
+		_refresh_deck_ui()
+	elif card_instance in my_player.cards_in_deck:
+		_refresh_deck_ui()
+	else:
+		# TODO: these conditions do not cover the end of burning for some reason
+		# Heres the hack
+		_refresh_deck_ui()
+
+var current_top_card : ICardInstance
+var top_card_frontend : CardFrontend
+
+func _refresh_deck_ui() -> void:
+	if top_card_frontend: top_card_frontend.queue_free()
+	top_card_frontend = CardFrontend.instantiate()
+	$"%CARD-HOLDER".add_child(top_card_frontend, true)
+
+	current_top_card = my_player.cards_in_deck.front()
+	top_card_frontend.set_card(current_top_card)
 
 	var card_face_is_visible : bool = false
 	var card_rarity_is_visible : bool = false
@@ -34,7 +50,7 @@ func refresh_deck_ui() -> void:
 		card_rarity_is_visible = true
 		card_type_is_visible = true
 
-	card_frontend.set_visibility(
+	top_card_frontend.set_visibility(
 		card_face_is_visible,
 		card_rarity_is_visible,
 		card_type_is_visible

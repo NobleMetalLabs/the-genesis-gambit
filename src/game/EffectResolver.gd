@@ -13,7 +13,8 @@ var effects_by_requester : Dictionary = {} # [Object, Array[Effect]]
 var yet_to_process_actions : Array[Action] = []
 var already_processed_actions : Array[Action] = []
 
-signal finished_resolving_effects_for_frame()
+var _updated_cards : Array[ICardInstance] = []
+signal finished_resolving_effects_for_frame(updated_cards : Array[ICardInstance])
 
 # TODO: ER should be able to be queried for all effects that have been relevant to a card, including resolved ones.
 # This would also reduce the amount of effect_list looping in card logics.
@@ -62,18 +63,20 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 		remove_effect(effect)
 		
 		var effect_properties : Array[Dictionary] = effect.get_property_list()
-		var relevant_cards : Array[ICardInstance] = []
-		relevant_cards.assign(effect_properties.filter(
+		var effect_updated_cards : Array[ICardInstance] = []
+		effect_updated_cards.assign(effect_properties.filter(
 			func(dict : Dictionary) -> bool:
 				return dict.get("class_name") == "ICardInstance"
 		).map(
 			func(dict : Dictionary) -> ICardInstance:
 				return effect.get(dict["name"])
 		))
-		for card : ICardInstance in relevant_cards:
-			Router.client_ui.refresh_card(card)
+		for card : ICardInstance in effect_updated_cards:
+			if card in _updated_cards: continue
+			_updated_cards.append(card)
 
 func resolve_effects(backend_objects : BackendObjectCollection) -> void:
+	_updated_cards.clear()
 	#process all actions
 	var action_queue : Array[Action] = yet_to_process_actions.duplicate() + already_processed_actions.duplicate()
 	for action : Action in action_queue:
@@ -104,4 +107,4 @@ func resolve_effects(backend_objects : BackendObjectCollection) -> void:
 		#request new effects
 		card.logic.process(backend_objects, self)
 
-	finished_resolving_effects_for_frame.emit()
+	finished_resolving_effects_for_frame.emit(_updated_cards)

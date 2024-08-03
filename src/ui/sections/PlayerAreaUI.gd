@@ -15,6 +15,7 @@ var flipped : bool :
 		hand_ui.get_parent().set_anchors_preset(PRESET_CENTER_TOP if flipped else PRESET_CENTER_BOTTOM)
 		hand_ui.get_parent().position.y = 0 #I LOVE GODOT ENGINE!!!!
 		hand_ui.energy_bar.fill_mode = (ProgressBar.FILL_TOP_TO_BOTTOM if flipped else ProgressBar.FILL_BOTTOM_TO_TOP)
+		deck_ui.set_flipped(flipped)
 
 func force_refresh_ui() -> void:
 	hand_ui.force_refresh_ui()

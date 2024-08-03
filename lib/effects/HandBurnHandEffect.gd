@@ -14,3 +14,5 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 		_effect_resolver.request_effect(HandRemoveCardEffect.new(
 			self.requester, self.player, card, Genesis.LeaveHandReason.BURNED
 		))
+	
+	IStatisticPossessor.id(player).set_statistic(Genesis.Statistic.NUM_BURN_COOLDOWN_FRAMES, 60.0 / Genesis.NETWORK_FRAME_PERIOD)

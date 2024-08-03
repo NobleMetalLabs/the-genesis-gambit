@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://buqjcifo0r7iq"]
+[gd_scene load_steps=5 format=3 uid="uid://buqjcifo0r7iq"]
 
 [ext_resource type="Script" path="res://src/ui/sections/DeckUI.gd" id="1_1k0lu"]
 
@@ -7,6 +7,9 @@ bg_color = Color(0.252, 0.24, 0.6, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_31bcc"]
 bg_color = Color(0.6, 0.24, 0.24, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6trj0"]
+bg_color = Color(1, 0.4, 0.4, 1)
 
 [node name="DECK-UI" type="Control"]
 layout_mode = 3
@@ -53,5 +56,15 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_styles/fill = SubResource("StyleBoxFlat_31bcc")
+fill_mode = 3
+show_percentage = false
+
+[node name="BURN-TIMER-BAR" type="ProgressBar" parent="MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_6trj0")
+max_value = 60.0
 fill_mode = 3
 show_percentage = false

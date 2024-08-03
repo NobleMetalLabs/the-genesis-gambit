@@ -103,19 +103,14 @@ func _handle_card_actions() -> void:
 					CreatureActivateAction.setup(hovered_card)
 				)
 
-@onready var burn_timer : Timer = $BurnTimer
 func _handle_hand_actions() -> void:
 	if Input.is_action_just_pressed("hand_burn"):
-		if burn_timer.is_stopped():
+		var player_stats := IStatisticPossessor.id(Router.backend.local_player)
+		
+		if player_stats.get_statistic(Genesis.Statistic.NUM_BURN_COOLDOWN_FRAMES) == 0:
 			AuthoritySourceProvider.authority_source.request_action(
 				HandBurnHandAction.setup()
 			)
-			burn_timer.start()
-		else:
-			_burn_cooldown_animation()
-
-	if not burn_timer.is_stopped():
-		$BurnBar.value = 60 - burn_timer.time_left
 
 func _handle_debug_actions() -> void:
 	if Input.is_action_just_pressed("debug_action"):
@@ -125,17 +120,3 @@ func _handle_debug_actions() -> void:
 
 	if Input.is_action_just_pressed("debug_advance_frame"):
 		AuthoritySourceProvider.authority_source.execute_frame()
-
-@onready var burn_bar_label : Label = $BurnBar/Label
-func _burn_cooldown_animation() -> void:
-	var flash_tween : Tween = get_tree().create_tween()
-	flash_tween.tween_property(burn_bar_label, "modulate", Color(1, 0, 0, 1), 0)
-	flash_tween.tween_property(burn_bar_label, "modulate", Color(1, 1, 1, 1), 0.5)
-	
-	var wiggle_tween : Tween = get_tree().create_tween()
-	wiggle_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
-	wiggle_tween.tween_property(burn_bar_label, "position:x", 5, 0.05)
-	wiggle_tween.tween_property(burn_bar_label, "position:x", -5, 0.05)
-	wiggle_tween.tween_property(burn_bar_label, "position:x", 5, 0.05)
-	wiggle_tween.tween_property(burn_bar_label, "position:x", -5, 0.05)
-	wiggle_tween.tween_property(burn_bar_label, "position:x", 0, 0.1)

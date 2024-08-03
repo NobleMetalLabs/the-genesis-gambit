@@ -105,6 +105,8 @@ enum CardRemoveAnimation {
 	BANISH,
 }
 
+const NETWORK_FRAME_PERIOD : float = 0.1
+
 # Statistics
 
 enum Statistic {
@@ -175,6 +177,7 @@ enum Statistic {
 	NUM_CARDS,
 	NUM_CARDS_MARKED_IN_DECK,
 	NUM_CARDS_LEFT_IN_DECK,
+	NUM_BURN_COOLDOWN_FRAMES,
 	HAND_VISIBLE,
 	HAND_VISIBLE_TO_OPPONENTS,
 	HAND_VISIBLE_RARITY_ONLY,
@@ -257,6 +260,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.NUM_CARDS : 0,
 	Statistic.NUM_CARDS_MARKED_IN_DECK : 0,
 	Statistic.NUM_CARDS_LEFT_IN_DECK: 0,
+	Statistic.NUM_BURN_COOLDOWN_FRAMES: 0,
 	Statistic.HAND_VISIBLE: false,
 	Statistic.HAND_VISIBLE_TO_OPPONENTS: false,
 	Statistic.HAND_VISIBLE_RARITY_ONLY: false,

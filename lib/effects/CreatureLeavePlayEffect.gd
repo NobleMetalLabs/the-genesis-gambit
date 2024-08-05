@@ -21,8 +21,6 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 		self, player_owner, ICardInstance.id(self.creature)
 	))
 
-	
-	
 	var creature_stats := IStatisticPossessor.id(creature)
 	var source_stats := IStatisticPossessor.id(source)
 	
@@ -37,8 +35,11 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	))
 	
 	creature_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, false)
+	if creature == source_stats.get_statistic(Genesis.Statistic.TARGET):
+		source_stats.set_statistic(Genesis.Statistic.TARGET, null)
 	
 	var energy_to_remove : int = creature_stats.get_statistic(Genesis.Statistic.ENERGY)
 	IStatisticPossessor.id(creature.player).modify_statistic(Genesis.Statistic.ENERGY, -energy_to_remove)
 	
 	creature.player.cards_on_field.erase(creature)
+	

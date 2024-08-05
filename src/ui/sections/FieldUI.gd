@@ -30,6 +30,8 @@ func _remake_card(card : ICardInstance) -> void:
 	var cof : CardOnField = _instance_to_field_card.get(card)
 	if cof != null: 
 		_field_cards.erase(cof)
+		_instance_to_field_card.erase(card)
+		Router.client_ui.deassign_card_frontend(card)
 		cof.queue_free()
 	if not card in my_player.cards_on_field: return
 	var new_card : CardOnField = _make_card(card)

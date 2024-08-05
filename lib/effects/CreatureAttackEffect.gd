@@ -44,13 +44,15 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 		
 		self.resolve_status = ResolveStatus.FAILED
 		return
-
+	
+	var target_stats := IStatisticPossessor.id(self.target)
+	if not target_stats.get_statistic(Genesis.Statistic.CAN_BE_ATTACKED): return
+	
 	creature_stats.set_statistic(Genesis.Statistic.JUST_ATTACKED, true)
 	_effect_resolver.request_effect(SetStatisticEffect.new(
 		self.requester, creature_stats, Genesis.Statistic.JUST_ATTACKED, false
 	))
 	
-	var target_stats := IStatisticPossessor.id(self.target)
 	target_stats.set_statistic(Genesis.Statistic.WAS_JUST_ATTACKED, true)
 	_effect_resolver.request_effect(SetStatisticEffect.new(
 		self.requester, target_stats, Genesis.Statistic.WAS_JUST_ATTACKED, false
@@ -58,3 +60,14 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 
 	target_stats.set_statistic(Genesis.Statistic.MOST_RECENT_ATTACKED_BY, ICardInstance.id(self.creature))
 	creature_stats.set_statistic(Genesis.Statistic.MOST_RECENT_ATTACKED, ICardInstance.id(self.target))
+
+	target_stats.modify_statistic(Genesis.Statistic.HEALTH, -damage)
+	if target_stats.get_statistic(Genesis.Statistic.HEALTH) <= 0:
+		if target_stats.get_statistic(Genesis.Statistic.CAN_BE_KILLED):
+			_effect_resolver.request_effect(CreatureLeavePlayEffect.new(
+				self.requester,
+				self.target,
+				self.creature,
+				Genesis.LeavePlayReason.DIED
+			))
+		

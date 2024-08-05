@@ -74,6 +74,9 @@ var _card_instance_to_frontend : Dictionary = {} #[ICardInstance, CardFrontend]
 func assign_card_frontend(card_instance : ICardInstance, card_frontend : CardFrontend) -> void:
 	_card_instance_to_frontend[card_instance] = card_frontend
 
+func deassign_card_frontend(card_instance : ICardInstance) -> void:
+	_card_instance_to_frontend.erase(card_instance)
+
 func get_card_frontend(card_instance : ICardInstance) -> CardFrontend:
 	return _card_instance_to_frontend.get(card_instance, null)
 

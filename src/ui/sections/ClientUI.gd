@@ -50,9 +50,9 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		leader_stats.set_statistic(Genesis.Statistic.POSITION, Vector2.ZERO)
 
 	Router.backend.effect_resolver.finished_resolving_effects_for_frame.connect(
-		func refresh_cards(cards : Array[ICardInstance]) -> void:
-			for card : ICardInstance in cards:
-				refresh_card(card)
+		func handle_ui_updates(effects : Array[Effect], cards : Array[ICardInstance]) -> void:
+			_handle_card_updates(cards)
+			_handle_effect_updates(effects)
 	)
 
 	client_ui_setup.emit()
@@ -62,7 +62,16 @@ func force_refresh_ui() -> void:
 	for pa in player_areas:
 		pa.force_refresh_ui()
 
-func refresh_card(card_instance : ICardInstance) -> void:
+var _audio_handler : ClientUIAudioHandler = ClientUIAudioHandler.new(self)
+func _handle_effect_updates(effects : Array[Effect]) -> void:
+	for effect : Effect in effects:
+		_audio_handler.handle_effect_audio(effect)
+
+func _handle_card_updates(cards : Array[ICardInstance]) -> void:
+	for card : ICardInstance in cards:
+		_refresh_card(card)
+
+func _refresh_card(card_instance : ICardInstance) -> void:
 	#print(card_instance)
 	for player_area in player_areas:
 		player_area.field_ui.refresh_card(card_instance)

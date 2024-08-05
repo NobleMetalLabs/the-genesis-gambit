@@ -13,8 +13,9 @@ var effects_by_requester : Dictionary = {} # [Object, Array[Effect]]
 var yet_to_process_actions : Array[Action] = []
 var already_processed_actions : Array[Action] = []
 
+var _resolved_effects : Array[Effect] = []
 var _updated_cards : Array[ICardInstance] = []
-signal finished_resolving_effects_for_frame(updated_cards : Array[ICardInstance])
+signal finished_resolving_effects_for_frame(effects_resolved : Array[Effect], updated_cards : Array[ICardInstance])
 
 # TODO: ER should be able to be queried for all effects that have been relevant to a card, including resolved ones.
 # This would also reduce the amount of effect_list looping in card logics.
@@ -62,6 +63,8 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 		effect.resolve_status = Effect.ResolveStatus.RESOLVED
 		remove_effect(effect)
 		
+		_resolved_effects.append(effect)
+
 		var effect_properties : Array[Dictionary] = effect.get_property_list()
 		var effect_updated_cards : Array[ICardInstance] = []
 		effect_updated_cards.assign(effect_properties.filter(
@@ -77,6 +80,7 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 			_updated_cards.append(card)
 
 func resolve_effects(backend_objects : BackendObjectCollection) -> void:
+	_resolved_effects.clear()
 	_updated_cards.clear()
 	#process all actions
 	var action_queue : Array[Action] = yet_to_process_actions.duplicate() + already_processed_actions.duplicate()
@@ -108,4 +112,4 @@ func resolve_effects(backend_objects : BackendObjectCollection) -> void:
 		#request new effects
 		card.logic.process(backend_objects, self)
 
-	finished_resolving_effects_for_frame.emit(_updated_cards)
+	finished_resolving_effects_for_frame.emit(_resolved_effects, _updated_cards)

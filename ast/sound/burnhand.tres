@@ -1,0 +1,8 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=2 format=3 uid="uid://yc4jd8emhfdu"]
+
+[ext_resource type="AudioStream" uid="uid://bdw3ymeo744nk" path="res://ast/sound/burnhand.wav" id="1_3ivfr"]
+
+[resource]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("1_3ivfr")

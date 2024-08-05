@@ -14,6 +14,7 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 				creature_moods.remove_mood(mood)
 				var creature_stats := IStatisticPossessor.id(friendly_creature)
 				creature_stats.set_statistic(Genesis.Statistic.TARGET, instance_owner)
+				creature_stats.set_statistic(Genesis.Statistic.HAS_TARGET, true)
 				creature_stats.set_statistic(Genesis.Statistic.JUST_TARGETED, true)
 				_effect_resolver.request_effect(
 					SetStatisticEffect.new(

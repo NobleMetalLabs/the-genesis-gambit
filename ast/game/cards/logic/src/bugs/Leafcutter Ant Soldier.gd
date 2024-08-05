@@ -1,6 +1,6 @@
 extends CardLogic
 
-static var description : StringName = "Whenever the Fungus Garden gains a charge, heal 1 health."
+static var description : StringName = "Gains 1 Happy for every creature currently tending the Fungus Garden."
 
 var last_seen_num_garden_tenders : int = 0
 var self_moods : Array[StatisticMood] = []

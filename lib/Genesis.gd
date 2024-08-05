@@ -105,7 +105,7 @@ enum CardRemoveAnimation {
 	BANISH,
 }
 
-const NETWORK_FRAME_PERIOD : float = 99999999999# 0.1
+const NETWORK_FRAME_PERIOD : float = 0.1#99999999999# 0.1
 
 static func speed_value_to_cooldown_frame_count(speed : int) -> int:
 	return (10 / max(1, speed)) * 15

@@ -6,6 +6,7 @@ var damage_count : int = 0
 
 func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
+	if my_stats.get_statistic(Genesis.Statistic.IS_ON_FIELD) == false: return
 	
 	for friendly_creature : ICardInstance in instance_owner.player.cards_on_field:
 		var creature_moods := IMoodPossessor.id(friendly_creature)

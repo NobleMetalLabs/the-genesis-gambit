@@ -32,28 +32,30 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	creature_stats.set_statistic(Genesis.Statistic.CAN_ATTACK, false)
 	creature_moods.apply_mood(ssickness_mood)
 	
+	var begin_attack_loop : Callable = func begin_attack_loop() -> void:
+		_effect_resolver.request_effect(
+			CreatureAttackEffect.new(
+				self.creature,
+				self.creature,
+				creature_stats.get_statistic(Genesis.Statistic.TARGET),
+				creature_stats.get_statistic(Genesis.Statistic.STRENGTH)
+			)
+		)
+
 	var remove_summoning_sickness : Callable = func remove_summoning_sickness() -> void:
 		creature_stats.set_statistic(Genesis.Statistic.CAN_ATTACK, true)
 		creature_moods.remove_mood(ssickness_mood)
-		
 		_effect_resolver.request_effect(CooldownEffect.new(
-			self.requester,
+			self.creature,
 			creature_stats,
 			Genesis.CooldownType.ATTACK,
 			Genesis.speed_value_to_cooldown_frame_count(creature_stats.get_statistic(Genesis.Statistic.SPEED)),
-			_effect_resolver.request_effect.bind(
-				CreatureAttackEffect.new(
-					self.creature,
-					self.creature,
-					creature_stats.get_statistic(Genesis.Statistic.TARGET),
-					creature_stats.get_statistic(Genesis.Statistic.STRENGTH)
-				)
-			)
+			begin_attack_loop
 		))
 	
 	_effect_resolver.request_effect(
 		CooldownEffect.new(
-			self.requester,
+			self.creature,
 			creature_stats,
 			Genesis.CooldownType.SSICKNESS,
 			Genesis.speed_value_to_cooldown_frame_count(creature_stats.get_statistic(Genesis.Statistic.SPEED)),

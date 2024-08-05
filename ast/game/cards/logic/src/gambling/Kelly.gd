@@ -4,7 +4,7 @@ static var description : StringName = "When you have zero cards in hand, sacrifi
 
 var previous_target : ICardInstance = null
 
-func process(_gs : MatchBackendState, effect_resolver : EffectResolver) -> void:
+func process(_backend_objects : BackendObjectCollection, effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if not my_stats.get_statistic(Genesis.Statistic.IS_ON_FIELD): return
 	if instance_owner.owner.hand.size() > 0: return

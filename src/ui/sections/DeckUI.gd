@@ -1,18 +1,43 @@
 class_name DeckUI
 extends Control
 
-
 @onready var remaining_bar : ProgressBar = $"%REMAINING-BAR"
 @onready var marked_bar : ProgressBar = $"%MARKED-BAR"
+@onready var burn_timer_bar : ProgressBar = $"%BURN-TIMER-BAR"
 @onready var my_player : Player = get_parent().get_parent().get_parent().associated_player
 
-var card_frontend : CardFrontend
-func refresh_deck_ui() -> void:
-	if card_frontend: card_frontend.queue_free()
-	card_frontend = CardFrontend.instantiate()
-	$"%CARD-HOLDER".add_child(card_frontend, true)
+func _ready() -> void:
+	AuthoritySourceProvider.authority_source.new_frame_index.connect(update_burn_timer)
 
-	card_frontend.set_card(my_player.cards_in_deck.front())
+func force_refresh_ui() -> void:
+	_refresh_deck_ui()
+
+func set_flipped(flipped: bool = false) -> void:
+	var bar_fill_mode : int = (ProgressBar.FILL_TOP_TO_BOTTOM if flipped else ProgressBar.FILL_BOTTOM_TO_TOP)
+	remaining_bar.fill_mode = bar_fill_mode
+	marked_bar.fill_mode = bar_fill_mode
+	burn_timer_bar.fill_mode = bar_fill_mode
+
+func refresh_card(card_instance : ICardInstance) -> void:
+	if card_instance == current_top_card:
+		_refresh_deck_ui()
+	elif card_instance in my_player.cards_in_deck:
+		_refresh_deck_ui()
+	else:
+		# TODO: these conditions do not cover the end of burning for some reason
+		# Heres the hack
+		_refresh_deck_ui()
+
+var current_top_card : ICardInstance
+var top_card_frontend : CardFrontend
+
+func _refresh_deck_ui() -> void:
+	if top_card_frontend: top_card_frontend.queue_free()
+	top_card_frontend = CardFrontend.instantiate()
+	$"%CARD-HOLDER".add_child(top_card_frontend, true)
+
+	current_top_card = my_player.cards_in_deck.front()
+	top_card_frontend.set_card(current_top_card)
 
 	var card_face_is_visible : bool = false
 	var card_rarity_is_visible : bool = false
@@ -34,7 +59,7 @@ func refresh_deck_ui() -> void:
 		card_rarity_is_visible = true
 		card_type_is_visible = true
 
-	card_frontend.set_visibility(
+	top_card_frontend.set_visibility(
 		card_face_is_visible,
 		card_rarity_is_visible,
 		card_type_is_visible
@@ -43,11 +68,16 @@ func refresh_deck_ui() -> void:
 	var player_stats := IStatisticPossessor.id(my_player)
 	var num_cards : int = player_stats.get_statistic(Genesis.Statistic.NUM_CARDS)
 	var num_marked : int = player_stats.get_statistic(Genesis.Statistic.NUM_CARDS_MARKED_IN_DECK)
-	var num_remaining : int = player_stats.get_statistic(Genesis.Statistic.NUM_CARDS_LEFT_IN_DECK)
+	var num_remaining : int = player_stats.get_statistic(Genesis.Statistic.NUM_CARDS_LEFT_IN_DECK) 
 	remaining_bar.max_value = num_cards
 	remaining_bar.value = num_remaining
 	marked_bar.max_value = num_cards
 	marked_bar.value = num_marked
 
-
-
+func update_burn_timer(_lol: int) -> void:
+	var player_stats := IStatisticPossessor.id(my_player)
+	var burn_cooldown_effect : CooldownEffect = player_stats.get_cooldown_of_type(Genesis.CooldownType.BURN)
+	
+	if burn_cooldown_effect == null: return
+	burn_timer_bar.max_value = burn_cooldown_effect.total_frames
+	burn_timer_bar.value = burn_cooldown_effect.total_frames - burn_cooldown_effect.frames

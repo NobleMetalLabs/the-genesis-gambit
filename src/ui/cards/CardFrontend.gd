@@ -8,6 +8,8 @@ static func instantiate() -> CardFrontend:
 static var back_img : Texture = preload("res://ast/game/cards/fgs/back.png")
 var card_instance : ICardInstance
 
+signal update_requested()
+
 @onready var border_component : CardBorder = $CardBorder
 @onready var overlay_component : CardOverlay = $CardOverlay
 
@@ -21,7 +23,7 @@ func set_card(card : ICardInstance) -> void:
 	self.texture = card_instance.metadata.image
 	border_component.set_rarity(card_instance.metadata.rarity)
 
-var is_face_visible : bool = false
+var is_face_visible : bool = true
 func set_visibility(face : bool, rarity : bool, _type : bool) -> void:
 	if card_instance == null: return
 
@@ -41,8 +43,8 @@ func set_visibility(face : bool, rarity : bool, _type : bool) -> void:
 func set_overlays(is_marked : bool, is_frozen : bool) -> void:
 	overlay_component.set_overlays(is_marked, is_frozen)
 
-func set_cooldown_bar_value(value : float) -> void:
-	overlay_component.set_cooldown_bar_value(value)
+func set_cooldown_bar_value(type : Genesis.CooldownType, value : float) -> void:
+	overlay_component.set_cooldown_bar_value(type, value)
 
 func check_self_for_animation() -> void:
 	var card_stats := IStatisticPossessor.id(card_instance)
@@ -64,9 +66,23 @@ func check_self_for_animation() -> void:
 		card_stats.get_statistic(Genesis.Statistic.IS_FROZEN)
 	)
 
-	if card_stats.get_statistic(Genesis.Statistic.IS_IN_COOLDOWN):
-		var cooldown_length : int = card_stats.get_statistic(Genesis.Statistic.NUM_COOLDOWN_FRAMES_LENGTH)
-		var cooldown_remaining : int = card_stats.get_statistic(Genesis.Statistic.NUM_COOLDOWN_FRAMES_REMAINING)
+	var sickness_cooldown : CooldownEffect = card_stats.get_cooldown_of_type(Genesis.CooldownType.SSICKNESS)
+	if sickness_cooldown != null:
+		var cooldown_length : int = sickness_cooldown.total_frames
+		var cooldown_remaining : int = sickness_cooldown.frames
 		var cooldown_progress : float = float(cooldown_remaining) / max(1, cooldown_length)
-		set_cooldown_bar_value(cooldown_progress)
+		
+		set_cooldown_bar_value(Genesis.CooldownType.SSICKNESS, cooldown_progress)
+	else:
+		set_cooldown_bar_value(Genesis.CooldownType.SSICKNESS, 0)
 
+		
+	var attack_cooldown : CooldownEffect = card_stats.get_cooldown_of_type(Genesis.CooldownType.ATTACK)
+	if attack_cooldown != null:
+		var cooldown_length : int = attack_cooldown.total_frames
+		var cooldown_remaining : int = attack_cooldown.frames
+		var cooldown_progress : float = float(cooldown_remaining) / max(1, cooldown_length)
+		
+		set_cooldown_bar_value(Genesis.CooldownType.ATTACK, cooldown_progress)
+	else:
+		set_cooldown_bar_value(Genesis.CooldownType.ATTACK, 0)

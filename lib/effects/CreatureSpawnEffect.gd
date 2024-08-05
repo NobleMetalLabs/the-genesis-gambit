@@ -33,10 +33,10 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	creature_moods.apply_mood(ssickness_mood)
 	
 	_effect_resolver.request_effect(
-		CreatureCooldownEffect.new(
+		CooldownEffect.new(
 			self.requester,
-			self.creature,
-			Genesis.CooldownStage.START,
+			creature_stats,
+			Genesis.CooldownType.SSICKNESS,
 			(10 / max(1, self.creature.metadata.speed)) * 5,
 			(func remove_summoning_sickness() -> void:
 				creature_stats.set_statistic(Genesis.Statistic.CAN_ATTACK, true)

@@ -13,6 +13,14 @@ enum CardType {
 	LEADER,
 }
 
+const COLOR_BY_CARDTYPE : Dictionary = {
+	Genesis.CardType.ATTACKER: Color.CRIMSON,
+	Genesis.CardType.INSTANT: Color.CORNFLOWER_BLUE,
+	Genesis.CardType.SUPPORT: Color.LIME_GREEN,
+	Genesis.CardType.PASSIVE: Color.DARK_ORCHID,
+	Genesis.CardType.LEADER: Color.GHOST_WHITE
+}
+
 enum CardRarity {
 	COMMON,
 	RARE,
@@ -52,11 +60,18 @@ enum CardTribe {
 
 # Actions and Events
 
-# CreatureCooldown*
-enum CooldownStage {
-	START,
-	IN_PROGRESS,
-	FINISH,
+# Cooldown*
+enum CooldownType {
+	BURN,
+	FREEZE,
+	SHUFFLE,
+	DECK_MAINTENANCE,
+	SSICKNESS,
+	ATTACK,
+	ACTIVATE,
+	CUSTOM,
+	CUSTOM2,
+	CUSTOM3
 }
 
 # CreatureLeavePlay*
@@ -90,6 +105,8 @@ enum CardRemoveAnimation {
 	BANISH,
 }
 
+const NETWORK_FRAME_PERIOD : float = 0.1
+
 # Statistics
 
 enum Statistic {
@@ -116,14 +133,11 @@ enum Statistic {
 	JUST_ATTACKED,
 	WAS_JUST_ATTACKED,
 	WAS_JUST_ACTIVATED,
-	JUST_STARTED_COOLDOWN,
-	IS_IN_COOLDOWN,
-	JUST_FINISHED_COOLDOWN,
 	JUST_TARGETED,
 	WAS_JUST_TARGETED,
 	JUST_DIED,
 	WAS_JUST_SACRIFICED,
-	WAS_JUST_DESTROYED,
+	WAS_JUST_KILLED,
 	HAS_TARGET,
 	# References
 	TARGET,
@@ -131,6 +145,7 @@ enum Statistic {
 	MOST_RECENT_ATTACKED_BY,
 	HAND_VISIBLE_PLAYERS,
 	DECK_TOPCARD_VISIBLE_PLAYERS,
+	CURRENT_COOLDOWNS,
 	# Ability
 	CAN_ATTACK,
 	CAN_BE_ATTACKED,
@@ -141,7 +156,7 @@ enum Statistic {
 	CAN_TARGET_SUPPORTS,
 	CAN_BE_TARGETED,
 	CAN_BE_SACRIFICED,
-	CAN_BE_DESTROYED,
+	CAN_BE_KILLED,
 	ACTS_AS_BLOCKER,
 	ACTS_AS_UNMARKED,
 	# Counts
@@ -150,8 +165,6 @@ enum Statistic {
 	NUM_ACTIVATIONS,
 	NUM_MOODS,
 	NUM_MOOD_CHANGES,
-	NUM_COOLDOWN_FRAMES_LENGTH,
-	NUM_COOLDOWN_FRAMES_REMAINING,
 	# Player
 	MAX_HAND_SIZE,
 	MAX_ENERGY,
@@ -202,14 +215,11 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.JUST_ATTACKED : false,
 	Statistic.WAS_JUST_ATTACKED : false,
 	Statistic.WAS_JUST_ACTIVATED : false,
-	Statistic.JUST_STARTED_COOLDOWN : false,
-	Statistic.IS_IN_COOLDOWN : false,
-	Statistic.JUST_FINISHED_COOLDOWN : false,
 	Statistic.JUST_TARGETED : false,
 	Statistic.WAS_JUST_TARGETED : false,
 	Statistic.JUST_DIED : false,
 	Statistic.WAS_JUST_SACRIFICED : false,
-	Statistic.WAS_JUST_DESTROYED : false,
+	Statistic.WAS_JUST_KILLED : false,
 	Statistic.HAS_TARGET : false,
 	# References
 	Statistic.TARGET : null,
@@ -217,6 +227,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.MOST_RECENT_ATTACKED_BY : null,
 	Statistic.HAND_VISIBLE_PLAYERS : [],
 	Statistic.DECK_TOPCARD_VISIBLE_PLAYERS : [],
+	Statistic.CURRENT_COOLDOWNS : [],
 	# Ability
 	Statistic.CAN_ATTACK : true,
 	Statistic.CAN_BE_ATTACKED : true,
@@ -227,7 +238,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.CAN_TARGET_SUPPORTS : true,
 	Statistic.CAN_BE_TARGETED : true,
 	Statistic.CAN_BE_SACRIFICED : true,
-	Statistic.CAN_BE_DESTROYED : true,
+	Statistic.CAN_BE_KILLED : true,
 	Statistic.ACTS_AS_BLOCKER : false,
 	Statistic.ACTS_AS_UNMARKED : false,
 	# Counts
@@ -236,8 +247,6 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.NUM_ACTIVATIONS : 0,
 	Statistic.NUM_MOODS : 0,
 	Statistic.NUM_MOOD_CHANGES : 0,
-	Statistic.NUM_COOLDOWN_FRAMES_LENGTH : 0,
-	Statistic.NUM_COOLDOWN_FRAMES_REMAINING : 0,
 	# Player
 	Statistic.MAX_HAND_SIZE : 10,
 	Statistic.MAX_ENERGY : 10,

@@ -2,7 +2,7 @@ extends CardLogic
 
 static var description : StringName = "The Rarity of the top card of your deck is visible to you."
 
-func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	var player_stats := IStatisticPossessor.id(instance_owner.player)
 	var is_on_field : bool = my_stats.get_statistic(Genesis.Statistic.IS_ON_FIELD)

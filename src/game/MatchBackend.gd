@@ -56,7 +56,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	if MultiplayerManager.is_instance_server():
 		var execute_frame_timer : Timer = Timer.new()
 		execute_frame_timer.name = "ExecuteFrameTimer"
-		execute_frame_timer.wait_time = 0.1
+		execute_frame_timer.wait_time = Genesis.NETWORK_FRAME_PERIOD
 		execute_frame_timer.one_shot = false
 		execute_frame_timer.autostart = true
 		execute_frame_timer.timeout.connect(AuthoritySourceProvider.authority_source.execute_frame)
@@ -64,10 +64,16 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 
 	AuthoritySourceProvider.authority_source.new_frame_index.connect(
 		func(_frame_number : int) -> void:
-			effect_resolver.resolve_effects(Router.backend.get_backend_state())
+			effect_resolver.resolve_effects(Router.backend.get_backend_object_collection())
 	)
 
+# NOTE: only works if created card order is deterministic across clients. i think it is, but not 100%...
+var _created_card_count : int = 1
+func get_created_card_number() -> int:
+	return _created_card_count
+
 func create_card(instance_id : int, player_owner : Player, internal_name : String) -> ICardInstance:
+	_created_card_count += 1
 	var ci := ICardInstance.new(CardDB.get_card_by_id(instance_id), player_owner)
 	_create_card_backend(ci, internal_name)
 	return ci
@@ -81,8 +87,8 @@ func _create_card_backend(card_instance : ICardInstance, internal_name : String)
 	card_holder.add_child(card_bk, true)
 	return card_bk
 
-func get_backend_state() -> MatchBackendState:
-	return MatchBackendState.new(players)
+func get_backend_object_collection() -> BackendObjectCollection:
+	return BackendObjectCollection.new(players)
 
 func _process(_delta : float) -> void: 
 	for player : Player in []: #players:

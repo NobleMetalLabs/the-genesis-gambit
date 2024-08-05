@@ -14,3 +14,12 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 		_effect_resolver.request_effect(HandRemoveCardEffect.new(
 			self.requester, self.player, card, Genesis.LeaveHandReason.BURNED
 		))
+	
+	_effect_resolver.request_effect(
+		CooldownEffect.new(
+			self.requester,
+			IStatisticPossessor.id(player),
+			Genesis.CooldownType.BURN,
+			int(60.0 / Genesis.NETWORK_FRAME_PERIOD)
+		)
+	)

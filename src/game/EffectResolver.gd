@@ -13,8 +13,8 @@ var effects_by_requester : Dictionary = {} # [Object, Array[Effect]]
 var yet_to_process_actions : Array[Action] = []
 var already_processed_actions : Array[Action] = []
 
-signal finished_resolving_effects_for_frame()
-
+var _updated_cards : Array[ICardInstance] = []
+signal finished_resolving_effects_for_frame(updated_cards : Array[ICardInstance])
 
 # TODO: ER should be able to be queried for all effects that have been relevant to a card, including resolved ones.
 # This would also reduce the amount of effect_list looping in card logics.
@@ -61,8 +61,23 @@ func resolve_existing_effects_of_requester(requester : Object) -> void:
 			push_warning("Error: Effect '%s' does not have a resolve method." % [effect])
 		effect.resolve_status = Effect.ResolveStatus.RESOLVED
 		remove_effect(effect)
+		
+		var effect_properties : Array[Dictionary] = effect.get_property_list()
+		var effect_updated_cards : Array[ICardInstance] = []
+		effect_updated_cards.assign(effect_properties.filter(
+			func(dict : Dictionary) -> bool:
+				return dict.get("class_name").begins_with("I") # NOTE: Lol
+		).map(
+			func(dict : Dictionary) -> ICardInstance:
+				return ICardInstance.id(effect.get(dict["name"]))
+		))
+		for card : ICardInstance in effect_updated_cards:
+			if card in _updated_cards: continue
+			if card == null: continue
+			_updated_cards.append(card)
 
-func resolve_effects(backend_state : MatchBackendState) -> void:
+func resolve_effects(backend_objects : BackendObjectCollection) -> void:
+	_updated_cards.clear()
 	#process all actions
 	var action_queue : Array[Action] = yet_to_process_actions.duplicate() + already_processed_actions.duplicate()
 	for action : Action in action_queue:
@@ -83,7 +98,7 @@ func resolve_effects(backend_state : MatchBackendState) -> void:
 			self.request_effect(effect)
 		
 	#process all cards
-	for card : ICardInstance in backend_state.cards:
+	for card : ICardInstance in backend_objects.cards:
 		if card == null:
 			push_error("Card is somehow fucking null.")
 			continue
@@ -91,6 +106,6 @@ func resolve_effects(backend_state : MatchBackendState) -> void:
 		resolve_existing_effects_of_requester(card)
 		if card.is_queued_for_deletion(): continue
 		#request new effects
-		card.logic.process(backend_state, self) #TODO: Should a cache / interop be provided here?
+		card.logic.process(backend_objects, self)
 
-	finished_resolving_effects_for_frame.emit()
+	finished_resolving_effects_for_frame.emit(_updated_cards)

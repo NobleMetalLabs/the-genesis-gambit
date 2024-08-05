@@ -20,16 +20,19 @@ func clone() -> IMoodPossessor:
 func apply_mood(mood : Mood) -> void:
 	_active_moods.append(mood)
 
+func get_moods() -> Array[Mood]:
+	return _active_moods
+
 func remove_mood(mood : Mood) -> void:
 	_active_moods.erase(mood)
 
-func _get_statistic(statistic_name : Genesis.Statistic, base_value : Variant) -> Variant:
+func _get_statistic(statistic : Genesis.Statistic, base_value : Variant) -> Variant:
 	if typeof(base_value) != TYPE_INT: 
 		return base_value
 	for mood in _active_moods:
 		if not mood is StatisticMood: continue
 		mood = mood as StatisticMood
-		if mood.statistic == statistic_name:
+		if mood.statistic == statistic:
 			match(mood.effect):
 				Mood.MoodEffect.EXPOSITIVE:
 					base_value *= 2

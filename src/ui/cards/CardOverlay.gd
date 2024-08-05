@@ -1,12 +1,19 @@
 class_name CardOverlay
 extends Control
 
-@onready var _cooldown_bar : TextureProgressBar = $CooldownTprogbar
+@onready var _ssickness_cooldown_bar : TextureProgressBar = $SSicknessCooldownBar
+@onready var _attack_cooldown_bar : TextureProgressBar = $AttackCooldownBar
 @onready var _marked_trect : TextureRect = $MarkedTrect
 @onready var _frozen_trect : TextureRect = $FrozenTrect
 
-func set_cooldown_bar_value(value : float) -> void:
-	_cooldown_bar.value = value
+func set_cooldown_bar_value(type : Genesis.CooldownType, value : float) -> void:
+	match(type):
+		Genesis.CooldownType.SSICKNESS:
+			_ssickness_cooldown_bar.value = value
+		Genesis.CooldownType.ATTACK:
+			_attack_cooldown_bar.value = value
+
+
 
 func set_overlays(is_marked : bool, is_frozen : bool) -> void:
 	set_marked(is_marked)

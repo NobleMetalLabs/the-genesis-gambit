@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CardMetadata" load_steps=4 format=3 uid="uid://bevptvc6gmegi"]
 
 [ext_resource type="Texture2D" uid="uid://b160qjbc08u0n" path="res://ast/game/cards/fgs/bugs/leafcutter-ant-queen.png" id="1_68svq"]
-[ext_resource type="Script" path="res://ast/game/cards/logic/src/Nothing.gd" id="2_syk16"]
+[ext_resource type="Script" path="res://ast/game/cards/logic/src/bugs/Leafcutter Ant Queen.gd" id="2_00irv"]
 [ext_resource type="Script" path="res://lib/card/CardMetadata.gd" id="3_rqe26"]
 
 [resource]
@@ -10,7 +10,7 @@ name = "Leafcutter Ant Queen"
 type = 4
 rarity = 4
 image = ExtResource("1_68svq")
-logic_script = ExtResource("2_syk16")
+logic_script = ExtResource("2_00irv")
 health = 40
 strength = -1
 speed = -1

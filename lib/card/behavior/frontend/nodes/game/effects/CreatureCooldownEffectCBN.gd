@@ -11,4 +11,3 @@ func _init() -> void:
 			CardBehaviorArgument.int("frames")
 		],
 	)
-

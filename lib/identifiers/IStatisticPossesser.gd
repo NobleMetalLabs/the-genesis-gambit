@@ -41,3 +41,8 @@ func modify_statistic(statistic_name : Genesis.Statistic, value : Variant) -> vo
 	var current_value : Variant = get_statistic(statistic_name)
 	var new_value : Variant = current_value + value
 	set_statistic(statistic_name, new_value)
+
+func get_cooldown_of_type(type : Genesis.CooldownType) -> CooldownEffect:
+	for cooldown : CooldownEffect in get_statistic(Genesis.Statistic.CURRENT_COOLDOWNS):
+		if cooldown.type == type: return cooldown
+	return null

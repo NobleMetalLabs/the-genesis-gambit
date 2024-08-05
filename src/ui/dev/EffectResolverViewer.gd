@@ -50,7 +50,7 @@ func _process(_delta : float) -> void:
 	# tally cards
 	var cards_parent : TreeItem = tree.create_item(root)
 	cards_parent.set_text(0, "Cards")
-	for card : ICardInstance in Router.backend.get_backend_state().cards:
+	for card : ICardInstance in Router.backend.get_backend_object_collection().cards:
 		var card_item : TreeItem = tree.create_item(cards_parent)
 		setup_card_row(card_item, card)
 		_object_to_treeitem[card] = card_item

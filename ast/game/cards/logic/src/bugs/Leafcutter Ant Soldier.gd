@@ -5,14 +5,14 @@ static var description : StringName = "Whenever the Fungus Garden gains a charge
 var last_seen_num_garden_tenders : int = 0
 var self_moods : Array[StatisticMood] = []
 
-func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	var curr_num_tenders : int = 0
-	for card : ICardInstance in _backend_state.get_player_from_instance(instance_owner).cards_on_field:
+	for card : ICardInstance in instance_owner.player.cards_on_field:
 		var card_target : ICardInstance = IStatisticPossessor.id(card).get_statistic(Genesis.Statistic.TARGET)
 		var target_card : ICardInstance = ICardInstance.id(card_target)
 		if not target_card: continue
 		if not target_card.player == instance_owner.player: continue
-		if target_card.card_name == "Fungus Garden": #Is this slow? Bad, even?
+		if target_card.metadata.name == "Fungus Garden": #Is this slow? Bad, even?
 			curr_num_tenders += 1
 
 	var my_moods := IMoodPossessor.id(instance_owner)

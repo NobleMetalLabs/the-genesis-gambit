@@ -21,10 +21,10 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	_effect_resolver.request_effect(SetStatisticEffect.new(
 		self.requester, creature_stats, Genesis.Statistic.JUST_ATTACKED, false
 	))
-	_effect_resolver.request_effect(CreatureCooldownEffect.new(
+	_effect_resolver.request_effect(CooldownEffect.new(
 		self.requester,
-		self.creature,
-		Genesis.CooldownStage.START,
+		self.creature_stats,
+		Genesis.CooldownType.ATTACK,
 		(10 / max(1, self.creature.metadata.speed)) * 5,
 	))
 

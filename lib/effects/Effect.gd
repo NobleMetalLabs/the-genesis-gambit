@@ -13,4 +13,3 @@ enum ResolveStatus {
 
 func _init() -> void:
 	assert(false, "Effect is an abstract class and should not be instantiated.")
-

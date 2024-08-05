@@ -2,7 +2,7 @@ class_name AuthoritySource
 extends Node
 
 signal reflect_action(action : Action)
-signal reflect_gamestate(gamestate : MatchBackendState)
+signal reflect_gamestate(gamestate : BackendObjectCollection)
 
 func request_action(action : Action) -> void:
 	assert(false, "Abstract function 'request_action()' not implemented by" % [self])

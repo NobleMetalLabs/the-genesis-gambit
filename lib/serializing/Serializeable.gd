@@ -27,17 +27,17 @@ static func _object_to_dict(obj : Object) -> Dictionary:
 		obj_dict[vname] = _variant_to_deep_variant(value)
 	return obj_dict
 
-static func _object_to_uid_dict(obj : Object) -> Dictionary:
-	var uid : int
-	if UIDDB.has_object(obj):
-		uid = UIDDB.uid(obj)
-		return { "uid" : uid }
-	else:
-		uid = UIDDB.register_object(obj)
-		var obj_dict : Dictionary = {
-			"uid" : uid
-		}
-		return obj_dict.merged(_object_to_dict(obj))
+# static func _object_to_uid_dict(obj : Object) -> Dictionary:
+# 	var uid : int
+# 	if UIDDB.has_object(obj):
+# 		uid = UIDDB.uid(obj)
+# 		return { "uid" : uid }
+# 	else:
+# 		uid = UIDDB.register_object(obj)
+# 		var obj_dict : Dictionary = {
+# 			"uid" : uid
+# 		}
+# 		return obj_dict.merged(_object_to_dict(obj))
 
 static func _object_to_resource_path_dict(obj : Object) -> Dictionary:
 	return {

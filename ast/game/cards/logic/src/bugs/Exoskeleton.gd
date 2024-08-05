@@ -1,10 +1,10 @@
 extends CardLogic
 
-static var description : StringName = "When Exoskeleton is played, gain 3 charges. Activate: The next attack targeted creature receives deals no damage. When Exoskeleton runs out of charges, it is destroyed."
+static var description : StringName = "When Exoskeleton is played, gain 3 charges. Activate: The next attack targeted creature receives deals no damage. When Exoskeleton runs out of charges, it is killed."
 
 var protected_creatures : Array[ICardInstance] = []
 
-func process(_backend_state : MatchBackendState, _effect_resolver : EffectResolver) -> void:
+func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_PLAYED):
 		my_stats.modify_statistic(Genesis.Statistic.CHARGES, 3)

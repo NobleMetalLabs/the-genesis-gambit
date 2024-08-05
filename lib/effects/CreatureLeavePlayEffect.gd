@@ -20,6 +20,8 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	_effect_resolver.request_effect(DeckAddCardEffect.new(
 		self, player_owner, ICardInstance.id(self.creature)
 	))
+
+	
 	
 	var creature_stats := IStatisticPossessor.id(creature)
 	var source_stats := IStatisticPossessor.id(source)

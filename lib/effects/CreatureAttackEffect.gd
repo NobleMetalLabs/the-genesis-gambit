@@ -58,15 +58,3 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 
 	target_stats.set_statistic(Genesis.Statistic.MOST_RECENT_ATTACKED_BY, ICardInstance.id(self.creature))
 	creature_stats.set_statistic(Genesis.Statistic.MOST_RECENT_ATTACKED, ICardInstance.id(self.target))
-
-	#var attack_swing_tween : Tween = Router.get_tree().create_tween()
-	#attack_swing_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO).tween_property(self.creature, "rotation_degrees", 20, 0.05)
-	#attack_swing_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE).tween_property(self.creature, "rotation_degrees", -20, 0.1)
-	#attack_swing_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE).tween_property(self.creature, "rotation_degrees", 0, 0.2)
-	#var attack_grow_tween : Tween = Router.get_tree().create_tween()
-	#attack_grow_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO).tween_property(self.creature, "scale", Vector2.ONE * 1.05, 0.1)
-	#attack_grow_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUINT).tween_property(self.creature, "scale", Vector2.ONE, 0.5)
-#
-	#var damage_flash_tween : Tween = Router.get_tree().create_tween()
-	#damage_flash_tween.tween_property(self.target, "modulate", Color(1, 0, 0, 1), 0)
-	#damage_flash_tween.tween_property(self.target, "modulate", Color(1, 1, 1, 1), 0.5)

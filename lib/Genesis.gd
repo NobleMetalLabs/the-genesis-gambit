@@ -138,9 +138,9 @@ enum Statistic {
 	WAS_JUST_ACTIVATED,
 	JUST_TARGETED,
 	WAS_JUST_TARGETED,
-	JUST_DIED,
-	WAS_JUST_SACRIFICED,
+	JUST_KILLED,
 	WAS_JUST_KILLED,
+	WAS_JUST_SACRIFICED,
 	HAS_TARGET,
 	# References
 	TARGET,
@@ -223,9 +223,9 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.WAS_JUST_ACTIVATED : false,
 	Statistic.JUST_TARGETED : false,
 	Statistic.WAS_JUST_TARGETED : false,
-	Statistic.JUST_DIED : false,
-	Statistic.WAS_JUST_SACRIFICED : false,
+	Statistic.JUST_KILLED : false,
 	Statistic.WAS_JUST_KILLED : false,
+	Statistic.WAS_JUST_SACRIFICED : false,
 	Statistic.HAS_TARGET : false,
 	# References
 	Statistic.TARGET : null,

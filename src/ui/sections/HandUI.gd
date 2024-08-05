@@ -11,7 +11,7 @@ func refresh_card(card : ICardInstance) -> void:
 		_refresh_hand()
 	elif card in my_player.cards_in_hand:
 		_refresh_hand()
-	elif card in my_player.cards_on_field:
+	else:
 		refresh_energy_bar()
 
 func _refresh_hand() -> void:

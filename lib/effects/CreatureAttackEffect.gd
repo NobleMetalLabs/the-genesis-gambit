@@ -36,7 +36,12 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	
 
 	if target == null:
-		IMoodPossessor.id(self.creature).apply_mood(BoredomMood.new(self.creature))
+		_effect_resolver.request_effect(ApplyMoodEffect.new(
+			self.requester,
+			IMoodPossessor.id(self.creature),
+			BoredomMood.new(self.creature)
+		))
+		
 		self.resolve_status = ResolveStatus.FAILED
 		return
 

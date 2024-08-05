@@ -31,6 +31,7 @@ func _remake_card(card : ICardInstance) -> void:
 	if cof != null: 
 		_field_cards.erase(cof)
 		cof.queue_free()
+	if not card in my_player.cards_on_field: return
 	var new_card : CardOnField = _make_card(card)
 	_instance_to_field_card[card] = new_card
 

@@ -93,5 +93,5 @@ func get_backend_object_collection() -> BackendObjectCollection:
 func _process(_delta : float) -> void: 
 	for player : Player in []: #players:
 		var leader_stats := IStatisticPossessor.id(player.leader)
-		if leader_stats.get_statistic(Genesis.Statistic.JUST_DIED):
+		if leader_stats.get_statistic(Genesis.Statistic.WAS_JUST_KILLED):
 			self.game_completed.emit()

@@ -17,5 +17,5 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 	if not most_recent_attacked: return
 	var mra_stats := IStatisticPossessor.id(most_recent_attacked)
 
-	if mra_stats.get_statistic(Genesis.Statistic.JUST_DIED):
+	if mra_stats.get_statistic(Genesis.Statistic.WAS_JUST_KILLED):
 		IStatisticPossessor.id(fungus_garden).modify_statistic(Genesis.Statistic.CHARGES, 1)

@@ -61,7 +61,7 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	target_stats.set_statistic(Genesis.Statistic.MOST_RECENT_ATTACKED_BY, ICardInstance.id(self.creature))
 	creature_stats.set_statistic(Genesis.Statistic.MOST_RECENT_ATTACKED, ICardInstance.id(self.target))
 
-	target_stats.modify_statistic(Genesis.Statistic.HEALTH, -damage)
+	target_stats.modify_statistic(Genesis.Statistic.HEALTH, min(0, -damage))
 	if target_stats.get_statistic(Genesis.Statistic.HEALTH) <= 0:
 		if target_stats.get_statistic(Genesis.Statistic.CAN_BE_KILLED):
 			_effect_resolver.request_effect(CreatureLeavePlayEffect.new(

@@ -39,8 +39,12 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	# Lmk if there's a better way to do get all cards on field, I didn't think about it too hard
 	for player : Player in Router.backend.players:
 		for card_on_field : ICardInstance in player.cards_on_field:
-			if creature == IStatisticPossessor.id(card_on_field).get_statistic(Genesis.Statistic.TARGET):
-				IStatisticPossessor.id(card_on_field).set_statistic(Genesis.Statistic.TARGET, null)
+			var cof_stats := IStatisticPossessor.id(card_on_field)
+			if not cof_stats.get_statistic(Genesis.Statistic.HAS_TARGET): continue
+			if cof_stats.get_statistic(Genesis.Statistic.TARGET) == creature:
+				CreatureTargetEffect.new(
+					self.requester, card_on_field, null
+				).resolve(_effect_resolver)
 	
 	var energy_to_remove : int = creature_stats.get_statistic(Genesis.Statistic.ENERGY)
 	IStatisticPossessor.id(creature.player).modify_statistic(Genesis.Statistic.ENERGY, -energy_to_remove)

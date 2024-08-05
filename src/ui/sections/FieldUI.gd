@@ -57,9 +57,11 @@ func _place_card(card : CardOnField, at_position : Vector2) -> void:
 	card.position = at_position
 	card.card_frontend.mouse_entered.connect(
 		func field_card_hovered() -> void:
+			if not self.can_process(): return
 			Router.client_ui.hovered_card = card.card_backend
 	)
 	card.card_frontend.mouse_exited.connect(
 		func field_card_unhovered() -> void:
+			if not self.can_process(): return
 			Router.client_ui.hovered_card = null
 	)

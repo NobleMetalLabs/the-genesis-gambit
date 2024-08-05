@@ -43,8 +43,8 @@ func set_visibility(face : bool, rarity : bool, _type : bool) -> void:
 func set_overlays(is_marked : bool, is_frozen : bool) -> void:
 	overlay_component.set_overlays(is_marked, is_frozen)
 
-func set_cooldown_bar_value(value : float) -> void:
-	overlay_component.set_cooldown_bar_value(value)
+func set_cooldown_bar_value(type : Genesis.CooldownType, value : float) -> void:
+	overlay_component.set_cooldown_bar_value(type, value)
 
 func check_self_for_animation() -> void:
 	var card_stats := IStatisticPossessor.id(card_instance)
@@ -66,11 +66,23 @@ func check_self_for_animation() -> void:
 		card_stats.get_statistic(Genesis.Statistic.IS_FROZEN)
 	)
 
-	for cooldown : CooldownEffect in card_stats.get_statistic(Genesis.Statistic.CURRENT_COOLDOWNS):
-		if cooldown.type == Genesis.CooldownType.SSICKNESS:
-			
-			var cooldown_length : int = cooldown.total_frames
-			var cooldown_remaining : int = cooldown.frames
-			var cooldown_progress : float = float(cooldown_remaining) / max(1, cooldown_length)
-			
-			set_cooldown_bar_value(cooldown_progress)
+	var sickness_cooldown : CooldownEffect = card_stats.get_cooldown_of_type(Genesis.CooldownType.SSICKNESS)
+	if sickness_cooldown != null:
+		var cooldown_length : int = sickness_cooldown.total_frames
+		var cooldown_remaining : int = sickness_cooldown.frames
+		var cooldown_progress : float = float(cooldown_remaining) / max(1, cooldown_length)
+		
+		set_cooldown_bar_value(Genesis.CooldownType.SSICKNESS, cooldown_progress)
+	else:
+		set_cooldown_bar_value(Genesis.CooldownType.SSICKNESS, 0)
+
+		
+	var attack_cooldown : CooldownEffect = card_stats.get_cooldown_of_type(Genesis.CooldownType.ATTACK)
+	if attack_cooldown != null:
+		var cooldown_length : int = attack_cooldown.total_frames
+		var cooldown_remaining : int = attack_cooldown.frames
+		var cooldown_progress : float = float(cooldown_remaining) / max(1, cooldown_length)
+		
+		set_cooldown_bar_value(Genesis.CooldownType.ATTACK, cooldown_progress)
+	else:
+		set_cooldown_bar_value(Genesis.CooldownType.ATTACK, 0)

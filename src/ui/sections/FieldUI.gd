@@ -9,7 +9,10 @@ func force_refresh_ui() -> void:
 
 func refresh_card(ci : ICardInstance) -> void:
 	if ci in _instance_to_field_card.keys():
-		_remake_card(ci)
+		if ci in my_player.cards_on_field:
+			_instance_to_field_card[ci].card_frontend.check_self_for_animation()
+		else:
+			_remake_card(ci)
 	elif ci in my_player.cards_on_field:
 		_remake_card(ci)
 

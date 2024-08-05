@@ -91,7 +91,10 @@ func get_backend_object_collection() -> BackendObjectCollection:
 	return BackendObjectCollection.new(players)
 
 func _process(_delta : float) -> void: 
-	for player : Player in []: #players:
+	for player : Player in players:
 		var leader_stats := IStatisticPossessor.id(player.leader)
 		if leader_stats.get_statistic(Genesis.Statistic.WAS_JUST_KILLED):
+			var final_blow_dealer : ICardInstance = leader_stats.get_statistic(Genesis.Statistic.MOST_RECENT_ATTACKED_BY)
+			var winner : Player = final_blow_dealer.player
+			Router.client_ui.display_postgame_ui(winner, final_blow_dealer)
 			self.game_completed.emit()

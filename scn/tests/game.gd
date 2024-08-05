@@ -39,7 +39,22 @@ func handle_new_match_started(nmatch : NetworkMatch) -> void:
 	nmatch.start_match()
 
 func handle_match_completed() -> void:
-	lobby_ui.show()
+	Router.backend.process_mode = Node.PROCESS_MODE_DISABLED
+	var win_timer : Timer = Timer.new()
+	win_timer.wait_time = 5
+	win_timer.one_shot = true
+	win_timer.autostart = true
+	win_timer.timeout.connect(
+		func reset_game() -> void:
+			Router.client_ui.queue_free()
+			Router.client_ui = null
+			Router.backend.queue_free()
+			Router.backend = null
+			UIDDB.clear()
+			win_timer.queue_free()
+			lobby_ui.show()
+	)
+	self.add_child(win_timer)
 
 func _dispatch_play_stage(config : NetworkPlayStageConfiguration) -> void:
 	var backend : MatchBackend = backend_scene.instantiate()

@@ -2,7 +2,7 @@ class_name ClientUI
 extends Control
 
 @onready var card_info_panel : CardInfoPanel = $"%CARD-INFO-PANEL"
-@onready var target_sprite : Sprite2D = $TargetSprite
+@onready var postgame_panel : PostgamePanel = $"%POSTGAME-PANEL"
 
 @onready var dev_effect_viewer : EffectResolverViewer = $"%EFFECT-RESOLVER-VIEWER"
 @onready var dev_card_viewer : CardDataViewer = $"%CARD-DATA-VIEWER"
@@ -16,6 +16,8 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	var t : String = "Server" if MultiplayerManager.is_instance_server() else "Client"
 	$"%MULTIPLAYER-PANEL".text = t
 	$"%MULTIPLAYER-PANEL".name = t
+
+	postgame_panel.hide()
 
 	var pui_template : = $"%PUI-TEMPLATE"
 	var grid_cont : GridContainer = $"PlayerAreaGridContainer"
@@ -69,6 +71,10 @@ func refresh_card(card_instance : ICardInstance) -> void:
 		player_area.field_ui.refresh_card(card_instance)
 		player_area.hand_ui.refresh_card(card_instance)
 		player_area.deck_ui.refresh_card(card_instance)
+
+func display_postgame_ui(player : Player, final_blow_dealer : ICardInstance) -> void:
+	postgame_panel.set_contents(player, final_blow_dealer)
+	postgame_panel.show()
 
 var _card_instance_to_frontend : Dictionary = {} #[ICardInstance, CardFrontend]
 func assign_card_frontend(card_instance : ICardInstance, card_frontend : CardFrontend) -> void:

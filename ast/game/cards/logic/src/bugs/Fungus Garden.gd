@@ -12,16 +12,11 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 		for mood in creature_moods.get_moods():
 			if mood is BoredomMood:
 				creature_moods.remove_mood(mood)
-				var creature_stats := IStatisticPossessor.id(friendly_creature)
-				creature_stats.set_statistic(Genesis.Statistic.TARGET, instance_owner)
-				creature_stats.set_statistic(Genesis.Statistic.HAS_TARGET, true)
-				creature_stats.set_statistic(Genesis.Statistic.JUST_TARGETED, true)
 				_effect_resolver.request_effect(
-					SetStatisticEffect.new(
+					CreatureTargetEffect.new(
 						instance_owner,
-						creature_stats,
-						Genesis.Statistic.JUST_TARGETED,
-						false
+						friendly_creature,
+						instance_owner,
 					)
 				)
 

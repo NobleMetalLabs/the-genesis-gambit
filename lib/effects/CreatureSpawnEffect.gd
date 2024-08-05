@@ -43,7 +43,7 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 			Genesis.speed_value_to_cooldown_frame_count(creature_stats.get_statistic(Genesis.Statistic.SPEED)),
 			_effect_resolver.request_effect.bind(
 				CreatureAttackEffect.new(
-					self.requester,
+					self.creature,
 					self.creature,
 					creature_stats.get_statistic(Genesis.Statistic.TARGET),
 					creature_stats.get_statistic(Genesis.Statistic.STRENGTH)

@@ -1,6 +1,6 @@
 extends CardLogic
 
-static var description : StringName = "Start the game with a Fungus Garden, which is untargetable, unkillable, and costs no energy."
+static var description : StringName = "Start the game with a Fungus Garden, which is untargetable by opponent creatures, unkillable, and costs no energy."
 
 var fungus_garden : ICardInstance = null
 var damage_count : int = 0
@@ -18,7 +18,7 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 	var fungor_stats := IStatisticPossessor.id(fungus_garden)
 
 	fungor_stats.set_statistic(Genesis.Statistic.ENERGY, 0)
-	fungor_stats.set_statistic(Genesis.Statistic.CAN_BE_TARGETED, false)
+	fungor_stats.set_statistic(Genesis.Statistic.CAN_BE_TARGETED_FRIENDLIES_ONLY, true)
 	fungor_stats.set_statistic(Genesis.Statistic.CAN_BE_KILLED, false)
 	fungor_stats.set_statistic(Genesis.Statistic.POSITION, my_stats.get_statistic(Genesis.Statistic.POSITION) + Vector2(100, 0))
 

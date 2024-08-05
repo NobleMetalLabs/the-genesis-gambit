@@ -4,9 +4,6 @@ extends Control
 @onready var card_info_panel : CardInfoPanel = $"%CARD-INFO-PANEL"
 @onready var postgame_panel : PostgamePanel = $"%POSTGAME-PANEL"
 
-@onready var dev_effect_viewer : EffectResolverViewer = $"%EFFECT-RESOLVER-VIEWER"
-@onready var dev_card_viewer : CardDataViewer = $"%CARD-DATA-VIEWER"
-
 var player_areas : Array[PlayerAreaUI] = []
 var local_player_area : PlayerAreaUI 
 
@@ -95,13 +92,12 @@ var hovered_card : ICardInstance = null
 func _handle_card_actions() -> void:
 	if Input.is_action_just_pressed("ui_inspect"):
 		if hovered_card != null and Router.client_ui.get_card_frontend(hovered_card).is_face_visible:
-			card_info_panel.set_card_metadata(hovered_card.metadata)
+			card_info_panel.set_card(hovered_card)
 			card_info_panel.card_display.description_label.text = hovered_card.logic.description #lol
 			card_info_panel.display()
-			dev_card_viewer.set_card(hovered_card)
+			
 		else:
 			card_info_panel.undisplay()
-			dev_card_viewer.set_card(null)
 
 	if Input.is_action_just_pressed("ui_activate"):
 		if hovered_card != null:

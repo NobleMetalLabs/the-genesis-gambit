@@ -23,6 +23,8 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	if at_index == 999:
 		self.player.cards_in_deck.append(card)
 	else:
+		if at_index < 0:
+			at_index = self.player.cards_in_deck.size() + at_index
 		self.player.cards_in_deck.insert(at_index, card)
 
 	var card_stats := IStatisticPossessor.id(card)

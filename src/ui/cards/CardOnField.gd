@@ -56,7 +56,9 @@ func _process(_delta : float) -> void:
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			end_target()
 	elif target != null:
-		var target_rect : Rect2 = Router.client_ui.get_card_frontend(target).get_global_rect()
+		var target_frontend : CardFrontend = Router.client_ui.get_card_frontend(target)
+		assert(target_frontend != null, "No registered frontend for target card %s" % target)
+		var target_rect : Rect2 = target_frontend.get_global_rect()
 		target_arrow.end_position = target_rect.get_center()
 
 func start_drag() -> void:

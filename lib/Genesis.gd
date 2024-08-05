@@ -106,9 +106,13 @@ enum CardRemoveAnimation {
 }
 
 const NETWORK_FRAME_PERIOD : float = 0.1#99999999999# 0.1
+const MAX_SPEED_VALUE : int = 10 # This probably should not change i think.
+const SPEED_FLOOR : float = 1.5
+const SPEED_SPREAD : float = 1.75
 
 static func speed_value_to_cooldown_frame_count(speed : int) -> int:
-	return (10 / max(1, speed)) * 15
+	return (((MAX_SPEED_VALUE - max(1, speed)) / SPEED_SPREAD) + SPEED_FLOOR) / NETWORK_FRAME_PERIOD
+
 
 # Statistics
 

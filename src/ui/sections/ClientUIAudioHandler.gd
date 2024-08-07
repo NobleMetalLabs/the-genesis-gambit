@@ -12,6 +12,7 @@ func _init(_client_ui : ClientUI) -> void:
 			AudioServer.set_bus_mute(bus_idx, true)
 
 func handle_effect_audio(effect : Effect) -> void:
+	if effect.resolve_status == Effect.ResolveStatus.FAILED: return
 	if effect is CreatureEffect:
 		var creature_frontend : CardFrontend = client_ui.get_card_frontend(effect.creature)
 		var creature_position : Vector2 = Vector2.ZERO

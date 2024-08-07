@@ -66,6 +66,14 @@ func check_self_for_animation() -> void:
 		card_stats.get_statistic(Genesis.Statistic.IS_FROZEN)
 	)
 
+	var health : int = card_stats.get_statistic(Genesis.Statistic.HEALTH)
+	if health > 0:
+		var start_health : int = card_instance.metadata.health
+		var damage_progress : float = (float(start_health) - health) / max(1, start_health)
+		overlay_component.set_damage_bar_value(damage_progress)
+	else:
+		overlay_component.set_damage_bar_value(0)
+
 	var sickness_cooldown : CooldownEffect = card_stats.get_cooldown_of_type(Genesis.CooldownType.SSICKNESS)
 	if sickness_cooldown != null:
 		var cooldown_length : int = sickness_cooldown.total_frames

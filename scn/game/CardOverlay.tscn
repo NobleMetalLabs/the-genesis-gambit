@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c60gmlmsnosfq"]
+[gd_scene load_steps=8 format=3 uid="uid://c60gmlmsnosfq"]
 
 [ext_resource type="Script" path="res://src/ui/cards/CardOverlay.gd" id="1_odu1a"]
 [ext_resource type="Texture2D" uid="uid://b76t6ix8ghkp3" path="res://ast/game/cards/fgs/marked.png" id="2_mggle"]
@@ -9,6 +9,13 @@ colors = PackedColorArray(0, 0, 0, 0.498039, 0, 0, 0, 0.498039)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_5fnbc"]
 gradient = SubResource("Gradient_2gmoa")
+width = 2
+
+[sub_resource type="Gradient" id="Gradient_r2ne4"]
+colors = PackedColorArray(1, 0, 0, 0.498039, 1, 0, 0, 0.498039)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sko0b"]
+gradient = SubResource("Gradient_r2ne4")
 width = 2
 
 [node name="CardOverlay" type="Control"]
@@ -46,6 +53,21 @@ step = 0.01
 fill_mode = 3
 nine_patch_stretch = true
 texture_progress = SubResource("GradientTexture1D_5fnbc")
+
+[node name="DamageBar" type="TextureProgressBar" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+fill_mode = 3
+nine_patch_stretch = true
+texture_progress = SubResource("GradientTexture1D_sko0b")
 
 [node name="MarkedTrect" type="TextureRect" parent="."]
 visible = false

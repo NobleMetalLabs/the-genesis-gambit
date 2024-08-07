@@ -31,6 +31,7 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 				my_stats.modify_statistic(Genesis.Statistic.CHARGES, damage_count / 5)
 				damage_count %= 5
 				attack_effect.damage = 0
+				attack_effect.resolve_status = Effect.ResolveStatus.FAILED
 	
 	if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_ACTIVATED):
 		if my_stats.get_statistic(Genesis.Statistic.CHARGES) > 0:

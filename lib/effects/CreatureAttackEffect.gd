@@ -34,7 +34,6 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 		request_next_attack
 	))
 	
-
 	if target == null:
 		_effect_resolver.request_effect(ApplyMoodEffect.new(
 			self.requester,
@@ -46,7 +45,9 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 		return
 	
 	var target_stats := IStatisticPossessor.id(self.target)
-	if not target_stats.get_statistic(Genesis.Statistic.CAN_BE_ATTACKED): return
+	if not target_stats.get_statistic(Genesis.Statistic.CAN_BE_ATTACKED): 
+		self.resolve_status = ResolveStatus.FAILED
+		return
 	
 	creature_stats.set_statistic(Genesis.Statistic.JUST_ATTACKED, true)
 	_effect_resolver.request_effect(SetStatisticEffect.new(

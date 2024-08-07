@@ -27,6 +27,7 @@ func handle_effect_audio(effect : Effect) -> void:
 
 		elif effect is CreatureAttackEffect:
 			effect = effect as CreatureAttackEffect
+			if effect.damage <= 0: return
 			AudioDispatcher.dispatch_positional_audio(
 				creature_position, "hitslash"
 			)

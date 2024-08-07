@@ -27,6 +27,9 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 			at_index = self.player.cards_in_deck.size() + at_index
 		self.player.cards_in_deck.insert(at_index, card)
 
+	if not keep_stats:
+		card.get_object().reset_stats()
+
 	var card_stats := IStatisticPossessor.id(card)
 	card_stats.set_statistic(Genesis.Statistic.IS_IN_DECK, true)
 	

@@ -79,6 +79,7 @@ enum LeavePlayReason {
 	DIED,
 	BANISHED,
 	SACRIFICED,
+	SPENT
 }
 
 # HandRemoveCard*

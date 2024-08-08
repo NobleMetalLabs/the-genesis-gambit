@@ -45,6 +45,9 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	var remove_summoning_sickness : Callable = func remove_summoning_sickness() -> void:
 		creature_stats.set_statistic(Genesis.Statistic.CAN_ATTACK, true)
 		creature_moods.remove_mood(ssickness_mood)
+		
+		if creature.metadata.type == Genesis.CardType.INSTANT: return
+		
 		_effect_resolver.request_effect(CooldownEffect.new(
 			self.creature,
 			creature_stats,

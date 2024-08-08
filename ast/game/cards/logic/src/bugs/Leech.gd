@@ -25,6 +25,14 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 				instance_owner,
 			)
 		)
-		var player_stats := IStatisticPossessor.id(instance_owner.player)
+		_effect_resolver.request_effect(
+			CreatureLeavePlayEffect.new(
+				instance_owner,
+				instance_owner,
+				instance_owner,
+				Genesis.LeavePlayReason.SPENT
+			)
+		)
 		
-		player_stats.modify_statistic(Genesis.Statistic.HEALTH, target_stats.get_statistic(Genesis.Statistic.HEALTH))
+		var leader_stats := IStatisticPossessor.id(instance_owner.player.leader)
+		leader_stats.modify_statistic(Genesis.Statistic.HEALTH, target_stats.get_statistic(Genesis.Statistic.HEALTH))

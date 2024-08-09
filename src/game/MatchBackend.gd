@@ -63,6 +63,19 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		execute_frame_timer.timeout.connect(AuthoritySourceProvider.authority_source.execute_frame)
 		add_child(execute_frame_timer)
 
+	var draw_timer : Timer = Timer.new()
+	draw_timer.name = "DrawTimer"
+	draw_timer.wait_time = Genesis.DRAW_TIMER_PERIOD
+	draw_timer.one_shot = false
+	draw_timer.autostart = true
+	draw_timer.timeout.connect(
+		AuthoritySourceProvider.authority_source.request_action.bind(
+			HandDrawCardAction.setup()
+		)
+	)
+	add_child(draw_timer)
+
+
 	AuthoritySourceProvider.authority_source.new_frame_index.connect(
 		func(_frame_number : int) -> void:
 			effect_resolver.resolve_effects(Router.backend.get_backend_object_collection())

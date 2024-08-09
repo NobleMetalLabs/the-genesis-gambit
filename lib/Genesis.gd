@@ -106,7 +106,10 @@ enum CardRemoveAnimation {
 	BANISH,
 }
 
+const DRAW_TIMER_PERIOD : float = 5
+
 const NETWORK_FRAME_PERIOD : float = 0.1#99999999999# 0.1
+
 const MAX_SPEED_VALUE : int = 10 # This probably should not change i think.
 const SPEED_FLOOR : float = 1.5
 const SPEED_SPREAD : float = 1.75

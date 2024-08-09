@@ -11,7 +11,7 @@ func refresh_card(card : ICardInstance) -> void:
 		_refresh_hand()
 	elif card in my_player.cards_in_hand:
 		_refresh_hand()
-	elif card in my_player.cards_on_field:
+	else:
 		refresh_energy_bar()
 
 func _refresh_hand() -> void:
@@ -67,8 +67,9 @@ func _add_card_to_hand(card_instance : ICardInstance) -> void:
 
 func _clear_hand() -> void:
 	_displayed_cards.clear()
-	for child in card_stack_container.get_children():
-		card_stack_container.remove_child(child)
+	for child : CardInHand in card_stack_container.get_children():
+		Router.client_ui.deassign_card_frontend(child.card_backend)
+		child.queue_free()
 
 func _create_card_ghost(hand_card : CardInHand) -> void:
 	var new_card_ghost := CardGhost.new(hand_card)

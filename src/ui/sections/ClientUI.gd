@@ -2,10 +2,7 @@ class_name ClientUI
 extends Control
 
 @onready var card_info_panel : CardInfoPanel = $"%CARD-INFO-PANEL"
-@onready var target_sprite : Sprite2D = $TargetSprite
-
-@onready var dev_effect_viewer : EffectResolverViewer = $"%EFFECT-RESOLVER-VIEWER"
-@onready var dev_card_viewer : CardDataViewer = $"%CARD-DATA-VIEWER"
+@onready var postgame_panel : PostgamePanel = $"%POSTGAME-PANEL"
 
 var player_areas : Array[PlayerAreaUI] = []
 var local_player_area : PlayerAreaUI 
@@ -16,6 +13,8 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	var t : String = "Server" if MultiplayerManager.is_instance_server() else "Client"
 	$"%MULTIPLAYER-PANEL".text = t
 	$"%MULTIPLAYER-PANEL".name = t
+
+	postgame_panel.hide()
 
 	var pui_template : = $"%PUI-TEMPLATE"
 	var grid_cont : GridContainer = $"PlayerAreaGridContainer"
@@ -51,9 +50,9 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		leader_stats.set_statistic(Genesis.Statistic.POSITION, Vector2.ZERO)
 
 	Router.backend.effect_resolver.finished_resolving_effects_for_frame.connect(
-		func refresh_cards(cards : Array[ICardInstance]) -> void:
-			for card : ICardInstance in cards:
-				refresh_card(card)
+		func handle_ui_updates(effects : Array[Effect], cards : Array[ICardInstance]) -> void:
+			_handle_card_updates(cards)
+			_handle_effect_updates(effects)
 	)
 
 	client_ui_setup.emit()
@@ -63,16 +62,32 @@ func force_refresh_ui() -> void:
 	for pa in player_areas:
 		pa.force_refresh_ui()
 
-func refresh_card(card_instance : ICardInstance) -> void:
+var _audio_handler : ClientUIAudioHandler = ClientUIAudioHandler.new(self)
+func _handle_effect_updates(effects : Array[Effect]) -> void:
+	for effect : Effect in effects:
+		_audio_handler.handle_effect_audio(effect)
+
+func _handle_card_updates(cards : Array[ICardInstance]) -> void:
+	for card : ICardInstance in cards:
+		_refresh_card(card)
+
+func _refresh_card(card_instance : ICardInstance) -> void:
 	#print(card_instance)
 	for player_area in player_areas:
 		player_area.field_ui.refresh_card(card_instance)
 		player_area.hand_ui.refresh_card(card_instance)
 		player_area.deck_ui.refresh_card(card_instance)
 
+func display_postgame_ui(player : Player, final_blow_dealer : ICardInstance) -> void:
+	postgame_panel.set_contents(player, final_blow_dealer)
+	postgame_panel.show()
+
 var _card_instance_to_frontend : Dictionary = {} #[ICardInstance, CardFrontend]
 func assign_card_frontend(card_instance : ICardInstance, card_frontend : CardFrontend) -> void:
 	_card_instance_to_frontend[card_instance] = card_frontend
+
+func deassign_card_frontend(card_instance : ICardInstance) -> void:
+	_card_instance_to_frontend.erase(card_instance)
 
 func get_card_frontend(card_instance : ICardInstance) -> CardFrontend:
 	return _card_instance_to_frontend.get(card_instance, null)
@@ -86,13 +101,12 @@ var hovered_card : ICardInstance = null
 func _handle_card_actions() -> void:
 	if Input.is_action_just_pressed("ui_inspect"):
 		if hovered_card != null and Router.client_ui.get_card_frontend(hovered_card).is_face_visible:
-			card_info_panel.set_card_metadata(hovered_card.metadata)
+			card_info_panel.set_card(hovered_card)
 			card_info_panel.card_display.description_label.text = hovered_card.logic.description #lol
 			card_info_panel.display()
-			dev_card_viewer.set_card(hovered_card)
+			
 		else:
 			card_info_panel.undisplay()
-			dev_card_viewer.set_card(null)
 
 	if Input.is_action_just_pressed("ui_activate"):
 		if hovered_card != null:

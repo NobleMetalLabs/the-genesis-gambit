@@ -2,9 +2,11 @@ class_name CardInfoPanel
 extends Panel
 
 @onready var card_display : UIFullCard = $"%CARD-DISPLAY"
+@onready var data_viewer : CardDataViewer = $"%CARD-DATA-VIEWER"
 
-func set_card_metadata(metadata : CardMetadata) -> void:
-	card_display.set_metadata(metadata)
+func set_card(card : ICardInstance) -> void:
+	card_display.set_metadata(card.metadata)
+	data_viewer.set_card(card)
 
 var displayed : bool = false
 

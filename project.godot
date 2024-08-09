@@ -28,6 +28,7 @@ MultiplayerManager="*res://src/autoloads/MultiplayerManager.gd"
 UIDDB="*res://src/autoloads/UIDDB.gd"
 AuthoritySourceProvider="*res://src/autoloads/AuthoritySourceProvider.gd"
 Router="*res://src/autoloads/Router.gd"
+AudioDispatcher="*res://src/autoloads/AudioDispatcher.gd"
 
 [debug]
 

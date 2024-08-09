@@ -30,7 +30,10 @@ func _remake_card(card : ICardInstance) -> void:
 	var cof : CardOnField = _instance_to_field_card.get(card)
 	if cof != null: 
 		_field_cards.erase(cof)
+		_instance_to_field_card.erase(card)
+		Router.client_ui.deassign_card_frontend(card)
 		cof.queue_free()
+	if not card in my_player.cards_on_field: return
 	var new_card : CardOnField = _make_card(card)
 	_instance_to_field_card[card] = new_card
 
@@ -53,10 +56,12 @@ func _place_card(card : CardOnField, at_position : Vector2) -> void:
 		at_position.y = -at_position.y
 	card.position = at_position
 	card.card_frontend.mouse_entered.connect(
-		func() -> void:
+		func field_card_hovered() -> void:
+			if not self.can_process(): return
 			Router.client_ui.hovered_card = card.card_backend
 	)
 	card.card_frontend.mouse_exited.connect(
-		func() -> void:
+		func field_card_unhovered() -> void:
+			if not self.can_process(): return
 			Router.client_ui.hovered_card = null
 	)

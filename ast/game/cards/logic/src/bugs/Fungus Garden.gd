@@ -1,26 +1,25 @@
 extends CardLogic
 
-static var description : StringName = "Whenever a creature on your field would be subject to boredom, it instead targets the Fungus Garden, tending it. Every 5 damage the garden receives gives it a charge of fungus. Activate: Spawn a copy of the creature it is targeting."
+static var description : StringName = "Whenever a creature on your field would be subject to Boredom, it instead targets the Fungus Garden, tending it. Every 5 damage the garden receives gives it a charge of fungus. Activate: Spawn a copy of the creature it is targeting."
 
 var damage_count : int = 0
 
+# NOTE: you can duplicate some stuff you probably shouldnt be able to
+
 func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
+	if my_stats.get_statistic(Genesis.Statistic.IS_ON_FIELD) == false: return
 	
 	for friendly_creature : ICardInstance in instance_owner.player.cards_on_field:
 		var creature_moods := IMoodPossessor.id(friendly_creature)
 		for mood in creature_moods.get_moods():
 			if mood is BoredomMood:
 				creature_moods.remove_mood(mood)
-				var creature_stats := IStatisticPossessor.id(friendly_creature)
-				creature_stats.set_statistic(Genesis.Statistic.TARGET, instance_owner)
-				creature_stats.set_statistic(Genesis.Statistic.JUST_TARGETED, true)
 				_effect_resolver.request_effect(
-					SetStatisticEffect.new(
+					CreatureTargetEffect.new(
 						instance_owner,
-						creature_stats,
-						Genesis.Statistic.JUST_TARGETED,
-						false
+						friendly_creature,
+						instance_owner,
 					)
 				)
 
@@ -32,13 +31,18 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 				my_stats.modify_statistic(Genesis.Statistic.CHARGES, damage_count / 5)
 				damage_count %= 5
 				attack_effect.damage = 0
+				attack_effect.resolve_status = Effect.ResolveStatus.FAILED
 	
 	if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_ACTIVATED):
 		if my_stats.get_statistic(Genesis.Statistic.CHARGES) > 0:
 			my_stats.modify_statistic(Genesis.Statistic.CHARGES, -1)
 			var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
+			
+			if target == null: return
+			if target == instance_owner.player.leader: return
+			
 			var target_dupe : ICardInstance = Router.backend.create_card(
-				instance_owner.metadata.id,
+				target.metadata.id,
 				instance_owner.player,
 				"Dupe%s-%s" % [
 					target.metadata.name,
@@ -46,7 +50,8 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 				]
 			)
 
-			IStatisticPossessor.id(target_dupe).set_statistic(Genesis.Statistic.POSITION, target.get_statistic(Genesis.Statistic.POSITION) + Vector2(50, 50))
+			IStatisticPossessor.id(target_dupe).set_statistic(
+				Genesis.Statistic.POSITION, IStatisticPossessor.id(target).get_statistic(Genesis.Statistic.POSITION) + Vector2(50, 50))
 
 			_effect_resolver.request_effect(
 				CreatureSpawnEffect.new(

@@ -38,3 +38,7 @@ func uid(_object : Object) -> int:
 		push_error("Object %s not registered." % [_object])
 		assert(false)
 	return object_to_uid.get(_object, -1)
+
+func clear() -> void:
+	uid_to_object.clear()
+	object_to_uid.clear()

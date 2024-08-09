@@ -7,7 +7,7 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 	if not my_stats.get_statistic(Genesis.Statistic.HAS_TARGET): return
 	var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
 	var target_stats := IStatisticPossessor.id(target)
-	if target_stats.get_statistic(Genesis.Statistic.JUST_DIED):
+	if target_stats.get_statistic(Genesis.Statistic.WAS_JUST_KILLED):
 		var attacker : ICardInstance = target_stats.get_statistic(Genesis.Statistic.MOST_RECENT_ATTACKED_BY)
 		_effect_resolver.request_effect(
 			ApplyMoodEffect.new(

@@ -66,6 +66,14 @@ func check_self_for_animation() -> void:
 		card_stats.get_statistic(Genesis.Statistic.IS_FROZEN)
 	)
 
+	var health : int = card_stats.get_statistic(Genesis.Statistic.HEALTH)
+	if health > 0:
+		var start_health : int = card_instance.metadata.health
+		var damage_progress : float = (float(start_health) - health) / max(1, start_health)
+		overlay_component.set_damage_bar_value(damage_progress)
+	else:
+		overlay_component.set_damage_bar_value(0)
+
 	var sickness_cooldown : CooldownEffect = card_stats.get_cooldown_of_type(Genesis.CooldownType.SSICKNESS)
 	if sickness_cooldown != null:
 		var cooldown_length : int = sickness_cooldown.total_frames
@@ -86,3 +94,18 @@ func check_self_for_animation() -> void:
 		set_cooldown_bar_value(Genesis.CooldownType.ATTACK, cooldown_progress)
 	else:
 		set_cooldown_bar_value(Genesis.CooldownType.ATTACK, 0)
+		
+
+	# TODO: make this work
+
+	#var attack_swing_tween : Tween = Router.get_tree().create_tween()
+	#attack_swing_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO).tween_property(self.creature, "rotation_degrees", 20, 0.05)
+	#attack_swing_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE).tween_property(self.creature, "rotation_degrees", -20, 0.1)
+	#attack_swing_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE).tween_property(self.creature, "rotation_degrees", 0, 0.2)
+	#var attack_grow_tween : Tween = Router.get_tree().create_tween()
+	#attack_grow_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO).tween_property(self.creature, "scale", Vector2.ONE * 1.05, 0.1)
+	#attack_grow_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUINT).tween_property(self.creature, "scale", Vector2.ONE, 0.5)
+#
+	#var damage_flash_tween : Tween = Router.get_tree().create_tween()
+	#damage_flash_tween.tween_property(self.target, "modulate", Color(1, 0, 0, 1), 0)
+	#damage_flash_tween.tween_property(self.target, "modulate", Color(1, 1, 1, 1), 0.5)

@@ -79,6 +79,7 @@ enum LeavePlayReason {
 	DIED,
 	BANISHED,
 	SACRIFICED,
+	SPENT
 }
 
 # HandRemoveCard*
@@ -105,7 +106,14 @@ enum CardRemoveAnimation {
 	BANISH,
 }
 
-const NETWORK_FRAME_PERIOD : float = 0.1
+const NETWORK_FRAME_PERIOD : float = 0.1#99999999999# 0.1
+const MAX_SPEED_VALUE : int = 10 # This probably should not change i think.
+const SPEED_FLOOR : float = 1.5
+const SPEED_SPREAD : float = 1.75
+
+static func speed_value_to_cooldown_frame_count(speed : int) -> int:
+	return (((MAX_SPEED_VALUE - max(1, speed)) / SPEED_SPREAD) + SPEED_FLOOR) / NETWORK_FRAME_PERIOD
+
 
 # Statistics
 
@@ -135,9 +143,9 @@ enum Statistic {
 	WAS_JUST_ACTIVATED,
 	JUST_TARGETED,
 	WAS_JUST_TARGETED,
-	JUST_DIED,
-	WAS_JUST_SACRIFICED,
+	JUST_KILLED,
 	WAS_JUST_KILLED,
+	WAS_JUST_SACRIFICED,
 	HAS_TARGET,
 	# References
 	TARGET,
@@ -154,7 +162,10 @@ enum Statistic {
 	CAN_TARGET_ATTACKERS,
 	CAN_TARGET_INSTANTS,
 	CAN_TARGET_SUPPORTS,
+	CAN_TARGET_SELF,
 	CAN_BE_TARGETED,
+	CAN_BE_TARGETED_OPPONENTS_ONLY,
+	CAN_BE_TARGETED_FRIENDLIES_ONLY,
 	CAN_BE_SACRIFICED,
 	CAN_BE_KILLED,
 	ACTS_AS_BLOCKER,
@@ -217,9 +228,9 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.WAS_JUST_ACTIVATED : false,
 	Statistic.JUST_TARGETED : false,
 	Statistic.WAS_JUST_TARGETED : false,
-	Statistic.JUST_DIED : false,
-	Statistic.WAS_JUST_SACRIFICED : false,
+	Statistic.JUST_KILLED : false,
 	Statistic.WAS_JUST_KILLED : false,
+	Statistic.WAS_JUST_SACRIFICED : false,
 	Statistic.HAS_TARGET : false,
 	# References
 	Statistic.TARGET : null,
@@ -236,7 +247,10 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.CAN_TARGET_ATTACKERS : true,
 	Statistic.CAN_TARGET_INSTANTS : true,
 	Statistic.CAN_TARGET_SUPPORTS : true,
+	Statistic.CAN_TARGET_SELF : false,
 	Statistic.CAN_BE_TARGETED : true,
+	Statistic.CAN_BE_TARGETED_OPPONENTS_ONLY : false,
+	Statistic.CAN_BE_TARGETED_FRIENDLIES_ONLY : false,
 	Statistic.CAN_BE_SACRIFICED : true,
 	Statistic.CAN_BE_KILLED : true,
 	Statistic.ACTS_AS_BLOCKER : false,

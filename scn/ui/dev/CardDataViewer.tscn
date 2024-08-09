@@ -24,6 +24,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
 layout_mode = 2
+horizontal_scroll_mode = 0
 
 [node name="VSplitContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer"]
 layout_mode = 2
@@ -36,33 +37,43 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VSplitContainer/METADATA-STACK"]
+custom_minimum_size = Vector2(20, 10)
 layout_mode = 2
 text = "Metadata"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="Metadata" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VSplitContainer/METADATA-STACK"]
 layout_mode = 2
 
 [node name="meta-label" type="Label" parent="MarginContainer/ScrollContainer/VSplitContainer/METADATA-STACK/Metadata"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 10)
 layout_mode = 2
+autowrap_mode = 3
 
 [node name="location-label" type="Label" parent="MarginContainer/ScrollContainer/VSplitContainer/METADATA-STACK/Metadata"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 10)
 layout_mode = 2
+autowrap_mode = 3
 
 [node name="player-label" type="Label" parent="MarginContainer/ScrollContainer/VSplitContainer/METADATA-STACK/Metadata"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 10)
 layout_mode = 2
+autowrap_mode = 3
 
 [node name="STAT-STACK" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VSplitContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VSplitContainer/STAT-STACK"]
+custom_minimum_size = Vector2(20, 10)
 layout_mode = 2
 text = "Statistics"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="STATS-HOLDER" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VSplitContainer/STAT-STACK"]
 unique_name_in_owner = true
@@ -73,9 +84,11 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VSplitContainer/MOOD-STACK"]
+custom_minimum_size = Vector2(20, 10)
 layout_mode = 2
 text = "Moods"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="MOODS-HOLDER" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VSplitContainer/MOOD-STACK"]
 unique_name_in_owner = true

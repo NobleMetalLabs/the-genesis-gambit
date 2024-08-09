@@ -19,7 +19,7 @@ func _ready() -> void:
 	tree.set_column_expand_ratio(2, 1)
 	tree.set_column_title(3, "Meta")
 	tree.set_column_expand(3, true)
-	tree.set_column_expand_ratio(3, 3)
+	tree.set_column_expand_ratio(3, 1)
 
 	var args := Array(OS.get_cmdline_args())
 	if args.has("-server"):

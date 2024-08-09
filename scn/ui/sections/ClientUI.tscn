@@ -1,14 +1,23 @@
-[gd_scene load_steps=10 format=3 uid="uid://b4fmewjxtuggy"]
+[gd_scene load_steps=14 format=3 uid="uid://b4fmewjxtuggy"]
 
 [ext_resource type="Script" path="res://src/ui/sections/ClientUI.gd" id="1_68p1r"]
 [ext_resource type="Script" path="res://src/ui/sections/CardInfoPanel.gd" id="3_73koh"]
-[ext_resource type="Texture2D" uid="uid://djjhjh04iwame" path="res://ast/game/cards/fgs/target-placeholder.png" id="5_kgfmm"]
 [ext_resource type="PackedScene" uid="uid://tixsmfbudwd1" path="res://scn/ui/parts/UIFullCardInInspect.tscn" id="5_sxn1b"]
 [ext_resource type="PackedScene" uid="uid://p22xihxignf0" path="res://scn/ui/dev/EffectResolverViewer.tscn" id="6_6ht5e"]
 [ext_resource type="Script" path="res://src/ui/sections/MultiplayerPanel.gd" id="6_akdw7"]
 [ext_resource type="Theme" uid="uid://buo11jw8ac2ew" path="res://ast/ui/DeveloperToolTheme.tres" id="7_ndtgr"]
 [ext_resource type="PackedScene" uid="uid://41tfx6ympneu" path="res://scn/ui/sections/PlayerAreaUI.tscn" id="8_lh7gb"]
 [ext_resource type="PackedScene" uid="uid://dep6a56640e7g" path="res://scn/ui/dev/CardDataViewer.tscn" id="8_xoc3b"]
+[ext_resource type="Script" path="res://scn/ui/sections/PostgamePanel.gd" id="9_kqs2o"]
+[ext_resource type="FontFile" uid="uid://d2oaifr2k5au7" path="res://ast/ui/fonts/counting_apples.ttf" id="10_lqpy6"]
+[ext_resource type="LabelSettings" uid="uid://cw57svhh0ogg2" path="res://ast/ui/TitleLabelSettings.tres" id="11_lth8f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wmkw2"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1o2v1"]
+font = ExtResource("10_lqpy6")
+font_size = 100
 
 [node name="CLIENT-UI" type="Control"]
 layout_mode = 3
@@ -27,15 +36,10 @@ unique_name_in_owner = true
 [node name="EFFECT-RESOLVER-VIEWER" parent="DEVELOPER" instance=ExtResource("6_6ht5e")]
 unique_name_in_owner = true
 canvas_item_default_texture_filter = 3
-gui_disable_input = true
 initial_position = 2
 size = Vector2i(1024, 360)
 visible = false
 theme = ExtResource("7_ndtgr")
-
-[node name="TargetSprite" type="Sprite2D" parent="."]
-visible = false
-texture = ExtResource("5_kgfmm")
 
 [node name="PlayerAreaGridContainer" type="GridContainer" parent="."]
 layout_mode = 1
@@ -110,3 +114,55 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="POSTGAME-PANEL" type="Panel" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -460.0
+offset_top = -160.0
+offset_right = 460.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wmkw2")
+script = ExtResource("9_kqs2o")
+
+[node name="MarginContainer" type="MarginContainer" parent="POSTGAME-PANEL"]
+y_sort_enabled = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="POSTGAME-PANEL/MarginContainer"]
+layout_mode = 2
+
+[node name="GameOver" type="Label" parent="POSTGAME-PANEL/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_1o2v1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WinnerLabel" type="Label" parent="POSTGAME-PANEL/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "WINNER : PLAYER"
+label_settings = ExtResource("11_lth8f")
+
+[node name="FinalBlowLabel" type="Label" parent="POSTGAME-PANEL/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 2
+text = "FINAL BLOW : CARD"
+label_settings = ExtResource("11_lth8f")
+autowrap_mode = 3

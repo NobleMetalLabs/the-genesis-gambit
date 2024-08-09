@@ -1,9 +1,19 @@
 #class_name AudioDispatcher
 extends Node
 
+var sound_path : String = "res://ast/sound/"
+
 func dispatch_audio(audio : StringName) -> AudioStreamPlayer:
 	var new_player : AudioStreamPlayer = AudioStreamPlayer.new()
-	new_player.stream = ResourceLoader.load(audio)
+	
+	if FileAccess.file_exists("%s/%s.tres" % [sound_path, audio]):
+		new_player.stream = ResourceLoader.load("%s/%s.tres" % [sound_path, audio])
+	elif FileAccess.file_exists("%s/%s.wav" % [sound_path, audio]):
+		new_player.stream = ResourceLoader.load("%s/%s.wav" % [sound_path, audio])
+	else:
+		push_error("Audio file not found: %s" % audio)
+		return null
+
 	self.add_child(new_player)
 	new_player.finished.connect(func() -> void:
 		new_player.queue_free()
@@ -11,10 +21,18 @@ func dispatch_audio(audio : StringName) -> AudioStreamPlayer:
 	new_player.play()
 	return new_player
 
-func dispatch_positional_audio(source : Node, audio : StringName) -> AudioStreamPlayer2D:
+func dispatch_positional_audio(position : Vector2, audio : StringName) -> AudioStreamPlayer2D:
 	var new_player : AudioStreamPlayer2D = AudioStreamPlayer2D.new()
-	new_player.stream = ResourceLoader.load(audio)
-	source.add_child(new_player)
+	if FileAccess.file_exists("%s/%s.tres" % [sound_path, audio]):
+		new_player.stream = ResourceLoader.load("%s/%s.tres" % [sound_path, audio])
+	elif FileAccess.file_exists("%s/%s.wav" % [sound_path, audio]):
+		new_player.stream = ResourceLoader.load("%s/%s.wav" % [sound_path, audio])
+	else:
+		push_error("Audio file not found: %s" % audio)
+		return null
+
+	self.add_child(new_player)
+	new_player.global_position = position
 	new_player.finished.connect(func() -> void:
 		new_player.queue_free()
 	)

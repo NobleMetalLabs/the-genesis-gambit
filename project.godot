@@ -46,6 +46,7 @@ window/stretch/mode="viewport"
 window/per_pixel_transparency/allowed=true
 
 [editor]
+
 run/main_run_args="-debug"
 
 [input]

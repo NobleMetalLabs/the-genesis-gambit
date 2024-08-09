@@ -26,6 +26,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	self.player_holder = $"Players"
 
 	for nplayer : NetworkPlayer in config.players:
+		seed(config.rng_seed * nplayer.peer_id)
 		var player_deck : Deck = config.decks_by_player_uid[nplayer.peer_id]
 		var player := Player.setup(player_deck)
 		player.name = nplayer.player_name

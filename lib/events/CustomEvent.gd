@@ -1,5 +1,5 @@
-class_name CustomEffect
-extends Effect
+class_name CustomEvent
+extends Event
 
 var name : StringName
 var data : Dictionary

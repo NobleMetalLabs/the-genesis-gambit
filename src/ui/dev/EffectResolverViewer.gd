@@ -22,7 +22,7 @@ func _ready() -> void:
 	tree.set_column_expand_ratio(3, 1)
 
 	var args := Array(OS.get_cmdline_args())
-	if args.has("-server"):
+	if args.has("-debug") and args.has("-server"):
 		self.show()
 	
 

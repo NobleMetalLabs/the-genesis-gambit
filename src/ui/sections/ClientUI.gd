@@ -126,6 +126,9 @@ func _handle_hand_actions() -> void:
 			)
 
 func _handle_debug_actions() -> void:
+	var args := Array(OS.get_cmdline_args())
+	if not args.has("-debug"): return
+	
 	if Input.is_action_just_pressed("debug_action"):
 		AuthoritySourceProvider.authority_source.request_action(
 			HandDrawCardAction.setup()

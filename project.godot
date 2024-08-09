@@ -45,6 +45,10 @@ window/subwindows/embed_subwindows=false
 window/stretch/mode="viewport"
 window/per_pixel_transparency/allowed=true
 
+[editor]
+
+export/convert_text_resources_to_binary=false
+
 [input]
 
 ui_inspect={

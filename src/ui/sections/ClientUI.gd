@@ -84,6 +84,7 @@ func display_postgame_ui(player : Player, final_blow_dealer : ICardInstance) -> 
 
 var _card_instance_to_frontend : Dictionary = {} #[ICardInstance, CardFrontend]
 func assign_card_frontend(card_instance : ICardInstance, card_frontend : CardFrontend) -> void:
+	print("%s : Assigned frontend %s to card %s" % [MultiplayerManager.get_peer_id(), card_frontend, card_instance])
 	_card_instance_to_frontend[card_instance] = card_frontend
 
 func deassign_card_frontend(card_instance : ICardInstance) -> void:

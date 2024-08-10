@@ -62,6 +62,7 @@ enum CardTribe {
 
 # Cooldown*
 enum CooldownType {
+	DRAW,
 	BURN,
 	FREEZE,
 	SHUFFLE,

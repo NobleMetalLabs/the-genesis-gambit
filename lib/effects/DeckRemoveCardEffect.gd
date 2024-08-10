@@ -19,8 +19,6 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	var card_instance := ICardInstance.id(self.card)
 	IStatisticPossessor.id(self.card).set_statistic(Genesis.Statistic.IS_IN_DECK, false)
 	IStatisticPossessor.id(player).modify_statistic(Genesis.Statistic.NUM_CARDS_LEFT_IN_DECK, -1)
-
-	player.cards_in_deck.erase(card_instance)
 	
 	if leave_reason == Genesis.LeaveDeckReason.DRAWN:
 		_effect_resolver.request_effect(HandAddCardEffect.new(

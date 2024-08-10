@@ -15,6 +15,6 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 		return
 
 	_effect_resolver.request_effect(DeckRemoveCardEffect.new(
-		self.requester, self.player, self.player.cards_in_deck.front(), Genesis.LeaveDeckReason.DRAWN
+		self.requester, self.player, self.player.cards_in_deck.pop_front(), Genesis.LeaveDeckReason.DRAWN
 	))
 	

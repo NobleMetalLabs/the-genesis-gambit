@@ -55,13 +55,16 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 			Genesis.speed_value_to_cooldown_frame_count(creature_stats.get_statistic(Genesis.Statistic.SPEED)),
 			begin_attack_loop
 		))
-	
+
+	var ss_cooldown_length : int = Genesis.speed_value_to_cooldown_frame_count(creature_stats.get_statistic(Genesis.Statistic.SPEED))
+	if self.creature.metadata.type == Genesis.CardType.SUPPORT: ss_cooldown_length = int(float(ss_cooldown_length) / 4)
+
 	_effect_resolver.request_effect(
 		CooldownEffect.new(
 			self.creature,
 			creature_stats,
 			Genesis.CooldownType.SSICKNESS,
-			Genesis.speed_value_to_cooldown_frame_count(creature_stats.get_statistic(Genesis.Statistic.SPEED)),
+			ss_cooldown_length,
 			remove_summoning_sickness
 		)
 	)

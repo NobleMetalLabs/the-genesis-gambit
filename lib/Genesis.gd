@@ -172,6 +172,7 @@ enum Statistic {
 	CAN_BE_TARGETED_FRIENDLIES_ONLY,
 	CAN_BE_SACRIFICED,
 	CAN_BE_KILLED,
+	CAN_HAVE_MOODS,
 	ACTS_AS_BLOCKER,
 	ACTS_AS_UNMARKED,
 	# Counts
@@ -256,6 +257,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.CAN_BE_TARGETED_OPPONENTS_ONLY : false,
 	Statistic.CAN_BE_TARGETED_FRIENDLIES_ONLY : false,
 	Statistic.CAN_BE_SACRIFICED : true,
+	Statistic.CAN_HAVE_MOODS : true,
 	Statistic.CAN_BE_KILLED : true,
 	Statistic.ACTS_AS_BLOCKER : false,
 	Statistic.ACTS_AS_UNMARKED : false,

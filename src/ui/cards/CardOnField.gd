@@ -21,17 +21,18 @@ func _to_string() -> String:
 func _ready() -> void:
 	self.mouse_filter = MOUSE_FILTER_IGNORE
 
-	if card_backend.player == Router.backend.local_player:
-		card_frontend.gui_input.connect(
-			func (event : InputEvent) -> void:
-				if not event is InputEventMouseButton: return
-				if event.button_index == MOUSE_BUTTON_LEFT:
-					if event.pressed: start_drag()
-					get_viewport().set_input_as_handled()
-				if event.button_index == MOUSE_BUTTON_RIGHT:
-					if event.pressed: start_target()
-					get_viewport().set_input_as_handled()
-		)
+	if IStatisticPossessor.id(card_backend).get_statistic(Genesis.Statistic.CAN_TARGET):
+		if card_backend.player == Router.backend.local_player:
+			card_frontend.gui_input.connect(
+				func (event : InputEvent) -> void:
+					if not event is InputEventMouseButton: return
+					if event.button_index == MOUSE_BUTTON_LEFT:
+						if event.pressed: start_drag()
+						get_viewport().set_input_as_handled()
+					if event.button_index == MOUSE_BUTTON_RIGHT:
+						if event.pressed: start_target()
+						get_viewport().set_input_as_handled()
+			)
 	
 	target_arrow.z_index = 2
 	target_arrow.modulate = Genesis.COLOR_BY_CARDTYPE[card_backend.metadata.type]

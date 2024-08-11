@@ -48,6 +48,8 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		var leader : CardBackend = pa.associated_player.leader.get_object()
 		var leader_stats := IStatisticPossessor.id(pa.associated_player.leader)
 		leader_stats.set_statistic(Genesis.Statistic.POSITION, Vector2.ZERO)
+		leader_stats.set_statistic(Genesis.Statistic.CAN_TARGET, false)
+		leader_stats.set_statistic(Genesis.Statistic.CAN_HAVE_MOODS, false)
 
 	Router.backend.effect_resolver.finished_resolving_effects_for_frame.connect(
 		func handle_ui_updates(effects : Array[Effect], cards : Array[ICardInstance]) -> void:

@@ -41,6 +41,10 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 			stats.set_statistic(Genesis.Statistic.IS_IN_HAND, ci in player.cards_in_hand)
 			stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, ci in player.cards_on_field)
 
+		var leader_stats := IStatisticPossessor.id(player.leader)
+		leader_stats.set_statistic(Genesis.Statistic.CAN_TARGET, false)
+		leader_stats.set_statistic(Genesis.Statistic.CAN_HAVE_MOODS, false)
+
 		var player_stats := IStatisticPossessor.id(player)
 		player_stats.set_statistic(Genesis.Statistic.ENERGY, 0)
 		player_stats.set_statistic(Genesis.Statistic.MAX_ENERGY, player.leader.metadata.energy)

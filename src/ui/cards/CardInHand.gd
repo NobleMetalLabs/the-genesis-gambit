@@ -13,14 +13,15 @@ func _init(backend : ICardInstance) -> void:
 
 	Router.client_ui.assign_card_frontend(card_backend, card_frontend)
 	
-	if card_backend.player == Router.backend.local_player:
-		card_frontend.gui_input.connect(
-			func (event : InputEvent) -> void:
-				if not event is InputEventMouseButton: return
-				if event.button_index == MOUSE_BUTTON_RIGHT:
-					if event.pressed: start_target()
-					get_viewport().set_input_as_handled()
-		)
+	if IStatisticPossessor.id(card_backend).get_statistic(Genesis.Statistic.CAN_TARGET):
+		if card_backend.player == Router.backend.local_player:
+			card_frontend.gui_input.connect(
+				func (event : InputEvent) -> void:
+					if not event is InputEventMouseButton: return
+					if event.button_index == MOUSE_BUTTON_RIGHT:
+						if event.pressed: start_target()
+						get_viewport().set_input_as_handled()
+			)
 	
 	target_arrow.z_index = 2
 	target_arrow.modulate = Genesis.COLOR_BY_CARDTYPE[card_backend.metadata.type]

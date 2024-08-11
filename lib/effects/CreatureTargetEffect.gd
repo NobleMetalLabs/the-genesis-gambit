@@ -22,6 +22,7 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 
 		var target_should_fail : bool = false
 		target_should_fail = \
+			(not creature_stats.get_statistic(Genesis.Statistic.CAN_TARGET)) or \
 			(not target_stats.get_statistic(Genesis.Statistic.CAN_BE_TARGETED)) or \
 			(target == creature and not target_stats.get_statistic(Genesis.Statistic.CAN_TARGET_SELF)) or \
 			(target_stats.get_statistic(Genesis.Statistic.CAN_BE_TARGETED_FRIENDLIES_ONLY) and not target.player == creature.player) or \

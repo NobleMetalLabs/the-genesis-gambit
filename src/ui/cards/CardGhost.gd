@@ -7,13 +7,13 @@ signal was_placed(global_position : Vector2)
 signal was_canceled()
 signal was_denied()
 
-var card_in_hand_mirror : CardInHand
+var hand_ui : HandUI
 var card_frontend : CardFrontend
-
 var card_backend : ICardInstance
 
-func _init(card_in_hand : CardInHand) -> void:
-	card_in_hand_mirror = card_in_hand
+func _init(card : ICardInstance, _hand_ui : HandUI) -> void:
+	hand_ui = _hand_ui
+	var card_in_hand : CardInHand = hand_ui._card_in_hand_map[card]
 	card_backend = card_in_hand.card_backend
 
 	card_frontend = card_in_hand.card_frontend.duplicate()
@@ -55,4 +55,4 @@ func _process(_delta : float) -> void:
 	position = get_parent().get_local_mouse_position()
 	var is_vis : bool = _is_in_hand_region()
 	visible = not is_vis
-	card_in_hand_mirror.visible = is_vis
+	hand_ui._card_in_hand_map[card_backend].visible = is_vis

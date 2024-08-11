@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0lu2nmbm8w0k"
-path="res://.godot/imported/CardBehaviorGraph.png-b6b4c7bb6e48029cc93ca702c98dbda5.ctex"
+uid="uid://fwvww25fkigx"
+path="res://.godot/imported/clover-xpp.png-7e4ea502fdc8b353fda0c174b505b45d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://lib/card/behavior/frontend/CardBehaviorGraph.png"
-dest_files=["res://.godot/imported/CardBehaviorGraph.png-b6b4c7bb6e48029cc93ca702c98dbda5.ctex"]
+source_file="res://ast/ui/image/icons/clover-xpp.png"
+dest_files=["res://.godot/imported/clover-xpp.png-7e4ea502fdc8b353fda0c174b505b45d.ctex"]
 
 [params]
 

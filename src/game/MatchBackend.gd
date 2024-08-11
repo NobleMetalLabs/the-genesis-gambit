@@ -26,6 +26,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	self.player_holder = $"Players"
 
 	for nplayer : NetworkPlayer in config.players:
+		seed(config.rng_seed * nplayer.peer_id)
 		var player_deck : Deck = config.decks_by_player_uid[nplayer.peer_id]
 		var player := Player.setup(player_deck)
 		player.name = nplayer.player_name
@@ -40,6 +41,10 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 			stats.set_statistic(Genesis.Statistic.IS_IN_HAND, ci in player.cards_in_hand)
 			stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, ci in player.cards_on_field)
 
+		var leader_stats := IStatisticPossessor.id(player.leader)
+		leader_stats.set_statistic(Genesis.Statistic.CAN_TARGET, false)
+		leader_stats.set_statistic(Genesis.Statistic.CAN_HAVE_MOODS, false)
+
 		var player_stats := IStatisticPossessor.id(player)
 		player_stats.set_statistic(Genesis.Statistic.ENERGY, 0)
 		player_stats.set_statistic(Genesis.Statistic.MAX_ENERGY, player.leader.metadata.energy)
@@ -52,6 +57,16 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 			local_player = player
 		players.append(player)
 		player_holder.add_child(player, true)
+	
+		effect_resolver.request_effect(
+			CooldownEffect.new(
+				player.leader,
+				IStatisticPossessor.id(player.leader),
+				Genesis.CooldownType.DRAW,
+				int(Genesis.DRAW_TIMER_PERIOD / Genesis.NETWORK_FRAME_PERIOD),
+				draw_cooldown.bind(player)
+			)
+		)
 
 	if MultiplayerManager.is_instance_server():
 		var execute_frame_timer : Timer = Timer.new()
@@ -63,8 +78,26 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		add_child(execute_frame_timer)
 
 	AuthoritySourceProvider.authority_source.new_frame_index.connect(
-		func(_frame_number : int) -> void:
+		func resolve_effects_for_frame(_frame_number : int) -> void:
 			effect_resolver.resolve_effects(Router.backend.get_backend_object_collection())
+	)
+
+func draw_cooldown(player : Player) -> void:
+	effect_resolver.request_effect(
+		DeckDrawCardEffect.new(
+			player.leader,
+			player
+		)
+	)
+	
+	effect_resolver.request_effect(
+		CooldownEffect.new(
+			player.leader,
+			IStatisticPossessor.id(player.leader),
+			Genesis.CooldownType.DRAW,
+			int(Genesis.DRAW_TIMER_PERIOD / Genesis.NETWORK_FRAME_PERIOD),
+			draw_cooldown.bind(player)
+		)
 	)
 
 # NOTE: only works if created card order is deterministic across clients. i think it is, but not 100%...

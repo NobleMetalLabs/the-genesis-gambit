@@ -19,15 +19,13 @@ func resolve(_effect_resolver : EffectResolver) -> void:
 	var card_instance := ICardInstance.id(self.card)
 	IStatisticPossessor.id(self.card).set_statistic(Genesis.Statistic.IS_IN_DECK, false)
 	IStatisticPossessor.id(player).modify_statistic(Genesis.Statistic.NUM_CARDS_LEFT_IN_DECK, -1)
-
+	
 	if leave_reason == Genesis.LeaveDeckReason.DRAWN:
-		#Card already removed from deck by DeckDrawCardEffect
 		_effect_resolver.request_effect(HandAddCardEffect.new(
 			self.requester, self.player, card,
 		))
 
 	if leave_reason == Genesis.LeaveDeckReason.PLAYED:
-		player.cards_in_deck.erase(card_instance)
 		_effect_resolver.request_effect(CreatureSpawnEffect.new(
 			self.requester, card_instance
 		))

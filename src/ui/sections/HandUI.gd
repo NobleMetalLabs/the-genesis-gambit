@@ -8,9 +8,12 @@ func force_refresh_ui() -> void:
 
 func refresh_card(card : ICardInstance) -> void:
 	if card in _displayed_cards:
-		_refresh_hand()
+		if card in my_player.cards_in_hand:
+			_refresh_card_in_hand(_card_in_hand_map[card])
+		else:
+			_remove_card_in_hand(_card_in_hand_map[card])
 	elif card in my_player.cards_in_hand:
-		_refresh_hand()
+		_add_card_to_hand(card)
 	else:
 		refresh_energy_bar()
 
@@ -22,12 +25,27 @@ func _refresh_hand() -> void:
 
 @onready var card_stack_container : HBoxContainer = $"CardStack"
 var _displayed_cards : Array[ICardInstance] = []
+var _card_in_hand_map : Dictionary = {} #[ICardInstance, CardInHand]
 
 func _add_card_to_hand(card_instance : ICardInstance) -> void:
 	_displayed_cards.append(card_instance)
 	var card_in_hand := CardInHand.new(card_instance)
 	card_stack_container.add_child(card_in_hand, true)
 
+	_refresh_card_in_hand(card_in_hand)
+
+	card_in_hand.mouse_entered.connect(
+		func() -> void:
+			Router.client_ui.hovered_card = card_in_hand.card_backend
+	)
+	card_in_hand.mouse_exited.connect(
+		func() -> void:
+			Router.client_ui.hovered_card = null
+	)
+
+	_card_in_hand_map[card_instance] = card_in_hand
+
+func _refresh_card_in_hand(card_in_hand : CardInHand) -> void:
 	var card_face_is_visible : bool = false
 	var card_rarity_is_visible : bool = false
 	var card_type_is_visible : bool = false
@@ -56,23 +74,20 @@ func _add_card_to_hand(card_instance : ICardInstance) -> void:
 
 	card_in_hand.card_frontend.check_self_for_animation()
 
-	card_in_hand.mouse_entered.connect(
-		func() -> void:
-			Router.client_ui.hovered_card = card_in_hand.card_backend
-	)
-	card_in_hand.mouse_exited.connect(
-		func() -> void:
-			Router.client_ui.hovered_card = null
-	)
+func _remove_card_in_hand(card_in_hand : CardInHand) -> void:
+	_card_in_hand_map.erase(card_in_hand.card_backend)
+	_displayed_cards.erase(card_in_hand.card_backend)
+	card_in_hand.queue_free()
 
 func _clear_hand() -> void:
 	_displayed_cards.clear()
+	_card_in_hand_map.clear()
 	for child : CardInHand in card_stack_container.get_children():
 		Router.client_ui.deassign_card_frontend(child.card_backend)
 		child.queue_free()
 
 func _create_card_ghost(hand_card : CardInHand) -> void:
-	var new_card_ghost := CardGhost.new(hand_card)
+	var new_card_ghost := CardGhost.new(hand_card.card_backend, self)
 	Router.client_ui.local_player_area.field_ui.add_child(new_card_ghost, true)
 	
 	new_card_ghost.was_placed.connect(

@@ -13,13 +13,17 @@ func _ready() -> void:
 	self.get_tree().get_root().content_scale_size = Vector2.ZERO
 
 	lobby_ui.match_start_requested.connect(func () -> void:
-		MultiplayerManager.send_network_message("nmatch/start", [])
+		MultiplayerManager.send_network_message("nmatch/start", [
+			hash(Time.get_unix_time_from_system())
+		])
 	)
 
 	MultiplayerManager.received_network_message.connect(handle_network_message)
 
 	new_match_started.connect(handle_new_match_started)
 	match_completed.connect(handle_match_completed)
+
+var play_config : NetworkPlayStageConfiguration 
 
 func handle_network_message(_sender : NetworkPlayer, message : String, args : Array) -> void:
 	match(message):
@@ -29,6 +33,12 @@ func handle_network_message(_sender : NetworkPlayer, message : String, args : Ar
 			var nmatch := NetworkMatch.new(
 				NetworkMatchConfiguration.new(players, MatchRuleset.new())
 			)
+
+			var decks_by_player_uid : Dictionary = {}
+			for np in players:
+				decks_by_player_uid[np.peer_id] = Deck.prebuilt_from_tribe(Genesis.CardTribe.BUGS)
+			play_config = NetworkPlayStageConfiguration.setup(players, decks_by_player_uid, args[0])
+
 			new_match_started.emit(nmatch)
 		"nmatch/end":
 			match_completed.emit(args[0])
@@ -36,7 +46,7 @@ func handle_network_message(_sender : NetworkPlayer, message : String, args : Ar
 func handle_new_match_started(nmatch : NetworkMatch) -> void:
 	lobby_ui.hide()
 	nmatch.dispatch_play_stage.connect(_dispatch_play_stage)
-	nmatch.start_match()
+	nmatch.start_match(play_config)
 
 func handle_match_completed() -> void:
 	Router.backend.process_mode = Node.PROCESS_MODE_DISABLED

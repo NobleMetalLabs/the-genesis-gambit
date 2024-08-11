@@ -48,6 +48,8 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		var leader : CardBackend = pa.associated_player.leader.get_object()
 		var leader_stats := IStatisticPossessor.id(pa.associated_player.leader)
 		leader_stats.set_statistic(Genesis.Statistic.POSITION, Vector2.ZERO)
+		leader_stats.set_statistic(Genesis.Statistic.CAN_TARGET, false)
+		leader_stats.set_statistic(Genesis.Statistic.CAN_HAVE_MOODS, false)
 
 	Router.backend.effect_resolver.finished_resolving_effects_for_frame.connect(
 		func handle_ui_updates(effects : Array[Effect], cards : Array[ICardInstance]) -> void:
@@ -84,6 +86,7 @@ func display_postgame_ui(player : Player, final_blow_dealer : ICardInstance) -> 
 
 var _card_instance_to_frontend : Dictionary = {} #[ICardInstance, CardFrontend]
 func assign_card_frontend(card_instance : ICardInstance, card_frontend : CardFrontend) -> void:
+	#print("%s : Assigned frontend %s to card %s" % [MultiplayerManager.get_peer_id(), card_frontend, card_instance])
 	_card_instance_to_frontend[card_instance] = card_frontend
 
 func deassign_card_frontend(card_instance : ICardInstance) -> void:
@@ -96,6 +99,8 @@ func _process(_delta : float) -> void:
 	_handle_card_actions()
 	_handle_hand_actions()
 	_handle_debug_actions()
+	
+	#print(_card_instance_to_frontend)
 
 var hovered_card : ICardInstance = null
 func _handle_card_actions() -> void:
@@ -126,6 +131,9 @@ func _handle_hand_actions() -> void:
 			)
 
 func _handle_debug_actions() -> void:
+	var args := Array(OS.get_cmdline_args())
+	if not args.has("-debug"): return
+	
 	if Input.is_action_just_pressed("debug_action"):
 		AuthoritySourceProvider.authority_source.request_action(
 			HandDrawCardAction.setup()

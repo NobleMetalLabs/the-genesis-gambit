@@ -3,11 +3,11 @@ extends Control
 
 @onready var remaining_bar : ProgressBar = $"%REMAINING-BAR"
 @onready var marked_bar : ProgressBar = $"%MARKED-BAR"
-@onready var burn_timer_bar : ProgressBar = $"%BURN-TIMER-BAR"
+@onready var burn_cooldown_bar : ProgressBar = $"%BURN-COOLDOWN-BAR"
 @onready var my_player : Player = get_parent().get_parent().get_parent().associated_player
 
 func _ready() -> void:
-	AuthoritySourceProvider.authority_source.new_frame_index.connect(update_burn_timer)
+	AuthoritySourceProvider.authority_source.new_frame_index.connect(update_burn_cooldown)
 
 func force_refresh_ui() -> void:
 	_refresh_deck_ui()
@@ -16,7 +16,7 @@ func set_flipped(flipped: bool = false) -> void:
 	var bar_fill_mode : int = (ProgressBar.FILL_TOP_TO_BOTTOM if flipped else ProgressBar.FILL_BOTTOM_TO_TOP)
 	remaining_bar.fill_mode = bar_fill_mode
 	marked_bar.fill_mode = bar_fill_mode
-	burn_timer_bar.fill_mode = bar_fill_mode
+	burn_cooldown_bar.fill_mode = bar_fill_mode
 
 func refresh_card(card_instance : ICardInstance) -> void:
 	if card_instance == current_top_card:
@@ -74,10 +74,10 @@ func _refresh_deck_ui() -> void:
 	marked_bar.max_value = num_cards
 	marked_bar.value = num_marked
 
-func update_burn_timer(_lol: int) -> void:
+func update_burn_cooldown(_lol: int) -> void:
 	var player_stats := IStatisticPossessor.id(my_player)
 	var burn_cooldown_effect : CooldownEffect = player_stats.get_cooldown_of_type(Genesis.CooldownType.BURN)
 	
 	if burn_cooldown_effect == null: return
-	burn_timer_bar.max_value = burn_cooldown_effect.total_frames
-	burn_timer_bar.value = burn_cooldown_effect.total_frames - burn_cooldown_effect.frames
+	burn_cooldown_bar.max_value = burn_cooldown_effect.total_frames
+	burn_cooldown_bar.value = burn_cooldown_effect.total_frames - burn_cooldown_effect.frames

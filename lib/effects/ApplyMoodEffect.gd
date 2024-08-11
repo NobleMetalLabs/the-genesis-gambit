@@ -12,6 +12,9 @@ func _to_string() -> String:
 	return "ApplyMoodEffect(%s,%s)" % [self.target, self.mood]
 
 func resolve(_effect_resolver : EffectResolver) -> void:
+	if IStatisticPossessor.id(self.target).get_statistic(Genesis.Statistic.CAN_HAVE_MOODS) == false:
+		self.resolve_status = ResolveStatus.FAILED
+		return
 	
 	var is_bored : bool = false
 	var bored_mood : Mood = null

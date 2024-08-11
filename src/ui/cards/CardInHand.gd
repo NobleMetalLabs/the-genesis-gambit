@@ -13,14 +13,15 @@ func _init(backend : ICardInstance) -> void:
 
 	Router.client_ui.assign_card_frontend(card_backend, card_frontend)
 	
-	if card_backend.player == Router.backend.local_player:
-		card_frontend.gui_input.connect(
-			func (event : InputEvent) -> void:
-				if not event is InputEventMouseButton: return
-				if event.button_index == MOUSE_BUTTON_RIGHT:
-					if event.pressed: start_target()
-					get_viewport().set_input_as_handled()
-		)
+	if IStatisticPossessor.id(card_backend).get_statistic(Genesis.Statistic.CAN_TARGET):
+		if card_backend.player == Router.backend.local_player:
+			card_frontend.gui_input.connect(
+				func (event : InputEvent) -> void:
+					if not event is InputEventMouseButton: return
+					if event.button_index == MOUSE_BUTTON_RIGHT:
+						if event.pressed: start_target()
+						get_viewport().set_input_as_handled()
+			)
 	
 	target_arrow.z_index = 2
 	target_arrow.modulate = Genesis.COLOR_BY_CARDTYPE[card_backend.metadata.type]
@@ -28,7 +29,7 @@ func _init(backend : ICardInstance) -> void:
 	add_child(target_arrow)
 
 func _to_string() -> String:
-	return "CardInHand<%s>" % ICardInstance.id(self)
+	return "CardInHand<%s>" % card_backend
 
 func _gui_input(event : InputEvent) -> void:
 	if not event is InputEventMouseButton: return
@@ -63,7 +64,11 @@ func _process(_delta : float) -> void:
 		if not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 			end_target()
 	elif target != null:
-		var target_rect : Rect2 = Router.client_ui.get_card_frontend(target).get_global_rect()
+		var target_frontend : CardFrontend = Router.client_ui.get_card_frontend(target)
+		if target_frontend == null:
+			push_warning("No registered frontend for target card %s" % target)
+			return
+		var target_rect : Rect2 = target_frontend.get_global_rect()
 		target_arrow.end_position = target_rect.get_center()
 
 func start_drag() -> void:

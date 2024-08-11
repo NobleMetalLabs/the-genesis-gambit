@@ -8,8 +8,6 @@ static func instantiate() -> CardFrontend:
 static var back_img : Texture = preload("res://ast/game/cards/fgs/back.png")
 var card_instance : ICardInstance
 
-signal update_requested()
-
 @onready var border_component : CardBorder = $CardBorder
 @onready var overlay_component : CardOverlay = $CardOverlay
 

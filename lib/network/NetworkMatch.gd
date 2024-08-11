@@ -1,7 +1,7 @@
 class_name NetworkMatch
 extends RefCounted
 
-signal dispatch_draft_stage(config : NetworkDraftStageConfiguration)
+#signal dispatch_draft_stage(config : NetworkDraftStageConfiguration)
 signal dispatch_play_stage(config : NetworkPlayStageConfiguration)
 
 var match_config : NetworkMatchConfiguration

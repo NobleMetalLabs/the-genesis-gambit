@@ -74,7 +74,7 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		add_child(execute_frame_timer)
 
 	AuthoritySourceProvider.authority_source.new_frame_index.connect(
-		func(_frame_number : int) -> void:
+		func resolve_effects_for_frame(_frame_number : int) -> void:
 			effect_resolver.resolve_effects(Router.backend.get_backend_object_collection())
 	)
 

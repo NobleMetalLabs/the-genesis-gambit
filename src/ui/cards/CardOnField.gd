@@ -16,7 +16,7 @@ func _init(backend : ICardInstance) -> void:
 	Router.client_ui.assign_card_frontend(card_backend, card_frontend)
 	
 func _to_string() -> String:
-	return "CardOnField<%s>" % ICardInstance.id(self)
+	return "CardOnField<%s>" % card_backend
 
 func _ready() -> void:
 	self.mouse_filter = MOUSE_FILTER_IGNORE

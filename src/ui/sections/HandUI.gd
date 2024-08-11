@@ -8,9 +8,12 @@ func force_refresh_ui() -> void:
 
 func refresh_card(card : ICardInstance) -> void:
 	if card in _displayed_cards:
-		_refresh_card_in_hand(_card_in_hand_map[card])
+		if card in my_player.cards_in_hand:
+			_refresh_card_in_hand(_card_in_hand_map[card])
+		else:
+			_remove_card_in_hand(_card_in_hand_map[card])
 	elif card in my_player.cards_in_hand:
-		_refresh_hand()
+		_add_card_to_hand(card)
 	else:
 		refresh_energy_bar()
 
@@ -70,6 +73,11 @@ func _refresh_card_in_hand(card_in_hand : CardInHand) -> void:
 	)
 
 	card_in_hand.card_frontend.check_self_for_animation()
+
+func _remove_card_in_hand(card_in_hand : CardInHand) -> void:
+	_card_in_hand_map.erase(card_in_hand.card_backend)
+	_displayed_cards.erase(card_in_hand.card_backend)
+	card_in_hand.queue_free()
 
 func _clear_hand() -> void:
 	_displayed_cards.clear()

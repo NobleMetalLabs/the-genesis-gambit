@@ -28,7 +28,7 @@ func _init(backend : ICardInstance) -> void:
 	add_child(target_arrow)
 
 func _to_string() -> String:
-	return "CardInHand<%s>" % ICardInstance.id(self)
+	return "CardInHand<%s>" % card_backend
 
 func _gui_input(event : InputEvent) -> void:
 	if not event is InputEventMouseButton: return

@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://8ug3p85pm4sh"]
+
+[ext_resource type="Script" path="res://addons/command-terminal/src/CommandTerminal.gd" id="1_7mbqb"]
+[ext_resource type="FontFile" uid="uid://cmmltma2gsu3a" path="res://addons/command-terminal/ast/windows_command_prompt.ttf" id="2_yvhsy"]
+[ext_resource type="PackedScene" uid="uid://b5b8i4p40f5ua" path="res://addons/command-terminal/scn/command_terminal_guts.tscn" id="3_asx5f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3nmgc"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Node" type="Node"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CommandTerminal" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_7mbqb")
+font = ExtResource("2_yvhsy")
+font_size = 24
+
+[node name="__guts__" parent="Control/CommandTerminal" instance=ExtResource("3_asx5f")]
+layout_mode = 0
+anchors_preset = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3nmgc")

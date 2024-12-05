@@ -58,15 +58,15 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		players.append(player)
 		player_holder.add_child(player, true)
 	
-		effect_resolver.request_effect(
-			CooldownEffect.new(
-				player.leader,
-				IStatisticPossessor.id(player.leader),
-				Genesis.CooldownType.DRAW,
-				int(Genesis.DRAW_TIMER_PERIOD / Genesis.NETWORK_FRAME_PERIOD),
-				draw_cooldown.bind(player)
-			)
-		)
+		# effect_resolver.request_effect(
+		# 	CooldownEffect.new(
+		# 		player.leader,
+		# 		IStatisticPossessor.id(player.leader),
+		# 		Genesis.CooldownType.DRAW,
+		# 		int(Genesis.DRAW_TIMER_PERIOD / Genesis.NETWORK_FRAME_PERIOD),
+		# 		draw_cooldown.bind(player)
+		# 	)
+		# )
 
 	if MultiplayerManager.is_instance_server():
 		var execute_frame_timer : Timer = Timer.new()
@@ -83,22 +83,23 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 	)
 
 func draw_cooldown(player : Player) -> void:
-	effect_resolver.request_effect(
-		DeckDrawCardEffect.new(
-			player.leader,
-			player
-		)
-	)
+	# effect_resolver.request_effect(
+	# 	DeckDrawCardEffect.new(
+	# 		player.leader,
+	# 		player
+	# 	)
+	# )
 	
-	effect_resolver.request_effect(
-		CooldownEffect.new(
-			player.leader,
-			IStatisticPossessor.id(player.leader),
-			Genesis.CooldownType.DRAW,
-			int(Genesis.DRAW_TIMER_PERIOD / Genesis.NETWORK_FRAME_PERIOD),
-			draw_cooldown.bind(player)
-		)
-	)
+	# effect_resolver.request_effect(
+	# 	CooldownEffect.new(
+	# 		player.leader,
+	# 		IStatisticPossessor.id(player.leader),
+	# 		Genesis.CooldownType.DRAW,
+	# 		int(Genesis.DRAW_TIMER_PERIOD / Genesis.NETWORK_FRAME_PERIOD),
+	# 		draw_cooldown.bind(player)
+	# 	)
+	# )
+	pass
 
 # NOTE: only works if created card order is deterministic across clients. i think it is, but not 100%...
 var _created_card_count : int = 1

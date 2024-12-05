@@ -72,26 +72,26 @@ func check_self_for_animation() -> void:
 	else:
 		overlay_component.set_damage_bar_value(0)
 
-	var sickness_cooldown : CooldownEffect = card_stats.get_cooldown_of_type(Genesis.CooldownType.SSICKNESS)
-	if sickness_cooldown != null:
-		var cooldown_length : int = sickness_cooldown.total_frames
-		var cooldown_remaining : int = sickness_cooldown.frames
-		var cooldown_progress : float = float(cooldown_remaining) / max(1, cooldown_length)
+	# var sickness_cooldown : CooldownEffect = card_stats.get_cooldown_of_type(Genesis.CooldownType.SSICKNESS)
+	# if sickness_cooldown != null:
+	# 	var cooldown_length : int = sickness_cooldown.total_frames
+	# 	var cooldown_remaining : int = sickness_cooldown.frames
+	# 	var cooldown_progress : float = float(cooldown_remaining) / max(1, cooldown_length)
 		
-		set_cooldown_bar_value(Genesis.CooldownType.SSICKNESS, cooldown_progress)
-	else:
-		set_cooldown_bar_value(Genesis.CooldownType.SSICKNESS, 0)
+	# 	set_cooldown_bar_value(Genesis.CooldownType.SSICKNESS, cooldown_progress)
+	# else:
+	# 	set_cooldown_bar_value(Genesis.CooldownType.SSICKNESS, 0)
 
 		
-	var attack_cooldown : CooldownEffect = card_stats.get_cooldown_of_type(Genesis.CooldownType.ATTACK)
-	if attack_cooldown != null:
-		var cooldown_length : int = attack_cooldown.total_frames
-		var cooldown_remaining : int = attack_cooldown.frames
-		var cooldown_progress : float = float(cooldown_remaining) / max(1, cooldown_length)
+	# var attack_cooldown : CooldownEffect = card_stats.get_cooldown_of_type(Genesis.CooldownType.ATTACK)
+	# if attack_cooldown != null:
+	# 	var cooldown_length : int = attack_cooldown.total_frames
+	# 	var cooldown_remaining : int = attack_cooldown.frames
+	# 	var cooldown_progress : float = float(cooldown_remaining) / max(1, cooldown_length)
 		
-		set_cooldown_bar_value(Genesis.CooldownType.ATTACK, cooldown_progress)
-	else:
-		set_cooldown_bar_value(Genesis.CooldownType.ATTACK, 0)
+	# 	set_cooldown_bar_value(Genesis.CooldownType.ATTACK, cooldown_progress)
+	# else:
+	# 	set_cooldown_bar_value(Genesis.CooldownType.ATTACK, 0)
 		
 
 	# TODO: make this work

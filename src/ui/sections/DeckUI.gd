@@ -76,8 +76,8 @@ func _refresh_deck_ui() -> void:
 
 func update_burn_cooldown(_lol: int) -> void:
 	var player_stats := IStatisticPossessor.id(my_player)
-	var burn_cooldown_effect : CooldownEffect = player_stats.get_cooldown_of_type(Genesis.CooldownType.BURN)
+	# var burn_cooldown_effect : CooldownEffect = player_stats.get_cooldown_of_type(Genesis.CooldownType.BURN)
 	
-	if burn_cooldown_effect == null: return
-	burn_cooldown_bar.max_value = burn_cooldown_effect.total_frames
-	burn_cooldown_bar.value = burn_cooldown_effect.total_frames - burn_cooldown_effect.frames
+	# if burn_cooldown_effect == null: return
+	# burn_cooldown_bar.max_value = burn_cooldown_effect.total_frames
+	# burn_cooldown_bar.value = burn_cooldown_effect.total_frames - burn_cooldown_effect.frames

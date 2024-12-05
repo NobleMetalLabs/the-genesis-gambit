@@ -19,7 +19,7 @@ func _to_string() -> String:
 		return "CreatureTargetAction(%s, null)" % [UIDDB.object(creature_uid)]
 	return "CreatureTargetAction(%s, %s)" % [UIDDB.object(creature_uid), UIDDB.object(target_uid)]
 
-func to_effect() -> CreatureTargetEffect:
-	if target_uid == -1:
-		return CreatureTargetEffect.new(self, UIDDB.object(creature_uid), null)
-	return CreatureTargetEffect.new(self, UIDDB.object(creature_uid), UIDDB.object(target_uid))
+# func to_effect() -> CreatureTargetEffect:
+# 	if target_uid == -1:
+# 		return CreatureTargetEffect.new(self, UIDDB.object(creature_uid), null)
+# 	return CreatureTargetEffect.new(self, UIDDB.object(creature_uid), UIDDB.object(target_uid))

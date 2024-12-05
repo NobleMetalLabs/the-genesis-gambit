@@ -24,4 +24,7 @@ func get_metadata() -> CardMetadata:
 	return metadata
 
 func _to_string() -> String:
-	return "ICardInstance(%s, %s)" % [metadata.name, player.name]
+	var player_name : String = "null"
+	if player != null:
+		player_name = player.name
+	return "ICardInstance(%s, %s)" % [metadata.name, player_name]

@@ -11,4 +11,4 @@ func _init(_card : ICardInstance,  _keep_stats : bool = true, _keep_moods : bool
 	self.keep_moods = _keep_moods
 
 func _to_string() -> String:
-	return "EnteredFieldEvent(%s,%s,%s)" % [self.creature, self.keep_stats, self.keep_moods]
+	return "EnteredFieldEvent(%s,%s,%s)" % [self.card, self.keep_stats, self.keep_moods]

@@ -11,6 +11,11 @@ func _ready() -> void:
 	_assign_ids()
 	_assign_tribes()
 
+func get_card_names() -> Array[StringName]:
+	var output : Array[StringName] = []
+	output.assign(_id_by_name.keys())
+	return output
+
 func get_card_by_id(id : int) -> CardMetadata:
 	return cards[id]
 
@@ -47,7 +52,7 @@ func _scan_path_for_cards(path : String = "res://ast/game/cards/meta/") -> Array
 				scanned_cards.append_array(_scan_path_for_cards(path + file_name + "/"))
 			else:
 				var trimmed_file_name : String = file_name.trim_suffix(".remap").trim_suffix(".import")
-				if trimmed_file_name.get_extension() == "gd":
+				if trimmed_file_name.get_extension() == "tres":
 					var obj : Object = load(path + trimmed_file_name)
 					if obj is CardMetadata:
 						scanned_cards.append(obj)
@@ -58,7 +63,7 @@ func _scan_path_for_cards(path : String = "res://ast/game/cards/meta/") -> Array
 func _assign_ids() -> void:
 	for i in range(cards.size()):
 		cards[i].id = i
-		_id_by_name[cards[i].name] = i
+		_id_by_name[cards[i].name.to_lower().replace(" ", "-")] = i
 
 func _assign_tribes() -> void:
 	for card in cards:

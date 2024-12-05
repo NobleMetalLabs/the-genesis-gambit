@@ -1,23 +1,15 @@
 extends CardLogic
 
-static var description : StringName = "Targeted creature receives Jolly, and 5 Slow."
+static var description : StringName = "Targeted creature receives Rage."
 
 func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
 	if not my_stats.get_statistic(Genesis.Statistic.HAS_TARGET): return
 	var target : ICardInstance = my_stats.get_statistic(Genesis.Statistic.TARGET)
-	var target_moods := IMoodPossessor.id(target)
 	_effect_resolver.request_effect(
 		ApplyMoodEffect.new(
 			instance_owner,
-			target_moods,
-			StatisticMood.JOLLY(instance_owner)
-		)
-	)
-	_effect_resolver.request_effect(
-		ApplyMoodEffect.new(
-			instance_owner,
-			target_moods,
-			StatisticMood.SLOW(instance_owner, 5)
+			IMoodPossessor.id(target),
+			StatisticMood.RAGE(instance_owner)
 		)
 	)

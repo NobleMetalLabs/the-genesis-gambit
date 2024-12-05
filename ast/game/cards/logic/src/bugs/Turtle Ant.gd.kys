@@ -1,6 +1,6 @@
 extends CardLogic
 
-static var description : StringName = "Targeted creature is covered in ooze. Attacks made against the creature inflict the attacker with slow."
+static var description : StringName = "Targeted creature is protected. Attacks made against the creature deal half damage."
 
 func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
 	var my_stats := IStatisticPossessor.id(instance_owner)
@@ -11,10 +11,4 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 				if not effect is CreatureAttackEffect: continue
 				effect = effect as CreatureAttackEffect
 				if not effect.target == target: continue
-				_effect_resolver.request_effect(
-					ApplyMoodEffect.new(
-						self,
-						IMoodPossessor.id(effect.creature),
-						StatisticMood.SLOW(instance_owner)
-					)
-				)
+				effect.damage = effect.damage / 2

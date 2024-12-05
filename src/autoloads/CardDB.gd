@@ -46,10 +46,12 @@ func _scan_path_for_cards(path : String = "res://ast/game/cards/meta/") -> Array
 			if dir.current_is_dir():
 				scanned_cards.append_array(_scan_path_for_cards(path + file_name + "/"))
 			else:
-				var obj : Object = load(path + file_name.trim_suffix(".remap").trim_suffix(".import"))
-				if obj is CardMetadata:
-					scanned_cards.append(obj)
-					_path_by_cards[obj] = path + file_name
+				var trimmed_file_name : String = file_name.trim_suffix(".remap").trim_suffix(".import")
+				if trimmed_file_name.get_extension() == "gd":
+					var obj : Object = load(path + trimmed_file_name)
+					if obj is CardMetadata:
+						scanned_cards.append(obj)
+						_path_by_cards[obj] = path + file_name
 			file_name = dir.get_next()
 	return scanned_cards
 

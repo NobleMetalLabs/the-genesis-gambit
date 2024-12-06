@@ -33,6 +33,7 @@ func register_commands() -> void:
 
 @onready var cards_holder : Node = get_node("%Cards")
 var processor : CardProcessor = CardProcessor.new()
+var game_access := GameAccess.new(processor)
 
 var players : Dictionary = {} #[int, Player]
 
@@ -40,6 +41,7 @@ func spawn_card(id : int, player_num : int) -> void:
 	var player : Player = players.get(player_num, _new_player(player_num))
 	var component := ICardInstance.new(CardDB.get_card_by_id(id), player)
 	component.logic.verbose = true
+	component.logic.game_access = game_access
 	var new_ent := CardBackend.new(component)
 	cards_holder.add_child(new_ent)
 	UIDDB.register_object(new_ent, 

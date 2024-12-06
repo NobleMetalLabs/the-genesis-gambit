@@ -14,49 +14,49 @@ func process_events() -> void:
 func process_event(event : Event) -> void:
 	print("Processing event: %s" % [event])
 	if event is WasCreatedEvent:
-		event.card.WAS_CREATED(event)
+		event.card.logic.WAS_CREATED(event)
 	elif event is EnteredDeckEvent:
-		event.card.ENTERED_DECK(event)
+		event.card.logic.ENTERED_DECK(event)
 	elif event is LeftDeckEvent:
-		event.card.LEFT_DECK(event)
+		event.card.logic.LEFT_DECK(event)
 	elif event is EnteredHandEvent:
-		event.card.ENTERED_HAND(event)
+		event.card.logic.ENTERED_HAND(event)
 	elif event is LeftHandEvent:
-		event.card.LEFT_HAND(event)
+		event.card.logic.LEFT_HAND(event)
 	elif event is EnteredFieldEvent:
 		event.card.logic.ENTERED_FIELD(event)
 	elif event is LeftFieldEvent:
-		event.card.LEFT_FIELD(event)
+		event.card.logic.LEFT_FIELD(event)
 	elif event is WasBurnedEvent:
-		event.card.WAS_BURNED(event)
+		event.card.logic.WAS_BURNED(event)
 	elif event is WasMarkedEvent:
-		event.card.WAS_MARKED(event)
+		event.card.logic.WAS_MARKED(event)
 	elif event is WasUnmarkedEvent:
-		event.card.WAS_UNMARKED(event)
+		event.card.logic.WAS_UNMARKED(event)
 	elif event is WasDiscardedEvent:
-		event.card.WAS_DISCARDED(event)
+		event.card.logic.WAS_DISCARDED(event)
 	elif event is AttackedEvent:
-		event.card.ATTACKED(event)
+		event.card.logic.ATTACKED(event)
 	elif event is WasAttackedEvent:
-		event.card.WAS_ATTACKED(event)
+		event.card.logic.WAS_ATTACKED(event)
 	elif event is WasActivatedEvent:
-		event.card.WAS_ACTIVATED(event)
+		event.card.logic.WAS_ACTIVATED(event)
 	elif event is TargetedEvent:
-		event.card.TARGETED(event)
+		event.card.logic.TARGETED(event)
 	elif event is WasTargetedEvent:
-		event.card.WAS_TARGETED(event)
+		event.card.logic.WAS_TARGETED(event)
 	elif event is KilledEvent:
-		event.card.KILLED(event)
+		event.card.logic.KILLED(event)
 	elif event is WasKilledEvent:
-		event.card.WAS_KILLED(event)
+		event.card.logic.WAS_KILLED(event)
 	elif event is GaveMoodEvent:
-		event.card.GAVE_MOOD(event)
+		event.card.logic.GAVE_MOOD(event)
 	elif event is GainedMoodEvent:
-		event.card.GAINED_MOOD(event)
+		event.card.logic.GAINED_MOOD(event)
 	elif event is TookMoodEvent:
-		event.card.TOOK_MOOD(event)
+		event.card.logic.TOOK_MOOD(event)
 	elif event is LostMoodEvent:
-		event.card.LOST_MOOD(event)
+		event.card.logic.LOST_MOOD(event)
 	elif event is PlayedCardEvent:
 		event.player.PLAYED_CARD(event)
 	elif event is BurnedHandEvent:

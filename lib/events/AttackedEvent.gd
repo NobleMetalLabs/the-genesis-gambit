@@ -11,5 +11,5 @@ func _init(_card : ICardInstance, _who : ICardInstance, _damage : int) -> void:
 	self.damage = _damage
 
 func _to_string() -> String:
-	return "AttackedEvent(%s, %s, %d)" % [self.card, self.who, self.damage]
+	return "AttackedEvent(%s, %s, %s)" % [self.card, self.who, self.damage]
 		

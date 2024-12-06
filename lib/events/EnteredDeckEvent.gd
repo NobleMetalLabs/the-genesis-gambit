@@ -13,4 +13,4 @@ func _init(_card : ICardInstance, _keep_stats : bool = false, _keep_moods : bool
 	self.at_index = _at_index
 	
 func _to_string() -> String:
-	return "EnteredDeckEvent(%s,%s,%s,%s,%d)" % [self.card, self.as_marked, self.keep_stats, self.keep_moods, self.at_index]
+	return "EnteredDeckEvent(%s,%s,%s,%d)" % [self.card, self.keep_stats, self.keep_moods, self.at_index]

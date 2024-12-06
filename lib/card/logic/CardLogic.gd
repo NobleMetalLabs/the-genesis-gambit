@@ -42,7 +42,7 @@ func LEFT_FIELD(event : LeftFieldEvent) -> void:
 	if verbose: print("%s left field of %s" % [event.card, event.card.player])
 	var card_stats := IStatisticPossessor.id(event.card)
 	card_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, false)
-	game_access.card_possessor.request_event(WasMarkedEvent.new(event.card))
+	game_access.card_processor.request_event(WasMarkedEvent.new(event.card))
 	game_access.card_processor.request_event(EnteredDeckEvent.new(event.card))
 	return
 
@@ -67,17 +67,17 @@ func WAS_DISCARDED(event : WasDiscardedEvent) -> void:
 	return
 
 func ATTACKED(event : AttackedEvent) -> void:
-	if verbose: print("%s attacked %s" % [event.card, event.who])
-	game_access.card_processor.request_event(WasAttackedEvent.new(event.who, event.card))
+	if verbose: print("%s attacked %s for %s" % [event.card, event.who, event.damage])
+	game_access.card_processor.request_event(WasAttackedEvent.new(event.who, event.card, event.damage))
 	return
 
 func WAS_ATTACKED(event : WasAttackedEvent) -> void:
-	if verbose: print("%s was attacked by %s" % [event.card, event.by])
+	if verbose: print("%s was attacked by %s for %s" % [event.card, event.by_who, event.damage])
 	var health : int = IStatisticPossessor.id(event.card).get_statistic(Genesis.Statistic.HEALTH)
 	var new_health : int = health - event.damage
-	IStatisticPossessor.id(event.who).set_statistic(Genesis.Statistic.HEALTH, new_health)
+	IStatisticPossessor.id(event.by_who).set_statistic(Genesis.Statistic.HEALTH, new_health)
 	if new_health <= 0:
-		game_access.card_processor.request_event(KilledEvent.new(event.card, event.who))
+		game_access.card_processor.request_event(KilledEvent.new(event.by_who, event.card))
 	return
 
 func WAS_ACTIVATED(event : WasActivatedEvent) -> void:

@@ -10,4 +10,3 @@ func _init(_card : ICardInstance, _who : ICardInstance) -> void:
 
 func _to_string() -> String:
 	return "WasSupportedEvent(%s, %s)" % [self.card, self.who]
-

@@ -23,10 +23,15 @@ func register_commands() -> void:
 			.Key("uid", _get_uiddb_uids)
 				.Tag_gn("int")
 			.Literal("event")
-			.Branch()
-				.Literal("entered-field-event")
-					.Tag_st("event-type")
-			.EndBranch()
+			.Branch().Literal("entered-field-event")
+			.NextBranch().Literal("entered-hand-event")
+			.NextBranch().Literal("was-activated-event")
+			.NextBranch().Literal("was-burned-event")
+			.NextBranch().Literal("was-created-event")
+			.NextBranch().Literal("was-discarded-event")
+			.NextBranch().Literal("was-marked-event")
+			.NextBranch().Literal("was-unmarked-event")
+			.EndBranch().Tag_st("event-type")
 			.Callback(issue_event_to_card, ["uid", "event-type"])
 		.Build()
 	)
@@ -59,8 +64,15 @@ func issue_event_to_card(uid : int, event_type : String) -> void:
 	var card := ICardInstance.id(ent)
 	var event : Event
 	match event_type:
-		"entered-field-event":
-			event = EnteredFieldEvent.new(card)
+		"entered-field-event": event = EnteredFieldEvent.new(card)
+		"entered-hand-event": event = EnteredHandEvent.new(card)
+		"was-activated-event": event = WasActivatedEvent.new(card)
+		"was-burned-event": event = WasBurnedEvent.new(card)
+		"was-created-event": event = WasCreatedEvent.new(card)
+		"was-discarded-event": event = WasDiscardedEvent.new(card)
+		"was-marked-event": event = WasMarkedEvent.new(card)
+		"was-unmarked-event": event = WasUnmarkedEvent.new(card)
+		
 		_:
 			push_error("Unknown event type: %s" % [event_type])
 	processor.process_event(event)

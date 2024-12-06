@@ -51,11 +51,11 @@ func setup(config : NetworkPlayStageConfiguration) -> void:
 		leader_stats.set_statistic(Genesis.Statistic.CAN_TARGET, false)
 		leader_stats.set_statistic(Genesis.Statistic.CAN_HAVE_MOODS, false)
 
-	Router.backend.effect_resolver.finished_resolving_effects_for_frame.connect(
-		func handle_ui_updates(effects : Array[Effect], cards : Array[ICardInstance]) -> void:
-			_handle_card_updates(cards)
-			_handle_effect_updates(effects)
-	)
+	# Router.backend.effect_resolver.finished_resolving_effects_for_frame.connect(
+	# 	func handle_ui_updates(effects : Array[Effect], cards : Array[ICardInstance]) -> void:
+	# 		_handle_card_updates(cards)
+	# 		_handle_effect_updates(effects)
+	# )
 
 	client_ui_setup.emit()
 	self.force_refresh_ui()
@@ -65,9 +65,9 @@ func force_refresh_ui() -> void:
 		pa.force_refresh_ui()
 
 var _audio_handler : ClientUIAudioHandler = ClientUIAudioHandler.new(self)
-func _handle_effect_updates(effects : Array[Effect]) -> void:
-	for effect : Effect in effects:
-		_audio_handler.handle_effect_audio(effect)
+# func _handle_effect_updates(effects : Array[Effect]) -> void:
+# 	for effect : Effect in effects:
+# 		_audio_handler.handle_effect_audio(effect)
 
 func _handle_card_updates(cards : Array[ICardInstance]) -> void:
 	for card : ICardInstance in cards:
@@ -123,12 +123,12 @@ func _handle_card_actions() -> void:
 func _handle_hand_actions() -> void:
 	if Input.is_action_just_pressed("hand_burn"):
 		var player_stats := IStatisticPossessor.id(Router.backend.local_player)
-		var burn_cooldown : CooldownEffect = player_stats.get_cooldown_of_type(Genesis.CooldownType.BURN)
+		#var burn_cooldown : CooldownEffect = player_stats.get_cooldown_of_type(Genesis.CooldownType.BURN)
 		
-		if burn_cooldown == null:
-			AuthoritySourceProvider.authority_source.request_action(
-				HandBurnHandAction.setup()
-			)
+		# if burn_cooldown == null:
+		# 	AuthoritySourceProvider.authority_source.request_action(
+		# 		HandBurnHandAction.setup()
+		# 	)
 
 func _handle_debug_actions() -> void:
 	var args := Array(OS.get_cmdline_args())

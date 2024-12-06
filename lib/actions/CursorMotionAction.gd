@@ -13,5 +13,5 @@ func _init() -> void: pass
 func _to_string() -> String:
 	return "CursorMotionAction(%s)" % [self.position]
 
-func to_effect() -> SetStatisticEffect:
-	return SetStatisticEffect.new(self, IStatisticPossessor.id(Router.backend.peer_id_to_player[player_peer_id]), Genesis.Statistic.POSITION, position)
+# func to_effect() -> SetStatisticEffect:
+# 	return SetStatisticEffect.new(self, IStatisticPossessor.id(Router.backend.peer_id_to_player[player_peer_id]), Genesis.Statistic.POSITION, position)

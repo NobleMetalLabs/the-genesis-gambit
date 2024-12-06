@@ -21,5 +21,3 @@ func process(_backend_objects : BackendObjectCollection, _effect_resolver : Effe
 					instance_owner.player
 				)
 			)
-
-

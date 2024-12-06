@@ -6,39 +6,40 @@ var game_access : GameAccess
 var verbose : bool = false
 
 func _init(_owner : ICardInstance) -> void:
-	self.instance_owner = _owner
+	pass
+	#self.instance_owner = _owner
 
 func WAS_CREATED(event : WasCreatedEvent) -> void:
 	if verbose: print("%s was created" % [event.card])
 	return
 
 func ENTERED_DECK(event : EnteredDeckEvent) -> void:
-	if verbose: print("%s entered deck of %s" % [event.card, event.player])
+	if verbose: print("%s entered deck of %s" % [event.card, event.card.player])
 	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_IN_DECK, true)
 	return
 
 func LEFT_DECK(event : LeftDeckEvent) -> void:
-	if verbose: print("%s left deck of %s" % [event.card, event.player])
+	if verbose: print("%s left deck of %s" % [event.card, event.card.player])
 	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_IN_DECK, false)
 	return
 
 func ENTERED_HAND(event : EnteredHandEvent) -> void:
-	if verbose: print("%s entered hand of %s" % [event.card, event.player])
+	if verbose: print("%s entered hand of %s" % [event.card, event.card.player])
 	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_IN_HAND, true)
 	return
 
 func LEFT_HAND(event : LeftHandEvent) -> void:
-	if verbose: print("%s left hand of %s" % [event.card, event.player])
+	if verbose: print("%s left hand of %s" % [event.card, event.card.player])
 	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_IN_HAND, false)
 	return
 
 func ENTERED_FIELD(event : EnteredFieldEvent) -> void:
-	if verbose: print("%s entered field of %s" % [event.card, event.player])
+	if verbose: print("%s entered field of %s" % [event.card, event.card.player])
 	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_ON_FIELD, true)
 	return
 
 func LEFT_FIELD(event : LeftFieldEvent) -> void:
-	if verbose: print("%s left field of %s" % [event.card, event.player])
+	if verbose: print("%s left field of %s" % [event.card, event.card.player])
 	var card_stats := IStatisticPossessor.id(event.card)
 	card_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, false)
 	game_access.card_possessor.request_event(WasMarkedEvent.new(event.card))
@@ -143,19 +144,19 @@ func LOST_MOOD(event : LostMoodEvent) -> void:
 	return
 
 func PLAYED_CARD(event : PlayedCardEvent) -> void:
-	if verbose: print("%s played card %s" % [event.player, event.card])
+	if verbose: print("%s played card %s" % [event.card.player, event.card])
 	game_access.card_processor.request_event(LeftHandEvent.new(event.card))
 	game_access.card_processor.request_event(EnteredFieldEvent.new(event.card))
 	return
 
 func BURNED_HAND(event : BurnedHandEvent) -> void:
-	if verbose: print("%s burned hand" % [event.player])
+	if verbose: print("%s burned hand" % [event.card.player])
 	return
 
 func BEGAN_DECK_MAINTENANCE(event : BeganDeckMaintenanceEvent) -> void:
-	if verbose: print("%s began deck maintenance" % [event.player])
+	if verbose: print("%s began deck maintenance" % [event.card.player])
 	return
 
 func ENDED_DECK_MAINTENANCE(event : EndedDeckMaintenanceEvent) -> void:
-	if verbose: print("%s ended deck maintenance" % [event.player])
+	if verbose: print("%s ended deck maintenance" % [event.card.player])
 	return

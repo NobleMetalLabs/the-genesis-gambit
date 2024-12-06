@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://8ug3p85pm4sh"]
+
+[ext_resource type="Script" path="res://addons/command-terminal/src/CommandTerminal.gd" id="1_7mbqb"]
+[ext_resource type="Script" path="res://tst/sandbox.gd" id="1_24t6r"]
+[ext_resource type="Script" path="res://tst/cards-tree.gd" id="2_fwa0a"]
+[ext_resource type="FontFile" uid="uid://cmmltma2gsu3a" path="res://addons/command-terminal/ast/windows_command_prompt.ttf" id="2_yvhsy"]
+[ext_resource type="PackedScene" uid="uid://b5b8i4p40f5ua" path="res://addons/command-terminal/scn/command_terminal_guts.tscn" id="3_asx5f"]
+[ext_resource type="Script" path="res://addons/command-terminal/src/CommandTerminalGuts.gd" id="4_n2biy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3nmgc"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Node" type="Node"]
+script = ExtResource("1_24t6r")
+
+[node name="Cards" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Tree" type="Tree" parent="Control/VBoxContainer/PanelContainer"]
+layout_mode = 2
+columns = 4
+script = ExtResource("2_fwa0a")
+
+[node name="CommandTerminal" type="Control" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+script = ExtResource("1_7mbqb")
+font = ExtResource("2_yvhsy")
+font_size = 36
+
+[node name="__guts__" type="PanelContainer" parent="Control/VBoxContainer/CommandTerminal" instance=ExtResource("3_asx5f")]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3nmgc")
+script = ExtResource("4_n2biy")
+metadata/_edit_lock_ = true

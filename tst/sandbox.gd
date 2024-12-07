@@ -124,6 +124,87 @@ func register_commands() -> void:
 				)
 		.Build()
 	)
+
+	CommandServer.register_command(
+		CommandBuilder.new()
+			.Literal("card").Literal("act")
+			.Key("uid", _get_uiddb_uids)
+				.Tag_gn("int")
+			.Literal("event")
+			.Branch()
+				.Literal("gave-mood-event")
+				.Key("who_uid", _get_uiddb_uids)
+					.Tag_gn("int")
+				.Branch()
+					.Literal("summoning")
+					.Callback(
+						func issue_gave_summoning_mood(uid : int, who_uid : int) -> void:
+							var card := ICardInstance.id(UIDDB.object(uid))
+							var who := ICardInstance.id(UIDDB.object(who_uid))
+							processor.process_event(GaveMoodEvent.new(card, who, SummoningMood.new(card)))
+							, ["uid", "who_uid"]
+					)
+				.NextBranch()
+					.Literal("boredom")
+					.Callback(
+						func issue_gave_boredom_mood(uid : int, who_uid : int) -> void:
+							var card := ICardInstance.id(UIDDB.object(uid))
+							var who := ICardInstance.id(UIDDB.object(who_uid))
+							processor.process_event(GaveMoodEvent.new(card, who, BoredomMood.new(card)))
+							, ["uid", "who_uid"]
+					)
+				.NextBranch()
+					.Key("mood-type", StatisticMood.get.bind("MOOD_NAMES"))
+						.Tag_gnst()
+					.Validated("amount", GlobalCommandValidators.is_valid_int_positive)
+						.Tag_gn("int")
+					.Callback(
+						func issue_gave_statistic_mood(uid : int, who_uid : int, mood_type : StringName, amount : int) -> void:
+							var card := ICardInstance.id(UIDDB.object(uid))
+							var who := ICardInstance.id(UIDDB.object(who_uid))
+							var mood := StatisticMood.FROM_NAME(card, mood_type, amount)
+							processor.process_event(GaveMoodEvent.new(card, who, mood))
+							, ["uid", "who_uid", "mood-type", "amount"]
+					)
+				.EndBranch()
+			.NextBranch()
+				.Literal("gained-mood-event")
+				.Key("from_who_uid", _get_uiddb_uids)
+					.Tag_gn("int")
+				.Branch()
+					.Literal("summoning")
+					.Callback(
+						func issue_gave_summoning_mood(uid : int, from_who_uid : int) -> void:
+							var card := ICardInstance.id(UIDDB.object(uid))
+							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
+							processor.process_event(GainedMoodEvent.new(card, from_who, SummoningMood.new(card)))
+							, ["uid", "from_who_uid"]
+					)
+				.NextBranch()
+					.Literal("boredom")
+					.Callback(
+						func issue_gave_boredom_mood(uid : int, from_who_uid : int) -> void:
+							var card := ICardInstance.id(UIDDB.object(uid))
+							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
+							processor.process_event(GainedMoodEvent.new(card, from_who, BoredomMood.new(card)))
+							, ["uid", "from_who_uid"]
+					)
+				.NextBranch()
+					.Key("mood-type", StatisticMood.get.bind("MOOD_NAMES"))
+						.Tag_gnst()
+					.Validated("amount", GlobalCommandValidators.is_valid_int_positive)
+						.Tag_gn("int")
+					.Callback(
+						func issue_gave_statistic_mood(uid : int, from_who_uid : int, mood_type : StringName, amount : int) -> void:
+							var card := ICardInstance.id(UIDDB.object(uid))
+							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
+							var mood := StatisticMood.FROM_NAME(card, mood_type, amount)
+							processor.process_event(GainedMoodEvent.new(card, from_who, mood))
+							, ["uid", "from_who_uid", "mood-type", "amount"]
+					)
+				.EndBranch()
+		.Build()
+	)
 	
 	CommandServer.register_command(
 		CommandBuilder.new()

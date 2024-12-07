@@ -7,8 +7,7 @@ func _ready() -> void:
 func register_commands() -> void:
 	CommandServer.register_command(
 		CommandBuilder.new()
-			.Literal("card")
-			.Literal("spawn")
+			.Literal("card").Literal("spawn")
 			.Key("name", CardDB.get_card_names)
 				.Tag("card-id", "int", CardDB.get_id_by_name)
 			.Validated("player-num", GlobalCommandValidators.is_valid_int_positive)
@@ -19,8 +18,7 @@ func register_commands() -> void:
 
 	CommandServer.register_command(
 		CommandBuilder.new()
-			.Literal("card")
-			.Literal("act")
+			.Literal("card").Literal("act")
 			.Key("uid", _get_uiddb_uids)
 				.Tag_gn("int")
 			.Literal("event")
@@ -39,8 +37,7 @@ func register_commands() -> void:
 
 	CommandServer.register_command(
 		CommandBuilder.new()
-			.Literal("card")
-			.Literal("act")
+			.Literal("card").Literal("act")
 			.Key("uid", _get_uiddb_uids)
 				.Tag_gn("int")
 			.Literal("event")
@@ -69,6 +66,39 @@ func register_commands() -> void:
 						var event := KilledEvent.new(card, target)
 						processor.process_event(event)
 						, ["uid", "target_uid"]
+				)
+		.Build()
+	)
+	
+	CommandServer.register_command(
+		CommandBuilder.new()
+			.Literal("player").Literal("act")
+			.Key("player_id", _get_player_ids)
+				.Tag_gn("int")
+			.Literal("event")
+			.Branch()
+				.Literal("burn-hand-event")
+				.Callback(
+					func issue_burn_hand(player_id : int) -> void:
+						var player : Player = players[player_id]
+						processor.process_event(BurnedHandEvent.new(player))
+						, ["player_id"]
+				)
+			.NextBranch()
+				.Literal("began-deck-maintenance-event")
+				.Callback(
+					func issue_began_dm(player_id : int) -> void:
+						var player : Player = players[player_id]
+						processor.process_event(BeganDeckMaintenanceEvent.new(player))
+						, ["player_id"]
+				)
+			.NextBranch()
+				.Literal("ended-deck-maintenance-event")
+				.Callback(
+					func issue_ended_dm(player_id : int) -> void:
+						var player : Player = players[player_id]
+						processor.process_event(EndedDeckMaintenanceEvent.new(player))
+						, ["player_id"]
 				)
 		.Build()
 	)
@@ -118,6 +148,11 @@ func issue_simple_event_to_card(uid : int, event_type : StringName) -> void:
 func _get_uiddb_uids() -> Array[StringName]:
 	var output : Array[StringName] = []
 	output.assign(UIDDB.uid_to_object.keys().map(func to_sn(uid : int) -> StringName: return str(uid)))
+	return output
+
+func _get_player_ids() -> Array[StringName]:
+	var output : Array[StringName] = []
+	output.assign(players.keys().map(func to_sn(uid : int) -> StringName: return str(uid)))
 	return output
 
 # func is_uid_of_existing_card(value : String) -> bool:

@@ -35,8 +35,8 @@ layout_mode = 2
 columns = 4
 script = ExtResource("2_fwa0a")
 
-[node name="CommandTerminal" type="Control" parent="Control"]
-layout_mode = 1
+[node name="CommandTerminal" type="Control" parent="."]
+layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -48,7 +48,7 @@ script = ExtResource("1_7mbqb")
 font = ExtResource("2_yvhsy")
 font_size = 36
 
-[node name="__guts__" type="PanelContainer" parent="Control/CommandTerminal" instance=ExtResource("3_asx5f")]
+[node name="__guts__" type="PanelContainer" parent="CommandTerminal" instance=ExtResource("3_asx5f")]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0

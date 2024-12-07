@@ -22,25 +22,6 @@ func register_commands() -> void:
 			.Key("uid", _get_uiddb_uids)
 				.Tag_gn("int")
 			.Literal("event")
-			.Branch().Literal("entered-field-event")
-			.NextBranch().Literal("entered-hand-event")
-			.NextBranch().Literal("was-activated-event")
-			.NextBranch().Literal("was-burned-event")
-			.NextBranch().Literal("was-created-event")
-			.NextBranch().Literal("was-discarded-event")
-			.NextBranch().Literal("was-marked-event")
-			.NextBranch().Literal("was-unmarked-event")
-			.EndBranch().Tag_st("event-type")
-			.Callback(issue_simple_event_to_card, ["uid", "event-type"])
-		.Build()
-	)
-
-	CommandServer.register_command(
-		CommandBuilder.new()
-			.Literal("card").Literal("act")
-			.Key("uid", _get_uiddb_uids)
-				.Tag_gn("int")
-			.Literal("event")
 			.Branch()
 				.Literal("attacked-event")
 				.Key("target_uid", _get_uiddb_uids)
@@ -56,6 +37,20 @@ func register_commands() -> void:
 						, ["uid", "target_uid", "damage"]
 				)
 			.NextBranch()
+				.Literal("was-attacked-event")
+				.Key("target_uid", _get_uiddb_uids)
+					.Tag_gn("int")
+				.Validated("damage", GlobalCommandValidators.is_valid_int_positive)
+					.Tag_gn("int")
+				.Callback(
+					func issue_was_attacked(uid : int, target_uid : int, damage : int) -> void:
+						var card := ICardInstance.id(UIDDB.object(uid))
+						var target := ICardInstance.id(UIDDB.object(target_uid)) 
+						var event := WasAttackedEvent.new(card, target, damage)
+						processor.process_event(event)
+						, ["uid", "target_uid", "damage"]
+				)
+			.NextBranch()
 				.Literal("killed-event")
 				.Key("target_uid", _get_uiddb_uids)
 					.Tag("target_uid", "int")
@@ -67,6 +62,85 @@ func register_commands() -> void:
 						processor.process_event(event)
 						, ["uid", "target_uid"]
 				)
+			.NextBranch()
+				.Literal("was-killed-event")
+				.Key("target_uid", _get_uiddb_uids)
+					.Tag("target_uid", "int")
+				.Callback(
+					func issue_was_killed(uid : int, target_uid : int) -> void:
+						var card := ICardInstance.id(UIDDB.object(uid))
+						var target := ICardInstance.id(UIDDB.object(target_uid)) 
+						var event := WasKilledEvent.new(card, target)
+						processor.process_event(event)
+						, ["uid", "target_uid"]
+				)
+			.NextBranch()
+				.Literal("supported-event")
+				.Key("target_uid", _get_uiddb_uids)
+					.Tag("target_uid", "int")
+				.Callback(
+					func issue_support(uid : int, target_uid : int) -> void:
+						var card := ICardInstance.id(UIDDB.object(uid))
+						var target := ICardInstance.id(UIDDB.object(target_uid)) 
+						var event := SupportedEvent.new(card, target)
+						processor.process_event(event)
+						, ["uid", "target_uid"]
+				)
+			.NextBranch()
+				.Literal("was-supported-event")
+				.Key("target_uid", _get_uiddb_uids)
+					.Tag("target_uid", "int")
+				.Callback(
+					func issue_was_supported(uid : int, target_uid : int) -> void:
+						var card := ICardInstance.id(UIDDB.object(uid))
+						var target := ICardInstance.id(UIDDB.object(target_uid)) 
+						var event := WasSupportedEvent.new(card, target)
+						processor.process_event(event)
+						, ["uid", "target_uid"]
+				)
+			.NextBranch()
+				.Literal("targeted-event")
+				.Key("target_uid", _get_uiddb_uids)
+					.Tag("target_uid", "int")
+				.Callback(
+					func issue_target(uid : int, target_uid : int) -> void:
+						var card := ICardInstance.id(UIDDB.object(uid))
+						var target := ICardInstance.id(UIDDB.object(target_uid)) 
+						var event := TargetedEvent.new(card, target)
+						processor.process_event(event)
+						, ["uid", "target_uid"]
+				)
+			.NextBranch()
+				.Literal("was-targeted-event")
+				.Key("target_uid", _get_uiddb_uids)
+					.Tag("target_uid", "int")
+				.Callback(
+					func issue_support(uid : int, target_uid : int) -> void:
+						var card := ICardInstance.id(UIDDB.object(uid))
+						var target := ICardInstance.id(UIDDB.object(target_uid)) 
+						var event := WasSupportedEvent.new(card, target)
+						processor.process_event(event)
+						, ["uid", "target_uid"]
+				)
+		.Build()
+	)
+	
+	CommandServer.register_command(
+		CommandBuilder.new()
+			.Literal("card").Literal("act")
+			.Key("uid", _get_uiddb_uids)
+				.Tag_gn("int")
+			.Literal("event")
+			.Branch().Literal("entered-field-event")
+			.NextBranch().Literal("entered-hand-event")
+			.NextBranch().Literal("was-activated-event")
+			.NextBranch().Literal("was-burned-event")
+			.NextBranch().Literal("was-created-event")
+			.NextBranch().Literal("was-discarded-event")
+			.NextBranch().Literal("was-marked-event")
+			.NextBranch().Literal("was-unmarked-event")
+			.EndBranch().Tag_st("event-type")
+			.Callback(issue_simple_event_to_card, ["uid", "event-type"])
 		.Build()
 	)
 	

@@ -76,6 +76,8 @@ func HANDLE_LEFT_FIELD(event : LeftFieldEvent) -> void:
 	if verbose: print("%s left field of %s" % [event.card, event.card.player])
 	var card_stats := IStatisticPossessor.id(event.card)
 	card_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, false)
+	
+	game_access.card_processor.request_event(TargetedEvent.new(event.card, null))
 	game_access.card_processor.request_event(WasMarkedEvent.new(event.card))
 	game_access.card_processor.request_event(EnteredDeckEvent.new(event.card))
 	return
@@ -133,9 +135,11 @@ func HANDLE_TARGETED(event : TargetedEvent) -> void:
 	if verbose: print("%s targeted %s" % [event.card, event.who])
 	
 	var card_stats := IStatisticPossessor.id(event.card)
-	card_stats.set_statistic(Genesis.Statistic.HAS_TARGET, true)
+	card_stats.set_statistic(Genesis.Statistic.HAS_TARGET, event.who != null)
 	card_stats.set_statistic(Genesis.Statistic.TARGET, event.who)
-
+	
+	if event.who == null: return
+	
 	if event.card.metadata.type == Genesis.CardType.SUPPORT:
 		if game_access.are_two_cards_friendly(event.card, event.who):
 			game_access.card_processor.request_event(SupportedEvent.new(event.card, event.who))

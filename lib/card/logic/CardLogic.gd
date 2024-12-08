@@ -3,42 +3,76 @@ class_name CardLogic
 extends RefCounted
 
 var game_access : GameAccess
+var owner : ICardInstance
 var verbose : bool = false
 
 func _init(_owner : ICardInstance) -> void:
-	pass
-	#self.instance_owner = _owner
+	WAS_CREATED.connect(HANDLE_WAS_CREATED)
+	ENTERED_DECK.connect(HANDLE_ENTERED_DECK)
+	LEFT_DECK.connect(HANDLE_LEFT_DECK)
+	ENTERED_HAND.connect(HANDLE_ENTERED_HAND)
+	LEFT_HAND.connect(HANDLE_LEFT_HAND)
+	ENTERED_FIELD.connect(HANDLE_ENTERED_FIELD)
+	LEFT_FIELD.connect(HANDLE_LEFT_FIELD)
+	WAS_BURNED.connect(HANDLE_WAS_BURNED)
+	WAS_MARKED.connect(HANDLE_WAS_MARKED)
+	WAS_UNMARKED.connect(HANDLE_WAS_UNMARKED)
+	WAS_DISCARDED.connect(HANDLE_WAS_DISCARDED)
+	ATTACKED.connect(HANDLE_ATTACKED)
+	WAS_ATTACKED.connect(HANDLE_WAS_ATTACKED)
+	WAS_ACTIVATED.connect(HANDLE_WAS_ACTIVATED)
+	TARGETED.connect(HANDLE_TARGETED)
+	WAS_TARGETED.connect(HANDLE_WAS_TARGETED)
+	SUPPORTED.connect(HANDLE_SUPPORTED)
+	WAS_SUPPORTED.connect(HANDLE_WAS_SUPPORTED)
+	KILLED.connect(HANDLE_KILLED)
+	WAS_KILLED.connect(HANDLE_WAS_KILLED)
+	GAVE_MOOD.connect(HANDLE_GAVE_MOOD)
+	GAINED_MOOD.connect(HANDLE_GAINED_MOOD)
+	TOOK_MOOD.connect(HANDLE_TOOK_MOOD)
+	LOST_MOOD.connect(HANDLE_LOST_MOOD)
+	PLAYED_CARD.connect(HANDLE_PLAYED_CARD)
+	BURNED_HAND.connect(HANDLE_BURNED_HAND)
+	BEGAN_DECK_MAINTENANCE.connect(HANDLE_BEGAN_DECK_MAINTENANCE)
+	ENDED_DECK_MAINTENANCE.connect(HANDLE_ENDED_DECK_MAINTENANCE)
 
-func WAS_CREATED(event : WasCreatedEvent) -> void:
+signal WAS_CREATED(event : WasCreatedEvent)
+func HANDLE_WAS_CREATED(event : WasCreatedEvent) -> void:
 	if verbose: print("%s was created" % [event.card])
 	return
 
-func ENTERED_DECK(event : EnteredDeckEvent) -> void:
+signal ENTERED_DECK(event : EnteredDeckEvent)
+func HANDLE_ENTERED_DECK(event : EnteredDeckEvent) -> void:
 	if verbose: print("%s entered deck of %s" % [event.card, event.card.player])
 	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_IN_DECK, true)
 	return
 
-func LEFT_DECK(event : LeftDeckEvent) -> void:
+signal LEFT_DECK(event : LeftDeckEvent)
+func HANDLE_LEFT_DECK(event : LeftDeckEvent) -> void:
 	if verbose: print("%s left deck of %s" % [event.card, event.card.player])
 	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_IN_DECK, false)
 	return
 
-func ENTERED_HAND(event : EnteredHandEvent) -> void:
+signal ENTERED_HAND(event : EnteredHandEvent)
+func HANDLE_ENTERED_HAND(event : EnteredHandEvent) -> void:
 	if verbose: print("%s entered hand of %s" % [event.card, event.card.player])
 	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_IN_HAND, true)
 	return
 
-func LEFT_HAND(event : LeftHandEvent) -> void:
+signal LEFT_HAND(event : LeftHandEvent)
+func HANDLE_LEFT_HAND(event : LeftHandEvent) -> void:
 	if verbose: print("%s left hand of %s" % [event.card, event.card.player])
 	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_IN_HAND, false)
 	return
 
-func ENTERED_FIELD(event : EnteredFieldEvent) -> void:
+signal ENTERED_FIELD(event : EnteredFieldEvent)
+func HANDLE_ENTERED_FIELD(event : EnteredFieldEvent) -> void:
 	if verbose: print("%s entered field of %s" % [event.card, event.card.player])
 	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_ON_FIELD, true)
 	return
 
-func LEFT_FIELD(event : LeftFieldEvent) -> void:
+signal LEFT_FIELD(event : LeftFieldEvent)
+func HANDLE_LEFT_FIELD(event : LeftFieldEvent) -> void:
 	if verbose: print("%s left field of %s" % [event.card, event.card.player])
 	var card_stats := IStatisticPossessor.id(event.card)
 	card_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, false)
@@ -46,32 +80,38 @@ func LEFT_FIELD(event : LeftFieldEvent) -> void:
 	game_access.card_processor.request_event(EnteredDeckEvent.new(event.card))
 	return
 
-func WAS_BURNED(event : WasBurnedEvent) -> void:
+signal WAS_BURNED(event : WasBurnedEvent)
+func HANDLE_WAS_BURNED(event : WasBurnedEvent) -> void:
 	if verbose: print("%s was burned" % [event.card])
 	game_access.card_processor.request_event(LeftHandEvent.new(event.card))
 	return
 
-func WAS_MARKED(event : WasMarkedEvent) -> void:
+signal WAS_MARKED(event : WasMarkedEvent)
+func HANDLE_WAS_MARKED(event : WasMarkedEvent) -> void:
 	if verbose: print("%s was marked" % [event.card])
 	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_MARKED, true)
 	return
 
-func WAS_UNMARKED(event : WasUnmarkedEvent) -> void:
+signal WAS_UNMARKED(event : WasUnmarkedEvent)
+func HANDLE_WAS_UNMARKED(event : WasUnmarkedEvent) -> void:
 	if verbose: print("%s was unmarked" % [event.card])
 	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_MARKED, false)
 	return
 
-func WAS_DISCARDED(event : WasDiscardedEvent) -> void:
+signal WAS_DISCARDED(event : WasDiscardedEvent)
+func HANDLE_WAS_DISCARDED(event : WasDiscardedEvent) -> void:
 	if verbose: print("%s was discarded" % [event.card])
 	game_access.card_processor.request_event(LeftHandEvent.new(event.card))
 	return
 
-func ATTACKED(event : AttackedEvent) -> void:
+signal ATTACKED(event : AttackedEvent)
+func HANDLE_ATTACKED(event : AttackedEvent) -> void:
 	if verbose: print("%s attacked %s for %s" % [event.card, event.who, event.damage])
 	game_access.card_processor.request_event(WasAttackedEvent.new(event.who, event.card, event.damage))
 	return
 
-func WAS_ATTACKED(event : WasAttackedEvent) -> void:
+signal WAS_ATTACKED(event : WasAttackedEvent)
+func HANDLE_WAS_ATTACKED(event : WasAttackedEvent) -> void:
 	if verbose: print("%s was attacked by %s for %s" % [event.card, event.by_who, event.damage])
 	var health : int = IStatisticPossessor.id(event.card).get_statistic(Genesis.Statistic.HEALTH)
 	var new_health : int = health - event.damage
@@ -80,14 +120,16 @@ func WAS_ATTACKED(event : WasAttackedEvent) -> void:
 		game_access.card_processor.request_event(KilledEvent.new(event.by_who, event.card))
 	return
 
-func WAS_ACTIVATED(event : WasActivatedEvent) -> void:
+signal WAS_ACTIVATED(event : WasActivatedEvent)
+func HANDLE_WAS_ACTIVATED(event : WasActivatedEvent) -> void:
 	if verbose: print("%s was activated" % [event.card])
 	var card_stats := IStatisticPossessor.id(event.card)
 	if card_stats.get_statistic(Genesis.Statistic.CHARGES): return
 	card_stats.modify_statistic(Genesis.Statistic.CHARGES, -1)
 	return
 
-func TARGETED(event : TargetedEvent) -> void:
+signal TARGETED(event : TargetedEvent)
+func HANDLE_TARGETED(event : TargetedEvent) -> void:
 	if verbose: print("%s targeted %s" % [event.card, event.who])
 	
 	var card_stats := IStatisticPossessor.id(event.card)
@@ -101,62 +143,75 @@ func TARGETED(event : TargetedEvent) -> void:
 	game_access.card_processor.request_event(WasTargetedEvent.new(event.who, event.card))
 	return
 
-func WAS_TARGETED(event : WasTargetedEvent) -> void:
+signal WAS_TARGETED(event : WasTargetedEvent)
+func HANDLE_WAS_TARGETED(event : WasTargetedEvent) -> void:
 	if verbose: print("%s was targeted by %s" % [event.card, event.by])
 	return
 
-func SUPPORTED(event : SupportedEvent) -> void:
+signal SUPPORTED(event : SupportedEvent)
+func HANDLE_SUPPORTED(event : SupportedEvent) -> void:
 	if verbose: print("%s supported %s" % [event.card, event.who])
 	return
 
-func WAS_SUPPORTED(event : WasSupportedEvent) -> void:
+signal WAS_SUPPORTED(event : WasSupportedEvent)
+func HANDLE_WAS_SUPPORTED(event : WasSupportedEvent) -> void:
 	if verbose: print("%s was supported by %s" % [event.card, event.by])
 	return
 
-func KILLED(event : KilledEvent) -> void:
+signal KILLED(event : KilledEvent)
+func HANDLE_KILLED(event : KilledEvent) -> void:
 	if verbose: print("%s killed %s" % [event.card, event.who])
 	game_access.card_processor.request_event(WasKilledEvent.new(event.who, event.card))
 	return
 
-func WAS_KILLED(event : WasKilledEvent) -> void:
+signal WAS_KILLED(event : WasKilledEvent)
+func HANDLE_WAS_KILLED(event : WasKilledEvent) -> void:
 	if verbose: print("%s was killed by %s" % [event.card, event.by])
 	game_access.card_processor.request_event(LeftFieldEvent.new(event.card))
 	return
 
-func GAVE_MOOD(event : GaveMoodEvent) -> void:
+signal GAVE_MOOD(event : GaveMoodEvent)
+func HANDLE_GAVE_MOOD(event : GaveMoodEvent) -> void:
 	if verbose: print("%s gave %s mood %s" % [event.card, event.who, event.mood])
 	game_access.card_processor.request_event(GainedMoodEvent.new(event.who, event.card, event.mood))
 	return
 
-func GAINED_MOOD(event : GainedMoodEvent) -> void:
+signal GAINED_MOOD(event : GainedMoodEvent)
+func HANDLE_GAINED_MOOD(event : GainedMoodEvent) -> void:
 	if verbose: print("%s gained mood %s from %s" % [event.card, event.mood, event.from])
 	IMoodPossessor.id(event.card).apply_mood(event.mood)
 	return
 
-func TOOK_MOOD(event : TookMoodEvent) -> void:
+signal TOOK_MOOD(event : TookMoodEvent)
+func HANDLE_TOOK_MOOD(event : TookMoodEvent) -> void:
 	if verbose: print("%s took mood %s from %s" % [event.card, event.mood, event.who])
 	game_access.card_processor.request_event(LostMoodEvent.new(event.who, event.card, event.mood))
 	return
 
-func LOST_MOOD(event : LostMoodEvent) -> void:
+signal LOST_MOOD(event : LostMoodEvent)
+func HANDLE_LOST_MOOD(event : LostMoodEvent) -> void:
 	if verbose: print("%s lost mood %s from %s" % [event.card, event.mood, event.from])
 	IMoodPossessor.id(event.card).remove_mood(event.mood)
 	return
 
-func PLAYED_CARD(event : PlayedCardEvent) -> void:
+signal PLAYED_CARD(event : PlayedCardEvent)
+func HANDLE_PLAYED_CARD(event : PlayedCardEvent) -> void:
 	if verbose: print("%s played card %s" % [event.card.player, event.card])
 	game_access.card_processor.request_event(LeftHandEvent.new(event.card))
 	game_access.card_processor.request_event(EnteredFieldEvent.new(event.card))
 	return
 
-func BURNED_HAND(event : BurnedHandEvent) -> void:
+signal BURNED_HAND(event : BurnedHandEvent)
+func HANDLE_BURNED_HAND(event : BurnedHandEvent) -> void:
 	if verbose: print("%s burned hand" % [event.card.player])
 	return
 
-func BEGAN_DECK_MAINTENANCE(event : BeganDeckMaintenanceEvent) -> void:
+signal BEGAN_DECK_MAINTENANCE(event : BeganDeckMaintenanceEvent)
+func HANDLE_BEGAN_DECK_MAINTENANCE(event : BeganDeckMaintenanceEvent) -> void:
 	if verbose: print("%s began deck maintenance" % [event.card.player])
 	return
 
-func ENDED_DECK_MAINTENANCE(event : EndedDeckMaintenanceEvent) -> void:
+signal ENDED_DECK_MAINTENANCE(event : EndedDeckMaintenanceEvent)
+func HANDLE_ENDED_DECK_MAINTENANCE(event : EndedDeckMaintenanceEvent) -> void:
 	if verbose: print("%s ended deck maintenance" % [event.card.player])
 	return

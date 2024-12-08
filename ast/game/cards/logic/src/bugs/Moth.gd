@@ -4,11 +4,11 @@ static var description : StringName = "Each first attack made by a creature agai
 
 var has_been_attacked_by : Array[ICardInstance] = []
 
-func ENTERED_FIELD(event : EnteredFieldEvent) -> void:
+func HANDLE_ENTERED_FIELD(event : EnteredFieldEvent) -> void:
 	has_been_attacked_by.clear()
 	super(event)
 
-func ATTACKED(event : AttackedEvent) -> void:
+func HANDLE_ATTACKED(event : AttackedEvent) -> void:
 	if has_been_attacked_by.has(event.who): return
 	event.damage = 0
 	has_been_attacked_by.append(event.who)

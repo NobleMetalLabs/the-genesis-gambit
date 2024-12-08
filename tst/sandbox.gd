@@ -355,8 +355,8 @@ func register_commands() -> void:
 	)
 
 func AUTO_EXEC() -> void:
-	CommandServer.run_command("card spawn moth 1")
-	CommandServer.run_command("card spawn moth 2")
+	CommandServer.run_command("card spawn slug 1")
+	CommandServer.run_command("card act 1 event was-created-event")
 
 @onready var cards_holder : Node = get_node("%Cards")
 var processor : CardProcessor = CardProcessor.new()

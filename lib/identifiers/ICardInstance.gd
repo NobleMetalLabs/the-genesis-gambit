@@ -15,6 +15,7 @@ func _init(_metadata : CardMetadata, _player : Player) -> void:
 	self.name = "ICardInstance"
 	metadata = _metadata
 	logic = metadata.logic_script.new(self)
+	logic.owner = self
 	player = _player
 
 func clone() -> ICardInstance:

@@ -370,9 +370,7 @@ func spawn_card(id : int, player_num : int) -> void:
 	component.logic.game_access = game_access
 	var new_ent := CardBackend.new(component)
 	cards_holder.add_child(new_ent)
-	UIDDB.register_object(new_ent,
-		hash(new_ent)
-	)
+	UIDDB.register_object(new_ent, UIDDB.uid_to_object.size() + 1)
 
 func _new_player(num : int) -> Player:
 	var player : Player = Player.setup(Deck.EMPTY)

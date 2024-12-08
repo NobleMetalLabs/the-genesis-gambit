@@ -136,7 +136,7 @@ func HANDLE_TARGETED(event : TargetedEvent) -> void:
 	card_stats.set_statistic(Genesis.Statistic.HAS_TARGET, true)
 	card_stats.set_statistic(Genesis.Statistic.TARGET, event.who)
 
-	if event.card.meta.type == Genesis.CardType.SUPPORT:
+	if event.card.metadata.type == Genesis.CardType.SUPPORT:
 		if game_access.are_two_cards_friendly(event.card, event.who):
 			game_access.card_processor.request_event(SupportedEvent.new(event.card, event.who))
 			return
@@ -151,6 +151,7 @@ func HANDLE_WAS_TARGETED(event : WasTargetedEvent) -> void:
 signal SUPPORTED(event : SupportedEvent)
 func HANDLE_SUPPORTED(event : SupportedEvent) -> void:
 	if verbose: print("%s supported %s" % [event.card, event.who])
+	game_access.card_processor.request_event(WasSupportedEvent.new(event.who, event.card))
 	return
 
 signal WAS_SUPPORTED(event : WasSupportedEvent)

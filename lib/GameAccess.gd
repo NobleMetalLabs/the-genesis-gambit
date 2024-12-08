@@ -20,15 +20,11 @@ func get_players_deck(player : Player) -> Array[ICardInstance]:
 	return []
 
 func are_two_cards_friendly(card1 : ICardInstance, card2 : ICardInstance) -> bool:
-	var cards : Array[ICardInstance] = []
-	cards.assign([card1, card2])
-	return _are_all_cards_friendly(cards)
+	return card1.player == card2.player
 
 func are_all_cards_friendly(cards : Array[ICardInstance]) -> bool:
-	return _are_all_cards_friendly(cards)
-
-func _are_all_cards_friendly(cards : Array[ICardInstance]) -> bool:
 	for card in cards:
-		if not are_two_cards_friendly(cards[0], card):
+		if not are_two_cards_friendly(cards[0], card): # This is cap af
 			return false
 	return true
+

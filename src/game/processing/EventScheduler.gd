@@ -1,8 +1,8 @@
 class_name EventScheduler
-extends Node
+extends RefCounted
 
 var event_history : EventHistory
-# TODO: all of this needs to be redone for better keying of abstract data
+# TODO: all of this ne\eds to be redone for better keying of abstract data
 # ie event_type with wildcarding, target_groups
 var processing_steps_by_event_by_target : Dictionary = {} #[ICardInstance, Dictionary[StringName, Array[EventProcessingStep]]]
 var processing_step_by_requester : Dictionary = {} #[ICardInstance, Array[EventProcessingStep]]

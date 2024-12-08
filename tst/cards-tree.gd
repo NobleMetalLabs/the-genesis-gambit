@@ -1,7 +1,6 @@
 extends Tree
 
 @onready var sandbox : Sandbox = get_parent().get_parent().get_parent().get_parent()
-@onready var cards_holder : Node = sandbox.get_node("%Cards")
 
 func _ready() -> void:
 	self.columns = 4
@@ -32,7 +31,7 @@ func refresh_tree() -> void:
 	# tally cards
 	var cards_parent : TreeItem = self.create_item(root)
 	cards_parent.set_text(0, "Cards")
-	for card : ICardInstance in cards_holder.get_children().map(func get_cardinstance(n : Node) -> ICardInstance: return ICardInstance.id(n)):
+	for card : ICardInstance in sandbox.cards_holder.get_children().map(func get_cardinstance(n : Node) -> ICardInstance: return ICardInstance.id(n)):
 		var card_item : TreeItem = self.create_item(cards_parent)
 		setup_card_row(card_item, card)
 		_object_to_treeitem[card] = card_item

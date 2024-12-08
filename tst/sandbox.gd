@@ -203,6 +203,90 @@ func register_commands() -> void:
 							, ["uid", "from_who_uid", "mood-type", "amount"]
 					)
 				.EndBranch()
+			.NextBranch()
+				.Literal("lost-mood-event")
+				.Key("from_who_uid", _get_uiddb_uids)
+					.Tag_gn("int")
+				.Branch()
+					.Literal("summoning")
+					.Callback(
+						func issue_gave_summoning_mood(uid : int, from_who_uid : int) -> void:
+							var card := ICardInstance.id(UIDDB.object(uid))
+							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
+							processor.process_event(GainedMoodEvent.new(card, from_who, SummoningMood.new(card)))
+							, ["uid", "from_who_uid"]
+					)
+				.NextBranch()
+					.Literal("boredom")
+					.Callback(
+						func issue_gave_boredom_mood(uid : int, from_who_uid : int) -> void:
+							var card := ICardInstance.id(UIDDB.object(uid))
+							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
+							processor.process_event(GainedMoodEvent.new(card, from_who, BoredomMood.new(card)))
+							, ["uid", "from_who_uid"]
+					)
+				.NextBranch()
+					.Key("mood-type", StatisticMood.get.bind("MOOD_NAMES"))
+						.Tag_gnst()
+					.Validated("amount", GlobalCommandValidators.is_valid_int_positive)
+						.Tag_gn("int")
+					.Callback(
+						func issue_gave_statistic_mood(uid : int, from_who_uid : int, mood_type : StringName, amount : int) -> void:
+							var card := ICardInstance.id(UIDDB.object(uid))
+							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
+							var mood := StatisticMood.FROM_NAME(card, mood_type, amount)
+							processor.process_event(GainedMoodEvent.new(card, from_who, mood))
+							, ["uid", "from_who_uid", "mood-type", "amount"]
+					)
+		.Build()
+	)
+
+	CommandServer.register_command(
+		CommandBuilder.new()
+			.Literal("card").Literal("act")
+			.Key("uid", _get_uiddb_uids)
+				.Tag_gn("int")
+			.Literal("event")
+			.Branch().Literal("left-deck-event")
+				.Key("reason", func get_deckreason_keys() -> Array[StringName]: 
+					var keys : Array[StringName] = []
+					keys.assign(Genesis.LeaveDeckReason.keys())
+					return keys
+					).Tag("reason_id", "int", func map_deckreason(value : String) -> int: 
+						return Genesis.LeaveDeckReason.keys().find(value))
+				.Callback(
+					func issue_left_deck(uid : int, reason_id : int) -> void:
+						var card := ICardInstance.id(UIDDB.object(uid))
+						processor.process_event(LeftDeckEvent.new(card, reason_id as Genesis.LeaveDeckReason))
+						, ["uid", "reason_id"]
+				)
+			.NextBranch().Literal("left-field-event")
+				.Key("reason", func get_fieldreason_keys() -> Array[StringName]: 
+					var keys : Array[StringName] = []
+					keys.assign(Genesis.LeavePlayReason.keys())
+					return keys
+					).Tag("reason_id", "int", func map_fieldreason(value : String) -> int: 
+						return Genesis.LeavePlayReason.keys().find(value))
+				.Callback(
+					func issue_left_field(uid : int, reason_id : int) -> void:
+						var card := ICardInstance.id(UIDDB.object(uid))
+						processor.process_event(LeftFieldEvent.new(card, reason_id as Genesis.LeavePlayReason))
+						, ["uid", "reason_id"]
+				)
+			.NextBranch().Literal("left-hand-event")
+				.Key("reason", func get_handreason_keys() -> Array[StringName]: 
+					var keys : Array[StringName] = []
+					keys.assign(Genesis.LeaveHandReason.keys())
+					return keys
+					).Tag("reason_id", "int", func map_handreason(value : String) -> int: 
+						return Genesis.LeaveHandReason.keys().find(value))
+				.Callback(
+					func issue_left_hand(uid : int, reason_id : int) -> void:
+						var card := ICardInstance.id(UIDDB.object(uid))
+						processor.process_event(LeftHandEvent.new(card, reason_id as Genesis.LeaveHandReason))
+						, ["uid", "reason_id"]
+				)
+			.EndBranch()
 		.Build()
 	)
 	
@@ -212,7 +296,8 @@ func register_commands() -> void:
 			.Key("uid", _get_uiddb_uids)
 				.Tag_gn("int")
 			.Literal("event")
-			.Branch().Literal("entered-field-event")
+			.Branch().Literal("entered-deck-event")
+			.NextBranch().Literal("entered-field-event")
 			.NextBranch().Literal("entered-hand-event")
 			.NextBranch().Literal("was-activated-event")
 			.NextBranch().Literal("was-burned-event")
@@ -232,7 +317,7 @@ func register_commands() -> void:
 				.Tag_gn("int")
 			.Literal("event")
 			.Branch()
-				.Literal("burn-hand-event")
+				.Literal("burned-hand-event")
 				.Callback(
 					func issue_burn_hand(player_id : int) -> void:
 						var player : Player = players[player_id]
@@ -254,6 +339,17 @@ func register_commands() -> void:
 						var player : Player = players[player_id]
 						processor.process_event(EndedDeckMaintenanceEvent.new(player))
 						, ["player_id"]
+				)
+			.NextBranch()
+				.Literal("played-card-event")
+				.Key("card_uid", _get_uiddb_uids)
+					.Tag_gn("int")
+				.Callback(
+					func issue_played_card(player_id : int, card_uid : int) -> void:
+						var player : Player = players[player_id]
+						var card := ICardInstance.id(UIDDB.object(card_uid))
+						processor.process_event(PlayedCardEvent.new(player, card))
+						, ["player_id", "card_uid"]
 				)
 		.Build()
 	)
@@ -289,6 +385,7 @@ func issue_simple_event_to_card(uid : int, event_type : StringName) -> void:
 	var card := ICardInstance.id(ent)
 	var event : Event
 	match event_type:
+		"entered-deck-event": event = EnteredDeckEvent.new(card)
 		"entered-field-event": event = EnteredFieldEvent.new(card)
 		"entered-hand-event": event = EnteredHandEvent.new(card)
 		"was-activated-event": event = WasActivatedEvent.new(card)

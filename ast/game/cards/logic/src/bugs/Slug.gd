@@ -4,9 +4,12 @@ static var description : StringName = "Supported creature is covered in ooze. At
 
 var last_supported_creature : ICardInstance
 
-func HANDLE_SUPPORTED(event : SupportedEvent) -> void:
+func HANDLE_TARGETED(event : TargetedEvent) -> void:
 	if last_supported_creature != null:
 		last_supported_creature.logic.WAS_ATTACKED.disconnect(HANDLE_WAS_ATTACKED_ON_SUPPORTED)
+	super(event)
+
+func HANDLE_SUPPORTED(event : SupportedEvent) -> void:
 	last_supported_creature = event.who
 	last_supported_creature.logic.WAS_ATTACKED.connect(HANDLE_WAS_ATTACKED_ON_SUPPORTED)
 	super(event)

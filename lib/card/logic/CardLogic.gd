@@ -191,7 +191,7 @@ func HANDLE_TOOK_MOOD(event : TookMoodEvent) -> void:
 
 signal LOST_MOOD(event : LostMoodEvent)
 func HANDLE_LOST_MOOD(event : LostMoodEvent) -> void:
-	if verbose: print("%s lost mood %s from %s" % [event.card, event.mood, event.from])
+	if verbose: print("%s lost mood %s from %s" % [event.card, event.mood, event.by])
 	IMoodPossessor.id(event.card).remove_mood(event.mood)
 	return
 

@@ -204,7 +204,7 @@ func register_commands() -> void:
 					)
 				.EndBranch()
 			.NextBranch()
-				.Literal("lost-mood-event")
+				.Literal("took-mood-event")
 				.Key("from_who_uid", _get_uiddb_uids)
 					.Tag_gn("int")
 				.Branch()
@@ -213,7 +213,7 @@ func register_commands() -> void:
 						func issue_gave_summoning_mood(uid : int, from_who_uid : int) -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
-							processor.process_event(GainedMoodEvent.new(card, from_who, SummoningMood.new(card)))
+							processor.process_event(TookMoodEvent.new(card, from_who, SummoningMood.new(card)))
 							, ["uid", "from_who_uid"]
 					)
 				.NextBranch()
@@ -222,7 +222,7 @@ func register_commands() -> void:
 						func issue_gave_boredom_mood(uid : int, from_who_uid : int) -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
-							processor.process_event(GainedMoodEvent.new(card, from_who, BoredomMood.new(card)))
+							processor.process_event(TookMoodEvent.new(card, from_who, BoredomMood.new(card)))
 							, ["uid", "from_who_uid"]
 					)
 				.NextBranch()
@@ -235,8 +235,43 @@ func register_commands() -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
 							var mood := StatisticMood.FROM_NAME(card, mood_type, amount)
-							processor.process_event(GainedMoodEvent.new(card, from_who, mood))
+							processor.process_event(TookMoodEvent.new(card, from_who, mood))
 							, ["uid", "from_who_uid", "mood-type", "amount"]
+					)
+			.NextBranch()
+				.Literal("lost-mood-event")
+				.Key("by_who_uid", _get_uiddb_uids)
+					.Tag_gn("int")
+				.Branch()
+					.Literal("summoning")
+					.Callback(
+						func issue_gave_summoning_mood(uid : int, by_who_uid : int) -> void:
+							var card := ICardInstance.id(UIDDB.object(uid))
+							var by_who := ICardInstance.id(UIDDB.object(by_who_uid))
+							processor.process_event(GainedMoodEvent.new(card, by_who, SummoningMood.new(card)))
+							, ["uid", "by_who_uid"]
+					)
+				.NextBranch()
+					.Literal("boredom")
+					.Callback(
+						func issue_gave_boredom_mood(uid : int, by_who_uid : int) -> void:
+							var card := ICardInstance.id(UIDDB.object(uid))
+							var by_who := ICardInstance.id(UIDDB.object(by_who_uid))
+							processor.process_event(GainedMoodEvent.new(card, by_who, BoredomMood.new(card)))
+							, ["uid", "by_who_uid"]
+					)
+				.NextBranch()
+					.Key("mood-type", StatisticMood.get.bind("MOOD_NAMES"))
+						.Tag_gnst()
+					.Validated("amount", GlobalCommandValidators.is_valid_int_positive)
+						.Tag_gn("int")
+					.Callback(
+						func issue_gave_statistic_mood(uid : int, by_who_uid : int, mood_type : StringName, amount : int) -> void:
+							var card := ICardInstance.id(UIDDB.object(uid))
+							var by_who := ICardInstance.id(UIDDB.object(by_who_uid))
+							var mood := StatisticMood.FROM_NAME(card, mood_type, amount)
+							processor.process_event(GainedMoodEvent.new(card, by_who, mood))
+							, ["uid", "by_who_uid", "mood-type", "amount"]
 					)
 		.Build()
 	)

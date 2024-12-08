@@ -63,6 +63,8 @@ func process_event(event : Event) -> void:
 		event.card.logic.WAS_KILLED.emit(event)
 	elif event is WasMarkedEvent:
 		event.card.logic.WAS_MARKED.emit(event)
+	elif event is WasSupportedEvent:
+		event.card.logic.WAS_SUPPORTED.emit(event)
 	elif event is WasTargetedEvent:
 		event.card.logic.WAS_TARGETED.emit(event)
 	elif event is WasUnmarkedEvent:

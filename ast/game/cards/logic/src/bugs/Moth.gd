@@ -10,13 +10,13 @@ func _set_game_access(_game_access : GameAccess) -> void:
 		EventProcessingStep.new(owner, "WAS_CREATED", owner, HANDLE_WAS_CREATED, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
 	))
-
-func HANDLE_WAS_CREATED(_event : WasCreatedEvent) -> void:
-	has_been_attacked_by.clear()
 	game_access.event_scheduler.register_event_processing_step(
 		EventProcessingStep.new(owner, "WAS_ATTACKED", owner, PREVENT_FIRST_ATTACK_FROM_UNIQUE_ATTACKER, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
 	))
+
+func HANDLE_WAS_CREATED(_event : WasCreatedEvent) -> void:
+	has_been_attacked_by.clear()
 
 func PREVENT_FIRST_ATTACK_FROM_UNIQUE_ATTACKER(event : WasAttackedEvent) -> void:
 	if not has_been_attacked_by.has(event.by_who):

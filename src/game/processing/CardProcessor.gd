@@ -1,21 +1,29 @@
 class_name CardProcessor
 extends RefCounted
 
-var event_scheduler : EventScheduler = EventScheduler.new()
+var event_causality : EventCausalityLogger = EventCausalityLogger.new()
+var event_history : EventHistory = EventHistory.new()
+var event_scheduler : EventScheduler = EventScheduler.new(event_causality, event_history)
+
 var requested_events : Array[Event] = []
 func request_event(_event : Event) -> void:
-	#requested_events.append(_event)
-	process_event(_event)
+	if currently_processing_events:
+		process_event(_event)
+	else:
+		requested_events.append(_event)
 
+var currently_processing_events : bool = true #false DEBUG
 func process_events() -> void:
+	currently_processing_events = true
 	for event : Event in requested_events:
 		process_event(event)
 	requested_events.clear()
+	currently_processing_events = false
 
 func process_event(event : Event) -> void:
 	print("PROCESSING EVENT: %s" % [event])
 	event_scheduler.process_event(event)
 
-# TODO: ER should be able to be queried for all effects that have been relevant to a card, including resolved ones.
-
 # TODO: ER should support effects failing, including cause. This will be really bad for chained effects though, as they will need to be undone?
+
+func _to_string() -> String: return "CardProcessor"

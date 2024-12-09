@@ -1,7 +1,7 @@
 class_name EventProcessingStep
 extends RefCounted
 
-var target : ICardInstance
+var target : ICardInstance # Should be a variant or sum ish. Maybe even a class for advanced targetting
 var event_type : StringName
 var processing_source : Object
 var function : Callable

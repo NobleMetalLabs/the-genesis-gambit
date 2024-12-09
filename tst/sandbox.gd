@@ -12,12 +12,12 @@ func _ready() -> void:
 func _to_string() -> String: return "SANDBOX"
 
 func AUTO_EXEC() -> void:
-	CommandServer.run_command("card spawn moth 1")
-	CommandServer.run_command("card act 1 event created-event moth")
+	CommandServer.run_command("card spawn mother-spider 1")
+	CommandServer.run_command("card act 1 event entered-deck-event")
 
-func _handle_create_event(event : CreatedEvent) -> void:
-	var new_card : ICardInstance = spawn_card(event.what.id, players.find_key(event.card.player))
-	processor.request_event(WasCreatedEvent.new(new_card, event.card))
+	print(processor.event_history.get_events_by_card(ICardInstance.id(UIDDB.object(1))))
+
+	return
 
 var players : Dictionary = {} #[int, Player]
 func spawn_card(id : int, player_num : int) -> ICardInstance:
@@ -40,6 +40,14 @@ func _new_player(num : int) -> Player:
 	player.name = "P%d" % [num]
 	players[num] = player
 	return player
+
+func _handle_spawn(id : int, player_num : int) -> void:
+	var new_card : ICardInstance = spawn_card(id, player_num)
+	processor.request_event(WasCreatedEvent.new(new_card))
+
+func _handle_create_event(event : CreatedEvent) -> void:
+	var new_card : ICardInstance = spawn_card(event.what.id, players.find_key(event.card.player))
+	processor.request_event(WasCreatedEvent.new(new_card, event.card))
 
 func issue_simple_event_to_card(uid : int, event_type : StringName) -> void:
 	var ent := UIDDB.object(uid)
@@ -84,7 +92,7 @@ func register_commands() -> void:
 				.Tag("card-id", "int", CardDB.get_id_by_name)
 			.Validated("player-num", GlobalCommandValidators.is_valid_int_positive)
 				.Tag_gn("int")
-			.Callback(spawn_card, ["card-id", "player-num"])
+			.Callback(_handle_spawn, ["card-id", "player-num"])
 		.Build()
 	)
 

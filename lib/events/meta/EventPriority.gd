@@ -49,5 +49,5 @@ func INDIVIDUAL(processing_individual : int) -> EventPriority:
 	return self
 
 func to_int() -> int:
-	return self.stage * 1000 + self.rarity * 100 + self.individual
+	return self.stage * 1000 + (10 * self.individual) + self.rarity
 

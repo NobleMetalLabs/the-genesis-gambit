@@ -9,6 +9,9 @@ var verbose : bool = false
 func _init(_owner : ICardInstance) -> void:
 	owner = _owner
 
+func _to_string() -> String:
+	return "CardLogic(%s)" % [owner]
+
 func _set_game_access(_game_access : GameAccess) -> void:
 	game_access = _game_access
 	game_access.event_scheduler._register_bulk([

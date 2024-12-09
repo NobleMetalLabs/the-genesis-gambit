@@ -13,3 +13,6 @@ func _init(_target : ICardInstance, _event_type : StringName, _processing_source
 	self.processing_source = _processing_source
 	self.function = _function
 	self.priority = _priority
+
+func _to_string() -> String:
+	return "EventPStep(%s::%s, %s{%s, %s})" % [self.target, self.event_type, self.processing_source, self.function, self.priority.to_int()]

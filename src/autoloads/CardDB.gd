@@ -22,6 +22,9 @@ func get_card_by_id(id : int) -> CardMetadata:
 func get_id_by_name(card_name : String) -> int:
 	return _id_by_name[card_name]
 
+func get_card_by_name(card_name : String) -> CardMetadata:
+	return cards[_id_by_name[card_name]]
+
 func get_card_count() -> int:
 	return cards.size()
 

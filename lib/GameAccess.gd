@@ -30,4 +30,3 @@ func are_all_cards_friendly(cards : Array[ICardInstance]) -> bool:
 		if not are_two_cards_friendly(cards[0], card): # This is cap af
 			return false
 	return true
-

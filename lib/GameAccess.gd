@@ -1,6 +1,9 @@
 class_name GameAccess
 
 var card_processor : CardProcessor
+var event_scheduler : EventScheduler : 
+	get:
+		return card_processor.event_scheduler
 
 func _init(_card_processor : CardProcessor) -> void:
 	card_processor = _card_processor

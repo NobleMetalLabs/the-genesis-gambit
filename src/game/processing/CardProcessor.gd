@@ -13,7 +13,7 @@ func process_events() -> void:
 	requested_events.clear()
 
 func process_event(event : Event) -> void:
-	print("Processing event: %s" % [event])
+	print("PROCESSING EVENT: %s" % [event])
 	event_scheduler.process_event(event)
 
 # TODO: ER should be able to be queried for all effects that have been relevant to a card, including resolved ones.

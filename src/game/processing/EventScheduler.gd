@@ -10,10 +10,18 @@ func register_event_processing_step(event_processing_step : EventProcessingStep)
 func _register_bulk(event_processing_steps : Array[EventProcessingStep]) -> void:
 	for event_processing_step in event_processing_steps:
 		var target_event_processing_steps : Dictionary = processing_steps_by_event_by_target.get_or_add(event_processing_step.target, {})
-		target_event_processing_steps.get_or_add(event_processing_step.event_type, []).append(event_processing_step)
-		processing_step_by_requester.get_or_add(event_processing_step.processing_source, []).append(event_processing_step)
-		print("%s registered." % [event_processing_step])
-		# TODO: check for dupe
+		var registered_steps : Array = target_event_processing_steps.get_or_add(event_processing_step.event_type, [])
+		var already_registered : bool = false
+		for registered_step : EventProcessingStep in registered_steps:
+			if registered_step._equals(event_processing_step):
+				already_registered = true
+				break
+		if not already_registered:
+			registered_steps.append(event_processing_step)
+			processing_step_by_requester.get_or_add(event_processing_step.processing_source, []).append(event_processing_step)
+			print("%s registered." % [event_processing_step])
+		else:
+			print("WARNING: %s is already registered." % [event_processing_step])
 
 func unregister_event_processing_steps_by_requester(requester : ICardInstance) -> void:
 	_unregister_bulk(processing_step_by_requester.get(requester, []))

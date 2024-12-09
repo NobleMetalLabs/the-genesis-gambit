@@ -5,6 +5,7 @@ var card : ICardInstance
 var by : ICardInstance
 
 func _init(_card : ICardInstance, _by : ICardInstance) -> void:
+	self.event_type = "WAS_TARGETED"
 	card = _card
 	by = _by
 

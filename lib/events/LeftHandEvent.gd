@@ -5,6 +5,7 @@ var card : ICardInstance
 var reason : Genesis.LeaveHandReason
 
 func _init(_card : ICardInstance, _reason : Genesis.LeaveHandReason = Genesis.LeaveHandReason.PLAYED) -> void:
+	self.event_type = "LEFT_HAND"
 	self.card = _card
 	self.reason = _reason
 

@@ -6,6 +6,7 @@ var who : ICardInstance
 var mood : Mood
 
 func _init(_card : ICardInstance, _who : ICardInstance, _mood : Mood) -> void:
+	self.event_type = "TOOK_MOOD"
 	self.card = _card
 	self.who = _who
 	self.mood = _mood

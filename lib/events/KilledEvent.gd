@@ -5,6 +5,7 @@ var card : ICardInstance
 var who : ICardInstance
 
 func _init(_card : ICardInstance, _who : ICardInstance) -> void:
+	event_type = "KILLED"
 	card = _card
 	who = _who
 

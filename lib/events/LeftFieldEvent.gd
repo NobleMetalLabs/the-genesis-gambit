@@ -5,6 +5,7 @@ var card : ICardInstance
 var reason : Genesis.LeavePlayReason
 
 func _init(_card : ICardInstance, _reason : Genesis.LeavePlayReason = Genesis.LeavePlayReason.DIED) -> void:
+	self.event_type = "LEFT_FIELD"
 	self.card = _card
 	self.reason = _reason
 

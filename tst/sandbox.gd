@@ -9,17 +9,18 @@ func _ready() -> void:
 	register_commands()
 	AUTO_EXEC()
 
+func _to_string() -> String: return "SANDBOX"
+
 func AUTO_EXEC() -> void:
-	CommandServer.run_command("card spawn turtle-ant 1")
 	CommandServer.run_command("card spawn moth 1")
-	CommandServer.run_command("card spawn moth 2")
-	CommandServer.run_command("card act 1 event targeted-event 2")
-	CommandServer.run_command("card act 3 event attacked-event 2 4")
-	CommandServer.run_command("card act 3 event attacked-event 2 4")
-	CommandServer.run_command("card act 3 event attacked-event 2 4")
+	CommandServer.run_command("card act 1 event created-event moth")
+
+func _handle_create_event(event : CreatedEvent) -> void:
+	var new_card : ICardInstance = spawn_card(event.what.id, players.find_key(event.card.player))
+	processor.request_event(WasCreatedEvent.new(new_card, event.card))
 
 var players : Dictionary = {} #[int, Player]
-func spawn_card(id : int, player_num : int) -> void:
+func spawn_card(id : int, player_num : int) -> ICardInstance:
 	var player : Player = players.get(player_num)
 	if player == null:
 		player = _new_player(player_num)
@@ -28,8 +29,11 @@ func spawn_card(id : int, player_num : int) -> void:
 	component.logic.verbose = true
 	var new_ent := CardBackend.new(component)
 	cards_holder.add_child(new_ent)
-	processor.request_event(WasCreatedEvent.new(component))
 	UIDDB.register_object(new_ent, UIDDB.uid_to_object.size() + 1)
+	processor.event_scheduler.register_event_processing_step(
+		EventProcessingStep.new(component, "CREATED", self, _handle_create_event, EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN))
+	)
+	return component
 
 func _new_player(num : int) -> Player:
 	var player : Player = Player.setup(Deck.EMPTY)
@@ -189,6 +193,17 @@ func register_commands() -> void:
 						var event := WasSupportedEvent.new(card, target)
 						processor.process_event(event)
 						, ["uid", "target_uid"]
+				)
+			.NextBranch()
+				.Literal("created-event")
+				.Key("name", CardDB.get_card_names)
+					.Tag("card_id", "int", CardDB.get_id_by_name)
+				.Callback(
+					func issue_create(uid : int, card_id : int) -> void:
+						var card := ICardInstance.id(UIDDB.object(uid))
+						var event := CreatedEvent.new(card, CardDB.get_card_by_id(card_id))
+						processor.process_event(event)
+						, ["uid", "card_id"]
 				)
 		.Build()
 	)

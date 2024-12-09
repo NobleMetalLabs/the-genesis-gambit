@@ -15,7 +15,6 @@ func _to_string() -> String:
 func _set_game_access(_game_access : GameAccess) -> void:
 	game_access = _game_access
 	game_access.event_scheduler._register_bulk([
-		EventProcessingStep.new(owner, "WAS_CREATED", owner, _handle_was_created, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
 		EventProcessingStep.new(owner, "ENTERED_DECK", owner, _handle_entered_deck, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
 		EventProcessingStep.new(owner, "LEFT_DECK", owner, _handle_left_deck, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
 		EventProcessingStep.new(owner, "ENTERED_HAND", owner, _handle_entered_hand, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
@@ -26,6 +25,8 @@ func _set_game_access(_game_access : GameAccess) -> void:
 		EventProcessingStep.new(owner, "WAS_MARKED", owner, _handle_was_marked, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
 		EventProcessingStep.new(owner, "WAS_UNMARKED", owner, _handle_was_unmarked, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
 		EventProcessingStep.new(owner, "WAS_DISCARDED", owner, _handle_was_discarded, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
+		EventProcessingStep.new(owner, "CREATED", owner, _handle_created, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),	
+		EventProcessingStep.new(owner, "WAS_CREATED", owner, _handle_was_created, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
 		EventProcessingStep.new(owner, "ATTACKED", owner, _handle_attacked, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
 		EventProcessingStep.new(owner, "WAS_ATTACKED", owner, _handle_was_attacked, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
 		EventProcessingStep.new(owner, "WAS_ACTIVATED", owner, _handle_was_activated, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
@@ -41,9 +42,6 @@ func _set_game_access(_game_access : GameAccess) -> void:
 		EventProcessingStep.new(owner, "LOST_MOOD", owner, _handle_lost_mood, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
 	])
 
-func _handle_was_created(event : WasCreatedEvent) -> void:
-	if verbose: print("%s was created" % [event.card])
-	return
 
 func _handle_entered_deck(event : EnteredDeckEvent) -> void:
 	if verbose: print("%s entered deck of %s" % [event.card, event.card.player])
@@ -98,6 +96,19 @@ func _handle_was_unmarked(event : WasUnmarkedEvent) -> void:
 func _handle_was_discarded(event : WasDiscardedEvent) -> void:
 	if verbose: print("%s was discarded" % [event.card])
 	game_access.card_processor.request_event(LeftHandEvent.new(event.card))
+	return
+
+func _handle_created(event : CreatedEvent) -> void:
+	if verbose: print("%s created %s" % [event.card, event.what])
+	#game_access.card_processor.request_event(WasCreatedEvent.new(event.what, event.card))
+	return
+
+func _handle_was_created(event : WasCreatedEvent) -> void:
+	if verbose: 
+		if event.by != null:
+			print("%s was created by %s" % [event.card, event.by])
+		else:
+			print("%s was created" % [event.card])
 	return
 
 func _handle_attacked(event : AttackedEvent) -> void:

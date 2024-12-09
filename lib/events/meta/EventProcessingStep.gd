@@ -3,11 +3,11 @@ extends RefCounted
 
 var target : ICardInstance
 var event_type : StringName
-var processing_source : ICardInstance
+var processing_source : Object
 var function : Callable
 var priority : EventPriority
 
-func _init(_target : ICardInstance, _event_type : StringName, _processing_source : ICardInstance, _function : Callable, _priority : EventPriority) -> void:
+func _init(_target : ICardInstance, _event_type : StringName, _processing_source : Object, _function : Callable, _priority : EventPriority) -> void:
 	self.target = _target
 	self.event_type = _event_type
 	self.processing_source = _processing_source

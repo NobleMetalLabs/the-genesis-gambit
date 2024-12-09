@@ -1,8 +1,76 @@
+class_name Sandbox
 extends Node
+
+@onready var cards_holder : Node = get_node("%Cards")
+var processor : CardProcessor = CardProcessor.new()
+var game_access := GameAccess.new(processor)
 
 func _ready() -> void:
 	register_commands()
 	AUTO_EXEC()
+
+func AUTO_EXEC() -> void:
+	CommandServer.run_command("card spawn turtle-ant 1")
+	CommandServer.run_command("card spawn moth 1")
+	CommandServer.run_command("card spawn moth 2")
+	CommandServer.run_command("card act 1 event targeted-event 2")
+	CommandServer.run_command("card act 3 event attacked-event 2 4")
+	CommandServer.run_command("card act 3 event attacked-event 2 4")
+	CommandServer.run_command("card act 3 event attacked-event 2 4")
+
+var players : Dictionary = {} #[int, Player]
+func spawn_card(id : int, player_num : int) -> void:
+	var player : Player = players.get(player_num)
+	if player == null:
+		player = _new_player(player_num)
+	var component := ICardInstance.new(CardDB.get_card_by_id(id), player)
+	component.logic._set_game_access(game_access)
+	component.logic.verbose = true
+	var new_ent := CardBackend.new(component)
+	cards_holder.add_child(new_ent)
+	processor.request_event(WasCreatedEvent.new(component))
+	UIDDB.register_object(new_ent, UIDDB.uid_to_object.size() + 1)
+
+func _new_player(num : int) -> Player:
+	var player : Player = Player.setup(Deck.EMPTY)
+	player.name = "P%d" % [num]
+	players[num] = player
+	return player
+
+func issue_simple_event_to_card(uid : int, event_type : StringName) -> void:
+	var ent := UIDDB.object(uid)
+	var card := ICardInstance.id(ent)
+	var event : Event
+	match event_type:
+		"entered-deck-event": event = EnteredDeckEvent.new(card)
+		"entered-field-event": event = EnteredFieldEvent.new(card)
+		"entered-hand-event": event = EnteredHandEvent.new(card)
+		"was-activated-event": event = WasActivatedEvent.new(card)
+		"was-burned-event": event = WasBurnedEvent.new(card)
+		"was-created-event": event = WasCreatedEvent.new(card)
+		"was-discarded-event": event = WasDiscardedEvent.new(card)
+		"was-marked-event": event = WasMarkedEvent.new(card)
+		"was-unmarked-event": event = WasUnmarkedEvent.new(card)
+		_: push_error("Unknown event type: %s" % [event_type])
+	processor.process_event(event)
+
+func _get_uiddb_uids() -> Array[StringName]:
+	var output : Array[StringName] = []
+	output.assign(UIDDB.uid_to_object.keys().map(func to_sn(uid : int) -> StringName: return str(uid)))
+	return output
+
+func _get_player_ids() -> Array[StringName]:
+	var output : Array[StringName] = []
+	output.assign(players.keys().map(func to_sn(uid : int) -> StringName: return str(uid)))
+	return output
+
+# func is_uid_of_existing_card(value : String) -> bool:
+# 	if not value.is_valid_int(): return false
+# 	var uid := value.to_int()
+# 	if not UIDDB.has_uid(uid): return false
+# 	var obj := UIDDB.object(uid)
+# 	var ci := ICardInstance.id(obj)
+# 	return ci != null
 
 func register_commands() -> void:
 	CommandServer.register_command(
@@ -388,64 +456,3 @@ func register_commands() -> void:
 				)
 		.Build()
 	)
-
-func AUTO_EXEC() -> void:
-	CommandServer.run_command("card spawn slug 1")
-	CommandServer.run_command("card act 1 event was-created-event")
-
-@onready var cards_holder : Node = get_node("%Cards")
-var processor : CardProcessor = CardProcessor.new()
-var game_access := GameAccess.new(processor)
-
-var players : Dictionary = {} #[int, Player]
-func spawn_card(id : int, player_num : int) -> void:
-	var player : Player = players.get(player_num)
-	if player == null:
-		player = _new_player(player_num)
-	var component := ICardInstance.new(CardDB.get_card_by_id(id), player)
-	component.logic.verbose = true
-	component.logic.game_access = game_access
-	var new_ent := CardBackend.new(component)
-	cards_holder.add_child(new_ent)
-	UIDDB.register_object(new_ent, UIDDB.uid_to_object.size() + 1)
-
-func _new_player(num : int) -> Player:
-	var player : Player = Player.setup(Deck.EMPTY)
-	player.name = "P%d" % [num]
-	players[num] = player
-	return player
-
-func issue_simple_event_to_card(uid : int, event_type : StringName) -> void:
-	var ent := UIDDB.object(uid)
-	var card := ICardInstance.id(ent)
-	var event : Event
-	match event_type:
-		"entered-deck-event": event = EnteredDeckEvent.new(card)
-		"entered-field-event": event = EnteredFieldEvent.new(card)
-		"entered-hand-event": event = EnteredHandEvent.new(card)
-		"was-activated-event": event = WasActivatedEvent.new(card)
-		"was-burned-event": event = WasBurnedEvent.new(card)
-		"was-created-event": event = WasCreatedEvent.new(card)
-		"was-discarded-event": event = WasDiscardedEvent.new(card)
-		"was-marked-event": event = WasMarkedEvent.new(card)
-		"was-unmarked-event": event = WasUnmarkedEvent.new(card)
-		_: push_error("Unknown event type: %s" % [event_type])
-	processor.process_event(event)
-
-func _get_uiddb_uids() -> Array[StringName]:
-	var output : Array[StringName] = []
-	output.assign(UIDDB.uid_to_object.keys().map(func to_sn(uid : int) -> StringName: return str(uid)))
-	return output
-
-func _get_player_ids() -> Array[StringName]:
-	var output : Array[StringName] = []
-	output.assign(players.keys().map(func to_sn(uid : int) -> StringName: return str(uid)))
-	return output
-
-# func is_uid_of_existing_card(value : String) -> bool:
-# 	if not value.is_valid_int(): return false
-# 	var uid := value.to_int()
-# 	if not UIDDB.has_uid(uid): return false
-# 	var obj := UIDDB.object(uid)
-# 	var ci := ICardInstance.id(obj)
-# 	return ci != null

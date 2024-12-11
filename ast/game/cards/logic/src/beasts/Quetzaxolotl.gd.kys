@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "Activate: Transform between Quetza and Xolotl. During Quetza, whenever Quetzaxolotl makes an attack, lose a max energy and draw a card. During Xolotl, marked cards act as though they are unmarked."
 

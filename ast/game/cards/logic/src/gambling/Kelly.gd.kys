@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "When you have zero cards in hand, sacrifice Kelly and draw three cards."
 

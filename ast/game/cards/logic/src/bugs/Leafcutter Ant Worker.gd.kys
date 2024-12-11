@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "Whenever the Fungus Garden gains a charge, heal 1 health."
 

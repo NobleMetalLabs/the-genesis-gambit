@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "Supported creature is covered in ooze. Attacks made against the creature inflict the attacker with slow."
 

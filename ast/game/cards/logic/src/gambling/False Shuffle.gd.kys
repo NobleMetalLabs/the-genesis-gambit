@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "Search your deck for the bottom-most Mythic card, then shuffle and put that card on top."
 

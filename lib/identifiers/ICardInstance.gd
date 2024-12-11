@@ -8,7 +8,7 @@ static func id(node : Node) -> ICardInstance:
 	return node.get_node("ICardInstance")
 
 var metadata : CardMetadata
-var logic : BaseCardLogic
+var logic : CardLogic
 var player : Player
 
 func _init(_metadata : CardMetadata, _player : Player, _game_access : GameAccess) -> void:

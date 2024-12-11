@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "Targeted creature receives Jolly, and 5 Slow."
 

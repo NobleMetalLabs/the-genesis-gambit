@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "When Mother Spider dies, add three transient Spiders to your hand."
 

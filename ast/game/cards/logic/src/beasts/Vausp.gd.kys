@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "When making an attack against a support creature, Vausp deals 1 extra damage."
 

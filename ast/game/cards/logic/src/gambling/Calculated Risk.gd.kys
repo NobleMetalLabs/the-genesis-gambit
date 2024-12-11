@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "Each player draws 2 cards. If there are more than 3 players in the game, you draw a third."
 

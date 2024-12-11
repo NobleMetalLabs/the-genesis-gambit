@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "The Rarity of the top card of your deck is visible to you."
 

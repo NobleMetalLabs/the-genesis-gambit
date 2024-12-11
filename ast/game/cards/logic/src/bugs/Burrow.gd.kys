@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "Targeted attacker burrows. While burrowed, it cannot be attacked, but may only make attacks against Supports. It remains burrowed until it has made 3 attacks."
 

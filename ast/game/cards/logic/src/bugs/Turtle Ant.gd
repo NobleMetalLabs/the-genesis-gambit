@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "Supported creature is protected. Attacks made against the creature deal half damage."
 
@@ -28,7 +28,7 @@ func HANDLE_TARGET_WATCH(event : SupportedEvent) -> void:
 func MODIFY_DAMAGE_OF_ATTACK_ON_PROTECTED(event : WasAttackedEvent) -> void:
 	event.damage /= 2
 
-#extends BaseCardLogic
+#extends CardLogic
 #
 #static var description : StringName = "Targeted creature is protected. Attacks made against the creature deal half damage."
 #

@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "The next time targeted creature is attacked, it makes an attack against the attacker at half strength."
 

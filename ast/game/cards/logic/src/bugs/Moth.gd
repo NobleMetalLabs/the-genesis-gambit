@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "Each first attack made by a creature against Moth deals no damage."
 

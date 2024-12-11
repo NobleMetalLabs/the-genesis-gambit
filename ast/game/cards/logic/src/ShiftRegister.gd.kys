@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "When played, gain 3 activations. Activate: ShiftRegister gives itself anger."
 

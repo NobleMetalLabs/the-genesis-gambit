@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "When Giant Spider damages an attacker, that attacker receives Slow."
 

@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "While on field, for friendly creatures, all positive moods become negative and vice versa."
 

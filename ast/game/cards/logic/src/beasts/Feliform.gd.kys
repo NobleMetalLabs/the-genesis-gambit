@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "When targeted creature is killed, the attacker receives summoning sickness."
 

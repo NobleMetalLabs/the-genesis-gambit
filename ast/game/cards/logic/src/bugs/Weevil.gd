@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "When Weevil enters the field, create a transient, inert Weevil in your hand."
 

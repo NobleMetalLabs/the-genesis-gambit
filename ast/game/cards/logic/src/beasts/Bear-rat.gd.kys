@@ -1,4 +1,4 @@
-extends BaseCardLogic
+extends CardLogic
 
 static var description : StringName = "Activate: Unmark targeted card. Unmark the twenty-second card in the deck. Cannot be activated again until it is attacked."
 

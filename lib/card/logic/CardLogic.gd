@@ -1,5 +1,5 @@
-@icon("res://lib/BaseCardLogic.png")
-class_name BaseCardLogic
+@icon("res://lib/card/logic/CardLogic.png")
+class_name CardLogic
 extends RefCounted
 
 var game_access : GameAccess
@@ -11,4 +11,4 @@ func _init(_owner : ICardInstance, _game_access : GameAccess) -> void:
 	game_access = _game_access
 
 func _to_string() -> String:
-	return "BaseCardLogic(%s)" % [owner]
+	return "CardLogic(%s)" % [owner]

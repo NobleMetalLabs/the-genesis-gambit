@@ -1,4 +1,4 @@
-extends CardLogic
+extends BaseCardLogic
 
 static var description : StringName = "Targeted creature is placed in it's owners deck, third from the top."
 

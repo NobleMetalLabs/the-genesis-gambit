@@ -1,11 +1,10 @@
-extends CardLogic
+extends BaseCardLogic
 
 static var description : StringName = "Supported creature gains 2 Angry."
 
 var last_supported_creature : ICardInstance
 
-func _set_game_access(_game_access : GameAccess) -> void:
-	super(_game_access)
+func _register_processing_steps() -> void:
 	game_access.event_scheduler.register_event_processing_step(
 		EventProcessingStep.new(SingleTargetGroup.new(owner), "TARGETED", owner, HANDLE_TARGET_DEWATCH, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)

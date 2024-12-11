@@ -1,11 +1,10 @@
-extends CardLogic
+extends BaseCardLogic
 
 static var description : StringName = "Each first attack made by a creature against Moth deals no damage."
 
 var has_been_attacked_by : Array[ICardInstance] = []
 
-func _set_game_access(_game_access : GameAccess) -> void:
-	super(_game_access)
+func _register_processing_steps() -> void:
 	game_access.event_scheduler.register_event_processing_step(
 		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_CREATED", owner, HANDLE_WAS_CREATED, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)

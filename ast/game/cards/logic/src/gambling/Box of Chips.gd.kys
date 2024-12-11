@@ -1,4 +1,4 @@
-extends CardLogic
+extends BaseCardLogic
 
 static var description : StringName = "Activate: Target attacker gets +1 Strength. Box of Chips loses one health."
 

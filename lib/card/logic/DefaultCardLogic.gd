@@ -1,45 +1,41 @@
-@icon("res://lib/CardLogic.png")
-class_name CardLogic
-extends RefCounted
+class_name DefaultCardLogic
+extends BaseCardLogic
 
-var game_access : GameAccess
-var owner : ICardInstance
-var verbose : bool = false
-
-func _init(_owner : ICardInstance) -> void:
-	owner = _owner
+func _init(_game_access : GameAccess) -> void:
+	super(null, _game_access)
 
 func _to_string() -> String:
-	return "CardLogic(%s)" % [owner]
+	return "DEFAULT-LOGIC"
 
-func _set_game_access(_game_access : GameAccess) -> void:
-	game_access = _game_access
+func register_base_processing_steps() -> void:
+	var tg := AllCardsTargetGroup.new()
+	var pr := EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)
 	game_access.event_scheduler._register_bulk([
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "ENTERED_DECK", owner, _handle_entered_deck, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "LEFT_DECK", owner, _handle_left_deck, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "ENTERED_HAND", owner, _handle_entered_hand, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "LEFT_HAND", owner, _handle_left_hand, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "ENTERED_FIELD", owner, _handle_entered_field, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "LEFT_FIELD", owner, _handle_left_field, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_BURNED", owner, _handle_was_burned, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_MARKED", owner, _handle_was_marked, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_UNMARKED", owner, _handle_was_unmarked, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_DISCARDED", owner, _handle_was_discarded, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "CREATED", owner, _handle_created, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),	
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_CREATED", owner, _handle_was_created, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "ATTACKED", owner, _handle_attacked, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_ATTACKED", owner, _handle_was_attacked, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_ACTIVATED", owner, _handle_was_activated, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "TARGETED", owner, _handle_targeted, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_TARGETED", owner, _handle_was_targeted, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "SUPPORTED", owner, _handle_supported, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_SUPPORTED", owner, _handle_was_supported, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "KILLED", owner, _handle_killed, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_KILLED", owner, _handle_was_killed, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "GAVE_MOOD", owner, _handle_gave_mood, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "GAINED_MOOD", owner, _handle_gained_mood, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "TOOK_MOOD", owner, _handle_took_mood, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "LOST_MOOD", owner, _handle_lost_mood, EventPriority.new().RARITY_FROM_CARD(owner).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)),
+		EventProcessingStep.new(tg, "ENTERED_DECK", self, _handle_entered_deck, pr),
+		EventProcessingStep.new(tg, "LEFT_DECK", self, _handle_left_deck, pr),
+		EventProcessingStep.new(tg, "ENTERED_HAND", self, _handle_entered_hand, pr),
+		EventProcessingStep.new(tg, "LEFT_HAND", self, _handle_left_hand, pr),
+		EventProcessingStep.new(tg, "ENTERED_FIELD", self, _handle_entered_field, pr),
+		EventProcessingStep.new(tg, "LEFT_FIELD", self, _handle_left_field, pr),
+		EventProcessingStep.new(tg, "WAS_BURNED", self, _handle_was_burned, pr),
+		EventProcessingStep.new(tg, "WAS_MARKED", self, _handle_was_marked, pr),
+		EventProcessingStep.new(tg, "WAS_UNMARKED", self, _handle_was_unmarked, pr),
+		EventProcessingStep.new(tg, "WAS_DISCARDED", self, _handle_was_discarded, pr),
+		EventProcessingStep.new(tg, "CREATED", self, _handle_created, pr),	
+		EventProcessingStep.new(tg, "WAS_CREATED", self, _handle_was_created, pr),
+		EventProcessingStep.new(tg, "ATTACKED", self, _handle_attacked, pr),
+		EventProcessingStep.new(tg, "WAS_ATTACKED", self, _handle_was_attacked, pr),
+		EventProcessingStep.new(tg, "WAS_ACTIVATED", self, _handle_was_activated, pr),
+		EventProcessingStep.new(tg, "TARGETED", self, _handle_targeted, pr),
+		EventProcessingStep.new(tg, "WAS_TARGETED", self, _handle_was_targeted, pr),
+		EventProcessingStep.new(tg, "SUPPORTED", self, _handle_supported, pr),
+		EventProcessingStep.new(tg, "WAS_SUPPORTED", self, _handle_was_supported, pr),
+		EventProcessingStep.new(tg, "KILLED", self, _handle_killed, pr),
+		EventProcessingStep.new(tg, "WAS_KILLED", self, _handle_was_killed, pr),
+		EventProcessingStep.new(tg, "GAVE_MOOD", self, _handle_gave_mood, pr),
+		EventProcessingStep.new(tg, "GAINED_MOOD", self, _handle_gained_mood, pr),
+		EventProcessingStep.new(tg, "TOOK_MOOD", self, _handle_took_mood, pr),
+		EventProcessingStep.new(tg, "LOST_MOOD", self, _handle_lost_mood, pr),
 	])
 
 

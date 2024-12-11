@@ -1,11 +1,10 @@
-extends CardLogic
+extends BaseCardLogic
 
 static var description : StringName = "Supported creature is protected. Attacks made against the creature deal half damage."
 
 var last_supported_creature : ICardInstance
 
-func _set_game_access(_game_access : GameAccess) -> void:
-	super(_game_access)
+func _register_processing_steps() -> void:
 	game_access.event_scheduler.register_event_processing_step(
 		EventProcessingStep.new(SingleTargetGroup.new(owner), "TARGETED", owner, HANDLE_TARGET_DEWATCH, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
@@ -29,7 +28,7 @@ func HANDLE_TARGET_WATCH(event : SupportedEvent) -> void:
 func MODIFY_DAMAGE_OF_ATTACK_ON_PROTECTED(event : WasAttackedEvent) -> void:
 	event.damage /= 2
 
-#extends CardLogic
+#extends BaseCardLogic
 #
 #static var description : StringName = "Targeted creature is protected. Attacks made against the creature deal half damage."
 #

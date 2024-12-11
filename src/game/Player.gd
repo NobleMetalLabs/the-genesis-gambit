@@ -10,16 +10,16 @@ static var scn : PackedScene = preload("res://scn/game/Player.tscn")
 static func setup(deck : Deck) -> Player:
 	var player := scn.instantiate()
 
-	for card : CardMetadata in deck.get_cards():
-		var card_instance := ICardInstance.new(
-			card,
-			player
-		)
-		if card_instance.metadata.rarity == Genesis.CardRarity.LEADER:
-			player.leader = card_instance
-			player.cards_on_field.append(card_instance)
-		else:
-			player.cards_in_deck.append(card_instance)
+	# for card : CardMetadata in deck.get_cards():
+	# 	var card_instance := ICardInstance.new(
+	# 		card,
+	# 		player
+	# 	)
+	# 	if card_instance.metadata.rarity == Genesis.CardRarity.LEADER:
+	# 		player.leader = card_instance
+	# 		player.cards_on_field.append(card_instance)
+	# 	else:
+	# 		player.cards_in_deck.append(card_instance)
 	return player
 
 func _ready() -> void:

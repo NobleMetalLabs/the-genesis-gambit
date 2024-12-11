@@ -108,7 +108,7 @@ func get_created_card_number() -> int:
 
 func create_card(instance_id : int, player_owner : Player, internal_name : String) -> ICardInstance:
 	_created_card_count += 1
-	var ci := ICardInstance.new(CardDB.get_card_by_id(instance_id), player_owner)
+	var ci := ICardInstance.new(CardDB.get_card_by_id(instance_id), player_owner, null)
 	_create_card_backend(ci, internal_name)
 	return ci
 

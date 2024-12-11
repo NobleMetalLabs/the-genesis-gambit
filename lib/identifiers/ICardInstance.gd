@@ -8,18 +8,18 @@ static func id(node : Node) -> ICardInstance:
 	return node.get_node("ICardInstance")
 
 var metadata : CardMetadata
-var logic : CardLogic
+var logic : BaseCardLogic
 var player : Player
 
-func _init(_metadata : CardMetadata, _player : Player) -> void:
+func _init(_metadata : CardMetadata, _player : Player, _game_access : GameAccess) -> void:
 	self.name = "ICardInstance"
 	metadata = _metadata
-	logic = metadata.logic_script.new(self)
+	logic = metadata.logic_script.new(self, _game_access)
 	logic.owner = self
 	player = _player
 
 func clone() -> ICardInstance:
-	return ICardInstance.new(self.metadata, self.player)
+	return ICardInstance.new(self.metadata, self.player, self.logic.game_access)
 
 func get_metadata() -> CardMetadata:
 	return metadata

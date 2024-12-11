@@ -1,9 +1,8 @@
-extends CardLogic
+extends BaseCardLogic
 
 static var description : StringName = "Targeted creature is attacked for 2 damage."
 
-func _set_game_access(_game_access : GameAccess) -> void:
-	super(_game_access)
+func _register_processing_steps() -> void:
 	game_access.event_scheduler.register_event_processing_step(
 		EventProcessingStep.new(SingleTargetGroup.new(owner), "ENTERED_FIELD", owner, ATTEMPT_INSTANT_CAST, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)

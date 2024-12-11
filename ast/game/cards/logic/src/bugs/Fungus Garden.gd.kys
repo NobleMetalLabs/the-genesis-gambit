@@ -1,4 +1,4 @@
-extends CardLogic
+extends BaseCardLogic
 
 static var description : StringName = "Whenever a creature on your field would be subject to Boredom, it instead targets the Fungus Garden, tending it. Every 5 damage the garden receives gives it a charge of fungus. Activate: Spawn a copy of the creature it is targeting."
 

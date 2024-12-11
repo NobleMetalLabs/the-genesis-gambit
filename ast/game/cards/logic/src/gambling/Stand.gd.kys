@@ -1,4 +1,4 @@
-extends CardLogic
+extends BaseCardLogic
 
 static var description : StringName = "Each opponent skips their next draw, then draws an additional card the next time they would draw."
 

@@ -1,4 +1,4 @@
-extends CardLogic
+extends BaseCardLogic
 
 static var description : StringName = "Beehive acts as a Blocker. Add a Bee to your hand every 20 seconds. When an attacker with more than three power damages Beehive, add a Bee to your hand "
 

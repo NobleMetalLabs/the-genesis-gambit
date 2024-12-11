@@ -1,4 +1,4 @@
-extends CardLogic
+extends BaseCardLogic
 
 static var description : StringName = "Activate: When Targeted Attacker makes its next attack, if its strength is higher than the target's health, deal the difference to the owner of the target."
 

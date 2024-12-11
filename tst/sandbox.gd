@@ -6,6 +6,7 @@ var processor : CardProcessor = CardProcessor.new()
 var game_access := GameAccess.new(processor)
 
 func _ready() -> void:
+	DefaultCardLogic.new(game_access).register_base_processing_steps()
 	register_commands()
 	AUTO_EXEC()
 
@@ -24,8 +25,8 @@ func spawn_card(metadata : CardMetadata, player_num : int) -> ICardInstance:
 	var player : Player = players.get(player_num)
 	if player == null:
 		player = _new_player(player_num)
-	var component := ICardInstance.new(metadata, player)
-	component.logic._set_game_access(game_access)
+	var component := ICardInstance.new(metadata, player, game_access)
+	component.logic._register_processing_steps()
 	component.logic.verbose = true
 	var new_ent := CardBackend.new(component)
 	cards_holder.add_child(new_ent)

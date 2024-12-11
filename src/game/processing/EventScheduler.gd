@@ -17,11 +17,15 @@ func register_event_processing_step(event_processing_step : EventProcessingStep)
 func _register_bulk(event_processing_steps : Array[EventProcessingStep]) -> void:
 	for event_processing_step in event_processing_steps:
 		var registered_steps : Array[EventProcessingStep] = []
-		if event_processing_step.target != null: # TODO: bad hack pt 2
-			var target_event_processing_steps : Dictionary = processing_steps_by_event_by_target.get_or_add(event_processing_step.target, {})
-			registered_steps = target_event_processing_steps.get_or_add(event_processing_step.event_type, registered_steps)
-		else:
+		if event_processing_step.target_group is AllCardsTargetGroup:
 			registered_steps = processing_steps_by_event_all_target.get_or_add(event_processing_step.event_type, registered_steps)
+		else:
+			var targets : Array[ICardInstance] = event_processing_step.target_group.get_targets()
+			
+			for target : ICardInstance in targets:
+				var target_event_processing_steps : Dictionary = processing_steps_by_event_by_target.get_or_add(target, {})
+				registered_steps = target_event_processing_steps.get_or_add(event_processing_step.event_type, registered_steps)
+		
 		var already_registered : bool = false
 		for registered_step : EventProcessingStep in registered_steps:
 			if registered_step._equals(event_processing_step):
@@ -64,7 +68,6 @@ func process_event(event : Event) -> void:
 	# ^*
 
 func _get_processing_steps_for_event(event : Event) -> Array[EventProcessingStep]:
-	# TODO: expand EventProcessingStep targetting to allow for abstract group targeting
 	var processing_steps : Array[EventProcessingStep] = []
 
 	var steps_for_target : Array[EventProcessingStep] = []

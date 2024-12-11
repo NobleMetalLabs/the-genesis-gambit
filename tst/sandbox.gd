@@ -31,7 +31,7 @@ func spawn_card(metadata : CardMetadata, player_num : int) -> ICardInstance:
 	cards_holder.add_child(new_ent)
 	UIDDB.register_object(new_ent, UIDDB.uid_to_object.size() + 1)
 	processor.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(component, "CREATED", self, _handle_create_event, EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN))
+		EventProcessingStep.new(SingleTargetGroup.new(component), "CREATED", self, _handle_create_event, EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN))
 	)
 	return component
 

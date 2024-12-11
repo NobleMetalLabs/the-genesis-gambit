@@ -5,7 +5,7 @@ static var description : StringName = "When Mother Spider dies, add three transi
 func _set_game_access(_game_access : GameAccess) -> void:
 	super(_game_access)
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(owner, "WAS_KILLED", owner, ADD_THREE_SPIDERS, 
+		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_KILLED", owner, ADD_THREE_SPIDERS, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)
 	))
 

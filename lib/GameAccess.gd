@@ -11,27 +11,27 @@ func _init(_card_processor : CardProcessor) -> void:
 	event_scheduler._register_bulk(
 		[
 			EventProcessingStep.new(
-				null, "ENTERED_DECK", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
+				AllCardsTargetGroup.new(), "ENTERED_DECK", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
 				EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.EVENT).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)
 			),
 			EventProcessingStep.new(
-				null, "LEFT_DECK", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
+				AllCardsTargetGroup.new(), "LEFT_DECK", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
 				EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.EVENT).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)
 			),
 			EventProcessingStep.new(
-				null, "ENTERED_FIELD", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
+				AllCardsTargetGroup.new(), "ENTERED_FIELD", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
 				EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.EVENT).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)
 			),
 			EventProcessingStep.new(
-				null, "LEFT_FIELD", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
+				AllCardsTargetGroup.new(), "LEFT_FIELD", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
 				EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.EVENT).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)
 			),
 			EventProcessingStep.new(
-				null, "ENTERED_HAND", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
+				AllCardsTargetGroup.new(), "ENTERED_HAND", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
 				EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.EVENT).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)
 			),
 			EventProcessingStep.new(
-				null, "LEFT_HAND", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
+				AllCardsTargetGroup.new(), "LEFT_HAND", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
 				EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.EVENT).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)
 			)
 		]

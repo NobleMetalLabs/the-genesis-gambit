@@ -7,11 +7,11 @@ var last_supported_creature : ICardInstance
 func _set_game_access(_game_access : GameAccess) -> void:
 	super(_game_access)
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(owner, "TARGETED", owner, HANDLE_TARGET_DEWATCH, 
+		EventProcessingStep.new(SingleTargetGroup.new(owner), "TARGETED", owner, HANDLE_TARGET_DEWATCH, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
 	))
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(owner, "SUPPORTED", owner, ADD_STRENGTH_TO_SUPPORTED,
+		EventProcessingStep.new(SingleTargetGroup.new(owner), "SUPPORTED", owner, ADD_STRENGTH_TO_SUPPORTED,
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
 	))
 

@@ -5,11 +5,11 @@ static var description : StringName = "Targeted creature is attacked for 2 damag
 func _set_game_access(_game_access : GameAccess) -> void:
 	super(_game_access)
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(owner, "ENTERED_FIELD", owner, ATTEMPT_INSTANT_CAST, 
+		EventProcessingStep.new(SingleTargetGroup.new(owner), "ENTERED_FIELD", owner, ATTEMPT_INSTANT_CAST, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)
 	))
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(owner, "TARGETED", owner, ATTEMPT_INSTANT_CAST, 
+		EventProcessingStep.new(SingleTargetGroup.new(owner), "TARGETED", owner, ATTEMPT_INSTANT_CAST, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)
 	))
 

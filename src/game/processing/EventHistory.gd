@@ -9,7 +9,7 @@ func clear_events_at_gametick(gametick : int) -> void:
 	_events_by_gametick.erase(gametick)
 
 func record_event_at_gametick(event : Event, gametick : int) -> void:
-	print("Recording event %s at gametick %s." % [event, gametick])
+	#print("Recording event %s at gametick %s." % [event, gametick])
 	var gametick_events : Array[Event] = []
 	gametick_events = _events_by_gametick.get_or_add(gametick, gametick_events)
 	gametick_events.append(event)
@@ -28,7 +28,7 @@ func get_events_at_gametick(gametick : int) -> Array[Event]:
 	return gametick_events
 
 func _record_event_for_card(event : Event, card : ICardInstance) -> void:
-	print("Recording event %s for card %s." % [event, card])
+	#print("Recording event %s for card %s." % [event, card])
 	var card_events : Array[Event] = []
 	card_events = _events_by_card.get_or_add(card, card_events)
 	card_events.append(event)

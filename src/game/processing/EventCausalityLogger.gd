@@ -18,10 +18,11 @@ func register_caused_event(event : Event, caused_event : Event) -> void:
 
 func get_events_caused_by(event : Event) -> Array[Event]:
 	var event_causality : EventCausality = _get_or_make_causality(event)
-	var caused_events : Array[Event] = event_causality.caused_events.map(
+	var caused_events : Array[Event] = [] 
+	caused_events.assign(event_causality.caused_events.map(
 		func extract_event(caused_event_causality : EventCausality) -> Event:
 			return caused_event_causality.event
-	)
+	))
 	return caused_events
 
 func _get_or_make_causality(event : Event) -> EventCausality:
@@ -44,3 +45,6 @@ class EventCausality extends RefCounted:
 
 	func add_caused_by_event(event_causality : EventCausality) -> void:
 		caused_by_events.append(event_causality)
+	
+	func _to_string() -> String:
+		return "EventCausality<%s>" % event

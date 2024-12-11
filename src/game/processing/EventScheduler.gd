@@ -47,21 +47,21 @@ func _unregister_bulk(event_processing_steps : Array[EventProcessingStep]) -> vo
 	for event_processing_step in event_processing_steps:
 		processing_steps_by_event_by_target[event_processing_step.target][event_processing_step.event_type].erase(event_processing_step)
 
-var _currently_processsing_events_stack : Array[Event] = []
+var _currently_processing_events_stack : Array[Event] = []
 # IMPORTANT: NOTHING SHOULD EVER BE ADDED TO THIS FUNCTION. INSTEAD, IT SHOULD BE A PROCESSING STEP
 func process_event(event : Event) -> void:
-	_currently_processsing_events_stack.push_back(event)
+	_currently_processing_events_stack.push_back(event)
 	for processing_step in _get_processing_steps_for_event(event):
 		print("  -{%s::%s}" % [processing_step.processing_source, processing_step.function.get_method()])
 		processing_step.function.call(event)
+	var finished_event : Event = _currently_processing_events_stack.pop_back()
 	# TODO: shit below needs to be a processing step ie undoable
-	var parent_event : Event = _currently_processsing_events_stack.pop_back()
+	var parent_event : Event = _currently_processing_events_stack.pop_back()
 	if parent_event != null:
 		event_causality.register_caused_event(parent_event, event)
-		_currently_processsing_events_stack.push_back(parent_event)
+		_currently_processing_events_stack.push_back(parent_event)
 	event_history.record_event_at_gametick(event, 0)
 	# ^*
-	_currently_processsing_events_stack.pop_back()
 
 func _get_processing_steps_for_event(event : Event) -> Array[EventProcessingStep]:
 	# TODO: expand EventProcessingStep targetting to allow for abstract group targeting

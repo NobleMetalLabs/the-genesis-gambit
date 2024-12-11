@@ -1,6 +1,6 @@
 extends CardLogic
 
-static var description : StringName = "When Mother Spider dies, add three Spiders to your hand."
+static var description : StringName = "When Mother Spider dies, add three transient Spiders to your hand."
 
 func _set_game_access(_game_access : GameAccess) -> void:
 	super(_game_access)
@@ -11,23 +11,13 @@ func _set_game_access(_game_access : GameAccess) -> void:
 
 func ADD_THREE_SPIDERS(_event: WasKilledEvent) -> void:
 	for i in range(3):
-		game_access.card_processor.request_event(
-			CreatedEvent.new(owner, CardDB.get_card_by_name("spider"))
-		)
+		var spider_event := CreatedEvent.new(owner, CardDB.get_card_by_name("spider"))
+		game_access.card_processor.request_event(spider_event)
 		
-
-#func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
-	#var my_stats := IStatisticPossessor.id(instance_owner)
-	#if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_KILLED):
-		#for i in range(3):
-			#_effect_resolver.request_effect(
-				#HandAddCardEffect.new(
-					#instance_owner,
-					#instance_owner.player,
-					#Router.backend.create_card(
-						#CardDB.get_id_by_name("Spider"),
-						#instance_owner.player,
-						#"MotherSpider-Spider-%s-%s" % [AuthoritySourceProvider.authority_source.current_frame_number, i]
-					#)
-				#)
-			#)
+		var caused_events := game_access.card_processor.event_causality.get_events_caused_by(spider_event)
+		for event: Event in caused_events:
+			if event is WasCreatedEvent and event.by == owner:
+				game_access.card_processor.request_event(
+					EnteredHandEvent.new(event.card)
+				)
+				IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_TRANSIENT, true)

@@ -75,6 +75,7 @@ enum CooldownType {
 	CUSTOM3
 }
 
+# NOTE: merge all of these?
 # CreatureLeavePlay*
 enum LeavePlayReason {
 	DIED,
@@ -93,8 +94,8 @@ enum LeaveHandReason {
 
 # DeckRemoveCard*
 enum LeaveDeckReason {
-	PLAYED,
 	DRAWN,
+	PLAYED,
 	BANISHED,
 }
 
@@ -175,6 +176,7 @@ enum Statistic {
 	CAN_HAVE_MOODS,
 	ACTS_AS_BLOCKER,
 	ACTS_AS_UNMARKED,
+	IS_TRANSIENT,
 	# Counts
 	NUM_ATTACKS_MADE,
 	NUM_ATTACKS_RECIEVED,
@@ -261,6 +263,7 @@ const STATISTIC_DEFAULTS : Dictionary = { #[Statistic, Variant]
 	Statistic.CAN_BE_KILLED : true,
 	Statistic.ACTS_AS_BLOCKER : false,
 	Statistic.ACTS_AS_UNMARKED : false,
+	Statistic.IS_TRANSIENT : false,
 	# Counts
 	Statistic.NUM_ATTACKS_MADE : 0,
 	Statistic.NUM_ATTACKS_RECIEVED : 0,

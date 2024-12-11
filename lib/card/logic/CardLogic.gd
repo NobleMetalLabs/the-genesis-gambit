@@ -70,12 +70,7 @@ func _handle_entered_field(event : EnteredFieldEvent) -> void:
 
 func _handle_left_field(event : LeftFieldEvent) -> void:
 	if verbose: print("%s left field of %s" % [event.card, event.card.player])
-	var card_stats := IStatisticPossessor.id(event.card)
-	card_stats.set_statistic(Genesis.Statistic.IS_ON_FIELD, false)
-	
-	game_access.card_processor.request_event(TargetedEvent.new(event.card, null))
-	game_access.card_processor.request_event(WasMarkedEvent.new(event.card))
-	game_access.card_processor.request_event(EnteredDeckEvent.new(event.card))
+	IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_ON_FIELD, false)
 	return
 
 func _handle_was_burned(event : WasBurnedEvent) -> void:
@@ -168,7 +163,22 @@ func _handle_killed(event : KilledEvent) -> void:
 
 func _handle_was_killed(event : WasKilledEvent) -> void:
 	if verbose: print("%s was killed by %s" % [event.card, event.by])
-	game_access.card_processor.request_event(LeftFieldEvent.new(event.card))
+	var card_stats := IStatisticPossessor.id(event.card)
+	
+	if card_stats.get_statistic(Genesis.Statistic.IS_ON_FIELD):
+		game_access.card_processor.request_event(LeftFieldEvent.new(event.card))
+	elif card_stats.get_statistic(Genesis.Statistic.IS_IN_HAND):
+		game_access.card_processor.request_event(LeftHandEvent.new(event.card))
+	else:
+		game_access.card_processor.request_event(LeftDeckEvent.new(event.card))
+	
+	game_access.card_processor.request_event(TargetedEvent.new(event.card, null))
+	
+	if card_stats.get_statistic(Genesis.Statistic.IS_TRANSIENT): return
+	
+	game_access.card_processor.request_event(WasMarkedEvent.new(event.card))
+	game_access.card_processor.request_event(EnteredDeckEvent.new(event.card))
+	
 	return
 
 func _handle_gave_mood(event : GaveMoodEvent) -> void:

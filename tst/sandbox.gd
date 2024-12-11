@@ -12,19 +12,19 @@ func _ready() -> void:
 func _to_string() -> String: return "SANDBOX"
 
 func AUTO_EXEC() -> void:
-	CommandServer.run_command("card spawn mother-spider 1")
-	CommandServer.run_command("card act 1 event entered-deck-event")
-
-	print(processor.event_history.get_events_by_card(ICardInstance.id(UIDDB.object(1))))
+	CommandServer.run_command("card spawn weevil 1")
+	CommandServer.run_command("card act 1 event entered-field-event")
+	
+	CommandServer.run_command("card act 2 event entered-field-event")
 
 	return
 
 var players : Dictionary = {} #[int, Player]
-func spawn_card(id : int, player_num : int) -> ICardInstance:
+func spawn_card(metadata : CardMetadata, player_num : int) -> ICardInstance:
 	var player : Player = players.get(player_num)
 	if player == null:
 		player = _new_player(player_num)
-	var component := ICardInstance.new(CardDB.get_card_by_id(id), player)
+	var component := ICardInstance.new(metadata, player)
 	component.logic._set_game_access(game_access)
 	component.logic.verbose = true
 	var new_ent := CardBackend.new(component)
@@ -42,11 +42,11 @@ func _new_player(num : int) -> Player:
 	return player
 
 func _handle_spawn(id : int, player_num : int) -> void:
-	var new_card : ICardInstance = spawn_card(id, player_num)
+	var new_card : ICardInstance = spawn_card(CardDB.get_card_by_id(id), player_num)
 	processor.request_event(WasCreatedEvent.new(new_card))
 
 func _handle_create_event(event : CreatedEvent) -> void:
-	var new_card : ICardInstance = spawn_card(event.what.id, players.find_key(event.card.player))
+	var new_card : ICardInstance = spawn_card(event.what, players.find_key(event.card.player))
 	processor.request_event(WasCreatedEvent.new(new_card, event.card))
 
 func issue_simple_event_to_card(uid : int, event_type : StringName) -> void:

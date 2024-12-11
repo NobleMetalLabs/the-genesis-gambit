@@ -4,6 +4,7 @@ extends RefCounted
 var _events_by_gametick : Dictionary = {} # [int, Array[Event]]
 var _events_by_card : Dictionary = {} # [ICardInstance, Array[Event]]
 var _events_by_card_by_lifetime : Dictionary = {} # [ICardInstance, Array[Array[Event]]]
+var _processing_steps_by_event : Dictionary = {} # [Event, Array[EventProcessingStep]]
 
 func clear_events_at_gametick(gametick : int) -> void:
 	_events_by_gametick.erase(gametick)
@@ -22,11 +23,6 @@ func record_event_at_gametick(event : Event, gametick : int) -> void:
 		if card == null: continue
 		_record_event_for_card(event, card)
 
-func get_events_at_gametick(gametick : int) -> Array[Event]:
-	var gametick_events : Array[Event] = []
-	gametick_events.assign(_events_by_gametick.get(gametick, gametick_events))
-	return gametick_events
-
 func _record_event_for_card(event : Event, card : ICardInstance) -> void:
 	#print("Recording event %s for card %s." % [event, card])
 	var card_events : Array[Event] = []
@@ -40,6 +36,19 @@ func _record_event_for_card(event : Event, card : ICardInstance) -> void:
 	if existing: card_lifetime_events.assign(existing)
 	card_lifetime_events.append(event)
 	card_events_by_lifetime.append(card_lifetime_events)
+
+func record_processing_steps_for_event(event : Event, processing_steps : Array[EventProcessingStep]) -> void:
+	_processing_steps_by_event[event] = processing_steps
+
+func get_events_at_gametick(gametick : int) -> Array[Event]:
+	var gametick_events : Array[Event] = []
+	gametick_events.assign(_events_by_gametick.get(gametick, gametick_events))
+	return gametick_events
+
+func get_processing_steps_for_event(event : Event) -> Array[EventProcessingStep]:
+	var processing_steps : Array[EventProcessingStep] = []
+	processing_steps.assign(_processing_steps_by_event.get(event, processing_steps))
+	return processing_steps
 
 func get_events_by_card(card : ICardInstance) -> Array[Event]:
 	var card_events : Array[Event] = []

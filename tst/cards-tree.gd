@@ -1,16 +1,17 @@
 extends Tree
 
-@onready var cards_holder : Node = get_parent().get_parent().get_parent().get_node("%Cards")
+@onready var sandbox : Sandbox = get_parent().get_parent().get_parent().get_parent()
+@onready var cards_holder : Node = sandbox.get_node("%Cards")
 
 func _ready() -> void:
 	self.columns = 4
 	self.column_titles_visible = true
 	self.set_column_title(0, "UID")
 	self.set_column_expand(0, true)
-	self.set_column_expand_ratio(0, 3)
+	self.set_column_expand_ratio(0, 1)
 	self.set_column_title(1, "Name")
 	self.set_column_expand(1, true)
-	self.set_column_expand_ratio(1, 1)
+	self.set_column_expand_ratio(1, 3)
 	self.set_column_title(2, "Location")
 	self.set_column_expand(2, true)
 	self.set_column_expand_ratio(2, 1)
@@ -18,9 +19,11 @@ func _ready() -> void:
 	self.set_column_expand(3, true)
 	self.set_column_expand_ratio(3, 1)
 	
+	sandbox.processor.finished_processing_events.connect(refresh_tree)
+
 var _object_to_treeitem : Dictionary = {} #[Object, TreeItem]
 
-func _process(_delta : float) -> void:
+func refresh_tree() -> void:
 	if not self.visible: return
 	self.clear()
 	_object_to_treeitem.clear()

@@ -28,4 +28,6 @@ func _to_string() -> String:
 	var player_name : String = "null"
 	if player != null:
 		player_name = player.name
+	if UIDDB.has_object(self.get_object()):
+		return "Card[%s<%s, %s>]" % [UIDDB.uid(self.get_object()), metadata.name, player_name]
 	return "Card[%s, %s]" % [metadata.name, player_name]

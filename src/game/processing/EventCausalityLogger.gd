@@ -25,6 +25,15 @@ func get_events_caused_by(event : Event) -> Array[Event]:
 	))
 	return caused_events
 
+func get_events_which_caused(event : Event) -> Array[Event]:
+	var event_causality : EventCausality = _get_or_make_causality(event)
+	var caused_by_events : Array[Event] = [] 
+	caused_by_events.assign(event_causality.caused_by_events.map(
+		func extract_event(caused_by_event_causality : EventCausality) -> Event:
+			return caused_by_event_causality.event
+	))
+	return caused_by_events
+
 func _get_or_make_causality(event : Event) -> EventCausality:
 	if self.event_to_causalities.has(event):
 		return self.event_to_causalities[event]

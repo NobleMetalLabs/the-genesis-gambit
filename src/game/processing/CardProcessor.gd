@@ -12,6 +12,7 @@ func request_event(_event : Event) -> void:
 	else:
 		requested_events.append(_event)
 
+signal finished_processing_events
 var currently_processing_events : bool = true #false DEBUG
 func process_events() -> void:
 	currently_processing_events = true
@@ -19,10 +20,12 @@ func process_events() -> void:
 		process_event(event)
 	requested_events.clear()
 	currently_processing_events = false
+	finished_processing_events.emit()
 
 func process_event(event : Event) -> void:
 	print("PROCESSING EVENT: %s" % [event])
 	event_scheduler.process_event(event)
+	finished_processing_events.emit() # TODO: bad hack
 
 # TODO: ER should support effects failing, including cause. This will be really bad for chained effects though, as they will need to be undone?
 

@@ -16,7 +16,7 @@ func ADD_WEEVIL(_event: EnteredFieldEvent) -> void:
 	var weevil_event := CreatedEvent.new(owner, inert_weevil_md)
 	game_access.card_processor.request_event(weevil_event)
 	
-	var caused_events := game_access.card_processor.event_causality.get_events_caused_by(weevil_event)
+	var caused_events :=game_access.card_processor.event_history.get_event_processing_record(weevil_event).caused_events
 	for event: Event in caused_events:
 		if event is WasCreatedEvent and event.by == owner:
 			game_access.card_processor.request_event(

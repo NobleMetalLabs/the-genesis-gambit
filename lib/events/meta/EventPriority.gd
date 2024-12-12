@@ -24,6 +24,12 @@ const PROCESSING_INDIVIDUAL_MIN : int = 0
 const PROCESSING_INDIVIDUAL_MAX : int = 99
 var individual : int = PROCESSING_INDIVIDUAL_BASE
 
+static var PRIORITY_MAXIMUM : EventPriority : 
+	get(): return EventPriority.new().DEFINE(9, 9, 99)
+
+static var PRIORITY_MINIMUM : EventPriority : 
+	get(): return EventPriority.new().DEFINE(0, 0, 0)
+
 func _init() -> void: return
 
 func DEFINE(processing_stage : int, processing_rarity : int, processing_individual : int) -> EventPriority:

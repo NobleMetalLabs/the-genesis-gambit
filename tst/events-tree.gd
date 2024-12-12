@@ -1,8 +1,6 @@
 extends Tree
 
 @onready var sandbox : Sandbox = get_parent().get_parent().get_parent().get_parent()
-# TODO: these two things should probably be one class. also more specific info about processing steps invoking events should be tracked
-@onready var causality : EventCausalityLogger = sandbox.processor.event_causality
 @onready var history : EventHistory = sandbox.processor.event_history
 
 func _ready() -> void:
@@ -35,7 +33,7 @@ func refresh_tree() -> void:
 		
 	var tick_parent : TreeItem = self.create_item(root)
 	tick_parent.set_text(0, "Tick %s" % 0)
-	for event : Event in history.get_events_at_gametick(0):
+	for event : Event in history._event_processing_records.keys():
 		if event in already_logged: continue
 		setup_event_item(tick_parent, event)
 
@@ -56,21 +54,19 @@ func setup_event_item(parent : TreeItem, event : Event) -> void:
 	item.set_text(3, str(hash(event)))
 	already_logged.append(event)
 
-	for proc_step : EventProcessingStep in history.get_processing_steps_for_event(event):
-		setup_processing_step_item(item, proc_step)
-	
-	setup_event_children(event)
+	for proc_step : EventProcessingStep in history.get_event_processing_record(event).processing_steps:
+		setup_processing_step_item(item, event, proc_step)
 
-func setup_event_children(event : Event) -> void:
-	for caused_event : Event in causality.get_events_caused_by(event):
-		setup_event_item(object_to_treeitem[event], caused_event)
-
-func setup_processing_step_item(parent : TreeItem, proc_step : EventProcessingStep) -> void:
+func setup_processing_step_item(parent : TreeItem, event : Event, proc_step : EventProcessingStep) -> void:
 	var item : TreeItem = self.create_item(parent)
 	var proc_step_string : String = str(proc_step)
-	item.set_text(0, proc_step_string.left(proc_step_string.rfind(",")).substr(proc_step_string.rfind(":") + 1))
+	item.set_text(0, proc_step_string.left(proc_step_string.rfind(",")).substr(proc_step_string.rfind(":") - 1))
 	item.set_text(1, str(proc_step.target_group))
 	item.set_text(2, str(proc_step.processing_source))
 	item.set_text(3, str(proc_step.priority.to_int()))
+
+	var caused_events : Array[Event] = history.get_event_processing_record(event).caused_events_by_processing_step[proc_step]
+	for caused_event : Event in caused_events:
+		setup_event_item(item, caused_event)
 	
 	

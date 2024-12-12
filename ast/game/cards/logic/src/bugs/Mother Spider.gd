@@ -13,7 +13,7 @@ func ADD_THREE_SPIDERS(_event: WasKilledEvent) -> void:
 		var spider_event := CreatedEvent.new(owner, CardDB.get_card_by_name("spider"))
 		game_access.card_processor.request_event(spider_event)
 		
-		var caused_events := game_access.card_processor.event_causality.get_events_caused_by(spider_event)
+		var caused_events := game_access.card_processor.event_history.get_event_processing_record(spider_event).caused_events
 		for event: Event in caused_events:
 			if event is WasCreatedEvent and event.by == owner:
 				game_access.card_processor.request_event(

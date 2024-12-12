@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdhjukcem57os"
-path="res://.godot/imported/test-hand-bg.png-fa7beec2af2e641ccd82445ed9a25737.ctex"
+uid="uid://cf50liknrhsin"
+path="res://.godot/imported/blank.png-20dc00caf57bfc636bf1e3cbe2d3674b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ast/ui/image/test-hand-bg.png"
-dest_files=["res://.godot/imported/test-hand-bg.png-fa7beec2af2e641ccd82445ed9a25737.ctex"]
+source_file="res://ast/game/cards/fgs/blank.png"
+dest_files=["res://.godot/imported/blank.png-20dc00caf57bfc636bf1e3cbe2d3674b.ctex"]
 
 [params]
 

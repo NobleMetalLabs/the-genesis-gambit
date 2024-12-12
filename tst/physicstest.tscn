@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bmbq5d4swn3im"]
 
 [ext_resource type="Script" path="res://tst/physicstest.gd" id="1_00e1m"]
-[ext_resource type="Texture2D" uid="uid://cf50liknrhsin" path="res://ast/game/cards/fgs/blank84.png" id="1_gy58d"]
+[ext_resource type="Texture2D" uid="uid://cf50liknrhsin" path="res://ast/game/cards/fgs/blank.png" id="1_gy58d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x1jyp"]
 size = Vector2(84, 120)

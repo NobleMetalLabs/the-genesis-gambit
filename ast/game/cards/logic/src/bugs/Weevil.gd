@@ -1,31 +1,25 @@
 extends CardLogic
 
-static var description : StringName = "When Weevil enters play from your hand, create a copy of it in your hand."
+static var description : StringName = "When Weevil enters the field, create a transient, inert Weevil in your hand."
 
-# TODO: Add functionality for cards creating cards
+func _register_processing_steps() -> void:
+	game_access.event_scheduler.register_event_processing_step(
+		EventProcessingStep.new(SingleTargetGroup.new(owner), "ENTERED_FIELD", owner, ADD_WEEVIL, 
+			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)
+	))
 
-func HANDLE_LEFT_HAND(event : LeftHandEvent) -> void:
-	if event.reason == Genesis.LeaveHandReason.PLAYED:
-		pass
-	super(event)
-
-#func process(_backend_objects : BackendObjectCollection, _effect_resolver : EffectResolver) -> void:
-	#var my_stats := IStatisticPossessor.id(instance_owner)
-#
-	#if my_stats.get_statistic(Genesis.Statistic.WAS_JUST_PLAYED): 
-#
-		#var duped_weevil : ICardInstance = Router.backend.create_card(
-			#instance_owner.metadata.id,
-			#instance_owner.player,
-			#"DupeWeevil-%s" % [Router.backend.get_created_card_number()]
-		#)
-#
-		#duped_weevil.logic = CardMetadata.new().logic_script.new(duped_weevil)
-#
-		#_effect_resolver.request_effect(
-			#HandAddCardEffect.new(
-				#instance_owner,
-				#instance_owner.player,
-				#duped_weevil
-			#)
-		#)
+func ADD_WEEVIL(_event: EnteredFieldEvent) -> void:
+	var inert_weevil_md : CardMetadata = CardDB.get_card_by_name("weevil").duplicate()
+	inert_weevil_md.rarity = Genesis.CardRarity.COMMON
+	inert_weevil_md.logic_script = CardMetadata.nothing_script
+	
+	var weevil_event := CreatedEvent.new(owner, inert_weevil_md)
+	game_access.card_processor.request_event(weevil_event)
+	
+	var caused_events :=game_access.card_processor.event_history.get_event_processing_record(weevil_event).caused_events
+	for event: Event in caused_events:
+		if event is WasCreatedEvent and event.by == owner:
+			game_access.card_processor.request_event(
+				EnteredHandEvent.new(event.card)
+			)
+			IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_TRANSIENT, true)

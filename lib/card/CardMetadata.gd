@@ -2,8 +2,11 @@
 class_name CardMetadata
 extends Serializeable
 
-var id : int
-var tribe : Genesis.CardTribe = Genesis.CardTribe.NONE
+static var nothing_script : GDScript = preload("res://ast/game/cards/logic/src/Nothing.gd")
+
+@export_group("DO NOT TICH >:(")
+@export var id : int
+@export var tribe : Genesis.CardTribe = Genesis.CardTribe.NONE
 @export_group("Characteristics")
 @export var name : String
 @export var type : Genesis.CardType = Genesis.CardType.INSTANT

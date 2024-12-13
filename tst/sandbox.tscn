@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://tst/cards-tree.gd" id="2_fwa0a"]
 [ext_resource type="FontFile" uid="uid://cmmltma2gsu3a" path="res://addons/command-terminal/ast/windows_command_prompt.ttf" id="2_yvhsy"]
 [ext_resource type="PackedScene" uid="uid://b5b8i4p40f5ua" path="res://addons/command-terminal/scn/command_terminal_guts.tscn" id="3_asx5f"]
-[ext_resource type="Script" path="res://addons/command-terminal/src/CommandTerminalGuts.gd" id="4_n2biy"]
+[ext_resource type="Script" path="res://tst/events-tree.gd" id="3_gii7x"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3nmgc"]
 bg_color = Color(0, 0, 0, 1)
@@ -30,13 +30,27 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 size_flags_vertical = 3
 
-[node name="Tree" type="Tree" parent="Control/PanelContainer"]
+[node name="HBoxContainer" type="HSplitContainer" parent="Control/PanelContainer"]
 layout_mode = 2
+split_offset = -370
+
+[node name="CardsTree" type="Tree" parent="Control/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 columns = 4
+hide_root = true
+select_mode = 1
 script = ExtResource("2_fwa0a")
 
-[node name="CommandTerminal" type="Control" parent="."]
-layout_mode = 3
+[node name="EventsTree" type="Tree" parent="Control/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+hide_root = true
+select_mode = 1
+script = ExtResource("3_gii7x")
+
+[node name="CommandTerminal" type="Control" parent="Control"]
+layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -48,12 +62,11 @@ script = ExtResource("1_7mbqb")
 font = ExtResource("2_yvhsy")
 font_size = 36
 
-[node name="__guts__" type="PanelContainer" parent="CommandTerminal" instance=ExtResource("3_asx5f")]
+[node name="__guts__" parent="Control/CommandTerminal" instance=ExtResource("3_asx5f")]
 layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_3nmgc")
-script = ExtResource("4_n2biy")
-metadata/_edit_lock_ = true

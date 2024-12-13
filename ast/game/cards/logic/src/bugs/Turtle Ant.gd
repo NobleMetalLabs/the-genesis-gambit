@@ -4,19 +4,29 @@ static var description : StringName = "Supported creature is protected. Attacks 
 
 var last_supported_creature : ICardInstance
 
-func HANDLE_TARGETED(event : TargetedEvent) -> void:
+func _register_processing_steps() -> void:
+	game_access.event_scheduler.register_event_processing_step(
+		EventProcessingStep.new(SingleTargetGroup.new(owner), "TARGETED", owner, HANDLE_TARGET_DEWATCH, 
+			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
+	))
+	game_access.event_scheduler.register_event_processing_step(
+		EventProcessingStep.new(SingleTargetGroup.new(owner), "SUPPORTED", owner, HANDLE_TARGET_WATCH, 
+			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
+	))
+
+func HANDLE_TARGET_DEWATCH(_event : TargetedEvent) -> void:
 	if last_supported_creature != null:
-		last_supported_creature.logic.WAS_ATTACKED.disconnect(HANDLE_WAS_ATTACKED_ON_SUPPORTED)
-	super(event)
+		game_access.event_scheduler.unregister_event_processing_steps_by_requester_and_target(owner, last_supported_creature)
 
-func HANDLE_SUPPORTED(event : SupportedEvent) -> void:
+func HANDLE_TARGET_WATCH(event : SupportedEvent) -> void:
 	last_supported_creature = event.who
-	last_supported_creature.logic.WAS_ATTACKED.connect(HANDLE_WAS_ATTACKED_ON_SUPPORTED)
-	super(event)
+	game_access.event_scheduler.register_event_processing_step(
+		EventProcessingStep.new(SingleTargetGroup.new(event.who), "WAS_ATTACKED", owner, MODIFY_DAMAGE_OF_ATTACK_ON_PROTECTED, 
+			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.EVENT).RARITY_FROM_CARD(owner)
+	))
 
-func HANDLE_WAS_ATTACKED_ON_SUPPORTED(event : WasAttackedEvent) -> void:
+func MODIFY_DAMAGE_OF_ATTACK_ON_PROTECTED(event : WasAttackedEvent) -> void:
 	event.damage /= 2
-	print("avled")
 
 #extends CardLogic
 #

@@ -6,6 +6,8 @@
 
 [resource]
 script = ExtResource("2_6jy4a")
+id = 0
+tribe = 0
 name = "Spider"
 type = 0
 rarity = 0

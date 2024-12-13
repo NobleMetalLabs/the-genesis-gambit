@@ -6,6 +6,7 @@ var by_who : ICardInstance
 var damage : int
 
 func _init(_card : ICardInstance, _by_who : ICardInstance, _damage : int) -> void:
+	self.event_type = "WAS_ATTACKED"
 	self.card = _card
 	self.by_who = _by_who
 	self.damage = _damage

@@ -6,6 +6,7 @@ var by : ICardInstance
 var mood : Mood
 
 func _init(_card : ICardInstance, _by : ICardInstance, _mood : Mood) -> void:
+	self.event_type = "LOST_MOOD"
 	self.card = _card
 	self.by = _by
 	self.mood = _mood

@@ -1,6 +1,11 @@
 extends Tree
 
-@onready var sandbox : Sandbox = get_parent().get_parent().get_parent().get_parent()
+var sandbox : Sandbox
+
+func set_sandbox(_sandbox : Sandbox) -> void:
+	sandbox = _sandbox
+	sandbox.processor.finished_processing_events.connect(refresh_tree)
+
 
 func _ready() -> void:
 	self.columns = 4
@@ -17,8 +22,6 @@ func _ready() -> void:
 	self.set_column_title(3, "Meta")
 	self.set_column_expand(3, true)
 	self.set_column_expand_ratio(3, 1)
-	
-	sandbox.processor.finished_processing_events.connect(refresh_tree)
 
 var _object_to_treeitem : Dictionary = {} #[Object, TreeItem]
 

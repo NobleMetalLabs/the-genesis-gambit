@@ -1,7 +1,12 @@
 extends Tree
 
-@onready var sandbox : Sandbox = get_parent().get_parent().get_parent().get_parent()
-@onready var history : EventHistory = sandbox.processor.event_history
+var sandbox : Sandbox
+var history : EventHistory
+
+func set_sandbox(_sandbox : Sandbox) -> void:
+	sandbox = _sandbox
+	sandbox.processor.finished_processing_events.connect(refresh_tree)
+	history = sandbox.processor.event_history
 
 func _ready() -> void:
 	self.columns = 4
@@ -18,8 +23,6 @@ func _ready() -> void:
 	self.set_column_title(3, "Hash / Priority")
 	self.set_column_expand(3, true)
 	self.set_column_expand_ratio(3, 1)
-
-	sandbox.processor.finished_processing_events.connect(refresh_tree)
 
 var object_to_treeitem : Dictionary = {} #[Event, TreeItem]
 var already_logged : Array[Event] = []

@@ -1,40 +1,37 @@
-[gd_scene load_steps=8 format=3 uid="uid://8ug3p85pm4sh"]
+[gd_scene load_steps=9 format=3 uid="uid://8ug3p85pm4sh"]
 
 [ext_resource type="Script" path="res://addons/command-terminal/src/CommandTerminal.gd" id="1_7mbqb"]
-[ext_resource type="Script" path="res://tst/sandbox.gd" id="1_24t6r"]
+[ext_resource type="Script" path="res://tst/sandbox_menu.gd" id="1_iuema"]
 [ext_resource type="Script" path="res://tst/cards-tree.gd" id="2_fwa0a"]
 [ext_resource type="FontFile" uid="uid://cmmltma2gsu3a" path="res://addons/command-terminal/ast/windows_command_prompt.ttf" id="2_yvhsy"]
 [ext_resource type="PackedScene" uid="uid://b5b8i4p40f5ua" path="res://addons/command-terminal/scn/command_terminal_guts.tscn" id="3_asx5f"]
 [ext_resource type="Script" path="res://tst/events-tree.gd" id="3_gii7x"]
+[ext_resource type="Script" path="res://addons/command-terminal/src/CommandTerminalGuts.gd" id="7_mceo6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3nmgc"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="Node" type="Node"]
-script = ExtResource("1_24t6r")
-
-[node name="Cards" type="Node" parent="."]
-unique_name_in_owner = true
-
-[node name="Control" type="Control" parent="."]
+[node name="SandboxMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_iuema")
 
-[node name="PanelContainer" type="PanelContainer" parent="Control"]
+[node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
 offset_right = 1920.0
 offset_bottom = 1080.0
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HSplitContainer" parent="Control/PanelContainer"]
+[node name="HBoxContainer" type="HSplitContainer" parent="PanelContainer"]
 layout_mode = 2
 split_offset = -370
 
-[node name="CardsTree" type="Tree" parent="Control/PanelContainer/HBoxContainer"]
+[node name="CardsTree" type="Tree" parent="PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 4
@@ -42,31 +39,49 @@ hide_root = true
 select_mode = 1
 script = ExtResource("2_fwa0a")
 
-[node name="EventsTree" type="Tree" parent="Control/PanelContainer/HBoxContainer"]
+[node name="EventsTree" type="Tree" parent="PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 hide_root = true
 select_mode = 1
 script = ExtResource("3_gii7x")
 
-[node name="CommandTerminal" type="Control" parent="Control"]
+[node name="CommandTerminal" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
+offset_top = -34.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("1_7mbqb")
 font = ExtResource("2_yvhsy")
-font_size = 36
+font_size = 30
 
-[node name="__guts__" parent="Control/CommandTerminal" instance=ExtResource("3_asx5f")]
+[node name="__guts__" type="PanelContainer" parent="CommandTerminal" instance=ExtResource("3_asx5f")]
 layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-grow_horizontal = 1
-grow_vertical = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3nmgc")
+script = ExtResource("7_mceo6")
+metadata/_edit_lock_ = true
+
+[node name="ResetButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -233.0
+offset_top = -119.0
+offset_bottom = -34.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 40
+text = "reset"

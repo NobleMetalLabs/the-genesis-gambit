@@ -13,20 +13,10 @@ func _init() -> void:
 	DefaultCardLogic.new(game_access).register_base_processing_steps()
 	register_commands()
 
-func _ready() -> void:
-	AUTO_EXEC()
-
 func _teardown() -> void:
 	for player : Player in players.values(): player.free()
 
 func _to_string() -> String: return "SANDBOX"
-
-func AUTO_EXEC() -> void:
-	CommandServer.run_command("card spawn moth 1")
-	CommandServer.run_command("card spawn spider 2")
-	CommandServer.run_command("card act 2 event attacked-event 1 100")
-
-	return
 
 var players : Dictionary = {} #[int, Player]
 func spawn_card(metadata : CardMetadata, player_num : int) -> ICardInstance:

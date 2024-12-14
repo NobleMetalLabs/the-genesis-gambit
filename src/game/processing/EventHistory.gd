@@ -15,6 +15,14 @@ func get_events_by_card(card : ICardInstance) -> Array[Event]:
 	card_events.assign(_events_by_card.get(card, card_events))
 	return card_events
 
+func get_most_recent_event_of_type_by_card(card : ICardInstance, event_type : StringName) -> Event:
+	var card_events : Array[Event] = get_events_by_card(card).duplicate()
+	while not card_events.is_empty():
+		var event : Event = card_events.pop_back()
+		if event.event_type == event_type: return event
+	
+	return null
+
 func get_event_processing_record(event : Event) -> EventProcessingRecord:
 	return _event_processing_records.get(event)
 

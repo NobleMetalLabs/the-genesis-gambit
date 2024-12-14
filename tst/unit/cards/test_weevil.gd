@@ -23,3 +23,4 @@ func test_buddy() -> void:
 	CommandServer.run_command("card act 2 event entered-field-event")
 	assert_eq(test_sandbox.cards_holder.get_children().size(), 2)
 	
+	

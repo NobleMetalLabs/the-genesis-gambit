@@ -13,7 +13,7 @@ func after_each() -> void:
 	test_sandbox.free()
 	get_tree().get_root().print_orphan_nodes()
 
-func test_moth_spawn() -> void:
+func test_spawn() -> void:
 	assert_eq(test_sandbox.cards_holder.get_children().size(), 1)
 	
 

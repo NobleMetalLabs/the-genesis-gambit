@@ -1,7 +1,11 @@
 extends Tree
 
-@onready var sandbox : Sandbox = get_parent().get_parent().get_parent().get_parent()
-@onready var cards_holder : Node = sandbox.get_node("%Cards")
+var sandbox : Sandbox
+
+func set_sandbox(_sandbox : Sandbox) -> void:
+	sandbox = _sandbox
+	sandbox.processor.finished_processing_events.connect(refresh_tree)
+
 
 func _ready() -> void:
 	self.columns = 4
@@ -18,8 +22,6 @@ func _ready() -> void:
 	self.set_column_title(3, "Meta")
 	self.set_column_expand(3, true)
 	self.set_column_expand_ratio(3, 1)
-	
-	sandbox.processor.finished_processing_events.connect(refresh_tree)
 
 var _object_to_treeitem : Dictionary = {} #[Object, TreeItem]
 
@@ -32,7 +34,7 @@ func refresh_tree() -> void:
 	# tally cards
 	var cards_parent : TreeItem = self.create_item(root)
 	cards_parent.set_text(0, "Cards")
-	for card : ICardInstance in cards_holder.get_children().map(func get_cardinstance(n : Node) -> ICardInstance: return ICardInstance.id(n)):
+	for card : ICardInstance in sandbox.cards_holder.get_children().map(func get_cardinstance(n : Node) -> ICardInstance: return ICardInstance.id(n)):
 		var card_item : TreeItem = self.create_item(cards_parent)
 		setup_card_row(card_item, card)
 		_object_to_treeitem[card] = card_item

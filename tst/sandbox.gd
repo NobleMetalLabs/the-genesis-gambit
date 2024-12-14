@@ -1,24 +1,22 @@
 class_name Sandbox
 extends Node
 
-@onready var cards_holder : Node = get_node("%Cards")
+var cards_holder : Node
 var processor : CardProcessor = CardProcessor.new()
 var game_access := GameAccess.new(processor)
 
-func _ready() -> void:
+func _init() -> void:
+	cards_holder = Node.new()
+	cards_holder.name = "Cards"
+	add_child(cards_holder)
+	
 	DefaultCardLogic.new(game_access).register_base_processing_steps()
 	register_commands()
-	AUTO_EXEC()
+
+func _teardown() -> void:
+	for player : Player in players.values(): player.free()
 
 func _to_string() -> String: return "SANDBOX"
-
-func AUTO_EXEC() -> void:
-	CommandServer.run_command("card spawn weevil 1")
-	CommandServer.run_command("card act 1 event entered-field-event")
-	
-	CommandServer.run_command("card act 2 event entered-field-event")
-
-	return
 
 var players : Dictionary = {} #[int, Player]
 func spawn_card(metadata : CardMetadata, player_num : int) -> ICardInstance:

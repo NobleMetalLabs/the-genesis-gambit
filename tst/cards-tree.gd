@@ -1,6 +1,6 @@
 extends Tree
 
-@onready var sandbox : Sandbox = get_parent().get_parent().get_parent().get_parent()
+@onready var sandbox : Sandbox = get_node("../".repeat(5))
 @onready var cards_holder : Node = sandbox.get_node("%Cards")
 
 func _ready() -> void:

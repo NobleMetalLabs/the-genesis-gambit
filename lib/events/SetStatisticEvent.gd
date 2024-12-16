@@ -19,4 +19,4 @@ func _init(_subject : Object, _statistic : Genesis.Statistic, _new_value : Varia
 	self.new_value = _new_value
 
 func _to_string() -> String:
-	return "SetStatisticEvent(%s, %s, %s)" % [self.subject, self.statistic, self.new_value]
+	return "SetStatisticEvent(%s, %s, %s)" % [self.subject, Genesis.Statistic.keys()[statistic], self.new_value]

@@ -44,6 +44,7 @@ func setup_event_item(parent : TreeItem, event : Event) -> void:
 	var item : TreeItem = self.create_item(parent)
 	object_to_treeitem[event] = item
 	item.set_text(0, str(event.event_type))
+	item.set_tooltip_text(0, str(event))
 	item.set_text(1, str(event.card))
 	var other_card_prop : Variant = Event.get_event_property_names_of_cards(event).filter(
 			func is_card(pname : StringName) -> bool: return pname != "card"
@@ -67,6 +68,7 @@ func setup_processing_step_item(parent : TreeItem, event : Event, proc_step : Ev
 	item.set_text(1, str(proc_step.target_group))
 	item.set_text(2, str(proc_step.processing_source))
 	item.set_text(3, str(proc_step.priority.to_int()))
+	item.set_tooltip_text(3, str(proc_step.priority))
 
 	var caused_events : Array[Event] = history.get_event_processing_record(event).caused_events_by_processing_step[proc_step]
 	for caused_event : Event in caused_events:

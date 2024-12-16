@@ -56,3 +56,10 @@ func INDIVIDUAL(processing_individual : int) -> EventPriority:
 
 func to_int() -> int:
 	return self.stage * 1000 + (10 * self.individual) + self.rarity
+
+func _to_string() -> String:
+	var string_stage := str(stage)
+	var string_rarity := str(rarity)
+	if stage in PROCESSING_STAGE.values(): string_stage = PROCESSING_STAGE.keys()[PROCESSING_STAGE.PREPREEVENT - stage]
+	if rarity in PROCESSING_RARITY.values(): string_rarity = PROCESSING_RARITY.keys()[PROCESSING_RARITY.LEADER - rarity]
+	return "EventPriority(%s, %s, %s)" % [string_stage, individual, string_rarity]

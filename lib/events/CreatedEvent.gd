@@ -12,3 +12,8 @@ func _init(_card : ICardInstance, _what : CardMetadata) -> void:
 func _to_string() -> String:
 	return "CreatedEvent(%s, %s)" % [self.card, self.what]
 	
+
+var _resultant_card : ICardInstance
+
+func get_resultant_card() -> ICardInstance:
+	return _resultant_card

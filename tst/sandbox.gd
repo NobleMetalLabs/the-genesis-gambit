@@ -11,12 +11,24 @@ func _init() -> void:
 	add_child(cards_holder)
 	
 	DefaultCardLogic.new(game_access).register_base_processing_steps()
+	processor.event_scheduler.register_event_processing_step(
+		EventProcessingStep.new(AllCardsTargetGroup.new(), "CREATED", self, BUILD_CARD, EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN + 1))
+	)
+	
 	register_commands()
 
 func _teardown() -> void:
 	for player : Player in players.values(): player.free()
 
 func _to_string() -> String: return "SANDBOX"
+
+func BUILD_CARD(event : CreatedEvent) -> void:
+	var new_card : ICardInstance = spawn_card(event.what, players.find_key(event.card.player))
+	event._resultant_card = new_card
+
+func _handle_spawn(id : int, player_num : int) -> void:
+	var new_card : ICardInstance = spawn_card(CardDB.get_card_by_id(id), player_num)
+	processor.request_event(WasCreatedEvent.new(new_card))
 
 var players : Dictionary = {} #[int, Player]
 func spawn_card(metadata : CardMetadata, player_num : int) -> ICardInstance:
@@ -29,9 +41,6 @@ func spawn_card(metadata : CardMetadata, player_num : int) -> ICardInstance:
 	var new_ent := CardBackend.new(component)
 	cards_holder.add_child(new_ent)
 	UIDDB.register_object(new_ent, UIDDB.uid_to_object.size() + 1)
-	processor.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleTargetGroup.new(component), "CREATED", self, _handle_create_event, EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN))
-	)
 	return component
 
 func _new_player(num : int) -> Player:
@@ -39,14 +48,6 @@ func _new_player(num : int) -> Player:
 	player.name = "P%d" % [num]
 	players[num] = player
 	return player
-
-func _handle_spawn(id : int, player_num : int) -> void:
-	var new_card : ICardInstance = spawn_card(CardDB.get_card_by_id(id), player_num)
-	processor.request_event(WasCreatedEvent.new(new_card))
-
-func _handle_create_event(event : CreatedEvent) -> void:
-	var new_card : ICardInstance = spawn_card(event.what, players.find_key(event.card.player))
-	processor.request_event(WasCreatedEvent.new(new_card, event.card))
 
 func issue_simple_event_to_card(uid : int, event_type : StringName) -> void:
 	var ent := UIDDB.object(uid)

@@ -37,6 +37,7 @@ func register_base_processing_steps() -> void:
 		EventProcessingStep.new(tg, "GAINED_MOOD", self, _handle_gained_mood, pr),
 		EventProcessingStep.new(tg, "TOOK_MOOD", self, _handle_took_mood, pr),
 		EventProcessingStep.new(tg, "LOST_MOOD", self, _handle_lost_mood, pr),
+		EventProcessingStep.new(tg, "SET_STATISTIC", self, _handle_set_statistic, pr),
 	])
 
 
@@ -92,7 +93,7 @@ func _handle_was_discarded(event : WasDiscardedEvent) -> void:
 
 func _handle_created(event : CreatedEvent) -> void:
 	if verbose: print("%s created %s" % [event.card, event.what])
-	#game_access.card_processor.request_event(WasCreatedEvent.new(event.what, event.card))
+	game_access.card_processor.request_event(WasCreatedEvent.new(event.get_resultant_card(), event.card))
 	return
 
 func _handle_was_created(event : WasCreatedEvent) -> void:
@@ -112,7 +113,8 @@ func _handle_was_attacked(event : WasAttackedEvent) -> void:
 	if verbose: print("%s was attacked by %s for %s" % [event.card, event.by_who, event.damage])
 	var health : int = IStatisticPossessor.id(event.card).get_statistic(Genesis.Statistic.HEALTH)
 	var new_health : int = health - event.damage
-	IStatisticPossessor.id(event.by_who).set_statistic(Genesis.Statistic.HEALTH, new_health)
+	game_access.card_processor.request_event(SetStatisticEvent.new(event.by_who, Genesis.Statistic.HEALTH, new_health))
+	
 	if new_health <= 0:
 		game_access.card_processor.request_event(KilledEvent.new(event.by_who, event.card))
 	return
@@ -120,8 +122,10 @@ func _handle_was_attacked(event : WasAttackedEvent) -> void:
 func _handle_was_activated(event : WasActivatedEvent) -> void:
 	if verbose: print("%s was activated" % [event.card])
 	var card_stats := IStatisticPossessor.id(event.card)
-	if card_stats.get_statistic(Genesis.Statistic.CHARGES): return
-	card_stats.modify_statistic(Genesis.Statistic.CHARGES, -1)
+	var charges : int = card_stats.get_statistic(Genesis.Statistic.CHARGES)
+	if charges: return
+	
+	game_access.card_processor.request_event(SetStatisticEvent.new(event.card, Genesis.Statistic.CHARGES, charges - 1))
 	return
 
 func _handle_targeted(event : TargetedEvent) -> void:
@@ -196,6 +200,11 @@ func _handle_took_mood(event : TookMoodEvent) -> void:
 func _handle_lost_mood(event : LostMoodEvent) -> void:
 	if verbose: print("%s lost mood %s from %s" % [event.card, event.mood, event.by])
 	IMoodPossessor.id(event.card).remove_mood(event.mood)
+	return
+
+func _handle_set_statistic(event : SetStatisticEvent) -> void:
+	if verbose: print("set statistic placeholder")
+	IStatisticPossessor.id(event.subject).set_statistic(event.statistic, event.new_value)
 	return
 
 # func _handle_played_card(event : PlayedCardEvent) -> void:

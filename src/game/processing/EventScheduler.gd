@@ -56,6 +56,9 @@ func process_event(event : Event) -> void:
 	event_history._signal_begin_processing_event(event)
 	var processing_steps : Array[EventProcessingStep] = _get_processing_steps_for_event(event)
 	for processing_step in processing_steps:
+		if processing_step.priority.to_int() <= EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MAX).to_int():
+			if event.has_failed: continue
+		
 		event_history._signal_begin_processing_step(processing_step)
 		processing_step.function.call(event)
 		event_history._signal_end_processing_step()

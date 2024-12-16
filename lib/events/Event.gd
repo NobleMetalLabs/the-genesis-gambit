@@ -2,6 +2,7 @@ class_name Event
 extends RefCounted
 
 var event_type : StringName
+var has_failed := false
 
 func _init() -> void:
 	return

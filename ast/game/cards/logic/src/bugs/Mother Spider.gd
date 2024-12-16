@@ -12,11 +12,11 @@ func ADD_THREE_SPIDERS(_event: WasKilledEvent) -> void:
 	for i in range(3):
 		var spider_event := CreatedEvent.new(owner, CardDB.get_card_by_name("spider"))
 		game_access.card_processor.request_event(spider_event)
+		var spider : ICardInstance = spider_event.get_resultant_card()
 		
-		var caused_events := game_access.card_processor.event_history.get_event_processing_record(spider_event).caused_events
-		for event: Event in caused_events:
-			if event is WasCreatedEvent and event.by == owner:
-				game_access.card_processor.request_event(
-					EnteredHandEvent.new(event.card)
-				)
-				IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_TRANSIENT, true)
+		game_access.card_processor.request_event(
+			EnteredHandEvent.new(spider)
+		)
+		game_access.card_processor.request_event(
+			SetStatisticEvent.new(spider, Genesis.Statistic.IS_TRANSIENT, true)
+		)

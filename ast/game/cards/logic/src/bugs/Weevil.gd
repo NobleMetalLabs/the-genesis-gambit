@@ -15,11 +15,11 @@ func ADD_WEEVIL(_event: EnteredFieldEvent) -> void:
 	
 	var weevil_event := CreatedEvent.new(owner, inert_weevil_md)
 	game_access.card_processor.request_event(weevil_event)
-	
-	var caused_events :=game_access.card_processor.event_history.get_event_processing_record(weevil_event).caused_events
-	for event: Event in caused_events:
-		if event is WasCreatedEvent and event.by == owner:
-			game_access.card_processor.request_event(
-				EnteredHandEvent.new(event.card)
-			)
-			IStatisticPossessor.id(event.card).set_statistic(Genesis.Statistic.IS_TRANSIENT, true)
+	var inert_weevil : ICardInstance = weevil_event.get_resultant_card()
+
+	game_access.card_processor.request_event(
+		EnteredHandEvent.new(inert_weevil)
+	)
+	game_access.card_processor.request_event(
+		SetStatisticEvent.new(inert_weevil, Genesis.Statistic.IS_TRANSIENT, true)
+	)

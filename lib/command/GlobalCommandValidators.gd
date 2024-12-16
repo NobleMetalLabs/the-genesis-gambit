@@ -7,6 +7,9 @@ static func debug_return_valid(_value : String) -> bool:
 static func debug_return_invalid(_value : String) -> bool:
 	return false
 
+static func is_valid_bool(value : String) -> bool:
+	return (value == "true") or (value == "false")
+
 static func is_valid_string(value : String) -> bool:
 	assert(value is String)
 	return true

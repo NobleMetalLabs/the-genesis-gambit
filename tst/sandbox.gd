@@ -421,6 +421,38 @@ func register_commands() -> void:
 			.Literal("card").Literal("act")
 			.Key("uid", _get_uiddb_uids)
 				.Tag_gn("int")
+			.Literal("event").Literal("set-statistic-event")
+			.Key("statistic", func get_statistics() -> Array[StringName]:
+				var keys : Array[StringName] = []
+				keys.assign(Genesis.Statistic.keys())
+				return keys
+				).Tag_gn("statistic")
+			.Branch()
+				.Condition(
+					func is_statistic_bool_type(statistic: Genesis.Statistic) -> bool:
+						return Genesis.STATISTIC_DEFAULTS[statistic] is bool,
+					["statistic"]
+				).Validated("value", GlobalCommandValidators.is_valid_bool).Tag_gn("bool")
+			.NextBranch()
+				.Condition(
+					func is_statistic_int_type(statistic: Genesis.Statistic) -> bool:
+						return Genesis.STATISTIC_DEFAULTS[statistic] is int,
+					["statistic"]
+				).Validated("value", GlobalCommandValidators.is_valid_int).Tag_gn("int")
+			.EndBranch().Callback(
+				func issue_set_statistic(uid : int, statistic : Genesis.Statistic, value : Variant) -> void:
+					var card := ICardInstance.id(UIDDB.object(uid))
+					processor.process_event(SetStatisticEvent.new(card, statistic, value))
+					, ["uid", "statistic", "value"]
+				)
+		.Build()
+	)
+	
+	CommandServer.register_command(
+		CommandBuilder.new()
+			.Literal("card").Literal("act")
+			.Key("uid", _get_uiddb_uids)
+				.Tag_gn("int")
 			.Literal("event")
 			.Branch().Literal("entered-deck-event")
 			.NextBranch().Literal("entered-field-event")

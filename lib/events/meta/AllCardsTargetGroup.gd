@@ -1,8 +1,8 @@
 class_name AllCardsTargetGroup
 extends BaseTargetGroup
 
-func get_targets() -> Array[ICardInstance]:
-	var output : Array[ICardInstance] = []
+func get_targets() -> Array[Object]:
+	var output : Array[Object] = []
 	
 	return output
 

@@ -4,7 +4,7 @@ static var description : StringName = "When Weevil enters the field, create a tr
 
 func _register_processing_steps() -> void:
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "ENTERED_FIELD", owner, ADD_WEEVIL, 
+		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "ENTERED_FIELD", owner, ADD_WEEVIL, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)
 	))
 

@@ -6,11 +6,11 @@ var last_supported_creature : ICardInstance
 
 func _register_processing_steps() -> void:
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "TARGETED", owner, HANDLE_TARGET_DEWATCH, 
+		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "TARGETED", owner, HANDLE_TARGET_DEWATCH, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
 	))
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "SUPPORTED", owner, HANDLE_TARGET_WATCH, 
+		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "SUPPORTED", owner, HANDLE_TARGET_WATCH, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
 	))
 
@@ -21,7 +21,7 @@ func HANDLE_TARGET_DEWATCH(_event : TargetedEvent) -> void:
 func HANDLE_TARGET_WATCH(event : SupportedEvent) -> void:
 	last_supported_creature = event.who
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleTargetGroup.new(event.who), "WAS_ATTACKED", owner, MODIFY_DAMAGE_OF_ATTACK_ON_PROTECTED, 
+		EventProcessingStep.new(SingleCardTargetGroup.new(event.who), "WAS_ATTACKED", owner, MODIFY_DAMAGE_OF_ATTACK_ON_PROTECTED, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.EVENT).RARITY_FROM_CARD(owner)
 	))
 

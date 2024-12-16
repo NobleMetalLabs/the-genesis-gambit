@@ -6,11 +6,11 @@ var has_been_attacked_by : Array[ICardInstance] = []
 
 func _register_processing_steps() -> void:
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_CREATED", owner, HANDLE_WAS_CREATED, 
+		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "WAS_CREATED", owner, HANDLE_WAS_CREATED, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
 	))
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_ATTACKED", owner, PREVENT_FIRST_ATTACK_FROM_UNIQUE_ATTACKER, 
+		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "WAS_ATTACKED", owner, PREVENT_FIRST_ATTACK_FROM_UNIQUE_ATTACKER, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
 	))
 

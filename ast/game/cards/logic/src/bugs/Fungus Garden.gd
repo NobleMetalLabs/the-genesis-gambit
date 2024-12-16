@@ -11,12 +11,12 @@ func _register_processing_steps() -> void:
 	))
 	
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_ATTACKED", owner, GAIN_CHARGE_EVERY_FIVE_DAMAGE, 
+		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "WAS_ATTACKED", owner, GAIN_CHARGE_EVERY_FIVE_DAMAGE, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
 	))
 	
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "WAS_ACTIVATED", owner, DUPE_TARGET, 
+		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "WAS_ACTIVATED", owner, DUPE_TARGET, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
 	))
 

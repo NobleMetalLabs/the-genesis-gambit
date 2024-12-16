@@ -1,4 +1,4 @@
-class_name SingleTargetGroup
+class_name SingleCardTargetGroup
 extends BaseTargetGroup
 
 var target : ICardInstance
@@ -6,11 +6,10 @@ var target : ICardInstance
 func _init(_target : ICardInstance) -> void:
 	self.target = _target
 
-func get_targets() -> Array[ICardInstance]:
-	var output : Array[ICardInstance] = []
+func get_targets() -> Array[Object]:
+	var output : Array[Object] = []
 	output.assign([target])
-	
 	return output
 
 func _to_string() -> String:
-	return "SingleTargetGroup[%s]" % target
+	return "SingleCardTargetGroup[%s]" % target

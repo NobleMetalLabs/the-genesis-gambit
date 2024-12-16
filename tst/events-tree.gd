@@ -45,7 +45,7 @@ func setup_event_item(parent : TreeItem, event : Event) -> void:
 	object_to_treeitem[event] = item
 	item.set_text(0, str(event.event_type))
 	item.set_tooltip_text(0, str(event))
-	item.set_text(1, str(event.card))
+	item.set_text(1, str(event.get_subject()))
 	var other_card_prop : Variant = Event.get_event_property_names_of_cards(event).filter(
 			func is_card(pname : StringName) -> bool: return pname != "card"
 		).pop_front()

@@ -4,7 +4,7 @@ static var description : StringName = "When Giant Spider damages an attacker, th
 
 func _register_processing_steps() -> void:
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "ATTACKED", owner, ADD_SLOW_TO_TARGET_IF_ATTACKER, 
+		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "ATTACKED", owner, ADD_SLOW_TO_TARGET_IF_ATTACKER, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)
 	))
 

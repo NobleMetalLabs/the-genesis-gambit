@@ -12,11 +12,11 @@ func WATCH_FUNGUS_GARDENS(event: EnteredFieldEvent) -> void:
 	if event.card.metadata.id != CardDB.get_id_by_name("fungus-garden"): return
 	if not game_access.are_two_cards_friendly(owner, event.card): return
 	game_access.event_scheduler.register_event_processing_step(
-	EventProcessingStep.new(SingleTargetGroup.new(event.card), "SET_STATISTIC", owner, GAIN_HEALTH_ON_FUNGUS_CHARGE, 
+	EventProcessingStep.new(SingleCardTargetGroup.new(event.card), "SET_STATISTIC", owner, GAIN_HEALTH_ON_FUNGUS_CHARGE, 
 		EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)
 	))
 	game_access.event_scheduler.register_event_processing_step(
-	EventProcessingStep.new(SingleTargetGroup.new(event.card), "LEFT_FIELD", owner, DEWATCH_FUNGUS_GARDEN, 
+	EventProcessingStep.new(SingleCardTargetGroup.new(event.card), "LEFT_FIELD", owner, DEWATCH_FUNGUS_GARDEN, 
 		EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)
 	))
 

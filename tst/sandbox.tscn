@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://8ug3p85pm4sh"]
+[gd_scene load_steps=8 format=3 uid="uid://8ug3p85pm4sh"]
 
 [ext_resource type="Script" path="res://addons/command-terminal/src/CommandTerminal.gd" id="1_7mbqb"]
 [ext_resource type="Script" path="res://tst/sandbox_menu.gd" id="1_iuema"]
@@ -6,7 +6,6 @@
 [ext_resource type="FontFile" uid="uid://cmmltma2gsu3a" path="res://addons/command-terminal/ast/windows_command_prompt.ttf" id="2_yvhsy"]
 [ext_resource type="PackedScene" uid="uid://b5b8i4p40f5ua" path="res://addons/command-terminal/scn/command_terminal_guts.tscn" id="3_asx5f"]
 [ext_resource type="Script" path="res://tst/events-tree.gd" id="3_gii7x"]
-[ext_resource type="Script" path="res://addons/command-terminal/src/CommandTerminalGuts.gd" id="7_mceo6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3nmgc"]
 bg_color = Color(0, 0, 0, 1)
@@ -60,15 +59,10 @@ script = ExtResource("1_7mbqb")
 font = ExtResource("2_yvhsy")
 font_size = 30
 
-[node name="__guts__" type="PanelContainer" parent="CommandTerminal" instance=ExtResource("3_asx5f")]
+[node name="__guts__" parent="CommandTerminal" instance=ExtResource("3_asx5f")]
 layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_3nmgc")
-script = ExtResource("7_mceo6")
-metadata/_edit_lock_ = true
 
 [node name="ResetButton" type="Button" parent="."]
 unique_name_in_owner = true

@@ -4,11 +4,11 @@ static var description : StringName = "Targeted creature is inflicted with Sick.
 
 func _register_processing_steps() -> void:
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "ENTERED_FIELD", owner, ATTEMPT_INSTANT_CAST, 
+		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "ENTERED_FIELD", owner, ATTEMPT_INSTANT_CAST, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)
 	))
 	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleTargetGroup.new(owner), "TARGETED", owner, ATTEMPT_INSTANT_CAST, 
+		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "TARGETED", owner, ATTEMPT_INSTANT_CAST, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)
 	))
 

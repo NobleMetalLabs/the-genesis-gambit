@@ -1,5 +1,5 @@
 class_name Sandbox
-extends Node
+extends RefCounted
 
 var game_access_manager := GameAccessManager.new()
 var processor : CardProcessor = game_access_manager.get_current_game_access().card_processor

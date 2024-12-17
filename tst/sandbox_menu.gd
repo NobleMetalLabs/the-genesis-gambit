@@ -17,7 +17,6 @@ func reset_sandbox() -> void:
 	UIDDB.clear()
 	
 	sandbox = Sandbox.new()
-	add_child(sandbox, true)
 	sandbox.game_access_manager.get_current_game_access().card_processor.finished_processing_events.connect(update_data)
 
 func update_data(gametick : int = -1) -> void:

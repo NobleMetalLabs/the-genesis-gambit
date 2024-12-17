@@ -1,13 +1,5 @@
 extends Tree
 
-var sandbox : Sandbox
-var history : EventHistory
-
-func set_sandbox(_sandbox : Sandbox) -> void:
-	sandbox = _sandbox
-	sandbox.processor.finished_processing_events.connect(refresh_tree)
-	history = sandbox.processor.event_history
-
 func _ready() -> void:
 	self.columns = 4
 	self.column_titles_visible = true
@@ -24,10 +16,12 @@ func _ready() -> void:
 	self.set_column_expand(3, true)
 	self.set_column_expand_ratio(3, 1)
 
+var history : EventHistory
 var object_to_treeitem : Dictionary = {} #[Event, TreeItem]
 var already_logged : Array[Event] = []
 
-func refresh_tree() -> void:
+func display_event_history(_history : EventHistory) -> void:
+	history = _history
 	if not self.visible: return
 	self.clear()
 	object_to_treeitem.clear()

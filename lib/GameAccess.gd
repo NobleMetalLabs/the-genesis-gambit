@@ -47,9 +47,13 @@ func duplicate() -> GameAccess:
 # func update_object_collection(collection : BackendObjectCollection) -> void:
 # 	object_collection = collection
 
+var _cards : Array[ICardInstance] = []
 var _player_decks : Dictionary = {} # [Player, Array[ICardInstance]]
 var _player_fields : Dictionary = {} # [Player, Array[ICardInstance]]
 var _player_hands : Dictionary = {} # [Player, Array[ICardInstance]]
+
+func add_card(card : ICardInstance) -> void:
+	_cards.append(card)
 
 func get_players_field(player : Player) -> Array[ICardInstance]:
 	return []

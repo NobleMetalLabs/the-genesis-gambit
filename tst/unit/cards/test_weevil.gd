@@ -14,13 +14,13 @@ func after_each() -> void:
 	get_tree().get_root().print_orphan_nodes()
 
 func test_spawn() -> void:
-	assert_eq(test_sandbox.cards_holder.get_children().size(), 1)
+	assert_eq(test_sandbox.game_access_manager.get_current_game_access()._cards.size(), 1)
 
 func test_buddy() -> void:
 	CommandServer.run_command("card act 1 event entered-field-event")
-	assert_eq(test_sandbox.cards_holder.get_children().size(), 2)
+	assert_eq(test_sandbox.game_access_manager.get_current_game_access()._cards.size(), 2)
 	
 	CommandServer.run_command("card act 2 event entered-field-event")
-	assert_eq(test_sandbox.cards_holder.get_children().size(), 2)
+	assert_eq(test_sandbox.game_access_manager.get_current_game_access()._cards.size(), 2)
 	
 	

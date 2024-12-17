@@ -1,15 +1,13 @@
 class_name SingleCardTargetGroup
 extends BaseTargetGroup
 
-var target : ICardInstance
+var single : ICardInstance
 
-func _init(_target : ICardInstance) -> void:
-	self.target = _target
+func _init(target : ICardInstance) -> void:
+	self.single = target
 
-func get_targets() -> Array[Object]:
-	var output : Array[Object] = []
-	output.assign([target])
-	return output
+func does_group_contain(target : Object) -> bool:
+	return target == self.single
 
 func _to_string() -> String:
-	return "SingleCardTargetGroup[%s]" % target
+	return "SingleCardTargetGroup[%s]" % single

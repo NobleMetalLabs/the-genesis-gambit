@@ -2,10 +2,11 @@ class_name Sandbox
 extends RefCounted
 
 var game_access_manager := GameAccessManager.new()
-var processor : CardProcessor = game_access_manager.get_current_game_access().card_processor
+var processor : CardProcessor:
+	get: return game_access_manager.get_current_game_access().card_processor
 
 func _init() -> void:
-	DefaultCardLogic.new(game_access_manager.get_current_game_access()).register_base_processing_steps()
+	DefaultCardLogic.new(game_access_manager.get_current_game_access).register_base_processing_steps()
 	processor.event_scheduler.register_event_processing_step(
 		EventProcessingStep.new(AllCardsTargetGroup.new(), "CREATED", self, BUILD_CARD, EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN + 1))
 	)
@@ -30,7 +31,7 @@ func spawn_card(metadata : CardMetadata, player_num : int) -> ICardInstance:
 	var player : Player = players.get(player_num)
 	if player == null:
 		player = _new_player(player_num)
-	var component := ICardInstance.new(metadata, player, game_access_manager.get_current_game_access())
+	var component := ICardInstance.new(metadata, player, game_access_manager.get_current_game_access)
 	component.logic._register_processing_steps()
 	component.logic.verbose = true
 	var new_ent := CardBackend.new(component)
@@ -59,7 +60,7 @@ func issue_simple_event_to_card(uid : int, event_type : StringName) -> void:
 		"was-marked-event": event = WasMarkedEvent.new(card)
 		"was-unmarked-event": event = WasUnmarkedEvent.new(card)
 		_: push_error("Unknown event type: %s" % [event_type])
-	processor.process_event(event)
+	processor.request_event(event)
 
 func _get_uiddb_uids() -> Array[StringName]:
 	var output : Array[StringName] = []
@@ -108,7 +109,7 @@ func register_commands() -> void:
 						var card := ICardInstance.id(UIDDB.object(uid))
 						var target := ICardInstance.id(UIDDB.object(target_uid)) 
 						var event := AttackedEvent.new(card, target, damage)
-						processor.process_event(event)
+						processor.request_event(event)
 						, ["uid", "target_uid", "damage"]
 				)
 			.NextBranch()
@@ -122,7 +123,7 @@ func register_commands() -> void:
 						var card := ICardInstance.id(UIDDB.object(uid))
 						var target := ICardInstance.id(UIDDB.object(target_uid)) 
 						var event := WasAttackedEvent.new(card, target, damage)
-						processor.process_event(event)
+						processor.request_event(event)
 						, ["uid", "target_uid", "damage"]
 				)
 			.NextBranch()
@@ -134,7 +135,7 @@ func register_commands() -> void:
 						var card := ICardInstance.id(UIDDB.object(uid))
 						var target := ICardInstance.id(UIDDB.object(target_uid)) 
 						var event := KilledEvent.new(card, target)
-						processor.process_event(event)
+						processor.request_event(event)
 						, ["uid", "target_uid"]
 				)
 			.NextBranch()
@@ -146,7 +147,7 @@ func register_commands() -> void:
 						var card := ICardInstance.id(UIDDB.object(uid))
 						var target := ICardInstance.id(UIDDB.object(target_uid)) 
 						var event := WasKilledEvent.new(card, target)
-						processor.process_event(event)
+						processor.request_event(event)
 						, ["uid", "target_uid"]
 				)
 			.NextBranch()
@@ -158,7 +159,7 @@ func register_commands() -> void:
 						var card := ICardInstance.id(UIDDB.object(uid))
 						var target := ICardInstance.id(UIDDB.object(target_uid)) 
 						var event := SupportedEvent.new(card, target)
-						processor.process_event(event)
+						processor.request_event(event)
 						, ["uid", "target_uid"]
 				)
 			.NextBranch()
@@ -170,7 +171,7 @@ func register_commands() -> void:
 						var card := ICardInstance.id(UIDDB.object(uid))
 						var target := ICardInstance.id(UIDDB.object(target_uid)) 
 						var event := WasSupportedEvent.new(card, target)
-						processor.process_event(event)
+						processor.request_event(event)
 						, ["uid", "target_uid"]
 				)
 			.NextBranch()
@@ -182,7 +183,7 @@ func register_commands() -> void:
 						var card := ICardInstance.id(UIDDB.object(uid))
 						var target := ICardInstance.id(UIDDB.object(target_uid)) 
 						var event := TargetedEvent.new(card, target)
-						processor.process_event(event)
+						processor.request_event(event)
 						, ["uid", "target_uid"]
 				)
 			.NextBranch()
@@ -194,7 +195,7 @@ func register_commands() -> void:
 						var card := ICardInstance.id(UIDDB.object(uid))
 						var target := ICardInstance.id(UIDDB.object(target_uid)) 
 						var event := WasSupportedEvent.new(card, target)
-						processor.process_event(event)
+						processor.request_event(event)
 						, ["uid", "target_uid"]
 				)
 			.NextBranch()
@@ -205,7 +206,7 @@ func register_commands() -> void:
 					func issue_create(uid : int, card_id : int) -> void:
 						var card := ICardInstance.id(UIDDB.object(uid))
 						var event := CreatedEvent.new(card, CardDB.get_card_by_id(card_id))
-						processor.process_event(event)
+						processor.request_event(event)
 						, ["uid", "card_id"]
 				)
 		.Build()
@@ -227,7 +228,7 @@ func register_commands() -> void:
 						func issue_gave_summoning_mood(uid : int, who_uid : int) -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var who := ICardInstance.id(UIDDB.object(who_uid))
-							processor.process_event(GaveMoodEvent.new(card, who, SummoningMood.new(card)))
+							processor.request_event(GaveMoodEvent.new(card, who, SummoningMood.new(card)))
 							, ["uid", "who_uid"]
 					)
 				.NextBranch()
@@ -236,7 +237,7 @@ func register_commands() -> void:
 						func issue_gave_boredom_mood(uid : int, who_uid : int) -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var who := ICardInstance.id(UIDDB.object(who_uid))
-							processor.process_event(GaveMoodEvent.new(card, who, BoredomMood.new(card)))
+							processor.request_event(GaveMoodEvent.new(card, who, BoredomMood.new(card)))
 							, ["uid", "who_uid"]
 					)
 				.NextBranch()
@@ -249,7 +250,7 @@ func register_commands() -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var who := ICardInstance.id(UIDDB.object(who_uid))
 							var mood := StatisticMood.FROM_NAME(card, mood_type, amount)
-							processor.process_event(GaveMoodEvent.new(card, who, mood))
+							processor.request_event(GaveMoodEvent.new(card, who, mood))
 							, ["uid", "who_uid", "mood-type", "amount"]
 					)
 				.EndBranch()
@@ -263,7 +264,7 @@ func register_commands() -> void:
 						func issue_gave_summoning_mood(uid : int, from_who_uid : int) -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
-							processor.process_event(GainedMoodEvent.new(card, from_who, SummoningMood.new(card)))
+							processor.request_event(GainedMoodEvent.new(card, from_who, SummoningMood.new(card)))
 							, ["uid", "from_who_uid"]
 					)
 				.NextBranch()
@@ -272,7 +273,7 @@ func register_commands() -> void:
 						func issue_gave_boredom_mood(uid : int, from_who_uid : int) -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
-							processor.process_event(GainedMoodEvent.new(card, from_who, BoredomMood.new(card)))
+							processor.request_event(GainedMoodEvent.new(card, from_who, BoredomMood.new(card)))
 							, ["uid", "from_who_uid"]
 					)
 				.NextBranch()
@@ -285,7 +286,7 @@ func register_commands() -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
 							var mood := StatisticMood.FROM_NAME(card, mood_type, amount)
-							processor.process_event(GainedMoodEvent.new(card, from_who, mood))
+							processor.request_event(GainedMoodEvent.new(card, from_who, mood))
 							, ["uid", "from_who_uid", "mood-type", "amount"]
 					)
 				.EndBranch()
@@ -299,7 +300,7 @@ func register_commands() -> void:
 						func issue_gave_summoning_mood(uid : int, from_who_uid : int) -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
-							processor.process_event(TookMoodEvent.new(card, from_who, SummoningMood.new(card)))
+							processor.request_event(TookMoodEvent.new(card, from_who, SummoningMood.new(card)))
 							, ["uid", "from_who_uid"]
 					)
 				.NextBranch()
@@ -308,7 +309,7 @@ func register_commands() -> void:
 						func issue_gave_boredom_mood(uid : int, from_who_uid : int) -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
-							processor.process_event(TookMoodEvent.new(card, from_who, BoredomMood.new(card)))
+							processor.request_event(TookMoodEvent.new(card, from_who, BoredomMood.new(card)))
 							, ["uid", "from_who_uid"]
 					)
 				.NextBranch()
@@ -321,7 +322,7 @@ func register_commands() -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var from_who := ICardInstance.id(UIDDB.object(from_who_uid))
 							var mood := StatisticMood.FROM_NAME(card, mood_type, amount)
-							processor.process_event(TookMoodEvent.new(card, from_who, mood))
+							processor.request_event(TookMoodEvent.new(card, from_who, mood))
 							, ["uid", "from_who_uid", "mood-type", "amount"]
 					)
 			.NextBranch()
@@ -334,7 +335,7 @@ func register_commands() -> void:
 						func issue_gave_summoning_mood(uid : int, by_who_uid : int) -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var by_who := ICardInstance.id(UIDDB.object(by_who_uid))
-							processor.process_event(GainedMoodEvent.new(card, by_who, SummoningMood.new(card)))
+							processor.request_event(GainedMoodEvent.new(card, by_who, SummoningMood.new(card)))
 							, ["uid", "by_who_uid"]
 					)
 				.NextBranch()
@@ -343,7 +344,7 @@ func register_commands() -> void:
 						func issue_gave_boredom_mood(uid : int, by_who_uid : int) -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var by_who := ICardInstance.id(UIDDB.object(by_who_uid))
-							processor.process_event(GainedMoodEvent.new(card, by_who, BoredomMood.new(card)))
+							processor.request_event(GainedMoodEvent.new(card, by_who, BoredomMood.new(card)))
 							, ["uid", "by_who_uid"]
 					)
 				.NextBranch()
@@ -356,7 +357,7 @@ func register_commands() -> void:
 							var card := ICardInstance.id(UIDDB.object(uid))
 							var by_who := ICardInstance.id(UIDDB.object(by_who_uid))
 							var mood := StatisticMood.FROM_NAME(card, mood_type, amount)
-							processor.process_event(GainedMoodEvent.new(card, by_who, mood))
+							processor.request_event(GainedMoodEvent.new(card, by_who, mood))
 							, ["uid", "by_who_uid", "mood-type", "amount"]
 					)
 		.Build()
@@ -378,7 +379,7 @@ func register_commands() -> void:
 				.Callback(
 					func issue_left_deck(uid : int, reason_id : int) -> void:
 						var card := ICardInstance.id(UIDDB.object(uid))
-						processor.process_event(LeftDeckEvent.new(card, reason_id as Genesis.LeaveDeckReason))
+						processor.request_event(LeftDeckEvent.new(card, reason_id as Genesis.LeaveDeckReason))
 						, ["uid", "reason_id"]
 				)
 			.NextBranch().Literal("left-field-event")
@@ -391,7 +392,7 @@ func register_commands() -> void:
 				.Callback(
 					func issue_left_field(uid : int, reason_id : int) -> void:
 						var card := ICardInstance.id(UIDDB.object(uid))
-						processor.process_event(LeftFieldEvent.new(card, reason_id as Genesis.LeavePlayReason))
+						processor.request_event(LeftFieldEvent.new(card, reason_id as Genesis.LeavePlayReason))
 						, ["uid", "reason_id"]
 				)
 			.NextBranch().Literal("left-hand-event")
@@ -404,7 +405,7 @@ func register_commands() -> void:
 				.Callback(
 					func issue_left_hand(uid : int, reason_id : int) -> void:
 						var card := ICardInstance.id(UIDDB.object(uid))
-						processor.process_event(LeftHandEvent.new(card, reason_id as Genesis.LeaveHandReason))
+						processor.request_event(LeftHandEvent.new(card, reason_id as Genesis.LeaveHandReason))
 						, ["uid", "reason_id"]
 				)
 			.EndBranch()
@@ -437,7 +438,7 @@ func register_commands() -> void:
 			.EndBranch().Callback(
 				func issue_set_statistic(uid : int, statistic : Genesis.Statistic, value : Variant) -> void:
 					var card := ICardInstance.id(UIDDB.object(uid))
-					processor.process_event(SetStatisticEvent.new(card, statistic, value))
+					processor.request_event(SetStatisticEvent.new(card, statistic, value))
 					, ["uid", "statistic", "value"]
 				)
 		.Build()
@@ -474,7 +475,7 @@ func register_commands() -> void:
 				.Callback(
 					func issue_burn_hand(player_id : int) -> void:
 						var player : Player = players[player_id]
-						processor.process_event(BurnedHandEvent.new(player))
+						processor.request_event(BurnedHandEvent.new(player))
 						, ["player_id"]
 				)
 			.NextBranch()
@@ -482,7 +483,7 @@ func register_commands() -> void:
 				.Callback(
 					func issue_began_dm(player_id : int) -> void:
 						var player : Player = players[player_id]
-						processor.process_event(BeganDeckMaintenanceEvent.new(player))
+						processor.request_event(BeganDeckMaintenanceEvent.new(player))
 						, ["player_id"]
 				)
 			.NextBranch()
@@ -490,7 +491,7 @@ func register_commands() -> void:
 				.Callback(
 					func issue_ended_dm(player_id : int) -> void:
 						var player : Player = players[player_id]
-						processor.process_event(EndedDeckMaintenanceEvent.new(player))
+						processor.request_event(EndedDeckMaintenanceEvent.new(player))
 						, ["player_id"]
 				)
 			.NextBranch()
@@ -501,7 +502,7 @@ func register_commands() -> void:
 					func issue_played_card(player_id : int, card_uid : int) -> void:
 						var player : Player = players[player_id]
 						var card := ICardInstance.id(UIDDB.object(card_uid))
-						processor.process_event(PlayedCardEvent.new(player, card))
+						processor.request_event(PlayedCardEvent.new(player, card))
 						, ["player_id", "card_uid"]
 				)
 		.Build()

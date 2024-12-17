@@ -1,13 +1,12 @@
 class_name GameAccess
 extends RefCounted
 
-var card_processor : CardProcessor
+var card_processor : CardProcessor = CardProcessor.new()
 var event_scheduler : EventScheduler : 
 	get:
 		return card_processor.event_scheduler
 
-func _init(_card_processor : CardProcessor) -> void:
-	card_processor = _card_processor
+func _init() -> void:
 	event_scheduler._register_bulk(
 		[
 			EventProcessingStep.new(
@@ -41,7 +40,10 @@ func _init(_card_processor : CardProcessor) -> void:
 func _to_string() -> String: return "GameAccess(%s)" % [card_processor]
 
 func duplicate() -> GameAccess:
-	return GameAccess.new(card_processor.duplicate())
+	var dupe : GameAccess = GameAccess.new()
+	dupe.card_processor = card_processor.duplicate()
+	dupe._cards = _cards.duplicate(true)
+	return dupe
 
 # var object_collection : BackendObjectCollection
 # func update_object_collection(collection : BackendObjectCollection) -> void:

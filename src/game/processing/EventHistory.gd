@@ -5,6 +5,9 @@ var _events_by_gametick : Dictionary = {} # [int, Array[Event]]
 var _events_by_card : Dictionary = {} # [ICardInstance, Array[Event]]
 var _event_processing_records : Dictionary = {} # [Event, EventProcessingRecord]
 
+func _to_string() -> String:
+	return "EH(%s)" % [hash(self)]
+
 func duplicate() -> EventHistory:
 	var dupe := EventHistory.new()
 	dupe._events_by_gametick = _events_by_gametick.duplicate(true)
@@ -34,7 +37,7 @@ func get_event_processing_record(event : Event) -> EventProcessingRecord:
 	return _event_processing_records.get(event)
 
 var _current_gametick : int = 0
-func _signal_begin_gametick(gametick : int) -> void:
+func set_current_gametick(gametick : int) -> void:
 	_current_gametick = gametick
 	var empty : Array[Event] = []
 	_events_by_gametick[_current_gametick] = empty
@@ -69,9 +72,6 @@ func _signal_end_processing_step() -> void:
 
 func _signal_end_processing_event() -> void:
 	_processing_events_stack.pop_back()
-
-func _signal_end_gametick() -> void:
-	pass
 
 class EventProcessingRecord extends RefCounted:
 	var gametick : int

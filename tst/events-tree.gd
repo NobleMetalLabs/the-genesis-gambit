@@ -21,6 +21,8 @@ var object_to_treeitem : Dictionary = {} #[Event, TreeItem]
 var already_logged : Array[Event] = []
 
 func display_event_history(_history : EventHistory) -> void:
+	print("Displaying history %s" % _history)
+	
 	history = _history
 	if not self.visible: return
 	self.clear()

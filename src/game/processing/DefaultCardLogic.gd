@@ -2,8 +2,8 @@ class_name DefaultCardLogic
 extends CardLogic
 # TODO: this probably shouldnt be a cardlogic, all its getting from super is gameaccess
 
-func _init(_game_access : GameAccess) -> void:
-	super(null, _game_access)
+func _init(_access_getter : Callable) -> void:
+	super(null, _access_getter)
 
 func _to_string() -> String:
 	return "DEFAULT-LOGIC"

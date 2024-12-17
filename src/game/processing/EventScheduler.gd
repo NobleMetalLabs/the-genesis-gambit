@@ -5,6 +5,9 @@ var event_history := EventHistory.new()
 var processing_steps_by_event_type : Dictionary = {} #[StringName, Array[EventProcessingStep]]
 var processing_step_by_requester : Dictionary = {} #[Object, Array[EventProcessingStep]]
 
+func _to_string() -> String:
+	return "ES(%s, %s)" % [hash(self), event_history]
+
 func duplicate() -> EventScheduler:
 	var dupe := EventScheduler.new()
 	dupe.event_history = event_history.duplicate()

@@ -11,15 +11,15 @@ var metadata : CardMetadata
 var logic : CardLogic
 var player : Player
 
-func _init(_metadata : CardMetadata, _player : Player, _game_access : GameAccess) -> void:
+func _init(_metadata : CardMetadata, _player : Player, _access_getter : Callable) -> void:
 	self.name = "ICardInstance"
 	metadata = _metadata
-	logic = metadata.logic_script.new(self, _game_access)
+	logic = metadata.logic_script.new(self, _access_getter)
 	logic.owner = self
 	player = _player
 
 func clone() -> ICardInstance:
-	return ICardInstance.new(self.metadata, self.player, self.logic.game_access)
+	return ICardInstance.new(self.metadata, self.player, self.logic._access_getter)
 
 func get_metadata() -> CardMetadata:
 	return metadata

@@ -40,6 +40,9 @@ func _init(_card_processor : CardProcessor) -> void:
 
 func _to_string() -> String: return "GameAccess(%s)" % [card_processor]
 
+func duplicate() -> GameAccess:
+	return GameAccess.new(card_processor.duplicate())
+
 # var object_collection : BackendObjectCollection
 # func update_object_collection(collection : BackendObjectCollection) -> void:
 # 	object_collection = collection

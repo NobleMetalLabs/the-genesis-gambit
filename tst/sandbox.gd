@@ -2,15 +2,15 @@ class_name Sandbox
 extends Node
 
 var cards_holder : Node
-var processor : CardProcessor = CardProcessor.new()
-var game_access := GameAccess.new(processor)
+var game_access_manager := GameAccessManager.new()
+var processor : CardProcessor = game_access_manager.get_current_game_access().card_processor
 
 func _init() -> void:
 	cards_holder = Node.new()
 	cards_holder.name = "Cards"
 	add_child(cards_holder)
 	
-	DefaultCardLogic.new(game_access).register_base_processing_steps()
+	DefaultCardLogic.new(game_access_manager.get_current_game_access()).register_base_processing_steps()
 	processor.event_scheduler.register_event_processing_step(
 		EventProcessingStep.new(AllCardsTargetGroup.new(), "CREATED", self, BUILD_CARD, EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN + 1))
 	)
@@ -35,7 +35,7 @@ func spawn_card(metadata : CardMetadata, player_num : int) -> ICardInstance:
 	var player : Player = players.get(player_num)
 	if player == null:
 		player = _new_player(player_num)
-	var component := ICardInstance.new(metadata, player, game_access)
+	var component := ICardInstance.new(metadata, player, game_access_manager.get_current_game_access())
 	component.logic._register_processing_steps()
 	component.logic.verbose = true
 	var new_ent := CardBackend.new(component)

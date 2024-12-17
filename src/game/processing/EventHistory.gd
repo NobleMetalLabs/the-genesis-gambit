@@ -5,6 +5,13 @@ var _events_by_gametick : Dictionary = {} # [int, Array[Event]]
 var _events_by_card : Dictionary = {} # [ICardInstance, Array[Event]]
 var _event_processing_records : Dictionary = {} # [Event, EventProcessingRecord]
 
+func duplicate() -> EventHistory:
+	var dupe := EventHistory.new()
+	dupe._events_by_gametick = _events_by_gametick.duplicate(true)
+	dupe._events_by_card = _events_by_card.duplicate(true)
+	dupe._event_processing_records = _event_processing_records.duplicate()
+	return dupe
+
 func get_events_at_gametick(gametick : int) -> Array[Event]:
 	var gametick_events : Array[Event] = []
 	gametick_events.assign(_events_by_gametick.get(gametick, gametick_events))

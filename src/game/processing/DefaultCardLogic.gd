@@ -121,11 +121,12 @@ func _handle_was_attacked(event : WasAttackedEvent) -> void:
 
 func _handle_was_activated(event : WasActivatedEvent) -> void:
 	if verbose: print("%s was activated" % [event.card])
-	var card_stats := IStatisticPossessor.id(event.card)
-	var charges : int = card_stats.get_statistic(Genesis.Statistic.CHARGES)
-	if charges: return
-	
-	game_access.card_processor.request_event(SetStatisticEvent.new(event.card, Genesis.Statistic.CHARGES, charges - 1))
+	# NOTE: code for cards that need charges to activate
+	#if IStatisticPossessor.id(event.card).card_stats.get_statistic(Genesis.Statistic.CHARGES) <= 0: 
+		#event.has_failed = true
+		#return
+	#
+	#game_access.card_processor.request_event(SetStatisticEvent.modify(event.card, Genesis.Statistic.CHARGES, -1))
 	return
 
 func _handle_targeted(event : TargetedEvent) -> void:

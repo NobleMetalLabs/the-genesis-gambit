@@ -24,11 +24,10 @@ func WATCH_FUNGUS_GARDENS(event: EnteredFieldEvent) -> void:
 		EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)
 	))
 
-func GIVE_CHARGE_TO_GARDENS(event: KilledEvent) -> void: 
+func GIVE_CHARGE_TO_GARDENS(_event: KilledEvent) -> void: 
 	for fungus_garden : ICardInstance in fungus_gardens:
-		var charges : int = IStatisticPossessor.id(fungus_garden).get_statistic(Genesis.Statistic.CHARGES)
 		game_access.card_processor.request_event(
-			SetStatisticEvent.new(fungus_garden, Genesis.Statistic.CHARGES, charges + 1)
+			SetStatisticEvent.modify(fungus_garden, Genesis.Statistic.CHARGES, 1)
 		)
 
 func DEWATCH_FUNGUS_GARDEN(event: LeftFieldEvent) -> void:

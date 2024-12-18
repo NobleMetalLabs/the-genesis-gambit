@@ -32,9 +32,8 @@ func TARGET_ME_WHEN_BORED(event : GainedMoodEvent) -> void:
 func GAIN_CHARGE_EVERY_FIVE_DAMAGE(event : WasAttackedEvent) -> void:
 	damage_count += event.damage
 	
-	var new_charges : int = IStatisticPossessor.id(owner).get_statistic(Genesis.Statistic.CHARGES) + damage_count / 5
 	game_access.card_processor.request_event(
-		SetStatisticEvent.new(event.card, Genesis.Statistic.CHARGES, new_charges)
+		SetStatisticEvent.modify(event.card, Genesis.Statistic.CHARGES, damage_count / 5)
 	)
 	damage_count %= 5
 	

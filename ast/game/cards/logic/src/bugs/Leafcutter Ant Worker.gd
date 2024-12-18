@@ -26,7 +26,7 @@ func GAIN_HEALTH_ON_FUNGUS_CHARGE(event: SetStatisticEvent) -> void:
 	if charge_delta <= 0: return
 	
 	game_access.card_processor.request_event(
-		SetStatisticEvent.new(owner, Genesis.Statistic.HEALTH, charge_delta)
+		SetStatisticEvent.modify(owner, Genesis.Statistic.HEALTH, charge_delta)
 	)
 
 func DEWATCH_FUNGUS_GARDEN(event: LeftFieldEvent) -> void:

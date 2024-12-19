@@ -11,7 +11,7 @@ func _to_string() -> String:
 func register_base_processing_steps() -> void:
 	var tg := AllCardsTargetGroup.new()
 	var pr := EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)
-	game_access.event_scheduler._register_bulk([
+	game_access.event_processing_step_manager._register_bulk([
 		EventProcessingStep.new(tg, "ENTERED_DECK", self, _handle_entered_deck, pr),
 		EventProcessingStep.new(tg, "LEFT_DECK", self, _handle_left_deck, pr),
 		EventProcessingStep.new(tg, "ENTERED_HAND", self, _handle_entered_hand, pr),
@@ -73,7 +73,7 @@ func _handle_left_field(event : LeftFieldEvent) -> void:
 
 func _handle_was_burned(event : WasBurnedEvent) -> void:
 	if verbose: print("%s was burned" % [event.card])
-	game_access.card_processor.request_event(LeftHandEvent.new(event.card))
+	game_access.request_event(LeftHandEvent.new(event.card))
 	return
 
 func _handle_was_marked(event : WasMarkedEvent) -> void:
@@ -88,12 +88,12 @@ func _handle_was_unmarked(event : WasUnmarkedEvent) -> void:
 
 func _handle_was_discarded(event : WasDiscardedEvent) -> void:
 	if verbose: print("%s was discarded" % [event.card])
-	game_access.card_processor.request_event(LeftHandEvent.new(event.card))
+	game_access.request_event(LeftHandEvent.new(event.card))
 	return
 
 func _handle_created(event : CreatedEvent) -> void:
 	if verbose: print("%s created %s" % [event.card, event.what])
-	game_access.card_processor.request_event(WasCreatedEvent.new(event.get_resultant_card(), event.card))
+	game_access.request_event(WasCreatedEvent.new(event.get_resultant_card(), event.card))
 	return
 
 func _handle_was_created(event : WasCreatedEvent) -> void:
@@ -106,17 +106,17 @@ func _handle_was_created(event : WasCreatedEvent) -> void:
 
 func _handle_attacked(event : AttackedEvent) -> void:
 	if verbose: print("%s attacked %s for %s" % [event.card, event.who, event.damage])
-	game_access.card_processor.request_event(WasAttackedEvent.new(event.who, event.card, event.damage))
+	game_access.request_event(WasAttackedEvent.new(event.who, event.card, event.damage))
 	return
 
 func _handle_was_attacked(event : WasAttackedEvent) -> void:
 	if verbose: print("%s was attacked by %s for %s" % [event.card, event.by_who, event.damage])
 	var health : int = IStatisticPossessor.id(event.card).get_statistic(Genesis.Statistic.HEALTH)
 	var new_health : int = health - event.damage
-	game_access.card_processor.request_event(SetStatisticEvent.new(event.by_who, Genesis.Statistic.HEALTH, new_health))
+	game_access.request_event(SetStatisticEvent.new(event.by_who, Genesis.Statistic.HEALTH, new_health))
 	
 	if new_health <= 0:
-		game_access.card_processor.request_event(KilledEvent.new(event.by_who, event.card))
+		game_access.request_event(KilledEvent.new(event.by_who, event.card))
 	return
 
 func _handle_was_activated(event : WasActivatedEvent) -> void:
@@ -126,7 +126,7 @@ func _handle_was_activated(event : WasActivatedEvent) -> void:
 		#event.has_failed = true
 		#return
 	#
-	#game_access.card_processor.request_event(SetStatisticEvent.modify(event.card, Genesis.Statistic.CHARGES, -1))
+	#game_access.request_event(SetStatisticEvent.modify(event.card, Genesis.Statistic.CHARGES, -1))
 	return
 
 func _handle_targeted(event : TargetedEvent) -> void:
@@ -140,9 +140,9 @@ func _handle_targeted(event : TargetedEvent) -> void:
 	
 	if event.card.metadata.type == Genesis.CardType.SUPPORT:
 		if game_access.are_two_cards_friendly(event.card, event.who):
-			game_access.card_processor.request_event(SupportedEvent.new(event.card, event.who))
+			game_access.request_event(SupportedEvent.new(event.card, event.who))
 			return
-	game_access.card_processor.request_event(WasTargetedEvent.new(event.who, event.card))
+	game_access.request_event(WasTargetedEvent.new(event.who, event.card))
 	return
 
 func _handle_was_targeted(event : WasTargetedEvent) -> void:
@@ -151,7 +151,7 @@ func _handle_was_targeted(event : WasTargetedEvent) -> void:
 
 func _handle_supported(event : SupportedEvent) -> void:
 	if verbose: print("%s supported %s" % [event.card, event.who])
-	game_access.card_processor.request_event(WasSupportedEvent.new(event.who, event.card))
+	game_access.request_event(WasSupportedEvent.new(event.who, event.card))
 	return
 
 func _handle_was_supported(event : WasSupportedEvent) -> void:
@@ -160,7 +160,7 @@ func _handle_was_supported(event : WasSupportedEvent) -> void:
 
 func _handle_killed(event : KilledEvent) -> void:
 	if verbose: print("%s killed %s" % [event.card, event.who])
-	game_access.card_processor.request_event(WasKilledEvent.new(event.who, event.card))
+	game_access.request_event(WasKilledEvent.new(event.who, event.card))
 	return
 
 func _handle_was_killed(event : WasKilledEvent) -> void:
@@ -168,24 +168,24 @@ func _handle_was_killed(event : WasKilledEvent) -> void:
 	var card_stats := IStatisticPossessor.id(event.card)
 	
 	if card_stats.get_statistic(Genesis.Statistic.IS_ON_FIELD):
-		game_access.card_processor.request_event(LeftFieldEvent.new(event.card))
+		game_access.request_event(LeftFieldEvent.new(event.card))
 	elif card_stats.get_statistic(Genesis.Statistic.IS_IN_HAND):
-		game_access.card_processor.request_event(LeftHandEvent.new(event.card))
+		game_access.request_event(LeftHandEvent.new(event.card))
 	else:
-		game_access.card_processor.request_event(LeftDeckEvent.new(event.card))
+		game_access.request_event(LeftDeckEvent.new(event.card))
 	
-	game_access.card_processor.request_event(TargetedEvent.new(event.card, null))
+	game_access.request_event(TargetedEvent.new(event.card, null))
 	
 	if card_stats.get_statistic(Genesis.Statistic.IS_TRANSIENT): return
 	
-	game_access.card_processor.request_event(WasMarkedEvent.new(event.card))
-	game_access.card_processor.request_event(EnteredDeckEvent.new(event.card))
+	game_access.request_event(WasMarkedEvent.new(event.card))
+	game_access.request_event(EnteredDeckEvent.new(event.card))
 	
 	return
 
 func _handle_gave_mood(event : GaveMoodEvent) -> void:
 	if verbose: print("%s gave %s mood %s" % [event.card, event.who, event.mood])
-	game_access.card_processor.request_event(GainedMoodEvent.new(event.who, event.card, event.mood))
+	game_access.request_event(GainedMoodEvent.new(event.who, event.card, event.mood))
 	return
 
 func _handle_gained_mood(event : GainedMoodEvent) -> void:
@@ -195,7 +195,7 @@ func _handle_gained_mood(event : GainedMoodEvent) -> void:
 
 func _handle_took_mood(event : TookMoodEvent) -> void:
 	if verbose: print("%s took mood %s from %s" % [event.card, event.mood, event.who])
-	game_access.card_processor.request_event(LostMoodEvent.new(event.who, event.card, event.mood))
+	game_access.request_event(LostMoodEvent.new(event.who, event.card, event.mood))
 	return
 
 func _handle_lost_mood(event : LostMoodEvent) -> void:
@@ -210,8 +210,8 @@ func _handle_set_statistic(event : SetStatisticEvent) -> void:
 
 # func _handle_played_card(event : PlayedCardEvent) -> void:
 # 	if verbose: print("%s played card %s" % [event.card.player, event.card])
-# 	game_access.card_processor.request_event(LeftHandEvent.new(event.card))
-# 	game_access.card_processor.request_event(EnteredFieldEvent.new(event.card))
+# 	game_access.request_event(LeftHandEvent.new(event.card))
+# 	game_access.request_event(EnteredFieldEvent.new(event.card))
 # 	return
 
 # func _handle_burned_hand(event : BurnedHandEvent) -> void:

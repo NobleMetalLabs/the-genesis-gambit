@@ -1,15 +1,19 @@
 class_name GameAccess
 extends RefCounted
 
-var card_processor : CardProcessor
-var event_scheduler : EventScheduler :
-	get: return card_processor._event_scheduler
+var event_processor : EventProcessor
+var event_processing_step_manager : EventProcessingStepManager :
+	get: return event_processor._event_processing_step_manager
+var epsm := event_processing_step_manager
 var event_history : EventHistory :
-	get: return card_processor._event_scheduler._event_history
+	get: return event_processor._event_processing_step_manager._event_history
 
-func _init(_card_processor : CardProcessor) -> void:
-	card_processor = _card_processor
-	event_scheduler._register_bulk(
+func request_event(event : Event) -> void:
+	event_processor.request_event(event)
+
+func _init(_event_processor : EventProcessor) -> void:
+	event_processor = _event_processor
+	event_processing_step_manager._register_bulk(
 		[
 			EventProcessingStep.new(
 				AllCardsTargetGroup.new(), "ENTERED_DECK", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
@@ -39,7 +43,7 @@ func _init(_card_processor : CardProcessor) -> void:
 	)
 	return
 
-func _to_string() -> String: return "GameAccess(%s)" % [card_processor]
+func _to_string() -> String: return "GameAccess(%s)" % [event_processor]
 
 var _cards : Array[ICardInstance] = []
 var _player_decks : Dictionary = {} # [Player, Array[ICardInstance]]

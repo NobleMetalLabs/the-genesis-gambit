@@ -1,4 +1,4 @@
-class_name EventScheduler
+class_name EventProcessingStepManager
 extends RefCounted
 
 var _event_history : EventHistory

@@ -1,7 +1,12 @@
 class_name GameAccessManager
 extends RefCounted
 
-var game_access := GameAccess.new()
+
+var event_history := EventHistory.new()
+var event_scheduler := EventScheduler.new(event_history)
+var card_processor := CardProcessor.new(event_scheduler)
+var game_access := GameAccess.new(card_processor)
+
 var _game_access_delta_by_gametick : Dictionary = {}
 var _current_gametick : int = 0
 

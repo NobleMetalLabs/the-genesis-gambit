@@ -1,12 +1,14 @@
 class_name GameAccess
 extends RefCounted
 
-var card_processor : CardProcessor = CardProcessor.new()
-var event_scheduler : EventScheduler : 
-	get:
-		return card_processor.event_scheduler
+var card_processor : CardProcessor
+var event_scheduler : EventScheduler :
+	get: return card_processor._event_scheduler
+var event_history : EventHistory :
+	get: return card_processor._event_scheduler._event_history
 
-func _init() -> void:
+func _init(_card_processor : CardProcessor) -> void:
+	card_processor = _card_processor
 	event_scheduler._register_bulk(
 		[
 			EventProcessingStep.new(

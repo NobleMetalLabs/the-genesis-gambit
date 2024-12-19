@@ -1,21 +1,24 @@
 class_name EventScheduler
 extends RefCounted
 
-var event_history := EventHistory.new()
-var processing_steps_by_event_type : Dictionary = {} #[StringName, Array[EventProcessingStep]]
-var processing_step_by_requester : Dictionary = {} #[Object, Array[EventProcessingStep]]
+var _event_history : EventHistory
+var _processing_steps_by_event_type : Dictionary = {} #[StringName, Array[EventProcessingStep]]
+var _processing_step_by_requester : Dictionary = {} #[Object, Array[EventProcessingStep]]
+
+func _init(event_history : EventHistory) -> void:
+	_event_history = event_history
 
 func _to_string() -> String:
-	return "ES(%s, %s)" % [hash(self), event_history]
+	return "ES(%s, %s)" % [hash(self), _event_history]
 
 func _get_processing_steps_by_event_type(event_type : StringName) -> Array[EventProcessingStep]:
 	var processing_steps : Array[EventProcessingStep] = []
-	processing_steps.assign(processing_steps_by_event_type.get(event_type, []))
+	processing_steps.assign(_processing_steps_by_event_type.get(event_type, []))
 	return processing_steps
 
 func _get_processing_steps_by_requester(requester : Object) -> Array[EventProcessingStep]:
 	var processing_steps : Array[EventProcessingStep] = []
-	processing_steps.assign(processing_step_by_requester.get(requester, []))
+	processing_steps.assign(_processing_step_by_requester.get(requester, []))
 	return processing_steps
 
 func register_event_processing_step(event_processing_step : EventProcessingStep) -> void:
@@ -24,7 +27,7 @@ func register_event_processing_step(event_processing_step : EventProcessingStep)
 func _register_bulk(event_processing_steps : Array[EventProcessingStep]) -> void:
 	for event_processing_step in event_processing_steps:
 		var registered_steps : Array[EventProcessingStep] = []
-		registered_steps = processing_steps_by_event_type.get_or_add(event_processing_step.event_type, registered_steps)
+		registered_steps = _processing_steps_by_event_type.get_or_add(event_processing_step.event_type, registered_steps)
 
 		var already_registered : bool = false
 		for registered_step : EventProcessingStep in registered_steps:
@@ -33,7 +36,7 @@ func _register_bulk(event_processing_steps : Array[EventProcessingStep]) -> void
 				break
 		if not already_registered:
 			registered_steps.append(event_processing_step)
-			processing_step_by_requester.get_or_add(event_processing_step.processing_source, []).append(event_processing_step)
+			_processing_step_by_requester.get_or_add(event_processing_step.processing_source, []).append(event_processing_step)
 		else:
 			print("WARNING: %s is already registered." % [event_processing_step])
 
@@ -55,23 +58,23 @@ func unregister_event_processing_steps_by_requester_and_target(requester : Objec
 
 func _unregister_bulk(event_processing_steps : Array[EventProcessingStep]) -> void:
 	for event_processing_step in event_processing_steps:
-		processing_steps_by_event_type[event_processing_step.event_type].erase(event_processing_step)
+		_processing_steps_by_event_type[event_processing_step.event_type].erase(event_processing_step)
 
 # IMPORTANT: NOTHING SHOULD EVER BE ADDED TO THIS FUNCTION. INSTEAD, IT SHOULD BE A PROCESSING STEP
 func process_event(event : Event) -> void:
-	event_history._signal_begin_processing_event(event)
+	_event_history._signal_begin_processing_event(event)
 	var processing_steps : Array[EventProcessingStep] = _get_processing_steps_for_event(event)
 	save_requester_property_values(event, processing_steps)
 	
 	for processing_step in processing_steps:
 		if processing_step.priority.to_int() <= EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MAX).to_int():
 			if event.has_failed: continue
-		event_history._signal_begin_processing_step(processing_step)
+		_event_history._signal_begin_processing_step(processing_step)
 		processing_step.function.call(event)
-		event_history._signal_end_processing_step()
+		_event_history._signal_end_processing_step()
 	
 	identify_changed_properties(event)
-	event_history._signal_end_processing_event()
+	_event_history._signal_end_processing_event()
 
 var saved_object_values_by_object_by_event : Dictionary
 var changed_local_properties : Array[Dictionary] = []

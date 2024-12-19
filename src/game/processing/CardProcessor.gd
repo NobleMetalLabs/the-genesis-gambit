@@ -1,13 +1,10 @@
 class_name CardProcessor
 extends RefCounted
 
-var event_scheduler : EventScheduler = EventScheduler.new()
-var event_history : EventHistory : 
-	get:
-		return event_scheduler.event_history
-
-func _init() -> void:
-	event_history.set_current_gametick(0) # TODO: bad hack 7
+var _event_scheduler : EventScheduler
+func _init(event_scheduler : EventScheduler) -> void:
+	_event_scheduler = event_scheduler
+	_event_scheduler._event_history.set_current_gametick(0) # TODO: bad hack 7
 
 var requested_events : Array[Event] = []
 func request_event(_event : Event) -> void:
@@ -24,11 +21,11 @@ func process_events() -> void:
 	requested_events.clear()
 	
 	var new_delta = GameAccessDelta.new()
-	new_delta.changed_local_properties = event_scheduler.changed_local_properties
+	new_delta.changed_local_properties = _event_scheduler.changed_local_properties
 	
 	currently_processing_events = false
 
 func process_event(event : Event) -> void:
-	event_scheduler.process_event(event)
+	_event_scheduler.process_event(event)
 
-func _to_string() -> String: return "EP(%s, %s)" % [hash(self), event_scheduler]
+func _to_string() -> String: return "EP(%s, %s)" % [hash(self), _event_scheduler]

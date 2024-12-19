@@ -31,10 +31,4 @@ func process_events() -> void:
 func process_event(event : Event) -> void:
 	event_scheduler.process_event(event)
 
-func duplicate() -> CardProcessor:
-	var ep_dupe : EventScheduler = event_scheduler.duplicate()
-	var dupe := CardProcessor.new()
-	dupe.event_scheduler = ep_dupe
-	return dupe
-
 func _to_string() -> String: return "EP(%s, %s)" % [hash(self), event_scheduler]

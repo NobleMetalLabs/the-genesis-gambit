@@ -27,14 +27,14 @@ func reset_sandbox() -> void:
 	
 
 func update_data(gametick : int = -1) -> void:
-	var ticks : Array = sandbox.game_access_manager._game_access_by_gametick.keys()
+	var ticks : Array = sandbox.game_access_manager._game_access_delta_by_gametick.keys()
 	$"%GameTickSpinBox".max_value = ticks.max()
 	$"%GameTickSpinBox".min_value = ticks.min()
 
-	var game_access : GameAccess = sandbox.game_access_manager.get_current_game_access()
+	var game_access : GameAccess = sandbox.game_access_manager.game_access
 	
-	if gametick != -1:
-		game_access = sandbox.game_access_manager._game_access_by_gametick[gametick]
+	#if gametick != -1:
+		#game_access = sandbox.game_access_manager._game_access_by_gametick[gametick]
 	$"%CardsTree".display_cards(game_access._cards)
 	$"%EventsTree".display_event_history(game_access.card_processor.event_history)
 

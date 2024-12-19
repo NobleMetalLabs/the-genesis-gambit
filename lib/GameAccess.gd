@@ -39,16 +39,6 @@ func _init() -> void:
 
 func _to_string() -> String: return "GameAccess(%s)" % [card_processor]
 
-func duplicate() -> GameAccess:
-	var dupe : GameAccess = GameAccess.new()
-	dupe.card_processor = card_processor.duplicate()
-	dupe._cards = _cards.duplicate(true)
-	return dupe
-
-# var object_collection : BackendObjectCollection
-# func update_object_collection(collection : BackendObjectCollection) -> void:
-# 	object_collection = collection
-
 var _cards : Array[ICardInstance] = []
 var _player_decks : Dictionary = {} # [Player, Array[ICardInstance]]
 var _player_fields : Dictionary = {} # [Player, Array[ICardInstance]]

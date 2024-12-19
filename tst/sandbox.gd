@@ -3,10 +3,10 @@ extends RefCounted
 
 var game_access_manager := GameAccessManager.new()
 var processor : CardProcessor:
-	get: return game_access_manager.get_current_game_access().card_processor
+	get: return game_access_manager.game_access.card_processor
 
 func _init() -> void:
-	DefaultCardLogic.new(game_access_manager.get_current_game_access).register_base_processing_steps()
+	DefaultCardLogic.new(game_access_manager.game_access).register_base_processing_steps()
 	processor.event_scheduler.register_event_processing_step(
 		EventProcessingStep.new(AllCardsTargetGroup.new(), "CREATED", self, BUILD_CARD, EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN + 1))
 	)
@@ -31,11 +31,11 @@ func spawn_card(metadata : CardMetadata, player_num : int) -> ICardInstance:
 	var player : Player = players.get(player_num)
 	if player == null:
 		player = _new_player(player_num)
-	var component := ICardInstance.new(metadata, player, game_access_manager.get_current_game_access)
+	var component := ICardInstance.new(metadata, player, game_access_manager.game_access)
 	component.logic._register_processing_steps()
 	component.logic.verbose = true
 	var new_ent := CardBackend.new(component)
-	game_access_manager.get_current_game_access().add_card(component)
+	game_access_manager.game_access.add_card(component)
 	UIDDB.register_object(new_ent, UIDDB.uid_to_object.size() + 1)
 	return component
 

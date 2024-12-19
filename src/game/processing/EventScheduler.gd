@@ -8,13 +8,6 @@ var processing_step_by_requester : Dictionary = {} #[Object, Array[EventProcessi
 func _to_string() -> String:
 	return "ES(%s, %s)" % [hash(self), event_history]
 
-func duplicate() -> EventScheduler:
-	var dupe := EventScheduler.new()
-	dupe.event_history = event_history.duplicate()
-	dupe.processing_steps_by_event_type = processing_steps_by_event_type.duplicate(true)
-	dupe.processing_step_by_requester = processing_step_by_requester.duplicate(true)
-	return dupe
-
 func _get_processing_steps_by_event_type(event_type : StringName) -> Array[EventProcessingStep]:
 	var processing_steps : Array[EventProcessingStep] = []
 	processing_steps.assign(processing_steps_by_event_type.get(event_type, []))

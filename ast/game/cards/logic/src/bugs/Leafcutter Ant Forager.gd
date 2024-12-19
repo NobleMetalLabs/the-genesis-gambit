@@ -32,5 +32,3 @@ func GIVE_CHARGE_TO_GARDENS(_event: KilledEvent) -> void:
 
 func DEWATCH_FUNGUS_GARDEN(event: LeftFieldEvent) -> void:
 	fungus_gardens.erase(event.card)
-
-# NOTE: create ModifyStatisticEvent that just invokes a SetStatisticEvent with the correct value?

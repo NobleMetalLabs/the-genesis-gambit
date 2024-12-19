@@ -22,6 +22,10 @@ func process_events() -> void:
 	for event : Event in requested_events:
 		process_event(event)
 	requested_events.clear()
+	
+	var new_delta = GameAccessDelta.new()
+	new_delta.changed_local_properties = event_scheduler.changed_local_properties
+	
 	currently_processing_events = false
 
 func process_event(event : Event) -> void:

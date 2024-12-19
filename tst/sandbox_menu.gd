@@ -40,8 +40,5 @@ func update_data(gametick : int = -1) -> void:
 
 
 func AUTO_EXEC() -> void:
-	CommandServer.run_command("card spawn leafcutter-ant-forager 1")
-	CommandServer.run_command("card spawn fungus-garden 1")
-	
-	CommandServer.run_command("card act 2 event entered-field-event")
-	CommandServer.run_command("card act 1 event killed-event 1")
+	CommandServer.run_command("card spawn moth 1")
+	CommandServer.run_command("card act 1 event attacked-event 1 10")

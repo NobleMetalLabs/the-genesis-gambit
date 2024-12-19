@@ -68,13 +68,54 @@ func _unregister_bulk(event_processing_steps : Array[EventProcessingStep]) -> vo
 func process_event(event : Event) -> void:
 	event_history._signal_begin_processing_event(event)
 	var processing_steps : Array[EventProcessingStep] = _get_processing_steps_for_event(event)
+	save_requester_property_values(event, processing_steps)
+	
 	for processing_step in processing_steps:
 		if processing_step.priority.to_int() <= EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MAX).to_int():
 			if event.has_failed: continue
 		event_history._signal_begin_processing_step(processing_step)
 		processing_step.function.call(event)
 		event_history._signal_end_processing_step()
+	
+	identify_changed_properties(event)
 	event_history._signal_end_processing_event()
+
+var saved_object_values_by_object_by_event : Dictionary
+var changed_local_properties : Array[Dictionary] = []
+
+func save_requester_property_values(event : Event, steps : Array[EventProcessingStep]) -> void:
+	for processing_step : EventProcessingStep in steps:
+		var requester : Object = processing_step.processing_source
+		var property_list : Array[Dictionary] = requester.get_property_list()
+		var script_variables : Array[Dictionary] = property_list.filter(func get_script_variables(p : Dictionary) -> bool: return p["usage"] & PROPERTY_USAGE_SCRIPT_VARIABLE)
+		var variable_names : Array[String] = []
+		variable_names.assign(script_variables.map(func(p : Dictionary) -> String: return p.name))
+		
+		var requester_properties : Dictionary
+		for var_name in variable_names: 
+			var var_value : Variant = requester.get(var_name)
+			if var_value is Array or var_value is Dictionary: var_value = var_value.duplicate()
+			requester_properties[var_name] = var_value
+		
+		saved_object_values_by_object_by_event.get_or_add(event, {})[requester] = requester_properties
+	
+	#print(JSON.stringify(saved_object_values_by_object_by_event))
+
+func identify_changed_properties(event : Event) -> void:
+	var relevant_obj_dict : Dictionary = saved_object_values_by_object_by_event[event]
+	
+	for object : Object in relevant_obj_dict:
+		var property_dict : Dictionary = relevant_obj_dict[object]
+		for property : StringName in property_dict:
+			if property_dict[property] != object.get(property):
+				var record_dict : Dictionary = {
+					"object": object,
+					"property": property,
+					"old_value": property_dict[property],
+					"new_value": object.get(property)
+				}
+				print(record_dict)
+				changed_local_properties.append(record_dict)
 
 func _get_processing_steps_for_event(event : Event) -> Array[EventProcessingStep]:
 	var steps_for_target : Array[EventProcessingStep] = []

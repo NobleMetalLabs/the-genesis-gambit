@@ -4,9 +4,10 @@ extends RefCounted
 var event_processor : EventProcessor
 var event_processing_step_manager : EventProcessingStepManager :
 	get: return event_processor._event_processing_step_manager
-var epsm := event_processing_step_manager
+var epsm : EventProcessingStepManager :
+	get: return event_processor._event_processing_step_manager
 var event_history : EventHistory :
-	get: return event_processor._event_processing_step_manager._event_history
+	get: return event_processor._event_history
 
 func request_event(event : Event) -> void:
 	event_processor.request_event(event)

@@ -3,26 +3,23 @@ extends RefCounted
 
 
 var event_history := EventHistory.new()
-var event_processing_step_manager := EventProcessingStepManager.new(event_history)
-var event_processor := EventProcessor.new(event_processing_step_manager)
+var event_processing_step_manager := EventProcessingStepManager.new()
+var event_processor := EventProcessor.new(event_processing_step_manager, event_history)
 var game_access := GameAccess.new(event_processor)
 
 var _game_access_delta_by_gametick : Dictionary = {}
 var _current_gametick : int = 0
 
+func _init() -> void:
+	_game_access_delta_by_gametick[_current_gametick] = GameAccessDelta.new()
+
 signal advanced_to_new_gametick(gametick : int)
 
 func advance_gametick() -> void:
-	#var delta_recorder : GameAccessDeltaRecorder = GameAccessDeltaRecorder.new()
-	game_access.event_processor.process_events()
-	#_game_access_delta_by_gametick[_current_gametick] = delta_recorder.get_delta()
-	
+	var delta_recorder : GameAccessDeltaRecorder = GameAccessDeltaRecorder.new()
+	game_access.event_processor.process_events(delta_recorder)
+	_game_access_delta_by_gametick[_current_gametick] = delta_recorder.get_delta()
 	_current_gametick += 1
-	#_game_access_by_gametick[_current_gametick] = current_access.duplicate()
-	#var new_access : GameAccess = get_current_game_access()
-	#new_access.event_processor.event_history.set_current_gametick(_current_gametick)
-	#print(new_access)
-	
 	advanced_to_new_gametick.emit(_current_gametick)
 
 #func revert_to_gametick(gametick : int) -> void:

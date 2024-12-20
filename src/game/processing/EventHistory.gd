@@ -5,6 +5,9 @@ var _events_by_gametick : Dictionary = {} # [int, Array[Event]]
 var _events_by_card : Dictionary = {} # [ICardInstance, Array[Event]]
 var _event_processing_records : Dictionary = {} # [Event, EventProcessingRecord]
 
+func _init() -> void:
+	set_current_gametick(0)
+
 func _to_string() -> String:
 	return "EventHistory(%s)" % [hash(self)]
 

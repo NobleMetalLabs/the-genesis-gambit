@@ -60,20 +60,25 @@ func _unregister_bulk(event_processing_steps : Array[EventProcessingStep]) -> vo
 func process_event(event : Event, history : EventHistory, delta_recorder : GameAccessDeltaRecorder) -> void:
 	history._signal_begin_processing_event(event)
 	var processing_steps : Array[EventProcessingStep] = _get_processing_steps_for_event(event)
-	var processing_step_sources : Array[Object] = []
-	processing_step_sources.assign(processing_steps.map(
+
+	var objects_to_record : Array[Object] = []
+	objects_to_record.assign(processing_steps.map(
 		func get_processing_source(event_processing_step : EventProcessingStep) -> Object:
 			return event_processing_step.processing_source
 	))
-	
-	delta_recorder.save_objects(processing_step_sources)
+	objects_to_record.append(event.get_subject())
+	delta_recorder.save_objects(objects_to_record)
+	delta_recorder.save_statistics(objects_to_record)
+
 	for processing_step in processing_steps:
 		if processing_step.priority.to_int() <= EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MAX).to_int():
 			if event.has_failed: continue
 		history._signal_begin_processing_step(processing_step)
 		processing_step.function.call(event)
 		history._signal_end_processing_step()
-	delta_recorder.record_object_deltas(processing_step_sources)
+
+	delta_recorder.record_object_deltas(objects_to_record)
+	delta_recorder.record_stat_deltas(objects_to_record)
 
 	history._signal_end_processing_event()
 

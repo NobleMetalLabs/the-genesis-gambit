@@ -6,7 +6,6 @@ var _event_history : EventHistory
 func _init(event_processing_step_manager : EventProcessingStepManager, event_history : EventHistory) -> void:
 	_event_processing_step_manager = event_processing_step_manager
 	_event_history = event_history
-	event_history.set_current_gametick(0) # TODO: bad hack 7
 
 var requested_events : Array[Event] = []
 func request_event(_event : Event) -> void:

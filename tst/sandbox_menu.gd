@@ -8,13 +8,24 @@ func _ready() -> void:
 	AUTO_EXEC()
 	
 	$"%ResetButton".pressed.connect(reset_sandbox)
-	game_tick_spinbox.value_changed.connect(update_data)
+	game_tick_spinbox.value_changed.connect(sandbox.game_access_manager.revert_to_gametick)
+
+func AUTO_EXEC() -> void:
+	sandbox.game_access_manager.advance_gametick()
+	sandbox.game_access_manager.advance_gametick()
+	sandbox.game_access_manager.advance_gametick()
+	CommandServer.run_command("card spawn moth 1")
+	sandbox.game_access_manager.advance_gametick()
+	CommandServer.run_command("card act 1 event entered-field-event")
+	sandbox.game_access_manager.advance_gametick()
+	CommandServer.run_command("card act 1 event attacked-event 1 10")
+	sandbox.game_access_manager.advance_gametick()
+	sandbox.game_access_manager.advance_gametick()
 
 func _process(_delta : float) -> void:
 	if Input.is_action_just_pressed("debug_advance_frame"):
 		sandbox.game_access_manager.advance_gametick()
 		
-
 func reset_sandbox() -> void:
 	if sandbox != null: sandbox._teardown()
 	
@@ -37,8 +48,3 @@ func update_data(gametick : int = -1) -> void:
 		#game_access = sandbox.game_access_manager._game_access_by_gametick[gametick]
 	$"%CardsTree".display_cards(game_access._cards)
 	$"%EventsTree".display_event_history(game_access.event_history)
-
-
-func AUTO_EXEC() -> void:
-	CommandServer.run_command("card spawn moth 1")
-	CommandServer.run_command("card act 1 event attacked-event 1 10")

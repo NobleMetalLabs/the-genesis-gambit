@@ -49,6 +49,7 @@ text = "GAME TICK"
 [node name="GameTickSpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+max_value = 0.0
 
 [node name="HBoxContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2

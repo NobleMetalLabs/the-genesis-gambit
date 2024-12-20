@@ -3,12 +3,19 @@ extends Control
 
 var sandbox : Sandbox
 @onready var game_tick_spinbox : SpinBox = $"%GameTickSpinBox"
+const TPS := 30.0
+
 func _ready() -> void: 
 	reset_sandbox()
 	AUTO_EXEC()
 	
 	$"%ResetButton".pressed.connect(reset_sandbox)
 	game_tick_spinbox.value_changed.connect(sandbox.game_access_manager.revert_to_gametick)
+	
+	var tick_timer := Timer.new()
+	tick_timer.timeout.connect(sandbox.game_access_manager.advance_gametick)
+	add_child(tick_timer)
+	tick_timer.start(1 / TPS)
 
 func AUTO_EXEC() -> void:
 	sandbox.game_access_manager.advance_gametick()
@@ -37,9 +44,8 @@ func reset_sandbox() -> void:
 	
 
 func update_data(gametick : int = -1) -> void:
-	var ticks : Array = sandbox.game_access_manager._game_access_delta_by_gametick.keys()
-	game_tick_spinbox.max_value = ticks.max() + 1
-	game_tick_spinbox.min_value = ticks.min()
+	game_tick_spinbox.max_value = sandbox.game_access_manager._current_gametick
+	game_tick_spinbox.min_value = 0
 	game_tick_spinbox.set_value_no_signal(gametick)
 
 	var game_access : GameAccess = sandbox.game_access_manager.game_access

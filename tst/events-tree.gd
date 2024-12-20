@@ -21,6 +21,8 @@ var object_to_treeitem : Dictionary = {} #[Event, TreeItem]
 var already_logged : Array[Event] = []
 
 func display_event_history(_history : EventHistory) -> void:
+	#print("Displaying history %s" % _history)
+	
 	history = _history
 	if not self.visible: return
 	self.clear()
@@ -30,9 +32,12 @@ func display_event_history(_history : EventHistory) -> void:
 		
 	var events_per_tick : Dictionary = history._events_by_gametick
 	for tick : int in events_per_tick.keys():
+		var events : Array[Event] = events_per_tick[tick]
+		if events.is_empty(): continue
+		
 		var tick_parent : TreeItem = self.create_item(root)
 		tick_parent.set_text(0, "Tick %s" % tick)
-		for event : Event in history.get_events_at_gametick(tick):
+		for event : Event in events:
 			if event in already_logged: continue
 			setup_event_item(tick_parent, event)
 

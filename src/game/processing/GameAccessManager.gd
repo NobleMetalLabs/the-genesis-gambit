@@ -1,6 +1,7 @@
 class_name GameAccessManager
 extends RefCounted
 
+var action_manager := ActionManager.new(self)
 var event_history := EventHistory.new()
 var event_processing_step_manager := EventProcessingStepManager.new()
 var event_processor := EventProcessor.new(event_processing_step_manager, event_history)
@@ -14,17 +15,21 @@ const MAX_NUM_SAVED_HISTORIES := 300
 signal advanced_to_new_gametick(gametick : int)
 
 func advance_gametick() -> void:
+	action_manager.run_actions_on_gametick(_current_gametick)
+	event_history.set_current_gametick(_current_gametick)
 	var delta_recorder : GameAccessDeltaRecorder = GameAccessDeltaRecorder.new()
 	game_access.event_processor.process_events(delta_recorder)
 	var delta : GameAccessDelta = delta_recorder.get_delta()
-	if not delta.is_empty(): _game_access_delta_by_gametick[_current_gametick] = delta
+	if not delta.is_empty():
+		_game_access_delta_by_gametick[_current_gametick] = delta
 	_current_gametick += 1
-	event_history.set_current_gametick(_current_gametick)
 	advanced_to_new_gametick.emit(_current_gametick)
 
 func revert_to_gametick(gametick : int) -> void:
 	print("Reverting to gametick %s" % gametick)
+	print(_game_access_delta_by_gametick.keys())
 	for i in range(_current_gametick - 1, gametick - 1, -1):
+		print("rolling back tick %d" % i)
 		if _game_access_delta_by_gametick.has(i):
 			revert_game_access_delta(_game_access_delta_by_gametick[i])
 			_game_access_delta_by_gametick.erase(i)

@@ -34,13 +34,20 @@ func get_event_processing_record(event : Event) -> EventProcessingRecord:
 
 var _current_gametick : int = 0
 func set_current_gametick(gametick : int) -> void:
+	if gametick < _current_gametick:
+		var stale_ticks : Array = _events_by_gametick.keys().filter(func(tick: int) -> bool: return tick > gametick)
+		for tick : int in stale_ticks:
+			for event : Event in _events_by_gametick[tick]:
+				_event_processing_records.erase(event)
+			_events_by_gametick.erase(tick)
+	
 	_current_gametick = gametick
 
 var _processing_events_stack : Array[Event] = []
 func _signal_begin_processing_event(event : Event) -> void:
 	var gametick_events : Array[Event] = []
-	gametick_events.assign(_events_by_gametick.get_or_add(_current_gametick, gametick_events))
-	gametick_events.append(event)
+	_events_by_gametick.get_or_add(_current_gametick, gametick_events).append(event)
+	
 	var causer_event : Event = null
 	if _current_processing_step_stack.size() > 0:
 		causer_event = _processing_events_stack.back()

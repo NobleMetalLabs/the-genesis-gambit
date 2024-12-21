@@ -34,7 +34,6 @@ func record_object_deltas(objects : Array[Object]) -> void:
 				"old_value": property_dict[property],
 				"new_value": object.get(property)
 			}
-			print(record_dict)
 			_delta.changed_local_properties.append(record_dict)
 
 var _saved_stat_values_by_possessor : Dictionary
@@ -70,5 +69,4 @@ func record_stat_deltas(objects : Array[Object]) -> void:
 				"old_value": saved_dict.get(stat, Genesis.STATISTIC_DEFAULTS[stat]),
 				"new_value": possessor.get_statistic(stat)
 			}
-			print(record_dict)
 			_delta.changed_statistics.append(record_dict)

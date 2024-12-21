@@ -39,6 +39,10 @@ func _init(_event_processor : EventProcessor) -> void:
 			EventProcessingStep.new(
 				AllCardsTargetGroup.new(), "LEFT_HAND", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
 				EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.EVENT).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)
+			),
+			EventProcessingStep.new(
+				AllCardsTargetGroup.new(), "WAS_CREATED", self, HANDLE_CARD_CREATION,
+				EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.EVENT).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)
 			)
 		]
 	)
@@ -89,3 +93,6 @@ func HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS(event : Event) -> void:
 		_player_hands.get_or_add(card.player, player_cards).erase(card)
 	else:
 		print("WARNING: Unhandled zone transition event %s." % [event])
+
+func HANDLE_CARD_CREATION(event : WasCreatedEvent) -> void:
+	add_card(event.card)

@@ -35,7 +35,6 @@ func spawn_card(metadata : CardMetadata, player_num : int) -> ICardInstance:
 	component.logic._register_processing_steps()
 	component.logic.verbose = true
 	var new_ent := CardBackend.new(component)
-	game_access.add_card(component)
 	UIDDB.register_object(new_ent, UIDDB.uid_to_object.size() + 1)
 	return component
 

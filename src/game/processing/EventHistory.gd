@@ -5,12 +5,11 @@ var _events_by_gametick : Dictionary = {} # [int, Array[Event]]
 var _events_by_card : Dictionary = {} # [ICardInstance, Array[Event]]
 var _event_processing_records : Dictionary = {} # [Event, EventProcessingRecord]
 
-func duplicate() -> EventHistory:
-	var dupe := EventHistory.new()
-	dupe._events_by_gametick = _events_by_gametick.duplicate(true)
-	dupe._events_by_card = _events_by_card.duplicate(true)
-	dupe._event_processing_records = _event_processing_records.duplicate()
-	return dupe
+func _init() -> void:
+	set_current_gametick(0)
+
+func _to_string() -> String:
+	return "EventHistory(%s)" % [hash(self)]
 
 func get_events_at_gametick(gametick : int) -> Array[Event]:
 	var gametick_events : Array[Event] = []
@@ -34,14 +33,21 @@ func get_event_processing_record(event : Event) -> EventProcessingRecord:
 	return _event_processing_records.get(event)
 
 var _current_gametick : int = 0
-func _signal_begin_gametick(gametick : int) -> void:
+func set_current_gametick(gametick : int) -> void:
+	if gametick < _current_gametick:
+		var stale_ticks : Array = _events_by_gametick.keys().filter(func(tick: int) -> bool: return tick > gametick)
+		for tick : int in stale_ticks:
+			for event : Event in _events_by_gametick[tick]:
+				_event_processing_records.erase(event)
+			_events_by_gametick.erase(tick)
+	
 	_current_gametick = gametick
-	var empty : Array[Event] = []
-	_events_by_gametick[_current_gametick] = empty
 
 var _processing_events_stack : Array[Event] = []
 func _signal_begin_processing_event(event : Event) -> void:
-	_events_by_gametick[_current_gametick].append(event)
+	var gametick_events : Array[Event] = []
+	_events_by_gametick.get_or_add(_current_gametick, gametick_events).append(event)
+	
 	var causer_event : Event = null
 	if _current_processing_step_stack.size() > 0:
 		causer_event = _processing_events_stack.back()
@@ -69,9 +75,6 @@ func _signal_end_processing_step() -> void:
 
 func _signal_end_processing_event() -> void:
 	_processing_events_stack.pop_back()
-
-func _signal_end_gametick() -> void:
-	pass
 
 class EventProcessingRecord extends RefCounted:
 	var gametick : int

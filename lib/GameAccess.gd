@@ -1,14 +1,20 @@
 class_name GameAccess
 extends RefCounted
 
-var card_processor : CardProcessor
-var event_scheduler : EventScheduler : 
-	get:
-		return card_processor.event_scheduler
+var event_processor : EventProcessor
+var event_processing_step_manager : EventProcessingStepManager :
+	get: return event_processor._event_processing_step_manager
+var epsm : EventProcessingStepManager :
+	get: return event_processor._event_processing_step_manager
+var event_history : EventHistory :
+	get: return event_processor._event_history
 
-func _init(_card_processor : CardProcessor) -> void:
-	card_processor = _card_processor
-	event_scheduler._register_bulk(
+func request_event(event : Event) -> void:
+	event_processor.request_event(event)
+
+func _init(_event_processor : EventProcessor) -> void:
+	event_processor = _event_processor
+	event_processing_step_manager._register_bulk(
 		[
 			EventProcessingStep.new(
 				AllCardsTargetGroup.new(), "ENTERED_DECK", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
@@ -33,23 +39,24 @@ func _init(_card_processor : CardProcessor) -> void:
 			EventProcessingStep.new(
 				AllCardsTargetGroup.new(), "LEFT_HAND", self, HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS, 
 				EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.EVENT).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)
+			),
+			EventProcessingStep.new(
+				AllCardsTargetGroup.new(), "WAS_CREATED", self, HANDLE_CARD_CREATION,
+				EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.EVENT).INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MIN)
 			)
 		]
 	)
 	return
 
-func _to_string() -> String: return "GameAccess(%s)" % [card_processor]
+func _to_string() -> String: return "GameAccess(%s)" % [event_processor]
 
-func duplicate() -> GameAccess:
-	return GameAccess.new(card_processor.duplicate())
-
-# var object_collection : BackendObjectCollection
-# func update_object_collection(collection : BackendObjectCollection) -> void:
-# 	object_collection = collection
-
+var _cards : Array[ICardInstance] = []
 var _player_decks : Dictionary = {} # [Player, Array[ICardInstance]]
 var _player_fields : Dictionary = {} # [Player, Array[ICardInstance]]
 var _player_hands : Dictionary = {} # [Player, Array[ICardInstance]]
+
+func add_card(card : ICardInstance) -> void:
+	_cards.append(card)
 
 func get_players_field(player : Player) -> Array[ICardInstance]:
 	return []
@@ -86,3 +93,6 @@ func HANDLE_ZONE_TRANSITION_EVENT_FOR_GAMEACCESS(event : Event) -> void:
 		_player_hands.get_or_add(card.player, player_cards).erase(card)
 	else:
 		print("WARNING: Unhandled zone transition event %s." % [event])
+
+func HANDLE_CARD_CREATION(event : WasCreatedEvent) -> void:
+	add_card(event.card)

@@ -1,13 +1,5 @@
 extends Tree
 
-var sandbox : Sandbox
-var history : EventHistory
-
-func set_sandbox(_sandbox : Sandbox) -> void:
-	sandbox = _sandbox
-	sandbox.processor.finished_processing_events.connect(refresh_tree)
-	history = sandbox.processor.event_history
-
 func _ready() -> void:
 	self.columns = 4
 	self.column_titles_visible = true
@@ -24,21 +16,30 @@ func _ready() -> void:
 	self.set_column_expand(3, true)
 	self.set_column_expand_ratio(3, 1)
 
+var history : EventHistory
 var object_to_treeitem : Dictionary = {} #[Event, TreeItem]
 var already_logged : Array[Event] = []
 
-func refresh_tree() -> void:
+func display_event_history(_history : EventHistory) -> void:
+	#print("Displaying history %s" % _history)
+	
+	history = _history
 	if not self.visible: return
 	self.clear()
 	object_to_treeitem.clear()
 	already_logged.clear()
 	var root : TreeItem = self.create_item(null)
 		
-	var tick_parent : TreeItem = self.create_item(root)
-	tick_parent.set_text(0, "Tick %s" % 0)
-	for event : Event in history._event_processing_records.keys():
-		if event in already_logged: continue
-		setup_event_item(tick_parent, event)
+	var events_per_tick : Dictionary = history._events_by_gametick
+	for tick : int in events_per_tick.keys():
+		var events : Array[Event] = events_per_tick[tick]
+		if events.is_empty(): continue
+		
+		var tick_parent : TreeItem = self.create_item(root)
+		tick_parent.set_text(0, "Tick %s" % tick)
+		for event : Event in events:
+			if event in already_logged: continue
+			setup_event_item(tick_parent, event)
 
 func setup_event_item(parent : TreeItem, event : Event) -> void:
 	var item : TreeItem = self.create_item(parent)

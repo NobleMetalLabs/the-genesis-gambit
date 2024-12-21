@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://8ug3p85pm4sh"]
+[gd_scene load_steps=9 format=3 uid="uid://8ug3p85pm4sh"]
 
 [ext_resource type="Script" path="res://addons/command-terminal/src/CommandTerminal.gd" id="1_7mbqb"]
 [ext_resource type="Script" path="res://tst/sandbox_menu.gd" id="1_iuema"]
@@ -6,6 +6,12 @@
 [ext_resource type="FontFile" uid="uid://cmmltma2gsu3a" path="res://addons/command-terminal/ast/windows_command_prompt.ttf" id="2_yvhsy"]
 [ext_resource type="PackedScene" uid="uid://b5b8i4p40f5ua" path="res://addons/command-terminal/scn/command_terminal_guts.tscn" id="3_asx5f"]
 [ext_resource type="Script" path="res://tst/events-tree.gd" id="3_gii7x"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bkg77"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3nmgc"]
 bg_color = Color(0, 0, 0, 1)
@@ -25,11 +31,32 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HSplitContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_bkg77")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+text = "GAME TICK"
+
+[node name="GameTickSpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 0.0
+
+[node name="HBoxContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 split_offset = -370
 
-[node name="CardsTree" type="Tree" parent="PanelContainer/HBoxContainer"]
+[node name="CardsTree" type="Tree" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -38,13 +65,29 @@ hide_root = true
 select_mode = 1
 script = ExtResource("2_fwa0a")
 
-[node name="EventsTree" type="Tree" parent="PanelContainer/HBoxContainer"]
+[node name="EventsTree" type="Tree" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 hide_root = true
 select_mode = 1
 script = ExtResource("3_gii7x")
+
+[node name="ResetButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -233.0
+offset_top = -119.0
+offset_bottom = -34.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 40
+text = "reset"
 
 [node name="CommandTerminal" type="Control" parent="."]
 layout_mode = 1
@@ -62,20 +105,8 @@ font_size = 30
 [node name="__guts__" parent="CommandTerminal" instance=ExtResource("3_asx5f")]
 layout_mode = 0
 anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_3nmgc")
-
-[node name="ResetButton" type="Button" parent="."]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -233.0
-offset_top = -119.0
-offset_bottom = -34.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_font_sizes/font_size = 40
-text = "reset"

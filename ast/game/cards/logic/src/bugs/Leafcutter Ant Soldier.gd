@@ -3,7 +3,7 @@ extends CardLogic
 static var description : StringName = "Gains 1 Happy for each friendly creature tending a Fungus Garden."
 
 func _register_processing_steps() -> void:
-	game_access.event_scheduler.register_event_processing_step(
+	game_access.epsm.register_event_processing_step(
 		EventProcessingStep.new(FriendlyCardsTargetGroup.new(owner.player), "TARGETED", owner, WATCH_TENDING, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.POSTEVENT).RARITY_FROM_CARD(owner)
 	))
@@ -16,13 +16,13 @@ func WATCH_TENDING(event: TargetedEvent) -> void:
 		if tenders.has(event.card): return
 		tenders.append(event.card)
 		
-		game_access.card_processor.request_event(
+		game_access.request_event(
 			GainedMoodEvent.new(owner, owner, StatisticMood.HAPPY(owner))
 			# NOTE: Not sure if GainedMood or GaveMood is preferable here?
 		)
 	elif tenders.has(event.card):
 		tenders.erase(event.card)
 		
-		game_access.card_processor.request_event(
+		game_access.request_event(
 			LostMoodEvent.new(owner, owner, StatisticMood.HAPPY(owner))
 		)

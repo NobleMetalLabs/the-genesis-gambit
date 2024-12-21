@@ -1,12 +1,5 @@
 extends Tree
 
-var sandbox : Sandbox
-
-func set_sandbox(_sandbox : Sandbox) -> void:
-	sandbox = _sandbox
-	sandbox.processor.finished_processing_events.connect(refresh_tree)
-
-
 func _ready() -> void:
 	self.columns = 4
 	self.column_titles_visible = true
@@ -25,7 +18,7 @@ func _ready() -> void:
 
 var _object_to_treeitem : Dictionary = {} #[Object, TreeItem]
 
-func refresh_tree() -> void:
+func display_cards(_cards : Array[ICardInstance]) -> void:
 	if not self.visible: return
 	self.clear()
 	_object_to_treeitem.clear()
@@ -34,7 +27,7 @@ func refresh_tree() -> void:
 	# tally cards
 	var cards_parent : TreeItem = self.create_item(root)
 	cards_parent.set_text(0, "Cards")
-	for card : ICardInstance in sandbox.cards_holder.get_children().map(func get_cardinstance(n : Node) -> ICardInstance: return ICardInstance.id(n)):
+	for card : ICardInstance in _cards:
 		var card_item : TreeItem = self.create_item(cards_parent)
 		setup_card_row(card_item, card)
 		_object_to_treeitem[card] = card_item

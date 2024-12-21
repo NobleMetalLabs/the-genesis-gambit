@@ -1,25 +1,20 @@
-class_name EventScheduler
+class_name EventProcessingStepManager
 extends RefCounted
 
-var event_history := EventHistory.new()
-var processing_steps_by_event_type : Dictionary = {} #[StringName, Array[EventProcessingStep]]
-var processing_step_by_requester : Dictionary = {} #[Object, Array[EventProcessingStep]]
+var _processing_steps_by_event_type : Dictionary = {} #[StringName, Array[EventProcessingStep]]
+var _processing_step_by_requester : Dictionary = {} #[Object, Array[EventProcessingStep]]
 
-func duplicate() -> EventScheduler:
-	var dupe := EventScheduler.new()
-	dupe.event_history = event_history.duplicate()
-	dupe.processing_steps_by_event_type = processing_steps_by_event_type.duplicate(true)
-	dupe.processing_step_by_requester = processing_step_by_requester.duplicate(true)
-	return dupe
+func _to_string() -> String:
+	return "EventProcessingStepManager(%s)" % [hash(self)]
 
 func _get_processing_steps_by_event_type(event_type : StringName) -> Array[EventProcessingStep]:
 	var processing_steps : Array[EventProcessingStep] = []
-	processing_steps.assign(processing_steps_by_event_type.get(event_type, []))
+	processing_steps.assign(_processing_steps_by_event_type.get(event_type, []))
 	return processing_steps
 
 func _get_processing_steps_by_requester(requester : Object) -> Array[EventProcessingStep]:
 	var processing_steps : Array[EventProcessingStep] = []
-	processing_steps.assign(processing_step_by_requester.get(requester, []))
+	processing_steps.assign(_processing_step_by_requester.get(requester, []))
 	return processing_steps
 
 func register_event_processing_step(event_processing_step : EventProcessingStep) -> void:
@@ -28,7 +23,7 @@ func register_event_processing_step(event_processing_step : EventProcessingStep)
 func _register_bulk(event_processing_steps : Array[EventProcessingStep]) -> void:
 	for event_processing_step in event_processing_steps:
 		var registered_steps : Array[EventProcessingStep] = []
-		registered_steps = processing_steps_by_event_type.get_or_add(event_processing_step.event_type, registered_steps)
+		registered_steps = _processing_steps_by_event_type.get_or_add(event_processing_step.event_type, registered_steps)
 
 		var already_registered : bool = false
 		for registered_step : EventProcessingStep in registered_steps:
@@ -37,7 +32,7 @@ func _register_bulk(event_processing_steps : Array[EventProcessingStep]) -> void
 				break
 		if not already_registered:
 			registered_steps.append(event_processing_step)
-			processing_step_by_requester.get_or_add(event_processing_step.processing_source, []).append(event_processing_step)
+			_processing_step_by_requester.get_or_add(event_processing_step.processing_source, []).append(event_processing_step)
 		else:
 			print("WARNING: %s is already registered." % [event_processing_step])
 
@@ -59,19 +54,34 @@ func unregister_event_processing_steps_by_requester_and_target(requester : Objec
 
 func _unregister_bulk(event_processing_steps : Array[EventProcessingStep]) -> void:
 	for event_processing_step in event_processing_steps:
-		processing_steps_by_event_type[event_processing_step.event_type].erase(event_processing_step)
+		_processing_steps_by_event_type[event_processing_step.event_type].erase(event_processing_step)
 
 # IMPORTANT: NOTHING SHOULD EVER BE ADDED TO THIS FUNCTION. INSTEAD, IT SHOULD BE A PROCESSING STEP
-func process_event(event : Event) -> void:
-	event_history._signal_begin_processing_event(event)
+func process_event(event : Event, history : EventHistory, delta_recorder : GameAccessDeltaRecorder) -> void:
+	history._signal_begin_processing_event(event)
 	var processing_steps : Array[EventProcessingStep] = _get_processing_steps_for_event(event)
+
+	var objects_to_record : Array[Object] = []
+	objects_to_record.assign(processing_steps.map(
+		func get_processing_source(event_processing_step : EventProcessingStep) -> Object:
+			return event_processing_step.processing_source
+	))
+	objects_to_record.append(event.get_subject())
+	delta_recorder.save_objects(objects_to_record)
+	delta_recorder.save_statistics(objects_to_record)
+
 	for processing_step in processing_steps:
 		if processing_step.priority.to_int() <= EventPriority.new().INDIVIDUAL(EventPriority.PROCESSING_INDIVIDUAL_MAX).to_int():
 			if event.has_failed: continue
-		event_history._signal_begin_processing_step(processing_step)
+		history._signal_begin_processing_step(processing_step)
 		processing_step.function.call(event)
-		event_history._signal_end_processing_step()
-	event_history._signal_end_processing_event()
+		history._signal_end_processing_step()
+
+	delta_recorder.record_object_deltas(objects_to_record)
+	delta_recorder.record_stat_deltas(objects_to_record)
+
+	history._signal_end_processing_event()
+
 
 func _get_processing_steps_for_event(event : Event) -> Array[EventProcessingStep]:
 	var steps_for_target : Array[EventProcessingStep] = []

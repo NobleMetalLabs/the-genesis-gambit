@@ -5,12 +5,12 @@ static var description : StringName = "Each first attack made by a creature agai
 var has_been_attacked_by : Array[ICardInstance] = []
 
 func _register_processing_steps() -> void:
-	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "WAS_CREATED", owner, HANDLE_WAS_CREATED, 
+	game_access.epsm.register_event_processing_step(
+		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "WAS_CREATED", self, HANDLE_WAS_CREATED, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
 	))
-	game_access.event_scheduler.register_event_processing_step(
-		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "WAS_ATTACKED", owner, PREVENT_FIRST_ATTACK_FROM_UNIQUE_ATTACKER, 
+	game_access.epsm.register_event_processing_step(
+		EventProcessingStep.new(SingleCardTargetGroup.new(owner), "WAS_ATTACKED", self, PREVENT_FIRST_ATTACK_FROM_UNIQUE_ATTACKER, 
 			EventPriority.new().STAGE(EventPriority.PROCESSING_STAGE.PREEVENT).RARITY_FROM_CARD(owner)
 	))
 

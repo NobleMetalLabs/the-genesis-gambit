@@ -17,3 +17,7 @@ func _init(_subject : Object, _statistic : Genesis.Statistic, _new_value : Varia
 
 func _to_string() -> String:
 	return "SetStatisticEvent(%s, %s, %s)" % [self.subject, Genesis.Statistic.keys()[statistic], self.new_value]
+
+static func modify(_subject : Object, _statistic : Genesis.Statistic, delta : int) -> SetStatisticEvent:
+	var value : int = IStatisticPossessor.id(_subject).get_statistic(_statistic)
+	return SetStatisticEvent.new(_subject, _statistic, value + delta)

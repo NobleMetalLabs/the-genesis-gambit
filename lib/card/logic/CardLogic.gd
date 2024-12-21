@@ -2,7 +2,7 @@
 class_name CardLogic
 extends RefCounted
 
-var game_access : GameAccess
+var game_access : GameAccess 
 var owner : ICardInstance
 var verbose : bool = false
 

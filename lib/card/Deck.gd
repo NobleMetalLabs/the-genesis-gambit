@@ -23,7 +23,7 @@ static func prebuilt_from_tribe(tribe : Genesis.CardTribe) -> Deck:
 		if card.type == Genesis.CardType.LEADER:
 			deck.leader = card
 	if tribe == Genesis.CardTribe.BUGS:
-		deck.remove_card(CardDB.get_card_by_id(CardDB.get_id_by_name("Fungus Garden")))
+		deck.remove_card(CardDB.get_card_by_id(CardDB.get_id_by_name("fungus-garden")))
 	return deck
 
 static var EMPTY := Deck.new()

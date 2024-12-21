@@ -33,16 +33,6 @@ func revert_to_gametick(gametick : int) -> void:
 	event_history.set_current_gametick(_current_gametick)
 	advanced_to_new_gametick.emit(_current_gametick)
 
-func apply_game_access_delta(delta : GameAccessDelta) -> void:
-	game_access.event_processing_step_manager._register_bulk(delta.new_processing_steps)
-	game_access.event_processing_step_manager._unregister_bulk(delta.removed_processing_steps)
-	
-	for changed_property : Dictionary in delta.changed_local_properties:
-		changed_property["object"].set(changed_property["property"], changed_property["new_value"])
-	
-	for changed_stat : Dictionary in delta.changed_statistics:
-		changed_stat["possessor"].set_statistic(changed_stat["statistic"], changed_stat["new_value"])
-
 func revert_game_access_delta(delta : GameAccessDelta) -> void:
 	game_access.event_processing_step_manager._unregister_bulk(delta.new_processing_steps)
 	game_access.event_processing_step_manager._register_bulk(delta.removed_processing_steps)
